@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "architectureId": "urn:agentic-delivery:architecture:authority",
   "version": "0.1.0-draft.1",
-  "sourceRepository": "agentic-delivery-lab/agentic-delivery",
+  "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
   "sourceCommit": "67d328b46d84ae599ebfe65ef550d156f689e112",
   "contentSha256": null,
   "status": "draft",

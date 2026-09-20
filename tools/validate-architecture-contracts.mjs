@@ -12,6 +12,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   const errors = [];
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
   if (release.schemaVersion !== 1 || release.status !== 'draft') errors.push('draft architecture release must use schemaVersion 1 and status draft');
+  if (release.sourceRepository !== 'agentic-delivery-lab/agentic-delivery-architecture') errors.push('architecture release sourceRepository must identify Architecture Authority');
   if (!/^[0-9a-f]{40}$/.test(release.sourceCommit)) errors.push('architecture release sourceCommit must be immutable');
   const aliases = JSON.parse(await readFile(path.join(root, 'architecture/references/adr-aliases.json'), 'utf8'));
   const aliasValues = Object.values(aliases.aliases ?? {});

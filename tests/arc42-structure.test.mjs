@@ -5,6 +5,7 @@ import { test } from 'node:test';
 
 import { validateArc42Structure } from '../tools/validate-arc42-structure.mjs';
 import { validateArchitectureContracts } from '../tools/validate-architecture-contracts.mjs';
+import { validateArchitectureRelease } from '../tools/validate-architecture-release.mjs';
 import { validateDiagrams } from '../tools/validate-diagrams.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -29,4 +30,10 @@ test('ADR/Primitive traceability uses a pinned release projection', async () => 
 
 test('diagram sources remain model-first and structurally valid', async () => {
   assert.deepEqual(await validateDiagrams(root), { structurizr: 1, mermaid: 2, plantuml: 1 });
+});
+
+test('architecture release identifies the target authority', async () => {
+  const result = await validateArchitectureRelease(root);
+  assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
+  assert.equal(result.status, 'draft');
 });

@@ -33,6 +33,12 @@ repository would preserve the smell rather than solve it. The decision is
 therefore required before extracting Architecture Authority, Agentic Primitives
 or Distribution repositories.
 
+The linked Issue #52 is the plan-persistence and intake record for this
+repository split. It is not implementation authorization, does not define the
+acceptance criteria for this ADR, and must not be closed as a side effect of
+this local extraction. The ADR becomes an official implementation decision only
+through a separately authorized successor issue and its review pull request.
+
 The GitHub platform supplies several separate mechanisms, and they must not be
 collapsed into one contract:
 
@@ -289,4 +295,3 @@ Deterministic tests and an operator smoke run must prove:
 - The selected architecture is an intermediate implementation boundary as the Architecture Authority, Agentic Primitives and Distribution repositories are extracted. The Control Plane remains in `agentic-delivery` to preserve existing issue and pull-request URLs.
 - `Delivery Readiness` remains the current live field. Renaming it to `Delivery State` is a separate architecture decision and migration; this ADR does not silently change that vocabulary.
 - This record is provisional until its review pull request is merged into `main`.
-

@@ -16,6 +16,12 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   const aliases = JSON.parse(await readFile(path.join(root, 'architecture/references/adr-aliases.json'), 'utf8'));
   const aliasValues = Object.values(aliases.aliases ?? {});
   if (aliases.schemaVersion !== 1 || aliasValues.length === 0 || new Set(aliasValues).size !== aliasValues.length) errors.push('ADR aliases must be unique schemaVersion 1 records');
+  const tooling = JSON.parse(await readFile(path.join(root, 'architecture/references/tooling-lock.json'), 'utf8'));
+  if (tooling.schemaVersion !== 1 || tooling.status !== 'draft') errors.push('tooling lock must be schemaVersion 1 draft');
+  if (tooling.arc42?.version !== '9.0') errors.push('arc42 tooling lock must pin the tested official version');
+  if (tooling.arc42Language?.package !== '@doctc/arc42' || tooling.arc42Language?.version !== '0.24.0') errors.push('arc42-language tooling lock must pin @doctc/arc42 0.24.0');
+  if (!/^sha512-[A-Za-z0-9+/=]+$/.test(tooling.arc42Language?.integrity ?? '')) errors.push('arc42-language tooling lock must include package integrity');
+  if (!Array.isArray(tooling.arc42Language?.testedCommands) || !tooling.arc42Language.testedCommands.includes('validate')) errors.push('arc42-language tooling lock must record tested commands');
   const contexts = await readFile(path.join(root, 'architecture/domain/bounded-contexts.yml'), 'utf8');
   for (const required of ['architecture-authority', 'agentic-delivery-control-plane', 'agentic-primitives', 'developer-distribution']) {
     if (!contexts.includes(`id: ${required}`)) errors.push(`bounded-context register is missing ${required}`);

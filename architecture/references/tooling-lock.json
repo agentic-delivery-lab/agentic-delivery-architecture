@@ -4,14 +4,16 @@
   "arc42": {
     "representation": "official Markdown chapter structure",
     "source": "https://arc42.org/documentation/",
-    "version": null,
-    "verifiedAt": null
+    "version": "9.0",
+    "verifiedAt": "2026-09-21"
   },
   "arc42Language": {
     "package": "@doctc/arc42",
     "status": "experimental",
-    "version": null,
+    "version": "0.24.0",
+    "integrity": "sha512-xYR4GszhJ+JIXsGDG7DpVxMfVt3yRiNsxjU1O5S/lz73cZlIVZOiLBxIkl6ynju+i2SfFcMs/Fe8fj1+/4X7vg==",
     "source": "https://github.com/docToolchain/arc42-language",
+    "testedCommands": ["validate", "get", "coverage", "rules", "explain", "guide", "diff", "serve", "build"],
     "upgradePolicy": "pin a tested release or immutable commit before activation"
   },
   "diagramRenderers": {

@@ -1,0 +1,22 @@
+schemaVersion: 1
+relationships:
+  - upstream: architecture-authority
+    downstream: agentic-delivery-control-plane
+    contract: architecture-release.v1
+    direction: governs
+  - upstream: architecture-authority
+    downstream: agentic-primitives
+    contract: primitive-reference.v1
+    direction: governs
+  - upstream: agentic-primitives
+    downstream: private-copilot-publication
+    contract: agent-publication-lock.v1
+    direction: promotes
+  - upstream: agentic-primitives
+    downstream: developer-distribution
+    contract: primitive-release.v1
+    direction: distributes
+  - upstream: agentic-delivery-control-plane
+    downstream: developer-distribution
+    contract: workflow-bundle.v1
+    direction: supplies

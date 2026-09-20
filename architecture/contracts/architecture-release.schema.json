@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/architecture-release.schema.json",
+  "title": "Architecture release v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "architectureId", "version", "sourceRepository", "sourceCommit", "status"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "architectureId": { "type": "string", "pattern": "^urn:agentic-delivery:architecture:[a-z0-9-]+$" },
+    "version": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$" },
+    "sourceRepository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+    "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "contentSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "status": { "enum": ["draft", "released", "withdrawn"] },
+    "principleIds": { "type": "array", "items": { "type": "string" } },
+    "contractVersions": { "type": "object", "additionalProperties": { "type": "string" } }
+  }
+}

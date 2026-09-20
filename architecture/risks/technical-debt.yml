@@ -1,0 +1,12 @@
+schemaVersion: 1
+items:
+  - id: TD-001
+    title: Legacy ADR numbers and paths still exist in the migration source
+    status: transitional
+    owner: architecture-maintainer
+    exit: Remove aliases only after Architecture v1 and one supported release cycle.
+  - id: TD-002
+    title: Delivery Readiness remains the live organization field name
+    status: transitional
+    owner: control-plane-maintainer
+    exit: Perform the explicit Delivery State migration while preserving field and option IDs.

@@ -1,0 +1,10 @@
+schemaVersion: 1
+principles:
+  - id: AP-001
+    name: One authoritative state
+    statement: Each durable fact has one canonical owner and other layers hold references, projections, or evidence.
+    source: principles/AP-001-one-authoritative-state.md
+  - id: AP-002
+    name: Deterministic enforcement after semantic proposal
+    statement: Reasoning may propose a route, but deterministic contracts authorize every state mutation.
+    source: principles/AP-002-deterministic-enforcement.md

@@ -1,0 +1,13 @@
+schemaVersion: 1
+policy:
+  architecturePinRequired: true
+  architectureDigestRequired: true
+  semanticReviewIsAdvisory: true
+  deterministicFindingsAreBlocking: true
+  renderedImagesMayNotBeSoleSource: true
+  consumerWriteAccess: false
+sections:
+  - 03-context-and-scope
+  - 05-building-block-view
+  - 06-runtime-view
+  - 07-deployment-view

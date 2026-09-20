@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/primitive-reference.schema.json",
+  "title": "Architecture to Primitive reference v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "primitiveId", "architectureId", "governingAdrs", "compatibility"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "primitiveId": { "type": "string", "pattern": "^urn:agentic-delivery:primitive:[a-z0-9-]+$" },
+    "architectureId": { "type": "string", "pattern": "^urn:agentic-delivery:architecture:[a-z0-9-]+$" },
+    "governingAdrs": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "compatibility": { "type": "object", "additionalProperties": { "type": "string" } }
+  }
+}

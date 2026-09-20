@@ -1,0 +1,26 @@
+schemaVersion: 1
+contexts:
+  - id: architecture-authority
+    name: Architecture Authority
+    repository: agentic-delivery-architecture
+    owns: [principles, arc42, adrs, bounded-contexts, models, quality, risks, conformance]
+  - id: agentic-delivery-control-plane
+    name: Agentic Delivery Control Plane
+    repository: agentic-delivery
+    owns: [event-routing, lifecycle, orchestration, github-app, actions, evidence]
+  - id: agentic-primitives
+    name: Agentic Primitives
+    repository: agentic-delivery-primitives
+    owns: [agents, skills, instructions, hooks, validators, capabilities, mcp-contracts]
+  - id: developer-distribution
+    name: Developer Distribution
+    repository: agentic-delivery-distribution
+    owns: [devcontainer, features, bootstrap, plugins, consumer-projections]
+  - id: public-organization-governance
+    name: Public Organization Governance
+    repository: .github
+    owns: [public-profile, community-health, issue-forms, pull-request-template]
+  - id: private-copilot-publication
+    name: Private Copilot Publication
+    repository: .github-private
+    owns: [member-profile, promoted-agent-projections, publication-provenance]

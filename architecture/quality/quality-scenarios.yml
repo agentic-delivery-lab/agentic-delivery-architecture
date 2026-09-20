@@ -1,0 +1,17 @@
+schemaVersion: 1
+scenarios:
+  - id: QR-001
+    name: preserve originating repository identity
+    stimulus: A lifecycle event arrives from an enrolled repository.
+    response: The same repository ID is retained through routing, mutation, and evidence.
+    measure: No mutation targets the controller repository unless it is the origin.
+  - id: QR-002
+    name: safe controller upgrade
+    stimulus: A new compatible controller release is proposed.
+    response: It runs in shadow mode before participant activation.
+    measure: Upgrade and exact-commit rollback have auditable evidence.
+  - id: QR-003
+    name: readable architecture without tooling
+    stimulus: A reviewer opens the architecture repository without the CLI.
+    response: Markdown, YAML, JSON, and model sources remain understandable.
+    measure: Every rendered view has a checked-in source file.

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/conformance-request.schema.json",
+  "title": "Architecture conformance request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "architectureCommit", "affectedIdentifiers", "implementationCommit"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "architectureCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "implementationCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "affectedIdentifiers": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "architectureDigest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

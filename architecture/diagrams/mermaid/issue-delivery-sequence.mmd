@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant G as GitHub event
+  participant A as GitHub App
+  participant C as Control Plane
+  participant I as Origin Issue
+  G->>A: signed webhook
+  A->>C: immutable event envelope
+  C->>C: resolve participant and validate pin
+  C->>C: semantic proposal
+  C->>C: deterministic authorization
+  C->>I: controlled mutation and evidence link

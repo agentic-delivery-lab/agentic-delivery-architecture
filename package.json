@@ -1,0 +1,14 @@
+{
+  "name": "@agentic-delivery/architecture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.3.4",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "architecture:check": "node tools/validate-arc42-structure.mjs && node tools/validate-architecture-contracts.mjs",
+    "test": "node --test \"tests/**/*.test.mjs\""
+  }
+}

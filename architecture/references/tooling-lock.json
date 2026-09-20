@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "arc42": {
+    "representation": "official Markdown chapter structure",
+    "source": "https://arc42.org/documentation/",
+    "version": null,
+    "verifiedAt": null
+  },
+  "arc42Language": {
+    "package": "@doctc/arc42",
+    "status": "experimental",
+    "version": null,
+    "source": "https://github.com/docToolchain/arc42-language",
+    "upgradePolicy": "pin a tested release or immutable commit before activation"
+  },
+  "diagramRenderers": {
+    "structurizr": { "status": "supporting", "version": null },
+    "plantuml": { "status": "supporting", "version": null },
+    "mermaid": { "status": "supporting", "version": null }
+  },
+  "externalRendering": "not required"
+}

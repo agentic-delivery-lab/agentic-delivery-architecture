@@ -1,0 +1,17 @@
+schemaVersion: 1
+risks:
+  - id: R-001
+    title: GitHub entitlement differs from the design assumptions
+    status: open
+    owner: organization-operator
+    mitigation: Verify repository visibility, Copilot entitlement, Projects access, and App installation permissions before activation.
+  - id: R-002
+    title: Preview documentation tooling changes syntax
+    status: open
+    owner: architecture-maintainer
+    mitigation: Pin a tested tool version or commit and keep plain Markdown readable without the CLI.
+  - id: R-003
+    title: Publication projection drifts from Primitive source
+    status: open
+    owner: primitive-maintainer
+    mitigation: Validate lock manifest, source commit, content hash, tools, and duplicate names on every publication PR.

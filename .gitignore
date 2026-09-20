@@ -1,0 +1,4 @@
+node_modules/
+.DS_Store
+architecture/diagrams/generated/*
+!architecture/diagrams/generated/README.md

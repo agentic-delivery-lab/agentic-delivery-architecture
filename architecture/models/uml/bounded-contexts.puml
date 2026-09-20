@@ -1,0 +1,15 @@
+@startuml bounded-contexts
+left to right direction
+rectangle "Architecture Authority" as architecture
+rectangle "Agentic Delivery Control Plane" as control
+rectangle "Agentic Primitives" as primitives
+rectangle "Developer Distribution" as distribution
+rectangle ".github" as public
+rectangle ".github-private" as private
+architecture --> control : governs
+architecture --> primitives : governs
+primitives --> private : promotes
+primitives --> distribution : releases
+distribution --> control : thin integration
+public ..> control : bootstrap reference
+@enduml

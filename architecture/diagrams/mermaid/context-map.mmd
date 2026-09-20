@@ -1,0 +1,7 @@
+flowchart LR
+  A[Architecture Authority] -->|pinned architecture release| C[Agentic Delivery Control Plane]
+  A -->|ADR and concept references| P[Agentic Primitives]
+  P -->|approved projection| PR[.github-private]
+  P -->|versioned packages| D[Developer Distribution]
+  D -->|thin bootstrap| R[Consumer repositories]
+  C -->|Issues, Projects, Actions| G[GitHub]

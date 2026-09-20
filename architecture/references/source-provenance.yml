@@ -1,0 +1,10 @@
+schemaVersion: 1
+sourceRepository: agentic-delivery-lab/agentic-delivery
+sourceCommit: 67d328b46d84ae599ebfe65ef550d156f689e112
+filterTool:
+  name: git-filter-repo
+  version: 2.47.0
+  tagCommit: cbad6503f5de690c9d5a376d900136691c330793
+filterSpecification: migration/repository-boundaries.yml#architecture-authority
+issueAndPullRequestUrls: preserved
+generatedProjection: false

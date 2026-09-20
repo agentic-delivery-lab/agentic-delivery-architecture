@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/conformance-result.schema.json",
+  "title": "Architecture conformance result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "status", "architectureCommit", "deterministicFindings", "semanticStatus"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "status": { "enum": ["passed", "failed", "inconclusive"] },
+    "architectureCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "deterministicFindings": { "type": "array", "items": { "type": "object" } },
+    "semanticStatus": { "enum": ["passed", "failed", "inconclusive", "not-run"] },
+    "evidence": { "type": "array", "items": { "type": "string", "format": "uri-reference" } }
+  }
+}

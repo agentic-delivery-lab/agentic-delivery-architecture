@@ -1,0 +1,15 @@
+{
+  "$schema": "../contracts/architecture-release.schema.json",
+  "schemaVersion": 1,
+  "architectureId": "urn:agentic-delivery:architecture:authority",
+  "version": "0.1.0-draft.1",
+  "sourceRepository": "agentic-delivery-lab/agentic-delivery",
+  "sourceCommit": "67d328b46d84ae599ebfe65ef550d156f689e112",
+  "contentSha256": null,
+  "status": "draft",
+  "principleIds": ["AP-001", "AP-002"],
+  "contractVersions": {
+    "architectureRelease": "1.0.0",
+    "conformance": "1.0.0"
+  }
+}

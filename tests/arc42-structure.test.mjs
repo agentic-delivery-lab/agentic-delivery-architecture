@@ -5,6 +5,7 @@ import { test } from 'node:test';
 
 import { validateArc42Structure } from '../tools/validate-arc42-structure.mjs';
 import { validateArchitectureContracts } from '../tools/validate-architecture-contracts.mjs';
+import { validateDiagrams } from '../tools/validate-diagrams.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 
@@ -24,4 +25,8 @@ test('ADR/Primitive traceability uses a pinned release projection', async () => 
   assert.ok(index.primitives.every((primitive) => primitive.sourceRepository === 'agentic-delivery-lab/agentic-delivery-primitives'));
   assert.ok(index.primitives.every((primitive) => !primitive.sourcePath.startsWith('docs/')));
   assert.ok(index.externalAdrs.includes('ADR-0009'));
+});
+
+test('diagram sources remain model-first and structurally valid', async () => {
+  assert.deepEqual(await validateDiagrams(root), { structurizr: 1, mermaid: 2, plantuml: 1 });
 });

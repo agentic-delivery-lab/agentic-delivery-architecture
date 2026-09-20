@@ -1,0 +1,20 @@
+@startuml
+title Agentic Delivery bounded contexts
+left to right direction
+
+rectangle "Architecture Authority" as architecture
+rectangle "Agentic Delivery Control Plane" as control
+rectangle "Agentic Primitives" as primitives
+rectangle "Developer Distribution" as distribution
+rectangle "Public .github adapter" as public
+rectangle "Private .github-private adapter" as private
+
+architecture --> control : pinned architecture release
+architecture --> primitives : ADR and concept references
+primitives --> control : selected capabilities
+primitives --> private : promoted agent projection
+primitives --> distribution : primitive release
+distribution --> control : thin consumer integration
+public ..> control : optional pinned starter
+
+@enduml

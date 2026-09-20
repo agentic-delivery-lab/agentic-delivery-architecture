@@ -1,7 +1,17 @@
 flowchart LR
-  A[Architecture Authority] -->|pinned architecture release| C[Agentic Delivery Control Plane]
-  A -->|ADR and concept references| P[Agentic Primitives]
-  P -->|approved projection| PR[.github-private]
-  P -->|versioned packages| D[Developer Distribution]
-  D -->|thin bootstrap| R[Consumer repositories]
-  C -->|Issues, Projects, Actions| G[GitHub]
+  architecture[Architecture Authority]
+  control[Agentic Delivery Control Plane]
+  primitives[Agentic Primitives]
+  distribution[Developer Distribution]
+  public[Public .github adapter]
+  private[Private .github-private adapter]
+  github[GitHub work state]
+
+  architecture -->|architecture-release.v1| control
+  architecture -->|primitive-reference.v1| primitives
+  primitives -->|promoted agent projection| private
+  primitives -->|primitive-release.v1| distribution
+  distribution -->|thin workflow/bootstrap| control
+  public -->|public defaults| github
+  private -->|member profile and agents| github
+  control -->|controlled mutation| github

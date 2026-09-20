@@ -15,4 +15,4 @@ boundary. An event is not itself a lifecycle transition; the versioned
 lifecycle policy decides whether it is ignored, observed, routed, or authorized.
 
 The runtime sequence is represented in
-`../diagrams/mermaid/issue-delivery-sequence.mmd` when that source is added.
+`../diagrams/mermaid/issue-delivery-sequence.mmd`.

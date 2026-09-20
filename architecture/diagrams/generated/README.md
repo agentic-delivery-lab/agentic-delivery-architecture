@@ -1,6 +1,5 @@
 # Generated diagram output
 
-Rendered diagrams are generated from the version-controlled model sources.
-This directory must never be the only place a diagram exists. CI may populate
-it with pinned local renderers; external Kroki rendering is not a mandatory
-build dependency.
+Rendered diagrams are disposable projections of the versioned sources in
+`../models/` and the sibling format directories. They are not architectural
+authority and must never be the only representation of a view.

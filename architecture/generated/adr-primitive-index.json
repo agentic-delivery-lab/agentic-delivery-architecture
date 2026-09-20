@@ -1,0 +1,463 @@
+{
+  "schemaVersion": 1,
+  "source": "released-primitive-catalog",
+  "architecture": "urn:agentic-delivery:architecture:authority",
+  "primitiveRelease": {
+    "repository": "agentic-delivery-lab/agentic-delivery-primitives",
+    "releaseId": "urn:agentic-delivery:primitive-release:0.1.0-draft.1",
+    "version": "0.1.0-draft.1",
+    "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+    "contentSha256": null,
+    "status": "draft"
+  },
+  "domains": [
+    "agentic-delivery-control-plane",
+    "agentic-delivery-governance"
+  ],
+  "adrs": [
+    {
+      "id": "ADR-0001",
+      "file": "decisions/0001-use-madr-for-architecture-decisions.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "architecture-decision"
+      ]
+    },
+    {
+      "id": "ADR-0002",
+      "file": "decisions/0002-use-plain-language-for-human-agent-communication.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "instructional"
+      ],
+      "primitives": [
+        "plain-language-communication"
+      ]
+    },
+    {
+      "id": "ADR-0003",
+      "file": "decisions/0003-use-context-scoped-ubiquitous-language.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "ubiquitous-language"
+      ]
+    },
+    {
+      "id": "ADR-0004",
+      "file": "decisions/0004-use-trunk-based-delivery.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "commit-range-validator",
+        "delivery-workflow"
+      ]
+    },
+    {
+      "id": "ADR-0005",
+      "file": "decisions/0005-use-conventional-commits-with-gitmoji.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "commit-range-validator",
+        "delivery-workflow",
+        "gitmoji-validator",
+        "pull-request-title-validator"
+      ]
+    },
+    {
+      "id": "ADR-0006",
+      "file": "decisions/0006-curate-a-changelog.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "changelog-structure-validator",
+        "delivery-workflow"
+      ]
+    },
+    {
+      "id": "ADR-0007",
+      "file": "decisions/0007-use-issue-linked-conventional-branch-names.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "delivery-workflow",
+        "issue-branch-name-validator",
+        "pull-request-branch-validator",
+        "source-issue-validator"
+      ]
+    },
+    {
+      "id": "ADR-0011",
+      "file": "decisions/0011-run-layered-harness-architecture-reviews.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "semantic"
+      ],
+      "primitives": []
+    },
+    {
+      "id": "ADR-0012",
+      "file": "decisions/0012-use-github-as-the-lifecycle-control-plane.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "supersedes": [
+        "ADR-0010"
+      ],
+      "primitives": [
+        "codex-delivery"
+      ]
+    },
+    {
+      "id": "ADR-0013",
+      "file": "decisions/0013-derive-adr-traceability-from-agentic-primitives.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": []
+    },
+    {
+      "id": "ADR-0016",
+      "file": "decisions/0016-require-structured-pull-request-descriptions.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "pull-request-body-validator"
+      ]
+    },
+    {
+      "id": "ADR-0019",
+      "file": "decisions/0019-canonicalize-delivery-state-field.md",
+      "domains": [
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "semantic"
+      ],
+      "primitives": []
+    }
+  ],
+  "externalAdrs": [
+    "ADR-0008",
+    "ADR-0009",
+    "ADR-0015",
+    "ADR-0017"
+  ],
+  "uncoveredAdrs": [
+    "ADR-0011",
+    "ADR-0013",
+    "ADR-0019"
+  ],
+  "primitives": [
+    {
+      "id": "architecture-decision",
+      "kind": "skill",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "skills/architecture-decision/SKILL.md",
+      "enforcement": "instructional",
+      "adrs": [
+        "ADR-0001"
+      ],
+      "localAdrs": [
+        "ADR-0001"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "changelog-structure-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/validate-changelog.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0006"
+      ],
+      "localAdrs": [
+        "ADR-0006"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "codex-delivery",
+      "kind": "agent",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "agents/codex/codex-delivery.md",
+      "enforcement": "instructional",
+      "adrs": [
+        "ADR-0009",
+        "ADR-0012",
+        "ADR-0015",
+        "ADR-0017"
+      ],
+      "localAdrs": [
+        "ADR-0012"
+      ],
+      "domains": [
+        "agentic-delivery-control-plane"
+      ]
+    },
+    {
+      "id": "commit-range-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/validate-commit-range.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0004",
+        "ADR-0005"
+      ],
+      "localAdrs": [
+        "ADR-0004",
+        "ADR-0005"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "delivery-workflow",
+      "kind": "skill",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "skills/delivery-workflow/SKILL.md",
+      "enforcement": "instructional",
+      "adrs": [
+        "ADR-0004",
+        "ADR-0005",
+        "ADR-0006",
+        "ADR-0007",
+        "ADR-0008"
+      ],
+      "localAdrs": [
+        "ADR-0004",
+        "ADR-0005",
+        "ADR-0006",
+        "ADR-0007"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "gitmoji-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/validate-gitmoji.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0005"
+      ],
+      "localAdrs": [
+        "ADR-0005"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "issue-branch-name-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/validate-branch-name.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0007"
+      ],
+      "localAdrs": [
+        "ADR-0007"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "plain-language-communication",
+      "kind": "skill",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "skills/plain-language-communication/SKILL.md",
+      "enforcement": "instructional",
+      "adrs": [
+        "ADR-0002"
+      ],
+      "localAdrs": [
+        "ADR-0002"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "pull-request-body-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/validate-pull-request-body.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0016"
+      ],
+      "localAdrs": [
+        "ADR-0016"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "pull-request-branch-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/validate-pull-request-branch.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0007"
+      ],
+      "localAdrs": [
+        "ADR-0007"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "pull-request-title-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/validate-pull-request-title.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0005"
+      ],
+      "localAdrs": [
+        "ADR-0005"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "source-issue-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/validate-source-issue.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0007"
+      ],
+      "localAdrs": [
+        "ADR-0007"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "toolchain-policy-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "validators/repository-delivery/lib/toolchain.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0008"
+      ],
+      "localAdrs": [],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "ubiquitous-language",
+      "kind": "skill",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
+      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourcePath": "skills/ubiquitous-language/SKILL.md",
+      "enforcement": "instructional",
+      "adrs": [
+        "ADR-0003"
+      ],
+      "localAdrs": [
+        "ADR-0003"
+      ],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    }
+  ]
+}

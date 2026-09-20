@@ -47,13 +47,13 @@ export async function validateDomainLanguage(repositoryRoot = process.cwd()) {
     throw new DomainLanguageValidationError(checkError(`repository root does not exist: ${repositoryRoot}`), 2);
   }
 
-  const domainDirectory = path.join(root, 'docs', 'domain');
+  const domainDirectory = path.join(root, 'architecture', 'domain');
   const registryPath = path.join(domainDirectory, 'ubiquitous-language.yml');
   if (!(await isDirectory(domainDirectory))) {
-    throw new DomainLanguageValidationError(checkError('missing docs/domain directory'), 2);
+    throw new DomainLanguageValidationError(checkError('missing architecture/domain directory'), 2);
   }
   if (!(await isFile(registryPath))) {
-    throw new DomainLanguageValidationError(checkError('missing docs/domain/ubiquitous-language.yml'), 2);
+    throw new DomainLanguageValidationError(checkError('missing architecture/domain/ubiquitous-language.yml'), 2);
   }
 
   let registry;
@@ -67,7 +67,7 @@ export async function validateDomainLanguage(repositoryRoot = process.cwd()) {
       throw new DomainLanguageValidationError(checkError(`invalid YAML: ${error.message.replace(/^invalid YAML: /, '').split(/\r?\n/, 1)[0]}`), 1);
     }
     throw new DomainLanguageValidationError(
-      checkError(`cannot read docs/domain/ubiquitous-language.yml: ${error.message}`),
+      checkError(`cannot read architecture/domain/ubiquitous-language.yml: ${error.message}`),
       2,
     );
   }

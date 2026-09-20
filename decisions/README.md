@@ -72,7 +72,7 @@ After a successful merge, remove active labels and close the ADR tracking issue.
 Use four digits and a lowercase dashed name:
 
 ```text
-docs/decisions/NNNN-title-with-dashes.md
+decisions/NNNN-title-with-dashes.md
 ```
 
 Record numbers are never reused. A removed record may leave a numeric gap;

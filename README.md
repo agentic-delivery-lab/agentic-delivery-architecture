@@ -8,7 +8,10 @@ views need to be distinguished.
 
 The architecture is deliberately reference-oriented. ADRs retain their
 rationale, section 09 indexes them, the domain register remains machine
-readable, and diagrams retain model sources next to generated views.
+readable, and diagrams retain model sources next to generated views. The
+ADR-to-Primitive index is derived from a pinned Primitive release projection;
+this repository does not import Primitive implementation merely to document
+that relationship.
 
 The repository is currently a locally prepared, history-preserving extraction
 from `agentic-delivery`. Publication as the organization repository requires a

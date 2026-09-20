@@ -1,5 +1,11 @@
 # Harness architecture conformance baseline
 
+> This document preserves the source-repository review baseline used during
+> extraction. Paths beginning with `docs/`, `scripts/`, or `.agents/` refer to
+> the historical `agentic-delivery` source until the corresponding bounded
+> context publishes its own release. Canonical Architecture Authority paths
+> are under `architecture/`, `decisions/`, `tools/`, and `tests/`.
+
 Evidence cutoff: 2026-09-10, implementation base `b0c34fc3b7c104fb37c51b541bf16c4020d26539`.
 
 Source issue: [#25](https://github.com/agentic-delivery-lab/agentic-delivery/issues/25).

@@ -22,6 +22,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   }
   for (const file of [
     'architecture/contracts/architecture-release.schema.json',
+    'architecture/contracts/adr-primitive-index.schema.json',
     'architecture/contracts/primitive-reference.schema.json',
     'architecture/contracts/conformance-request.schema.json',
     'architecture/contracts/conformance-result.schema.json',
@@ -30,7 +31,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
     if (schema.$schema !== 'https://json-schema.org/draft/2020-12/schema') errors.push(`${file} must use JSON Schema 2020-12`);
   }
   if (errors.length > 0) throw new Error(`architecture contract check failed:\n${errors.join('\n')}`);
-  return { schemas: 4, aliases: aliasValues.length };
+  return { schemas: 5, aliases: aliasValues.length };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

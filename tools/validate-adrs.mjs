@@ -61,18 +61,18 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
     throw new AdrValidationError(errorMessage(`repository root does not exist: ${repositoryRoot}`), 2);
   }
 
-  const decisionsDirectory = path.join(root, 'docs', 'decisions');
+  const decisionsDirectory = path.join(root, 'decisions');
   const errors = [];
   const addError = (message) => errors.push(errorMessage(message));
 
   if (!(await isDirectory(decisionsDirectory))) {
-    addError('missing docs/decisions directory');
+    addError('missing decisions directory');
     throw new AdrValidationError(errors.join('\n'), 1);
   }
 
   for (const requiredFile of ['README.md', 'adr-template.md']) {
     if (!(await isFile(path.join(decisionsDirectory, requiredFile)))) {
-      addError(`missing docs/decisions/${requiredFile}`);
+      addError(`missing decisions/${requiredFile}`);
     }
   }
 
@@ -88,10 +88,10 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
   // Git history is available, reject a current record whose number previously
   // named a different file. Fixture roots without Git history remain valid.
   try {
-    const { stdout } = await execFileAsync('git', ['-C', root, 'log', '--all', '--format=', '--name-only', '--', 'docs/decisions'], { encoding: 'utf8' });
+    const { stdout } = await execFileAsync('git', ['-C', root, 'log', '--all', '--format=', '--name-only', '--', 'decisions'], { encoding: 'utf8' });
     const historicalNames = new Map();
-    for (const file of stdout.split(/\r?\n/).filter((value) => /^docs\/decisions\/\d{4}-[a-z0-9-]+\.md$/.test(value))) {
-      const number = file.slice('docs/decisions/'.length, 'docs/decisions/'.length + 4);
+    for (const file of stdout.split(/\r?\n/).filter((value) => /^decisions\/\d{4}-[a-z0-9-]+\.md$/.test(value))) {
+      const number = file.slice('decisions/'.length, 'decisions/'.length + 4);
       const names = historicalNames.get(number) ?? new Set();
       names.add(path.basename(file));
       historicalNames.set(number, names);
@@ -181,7 +181,7 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
     if (await isFile(path.join(decisionsDirectory, 'README.md'))) {
       const readme = await readFile(path.join(decisionsDirectory, 'README.md'), 'utf8');
       if (!readme.includes(`(${filename})`)) {
-        addError(`${filename} is not linked from docs/decisions/README.md`);
+        addError(`${filename} is not linked from decisions/README.md`);
       }
     }
   }

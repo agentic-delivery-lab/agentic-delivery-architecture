@@ -1,15 +1,15 @@
 version: 2
 
-# ADR relationships are derived from primitive references into
-# docs/architecture/adr-primitive-index.json. This file maps only runtime
+# ADR relationships are derived from the pinned Primitive release into
+# architecture/generated/adr-primitive-index.json. This file maps only runtime
 # surfaces and bounded-context paths used to select review evidence.
 
 bounded-contexts:
   - id: agentic-delivery-governance
-    register: docs/domain/ubiquitous-language.yml
-    paths: [AGENTS.md, .agents/**, .github/**, docs/**, scripts/**, tests/**, package.json, pnpm-workspace.yaml]
+    register: architecture/domain/ubiquitous-language.yml
+    paths: [AGENTS.md, architecture/**, decisions/**, .github/**, tools/**, tests/**, package.json, pnpm-lock.yaml]
   - id: agentic-delivery-control-plane
-    register: docs/domain/ubiquitous-language.yml
+    register: architecture/domain/ubiquitous-language.yml
     paths: [api/github/**, .github/participants.yml, .github/workflows/agent-invocation.yml, .github/workflows/issue-intake.yml, .github/workflows/codex-delivery.yml, scripts/codex-delivery.mjs, scripts/issue-intake.mjs, scripts/prepare-agent-invocation.mjs, scripts/lib/github-app.mjs, scripts/lib/participant-registry.mjs]
 
 runtime-surfaces:

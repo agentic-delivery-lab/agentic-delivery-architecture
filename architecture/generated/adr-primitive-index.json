@@ -6,7 +6,7 @@
     "repository": "agentic-delivery-lab/agentic-delivery-primitives",
     "releaseId": "urn:agentic-delivery:primitive-release:0.1.0-draft.1",
     "version": "0.1.0-draft.1",
-    "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+    "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
     "contentSha256": null,
     "status": "draft"
   },
@@ -202,7 +202,7 @@
       "kind": "skill",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "skills/architecture-decision/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -220,7 +220,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/validate-changelog.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -238,7 +238,7 @@
       "kind": "agent",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "agents/codex/codex-delivery.md",
       "enforcement": "instructional",
       "adrs": [
@@ -259,7 +259,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/validate-commit-range.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -279,7 +279,7 @@
       "kind": "skill",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "skills/delivery-workflow/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -304,7 +304,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/validate-gitmoji.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -322,7 +322,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/validate-branch-name.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -340,7 +340,7 @@
       "kind": "skill",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "skills/plain-language-communication/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -358,7 +358,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/validate-pull-request-body.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -376,7 +376,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/validate-pull-request-branch.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -394,7 +394,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/validate-pull-request-title.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -412,7 +412,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/validate-source-issue.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -430,7 +430,7 @@
       "kind": "validator",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "validators/repository-delivery/lib/toolchain.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -446,7 +446,7 @@
       "kind": "skill",
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "0c6607279416a66b92cb0ee02a396638af09e3f0",
+      "sourceCommit": "6c06fdd604b56458245d0a81d25a6a847993edf4",
       "sourcePath": "skills/ubiquitous-language/SKILL.md",
       "enforcement": "instructional",
       "adrs": [

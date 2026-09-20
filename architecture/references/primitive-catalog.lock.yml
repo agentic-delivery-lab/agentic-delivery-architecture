@@ -3,7 +3,7 @@ source:
   repository: agentic-delivery-lab/agentic-delivery-primitives
   releaseId: urn:agentic-delivery:primitive-release:0.1.0-draft.1
   releaseVersion: 0.1.0-draft.1
-  sourceCommit: 6c06fdd604b56458245d0a81d25a6a847993edf4
+  sourceCommit: 78cceeda1c6d7ceeddd4cf3f392836284a0216f8
   contentSha256: null
   status: draft
 architectureId: urn:agentic-delivery:architecture:authority

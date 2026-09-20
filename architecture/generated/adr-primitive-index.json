@@ -172,6 +172,22 @@
       ]
     },
     {
+      "id": "ADR-0018",
+      "file": "decisions/0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md",
+      "domains": [
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "semantic"
+      ],
+      "supersedes": [
+        "ADR-0014"
+      ],
+      "primitives": []
+    },
+    {
       "id": "ADR-0019",
       "file": "decisions/0019-canonicalize-delivery-state-field.md",
       "domains": [
@@ -194,6 +210,7 @@
   "uncoveredAdrs": [
     "ADR-0011",
     "ADR-0013",
+    "ADR-0018",
     "ADR-0019"
   ],
   "primitives": [

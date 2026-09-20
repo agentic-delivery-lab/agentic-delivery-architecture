@@ -6,6 +6,9 @@ This section is an index and context map, not a duplicate of ADR rationale.
 Individual managed decisions remain in `../../decisions/` and are referenced by
 stable ADR identifiers in `../../references/adr-aliases.json`.
 
-The organization-wide control-plane distribution decision is ADR-0018 in the
-source history and remains owned by the Delivery Control Plane until the
-Architecture Authority promotion PR assigns its canonical `ADA-*` identity.
+ADR-0018 records the organization-wide control-plane distribution and
+versioning decision. The history-preserving extraction is provisional on the
+Architecture Authority feature branch; a separately authorized promotion PR
+must merge it before it becomes official on this repository's `main`. Its
+stable alias is listed in `../../references/adr-aliases.json`; the rationale
+remains in the individual ADR rather than being copied into this section.

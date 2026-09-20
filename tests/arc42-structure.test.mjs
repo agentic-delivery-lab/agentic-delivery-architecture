@@ -13,7 +13,7 @@ test('official arc42 chapter structure is complete', async () => {
 });
 
 test('architecture contracts and aliases are deterministic', async () => {
-  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 5, aliases: 12 });
+  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 5, aliases: 13 });
 });
 
 test('ADR/Primitive traceability uses a pinned release projection', async () => {

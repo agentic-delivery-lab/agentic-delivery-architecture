@@ -31,7 +31,7 @@ contracts.
 
 ## Required validation
 
-Run `pnpm architecture:check` and `pnpm test` before proposing a change.
+Run `pnpm architecture:check`, `pnpm migration:check`, and `pnpm test` before proposing a change.
 The architecture check validates arc42 structure, ADR/MADR records, domain
 language, contracts, and regenerated ADR-to-Primitive traceability.
 Architecture releases, cross-repository references, and ADR changes require a

@@ -22,5 +22,7 @@ jobs:
           node-version-file: .node-version
       - name: Validate arc42 and architecture contracts
         run: pnpm architecture:check
+      - name: Validate history-preserving extraction manifest
+        run: pnpm migration:check
       - name: Run architecture tests
         run: pnpm test

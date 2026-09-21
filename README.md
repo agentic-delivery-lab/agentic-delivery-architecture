@@ -21,6 +21,7 @@ separate operator-approved repository-creation and protection step.
 
 ```text
 pnpm architecture:check
+pnpm migration:check
 pnpm test
 ```
 

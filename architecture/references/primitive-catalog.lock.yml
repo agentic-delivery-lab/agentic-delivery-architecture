@@ -1,9 +1,9 @@
 schemaVersion: 1
 source:
   repository: agentic-delivery-lab/agentic-delivery-primitives
-  releaseId: urn:agentic-delivery:primitive-release:0.1.0-draft.3
-  releaseVersion: 0.1.0-draft.3
-  sourceCommit: 8d99a4a7a7240a02090ab2ac81cdb7676b8a42ad
+  releaseId: urn:agentic-delivery:primitive-release:0.1.0-draft.4
+  releaseVersion: 0.1.0-draft.4
+  sourceCommit: 51e94992c5f39c59046f752e0cf6cff2ed3fff32
   contentSha256: 36a7e7e95a89ee00288f08a30ac41e4166e11516165e93af47b342026ce894d0
   status: draft
 architectureId: urn:agentic-delivery:architecture:authority

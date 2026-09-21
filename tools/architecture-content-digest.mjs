@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
@@ -12,6 +13,7 @@ const SHA = /^[0-9a-f]{40}$/;
 // exact pinned tree, while migration and dependency caches remain outside the
 // architecture view consumed by conformance review.
 const AUTHORITATIVE_ROOTS = ['AGENTS.md', 'README.md', 'architecture', 'decisions'];
+const RELEASE_MANIFEST = 'architecture/generated/architecture-release.json';
 
 async function git(root, args, encoding = 'utf8') {
   const result = await execFileAsync('git', ['-C', root, ...args], {
@@ -23,7 +25,9 @@ async function git(root, args, encoding = 'utf8') {
 }
 
 export async function architectureFiles(root, revision = 'HEAD') {
-  const output = await git(root, ['ls-tree', '-r', '--name-only', revision]);
+  const output = await git(root, revision === 'WORKTREE'
+    ? ['ls-files', '--cached', '--others', '--exclude-standard']
+    : ['ls-tree', '-r', '--name-only', revision]);
   return output
     .split(/\r?\n/)
     .filter(Boolean)
@@ -31,16 +35,28 @@ export async function architectureFiles(root, revision = 'HEAD') {
     .sort();
 }
 
+function normalizeReleaseMetadata(file, contents) {
+  if (file !== RELEASE_MANIFEST) return contents;
+  // The release digest covers the manifest but not its own digest value. This
+  // keeps the published value reproducible without a self-referential hash.
+  return contents.toString('utf8').replace(
+    /("contentSha256"\s*:\s*)(?:"[0-9a-f]{64}"|null)/,
+    '$1null',
+  );
+}
+
 export async function architectureContentDigest(root, revision = 'HEAD') {
-  if (!SHA.test(revision) && revision !== 'HEAD') throw new Error('architecture revision must be HEAD or a 40-character commit SHA');
+  if (!SHA.test(revision) && !['HEAD', 'WORKTREE'].includes(revision)) throw new Error('architecture revision must be HEAD, WORKTREE, or a 40-character commit SHA');
   const files = await architectureFiles(root, revision);
   if (files.length === 0) throw new Error('Architecture Authority contains no authoritative files at the requested revision');
   const hash = createHash('sha256');
   for (const file of files) {
-    const contents = await git(root, ['show', `${revision}:${file}`], 'buffer');
+    const contents = revision === 'WORKTREE'
+      ? await readFile(path.join(root, file))
+      : await git(root, ['show', `${revision}:${file}`], 'buffer');
     hash.update(file, 'utf8');
     hash.update('\0', 'utf8');
-    hash.update(contents);
+    hash.update(normalizeReleaseMetadata(file, contents));
     hash.update('\0', 'utf8');
   }
   return hash.digest('hex');

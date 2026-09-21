@@ -2,12 +2,43 @@
   "$schema": "../contracts/architecture-release.schema.json",
   "schemaVersion": 1,
   "architectureId": "urn:agentic-delivery:architecture:authority",
-  "version": "0.1.0-draft.4",
+  "version": "0.1.0-draft.5",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
-  "sourceCommit": "d4714c9489fb14824ef0967903d34a73c3e437fb",
-  "contentSha256": null,
+  "sourceCommit": "61b2285334b5cff4ae2dba7875b132ad2a4a8502",
+  "contentSha256": "341bc5e446446af71893135eedb52b520c37162929f3ac6af2e74a494e6014ea",
   "status": "draft",
   "principleIds": ["AP-001", "AP-002"],
+  "adrIds": [
+    "urn:agentic-delivery:adr:architecture:0001",
+    "urn:agentic-delivery:adr:architecture:0002",
+    "urn:agentic-delivery:adr:architecture:0003",
+    "urn:agentic-delivery:adr:architecture:0004",
+    "urn:agentic-delivery:adr:architecture:0005",
+    "urn:agentic-delivery:adr:architecture:0006",
+    "urn:agentic-delivery:adr:architecture:0007",
+    "urn:agentic-delivery:adr:architecture:0011",
+    "urn:agentic-delivery:adr:architecture:0012",
+    "urn:agentic-delivery:adr:architecture:0013",
+    "urn:agentic-delivery:adr:architecture:0016",
+    "urn:agentic-delivery:adr:architecture:0018",
+    "urn:agentic-delivery:adr:architecture:0019"
+  ],
+  "contextIds": [
+    "architecture-authority",
+    "agentic-delivery-control-plane",
+    "agentic-primitives",
+    "developer-distribution",
+    "public-organization-governance",
+    "private-copilot-publication"
+  ],
+  "conformancePolicy": {
+    "path": "architecture/policies/conformance.yml",
+    "sha256": "2dc008a8f86dddf5fd7cf3117a6bb13b59d31223a62fc2f4828ceff9c57c802f"
+  },
+  "toolingLock": {
+    "path": "architecture/references/tooling-lock.json",
+    "sha256": "fc307c9f7307dfa9c5b58013a474a919a2a8534ee22a18962125d85c8fff3a91"
+  },
   "contractVersions": {
     "architectureRelease": "1.0.0",
     "conformance": "1.0.0"

@@ -37,6 +37,7 @@ test('diagram sources remain model-first and structurally valid', async () => {
 test('architecture release identifies the target authority', async () => {
   const result = await validateArchitectureRelease(root);
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
+  assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
 });
 

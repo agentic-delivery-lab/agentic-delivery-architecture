@@ -4,7 +4,7 @@
   "title": "Architecture conformance request v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "architectureCommit", "affectedIdentifiers", "implementationCommit"],
+  "required": ["schemaVersion", "architectureCommit", "architectureDigest", "affectedIdentifiers", "implementationCommit"],
   "properties": {
     "schemaVersion": { "const": 1 },
     "architectureCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },

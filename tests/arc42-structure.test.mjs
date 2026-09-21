@@ -7,6 +7,7 @@ import { validateArc42Structure } from '../tools/validate-arc42-structure.mjs';
 import { validateArchitectureContracts } from '../tools/validate-architecture-contracts.mjs';
 import { validateArchitectureRelease } from '../tools/validate-architecture-release.mjs';
 import { validateConformanceRequest } from '../tools/validate-conformance-request.mjs';
+import { architectureContentDigest } from '../tools/architecture-content-digest.mjs';
 import { validateDiagrams } from '../tools/validate-diagrams.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -39,11 +40,19 @@ test('architecture release identifies the target authority', async () => {
   assert.equal(result.status, 'draft');
 });
 
+test('architecture content digest is deterministic for a pinned tree', async () => {
+  const first = await architectureContentDigest(root, 'HEAD');
+  const second = await architectureContentDigest(root, 'HEAD');
+  assert.match(first, /^[0-9a-f]{64}$/);
+  assert.equal(first, second);
+});
+
 test('conformance requests bind implementation and Architecture commits', () => {
   const architectureCommit = '0123456789abcdef0123456789abcdef01234567';
   const result = validateConformanceRequest({
     schemaVersion: 1,
     architectureCommit,
+    architectureDigest: 'a'.repeat(64),
     implementationCommit: 'fedcba9876543210fedcba9876543210fedcba98',
     affectedIdentifiers: ['urn:agentic-delivery:architecture:authority'],
   }, architectureCommit);
@@ -51,6 +60,7 @@ test('conformance requests bind implementation and Architecture commits', () => 
   assert.throws(() => validateConformanceRequest({
     schemaVersion: 1,
     architectureCommit,
+    architectureDigest: 'a'.repeat(64),
     implementationCommit: 'fedcba9876543210fedcba9876543210fedcba98',
     affectedIdentifiers: ['duplicate', 'duplicate'],
   }, architectureCommit), /must be unique/);

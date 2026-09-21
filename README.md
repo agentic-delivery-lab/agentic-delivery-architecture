@@ -23,7 +23,9 @@ separate operator-approved repository-creation and protection step.
 pnpm architecture:check
 pnpm migration:check
 pnpm test
+node tools/architecture-content-digest.mjs . HEAD
 ```
 
 The initial release is draft until the arc42/tooling lock and architecture
-release digest have been reviewed and promoted.
+release digest have been reviewed and promoted. Conformance requests must
+carry the digest for the exact Architecture commit they pin.

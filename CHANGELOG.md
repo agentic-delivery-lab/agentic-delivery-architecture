@@ -6,6 +6,10 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Added Architecture draft release `0.1.0-draft.2`, whose generated
+  Primitive traceability index pins Primitive release `0.1.0-draft.2` and its
+  canonical content digest.
+
 - Added a deterministic SHA-256 Architecture content digest and made the
   conformance request require that digest for the pinned Architecture tree.
 

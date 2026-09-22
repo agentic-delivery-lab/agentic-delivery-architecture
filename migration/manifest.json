@@ -9,7 +9,7 @@
   "target": {
     "repository": "agentic-delivery-architecture",
     "defaultBranch": "main",
-    "initialImportCommit": "2af7d6df738257efd852894433caf9a4b9a18f60"
+    "initialImportCommit": "d3958d885980b7bd5b2c452b751ad91f43229f76"
   },
   "history": {
     "strategy": "filtered-history-with-source-map",

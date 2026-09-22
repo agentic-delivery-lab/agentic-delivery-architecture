@@ -6,6 +6,9 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Added Architecture draft release `0.1.0-draft.8`, documenting the separate
+  HMAC authentication boundary for the webhook-to-controller dispatch hop.
+
 - Added Architecture draft release `0.1.0-draft.7`, rebinding the generated
   Primitive traceability projection to the filtered main-snapshot Primitive
   candidate and updating the reproducible Architecture content digest; draft6

@@ -6,6 +6,11 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Added Architecture draft release `0.1.0-draft.7`, rebinding the generated
+  Primitive traceability projection to the filtered main-snapshot Primitive
+  candidate and updating the reproducible Architecture content digest; draft6
+  remains the explicit rollback release.
+
 - Added Architecture draft release `0.1.0-draft.6` with a non-null,
   reproducible content digest, explicit ADR and bounded-context identifiers,
   and integrity pins for the conformance policy and tooling lock. Draft5

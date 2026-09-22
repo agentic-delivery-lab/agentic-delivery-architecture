@@ -1,6 +1,6 @@
 schemaVersion: 1
 sourceRepository: agentic-delivery-lab/agentic-delivery
-sourceCommit: 67d328b46d84ae599ebfe65ef550d156f689e112
+sourceCommit: 8b9bd77e1cb6008ce9dab3bbe8652ab7979b4c99
 filterTool:
   name: git-filter-repo
   version: 2.47.0

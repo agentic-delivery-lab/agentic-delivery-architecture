@@ -8,5 +8,6 @@ test('history-preserving Architecture extraction has an immutable manifest and s
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
   const result = await validateMigrationManifest(root);
   assert.equal(result.manifest.target.repository, 'agentic-delivery-architecture');
+  assert.equal(result.manifest.publication, 'published');
   assert.ok(result.mappedCommits > 100);
 });

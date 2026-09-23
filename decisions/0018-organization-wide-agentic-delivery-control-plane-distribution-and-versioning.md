@@ -1,6 +1,6 @@
 ---
-date: 2026-09-20
-source-issue: https://github.com/agentic-delivery-lab/agentic-delivery/issues/52
+date: 2026-09-23
+source-issue: https://github.com/agentic-delivery-lab/agentic-delivery/issues/53
 decision-makers: Repository maintainers
 consulted: Official GitHub Actions, GitHub Apps, and webhook documentation
 informed: None
@@ -18,26 +18,45 @@ supersedes:
 
 ## Context and Problem Statement
 
-The current implementation is a working issue-based delivery harness, but it
-is coupled to `agentic-delivery-lab/agentic-delivery`. The webhook rejects
-events from another repository, `repository_dispatch` targets the controller
-repository, and the Actions workflows check out and mutate the same repository
-that contains the controller. Repository-scoped App variables and secrets
-reinforce that coupling. This prevents another organization repository from
-using the same lifecycle without copying the runtime.
+The supplied `main` snapshot showed a repository-local issue-based delivery
+harness. Its webhook rejected events from another repository,
+`repository_dispatch` targeted the controller repository, Actions checked out
+and mutated that same repository, and repository-scoped App variables and
+secrets reinforced the coupling. That snapshot is migration evidence, not a
+description of the current implementation.
 
-The repository-split plan makes an organization-wide lifecycle a hard target:
-every enrolled repository may use one Agentic Delivery lifecycle, while local
-CI/CD remains local. A split that moves the current assumptions into a new
-repository would preserve the smell rather than solve it. The decision is
-therefore required before extracting Architecture Authority, Agentic Primitives
-or Distribution repositories.
+Current `agentic-delivery` `main` has staged organization-wide foundations: a
+central webhook, a repository-ID participant registry, signed event envelopes,
+controller and contract pins, origin-aware intake, and shadow execution. The
+offline multi-repository acceptance fixture and the cross-repository release
+chain pass. They do not prove a live App installation, production webhook
+delivery, organization issue-field access, or production write-back. The
+fixture currently uses a synthetic second repository and synthetic
+`.github-private` identity; live installation and event evidence remain an
+operator gate.
 
-The linked Issue #52 is the plan-persistence and intake record for this
-repository split. It is not implementation authorization, does not define the
-acceptance criteria for this ADR, and must not be closed as a side effect of
-this local extraction. The ADR becomes an official implementation decision only
-through a separately authorized successor issue and its review pull request.
+The operator reported on 2026-09-23 that the organization App installation is
+set to **All repositories**, because the same lifecycle is intended to be
+available across existing and future repositories. That setting is not
+independently readable with the available identity. The current Control Plane
+App contract and validator still require `selected-repositories`. This is
+explicit contract drift, not proof that the reported setting is wrong or that
+the live setting has been verified.
+
+Issue [#52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52)
+captured and persisted the migration plan; it is closed and is not
+implementation authorization. Issue
+[#53](https://github.com/agentic-delivery-lab/agentic-delivery/issues/53) is
+the successor architecture gate. It requires this decision, machine-validated
+contracts, offline acceptance evidence, and later operator verification; it
+explicitly does not authorize App-setting changes, private-surface activation,
+or production write-back as part of this ADR change.
+
+Architecture Authority now exists as the dedicated, history-preserving
+repository and is the canonical owner of this global decision. The matching
+record under `agentic-delivery/docs/decisions/` is a migration bridge until
+Control Plane consumers have moved to the pinned Architecture contract; it
+must not become a separately edited decision.
 
 The GitHub platform supplies several separate mechanisms, and they must not be
 collapsed into one contract:
@@ -52,10 +71,12 @@ collapsed into one contract:
 - Issues, pull requests and organization fields remain the durable work-state
   authority.
 
-The platform references for this decision are [GitHub reusable workflows](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows),
+The platform references for this decision are [installing a GitHub App](https://docs.github.com/en/apps/using-github-apps/installing-your-own-github-app),
 [GitHub App permissions](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/choosing-permissions-for-a-github-app),
 [installation access tokens](https://docs.github.com/en/rest/apps/apps#create-an-installation-access-token-for-an-app),
-and [webhook events and payloads](https://docs.github.com/en/webhooks/webhook-events-and-payloads).
+[webhook types](https://docs.github.com/en/webhooks/types-of-webhooks),
+[webhook events and payloads](https://docs.github.com/en/webhooks/webhook-events-and-payloads),
+and [reusable workflows](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows).
 
 ## Decision Drivers
 
@@ -68,6 +89,10 @@ and [webhook events and payloads](https://docs.github.com/en/webhooks/webhook-ev
   never from a hard-coded controller repository name.
 - Make participation explicit and reversible for existing and future
   repositories.
+- Make the single organization App installation cover the intended organization
+  scope without treating App access as enrollment.
+- Honor the operator's organization-wide intent while containing event
+  processing and API tokens to explicitly enrolled repository identities.
 - Prevent a central release from silently changing a participant's behavior.
 - Keep App credentials out of participating repositories unless a local
   operation genuinely needs them.
@@ -79,8 +104,11 @@ and [webhook events and payloads](https://docs.github.com/en/webhooks/webhook-ev
 
 ## Considered Options
 
-- Central App webhook and controller with a selected-repository participant
-  registry, plus optional thin reusable-workflow callers.
+- Central App webhook and controller with an **All repositories** installation
+  plus a separate participant registry, with optional thin reusable-workflow
+  callers.
+- Central App webhook and controller with a **selected repositories**
+  installation plus the same registry.
 - Copy the complete lifecycle runtime into every participating repository.
 - Require a thin consumer workflow in every repository as the primary event
   intake path.
@@ -91,9 +119,11 @@ and [webhook events and payloads](https://docs.github.com/en/webhooks/webhook-ev
 
 ## Decision Outcome
 
-Chosen option: **A central App webhook and Delivery Control Plane with a
-selected-repository participant registry, using thin reusable-workflow or
-bootstrap integrations only where repository-local execution is needed.**
+Chosen option: **One organization-installed GitHub App with All repositories
+access, a central Delivery Control Plane, and a reviewed participant registry
+as the independent enrollment and authorization gate. Use thin reusable
+workflows or bootstrap integrations only where repository-local execution is
+needed.**
 
 The existing `agentic-delivery` repository remains the deliberate owner of
 the Delivery Control Plane during and after the split. It is not a generic
@@ -106,25 +136,80 @@ write-back.
 
 ### Organization-wide App installation
 
-One GitHub App definition serves the organization. Its installation uses
-selected-repository access by default and subscribes only to the event types
-required by the versioned event catalog. Adding a repository to the App's
-selected access is necessary but not sufficient for participation. The App
-private key remains only in the central deployment or central workflow secret
-boundary. Installation tokens are minted just in time and narrowed to the
-originating repository ID when the controller reads or mutates that repository.
+One GitHub App registration and one organization installation serve the
+organization; GitHub does not require a separate App definition per
+repository. The target installation setting is **All repositories**, matching
+the operator's stated organization-wide intent. GitHub documents `All
+repositories` and `Only select repositories` as installation choices, and an
+App webhook receives configured events for repositories the installation can
+access. A new repository is therefore within platform scope when the
+installation remains set to `All repositories`.
 
-The App source is part of the Delivery Control Plane; a second App repository
-is not created. The organization owner must separately verify the live App
-registration, installation repository selection, event subscriptions and
-least-privilege permissions before activation.
+This broad App reach is not participation. A newly created or otherwise
+accessible repository remains denied until its immutable repository ID is
+added through a reviewed Control Plane registry change. The controller fails
+closed for unknown, disabled, mismatched, or incompatible participants. App
+access changes never create registry records. The registry is the explicit
+onboarding, version pin, shadow/active mode, and rollback authority.
+
+Repository access and webhook subscriptions are separate settings. The
+versioned event catalog defines which `issues`, `issue_comment`, pull-request,
+and review events are meaningful; the lifecycle decides whether an event is
+ignored, observed, offered for semantic routing, or eligible for a validated
+transition. An issue comment can request an invocation only through the
+registered explicit mention and actor/source checks. A pull-request or review
+event is not by itself a lifecycle transition. Projects remain projections,
+and their events are not part of the active route until separately implemented
+and versioned. GitHub's `installation_repositories` event is useful to audit
+access changes, but it must never enroll a repository. The last observable App
+subscription snapshot omitted `issues`; an App-authorized owner must verify and
+correct subscriptions separately before any issue-based activation.
+
+The App registration, organization installation, webhook event subscriptions,
+central execution, workflow execution, workflow/configuration distribution,
+credential storage, and origin mutation are separate controls:
+
+1. **App registration:** one organization App defines callback URL, requested
+   permissions, and webhook events.
+2. **App installation:** one organization installation grants repository
+   access. Its reported `All repositories` setting must be verified by an App-
+   authorized owner before activation.
+3. **Webhook reception:** GitHub sends only subscribed events for accessible
+   repositories to the App's central webhook. Event reception does not enroll
+   or route a repository by itself.
+4. **Control Plane execution:** `agentic-delivery` receives the signed event,
+   resolves the participant's immutable controller/contract pins, and runs the
+   single lifecycle, routing, orchestration, and authorization implementation.
+5. **Workflow execution:** central workflows execute in the Control Plane
+   repository. Optional reusable workflows execute in a caller repository only
+   for an explicitly versioned local integration.
+6. **Distribution:** no consumer needs a copy of lifecycle logic. Optional
+   bootstrap files or reusable workflow callers are thin, reviewed adapters
+   pinned to an immutable SHA.
+7. **Configuration:** the participant registry is canonical in the Control
+   Plane; neither `.github` nor `.github-private` contains a second registry.
+8. **Credentials:** the App private key and webhook/dispatch secrets remain in
+   the central deployment or Control Plane secret boundary. They are never
+   copied into a participant repository or exposed to Codex/model processes.
+9. **Mutation:** installation tokens are minted just in time, scoped to the
+   originating repository ID and the minimum required permission subset; the
+   central `GITHUB_TOKEN` is limited to the Control Plane repository.
+
+The current App contract expresses `contents:write`, `issues:write`,
+`pull_requests:write`, and metadata read, with `workflows` permission disabled.
+It requests no organization administration or Projects permission. The exact
+permissions needed for organization issue-field GraphQL mutations have not
+been proven with the live App; therefore the permission set is a tested target
+contract, not an assertion of live sufficiency or minimality. Do not add a
+Projects permission until a separately scoped Project projection requires and
+validates it. Do not change App settings in this ADR PR.
 
 ### Participation contract
 
 Participation is the conjunction of two independently auditable conditions:
 
 1. the organization App installation has access to the exact numeric
-   repository ID; and
+   repository ID, proven by the origin-scoped installation-token operation; and
 2. the central `participants.yml` registry contains that repository ID with
    `mode: shadow` or `mode: active`, an expected full name, a controller
    release commit, supported event/lifecycle/state-machine/evidence contract
@@ -133,8 +218,11 @@ Participation is the conjunction of two independently auditable conditions:
 The repository ID is the primary identity and survives a rename. The full name
 is a verification value, not an identity key. App access without a registry
 entry does not activate delivery; a registry entry without App access fails
-closed. Enrollment and mode changes are reviewed pull requests in the Control
-Plane, not side effects of an arbitrary repository workflow or Project field.
+closed. With `All repositories` installed, App access is broad but the
+participant registry remains an explicit opt-in. Enrollment and mode changes
+are reviewed pull requests in the Control Plane, not side effects of an
+installation event, arbitrary repository workflow, Project field, or App
+repository-access change.
 
 ### Event and execution boundary
 
@@ -213,6 +301,11 @@ until its intentional upgrade window or the support policy's end date.
   shadow execution, App operations and cross-repository contract tests.
 - Bad, because App permissions and central credential storage become shared
   infrastructure that requires careful operational ownership.
+- Bad, because an All-repositories installation broadens the App's potential
+  reach. A compromised App key could mint tokens for any organization
+  repository within the App's granted permissions; registry checks and
+  origin-scoped tokens reduce routine exposure but do not replace key
+  protection, rotation, or incident revocation.
 - Neutral, because a small thin bootstrap may still be present in a consumer,
   but it is an adapter rather than a second control plane.
 
@@ -238,16 +331,36 @@ Deterministic tests and an operator smoke run must prove:
   private key; and
 - participant-local CI/CD remains independently executable.
 
+Current local evidence is narrower: `pnpm acceptance:check` reports
+`offline-fixture`, and `pnpm release-chain:check` passes when given the four
+cross-repository roots. The fixture demonstrates two distinct identities and
+the private-surface path without consumer App credentials, but its second
+repository and `.github-private` IDs are synthetic. It does not verify the
+organization App, event subscriptions, Projects, or live mutations. Keep every
+participant in `shadow` mode until the operator evidence is recorded and the
+App contract and validator agree with this decision.
+
 ## Pros and Cons of the Options
 
 ### Central App and controller with registry (chosen)
 
 - Good, because the lifecycle, state machine, routing, credentials and
   evidence have one owner and can be tested centrally.
-- Good, because selected App access and registry enrollment prevent accidental
-  activation.
+- Good, because the registry keeps participation explicit even though the App
+  can receive events for every organization repository.
+- Bad, because App reach is broader than the set of active participants and a
+  private-key compromise has a larger potential impact.
 - Bad, because central availability and release operations affect enrolled
   participants.
+
+### Central App with selected repositories and the same registry
+
+- Good, because the App installation has a smaller platform-access set.
+- Bad, because every existing and future repository would require a separate
+  installation-access change before its events could reach the shared
+  lifecycle, contrary to the operator's organization-wide intent.
+- Neutral, because the registry would still be required for explicit
+  enrollment, release pins, shadow mode, and rollback.
 
 ### Copy the complete runtime into every repository
 
@@ -272,9 +385,9 @@ Deterministic tests and an operator smoke run must prove:
 ### One App definition per repository
 
 - Good, because access appears isolated.
-- Bad, because GitHub organization installations already support selected
-  repository access; multiple registrations multiply credentials, event
-  configuration and operational failure modes without a platform requirement.
+- Bad, because one organization installation can cover multiple repositories;
+  multiple registrations multiply credentials, event configuration, and
+  operational failure modes without a platform requirement.
 
 ### App access alone as enrollment
 
@@ -297,6 +410,8 @@ Deterministic tests and an operator smoke run must prove:
 - Supersedes the historical [ADR-0014: Use a repository-scoped GitHub App for event-producing mutations](https://github.com/agentic-delivery-lab/agentic-delivery/blob/1212568eeb80960696385f04a1dd6313e38e4e04/docs/decisions/0014-use-a-repository-scoped-github-app.md): the App installation is organization-wide with per-origin repository token narrowing. Its record is removed from the active tree, but the commit history remains the historical source.
 - Refines [ADR-0015: Isolate resumable runner execution](0015-isolate-resumable-runner-execution.md): runner namespaces and continuation records must include repository ID, issue and pinned controller/state-machine versions.
 - Refines [ADR-0017: Use an explicit agent-invocation boundary for conversation-driven delivery](0017-use-an-explicit-agent-invocation-boundary.md): invocation envelopes retain the originating repository and are authorized centrally.
-- The selected architecture is an intermediate implementation boundary as the Architecture Authority, Agentic Primitives and Distribution repositories are extracted. The Control Plane remains in `agentic-delivery` to preserve existing issue and pull-request URLs.
+- Architecture Authority is now the canonical owner of this ADR. Architecture, Primitives, Distribution, and the private special-surface repositories exist; their presence does not prove their runtime or publication is activated. The Control Plane remains in `agentic-delivery` to preserve existing issue and pull-request URLs.
+- The All-repositories installation is an organization access choice, not an enrollment mechanism. The Control Plane contract still needs a reviewed follow-up that changes its `selected-repositories` expectation to `all-repositories`, records the operator-evidence boundary, and validates the exact decision before this gate is complete.
+- App-authorized verification of repository access, subscribed events, requested permissions, and issue-field GraphQL capability is unavailable to the current GitHub CLI identity. An attempt to read the installation with the OAuth identity was rejected; Projects inventory also lacks the `read:project` scope. Neither result is evidence that the setting, Projects, or permission is absent.
 - `Delivery Readiness` remains the current live field. Renaming it to `Delivery State` is a separate architecture decision and migration; this ADR does not silently change that vocabulary.
-- This record is provisional until its review pull request is merged into `main`.
+- This revision is provisional on its review branch. It becomes the official Architecture Authority decision only after its review pull request is merged to `main`; this does not close Issue #53 or authorize production activation.

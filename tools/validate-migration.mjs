@@ -38,7 +38,7 @@ export async function validateMigrationManifest(root) {
   if (!SHA.test(manifest.history?.filterTool?.tagCommit ?? '')) fail('filter tool tag commit is not pinned');
   if (manifest.sourceCommitMap !== 'source-commit-map.csv') fail('source map must be local and explicit');
   if (manifest.issueAndPullRequestUrls !== 'preserved') fail('issue and pull-request URL policy is not preserved');
-  if (manifest.publication !== 'local-prepared') fail('publication status must remain local-prepared');
+  if (manifest.publication !== 'published') fail('publication status must be published');
   const map = await readFile(mapPath, 'utf8');
   const lines = map.split(/\r?\n/).filter(Boolean);
   if (lines.shift()?.trim() !== 'old                                      new') fail('source map header is invalid');

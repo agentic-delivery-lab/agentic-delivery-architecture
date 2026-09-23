@@ -58,6 +58,6 @@
     },
     "sourceCommitMap": { "const": "source-commit-map.csv" },
     "issueAndPullRequestUrls": { "const": "preserved" },
-    "publication": { "const": "local-prepared" }
+    "publication": { "const": "published" }
   }
 }

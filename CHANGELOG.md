@@ -4,6 +4,15 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- Updated ADR-0018 to select one organization App installation with
+  `All repositories` access and an independent reviewed participant registry;
+  recorded live-configuration and activation evidence gaps without changing
+  App settings.
+- Marked the history-preserving Architecture extraction as published after
+  verifying its public `main`, merged import, and active branch ruleset.
+
 ### Added
 
 - Added Architecture draft release `0.1.0-draft.8`, documenting the separate

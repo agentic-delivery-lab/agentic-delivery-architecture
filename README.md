@@ -13,9 +13,11 @@ ADR-to-Primitive index is derived from a pinned Primitive release projection;
 this repository does not import Primitive implementation merely to document
 that relationship.
 
-The repository is currently a locally prepared, history-preserving extraction
-from `agentic-delivery`. Publication as the organization repository requires a
-separate operator-approved repository-creation and protection step.
+This is the published, public Architecture Authority repository. Its initial
+history-preserving extraction and validator changes are integrated on `main`.
+The active `Require reviewed main` ruleset protects the default branch. The
+Architecture release remains a draft until its tooling lock, content digest,
+and release metadata have been reviewed and promoted.
 
 ## Checks
 

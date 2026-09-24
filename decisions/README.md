@@ -91,21 +91,46 @@ Architecture issue #3.
 
 ## Canonical decision ownership
 
-This table is the proposed owner map for the six-repository system. Ownership
-changes in this table and removal of duplicate files remain provisional until
-this feature branch is reviewed and merged. During the proposal, all Control
-Plane-owned records remain intact at their canonical paths in `agentic-delivery`.
+The proposed owner map centralizes the 18 active ADR IDs plus ADP-0001,
+ADD-0001, and their new ownership decision ADR-0020 in Architecture Authority.
+The assignment is based on organization-wide decision stewardship, not on the
+historical repository path. This remains provisional until the issue-linked
+Architecture pull request is reviewed and merged. The repository-local copies
+in Control Plane, Primitives, and Distribution remain at their audited source
+revisions until each repository updates them in its own reviewed follow-up.
 
-| Owner | ADR identifiers | Canonical record location |
+| Canonical text owner | Decision identifiers | Canonical text location |
 | --- | --- | --- |
-| Architecture Authority | ADR-0001, ADR-0003, ADR-0011, ADR-0012, ADR-0013, ADR-0016, ADR-0018, ADR-0019 | This repository's `decisions/` directory. |
-| Agentic Delivery Control Plane | ADR-0002, ADR-0004 through ADR-0009, ADR-0015, ADR-0017 | [Immutable Control Plane ADR owner projection](../architecture/references/adr-owner-projection.yml), pinned to `agentic-delivery` commit `c6c891fa937b7db06e3925c3e83ea83656b3d617`; it records paths and content digests without copying decision prose. |
-| Agentic Primitives | ADP-0001 | `agentic-delivery-primitives/docs/decisions/ADP-0001-primitive-release-and-projection.md`. |
-| Developer Distribution | ADD-0001 | `agentic-delivery-distribution/docs/decisions/ADD-0001-distribution-boundary.md`. |
+| Architecture Authority | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015 through ADR-0019, ADR-0020, ADP-0001, ADD-0001 | This repository's `decisions/` directory, listed in the [decision inventory](../architecture/references/decision-inventory.yml) and pinned by the Architecture release. |
+
+The active identifiers preserve the historical gaps: ADR-0010 is superseded by
+ADR-0012, and ADR-0014 is superseded by ADR-0018. Neither has an active record
+file. The inventory distinguishes Architecture's canonical text from imported
+source hashes and from divergent historical source variants; it stores no
+second decision prose.
+
+The bounded-context registry assigns the repository used to route semantic
+review for each affected domain. Governance and Control Plane reviews route to
+`agentic-delivery-lab/agentic-delivery`; Primitives review routes to
+`agentic-delivery-lab/agentic-delivery-primitives`; Distribution review routes
+to `agentic-delivery-lab/agentic-delivery-distribution`. A record scoped to
+multiple contexts requires semantic review from each mapped context steward.
+The mapping identifies a repository, not a person, approval team, or active
+CODEOWNERS rule. Current audit evidence records a one-member/CODEOWNERS limit
+that blocks independent steward approval; see parent issue [#59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59).
+
+Text ownership does not move runtime or artifact authority. The Control Plane
+owns controller and GitHub adapter implementation; Primitives owns its
+reusable agent, skill, validator, catalog, and release artifacts; Distribution
+owns bootstrap and consumer bundle artifacts; `.github` and `.github-private`
+own only their public or private adapter artifacts. A source issue in a context
+links to an Architecture ADR-tracking issue. Canonical text changes only in an
+issue-linked Architecture PR, followed by a separate implementation PR in the
+owning repository pinned to the merged Architecture commit and digest.
 
 ADR-0010 is a historical record superseded by ADR-0012. ADR-0014 is a
 historical record superseded by ADR-0018. Neither has an active ADR file in the
-current source trees. `.github` owns the public issue-form and pull-request
+current canonical text set. `.github` owns the public issue-form and pull-request
 template artifacts, while the Control Plane owns the validator implementation
 for the organization-wide Source/Plan contract. The private `.github-private`
 repository owns only its private profile and agent-publication adapter. Those
@@ -113,6 +138,10 @@ artifact boundaries do not give either adapter ownership of an ADR or bounded
 context.
 
 ## Architecture Authority records
+
+The table below retains historical issue and review provenance for the
+Architecture-origin records. The complete canonical ID/file set and imported
+source metadata are enforced by the decision inventory.
 
 | Number | Decision | Historical source | Verifiable review evidence |
 | --- | --- | --- |
@@ -124,6 +153,7 @@ context.
 | [0016](0016-require-structured-pull-request-descriptions.md) | Require structured pull-request descriptions | [Issue #44](https://github.com/agentic-delivery-lab/agentic-delivery/issues/44) | [Public adapter PR #2](https://github.com/agentic-delivery-lab/.github/pull/2) changed the template artifact; it does not verify review of this Architecture ADR. |
 | [0018](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md) | Organization-wide Agentic Delivery Control Plane distribution and versioning | [Closed Issue #53](https://github.com/agentic-delivery-lab/agentic-delivery/issues/53) | [Architecture PR #2](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/pull/2) merged 2026-09-24. |
 | [0019](0019-canonicalize-delivery-state-field.md) | Canonicalize the orthogonal Delivery State field | [Closed Issue #52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52) | Unknown; no verifiable review PR for this Architecture record was found. The live rename remains separately gated. |
+| [0020](0020-centralize-organization-decision-records.md) | Centralize organization decision records in Architecture Authority | [Issue #3](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3) | Proposed on this issue-linked Architecture branch; context stewards and human review gate remain required. |
 
 The reviewer must keep the `Source` and `Plan` pull-request headings separate.
 ADR-0016 defines that organization-wide contract; it does not prove one

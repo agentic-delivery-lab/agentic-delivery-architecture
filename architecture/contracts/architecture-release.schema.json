@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/architecture-release.schema.json",
-  "title": "Architecture release manifest schemaVersion 1",
-  "description": "The manifest structure uses schemaVersion 1. Digest semantics are versioned independently by contractVersions.architectureRelease, currently 2.0.0.",
+  "title": "Architecture release manifest schemaVersion 2",
+  "description": "Manifest schemaVersion 2 adds exact decisionIds coverage for ADR, ADP, and ADD records. contractVersions.architectureRelease 3.0.0 retains the normalized sourceCommit/contentSha256 digest algorithm from 2.0.0 and requires consumers to dispatch by version and adopt the new inventory contract in their own gated phase.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -15,29 +15,31 @@
     "status",
     "principleIds",
     "adrIds",
+    "decisionIds",
     "contextIds",
     "conformancePolicy",
     "toolingLock",
     "contractVersions"
   ],
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "const": 2 },
     "architectureId": { "type": "string", "pattern": "^urn:agentic-delivery:architecture:[a-z0-9-]+$" },
     "version": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$" },
     "sourceRepository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
     "sourceCommit": {
       "type": "string",
       "pattern": "^[0-9a-f]{40}$",
-      "description": "For architectureRelease contract 2.0.0, this is the immutable prepared source commit whose normalized Architecture tree must reproduce contentSha256."
+      "description": "For architectureRelease contracts 2.0.0 and 3.0.0, this is the immutable prepared source commit whose normalized Architecture tree must reproduce contentSha256."
     },
     "contentSha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$",
-      "description": "For architectureRelease contract 2.0.0, SHA-256 over authoritative Architecture files after normalizing only sourceCommit and contentSha256 in this manifest."
+      "description": "For architectureRelease contracts 2.0.0 and 3.0.0, SHA-256 over authoritative Architecture files after normalizing only sourceCommit and contentSha256 in this manifest."
     },
     "status": { "enum": ["draft", "released", "withdrawn"] },
     "principleIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^AP-[0-9]{3}$" } },
-    "adrIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^urn:agentic-delivery:adr:[a-z0-9-]+:[0-9]{4}$" } },
+    "adrIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^urn:agentic-delivery:adr:architecture:[0-9]{4}$" } },
+    "decisionIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^(ADR|ADP|ADD)-[0-9]{4}$" } },
     "contextIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9-]+$" } },
     "conformancePolicy": {
       "type": "object",
@@ -59,12 +61,14 @@
     },
     "contractVersions": {
       "type": "object",
-      "required": ["architectureRelease"],
+      "required": ["architectureRelease", "adrPrimitiveIndex", "decisionInventory"],
       "properties": {
         "architectureRelease": {
-          "const": "2.0.0",
-          "description": "Contract 2.0.0 uses the prepared-source-commit digest algorithm defined for this manifest."
-        }
+          "const": "3.0.0",
+          "description": "Contract 3.0.0 retains the 2.0.0 prepared-source-commit digest algorithm and adds exact decision inventory coverage."
+        },
+        "adrPrimitiveIndex": { "const": "3.0.0" },
+        "decisionInventory": { "const": "1.0.0" }
       },
       "minProperties": 1,
       "additionalProperties": { "type": "string" }

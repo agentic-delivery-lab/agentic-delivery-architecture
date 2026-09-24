@@ -7,10 +7,10 @@ flowchart LR
   end
 
   AUTH["Architecture Authority<br/>Cross-context authority, not a bounded context"]
-  AUTH -. "principles, context map, cross-context ADRs, conformance" .-> GOV
-  AUTH -. "architecture-release.v1" .-> CP
-  AUTH -. "ADR and context references" .-> PRIM
-  AUTH -. "architecture contract" .-> DIST
+  AUTH -. "canonical organization ADR/ADP/ADD text, principles, conformance" .-> GOV
+  AUTH -. "pinned Architecture release and canonical decision text" .-> CP
+  AUTH -. "canonical ADR text and context references" .-> PRIM
+  AUTH -. "canonical decision text and architecture contract" .-> DIST
 
   subgraph GHORG["GitHub organization surfaces"]
     TYPE["Native Issue Types"]

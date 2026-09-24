@@ -4,17 +4,20 @@
 
 ## 8.1 One owner, then references or projections
 
-Each durable fact has a canonical owner. Architecture Authority owns
-cross-context ADR prose; Control Plane owns lifecycle/runtime implementation;
-Agentic Primitives owns reusable capability source; Distribution owns
-bootstrap and consumer integrations. A `.github` adapter may contain a local
-artifact required by GitHub, but that artifact does not become a second
-authoritative model.
+Each durable fact has a canonical owner. Architecture Authority owns all
+organization ADR, ADP, and ADD decision text, including context-local records.
+The Control Plane owns lifecycle/runtime implementation; Agentic Primitives
+owns reusable capability source; Distribution owns bootstrap and consumer
+integrations. A `.github` adapter may contain a local artifact required by
+GitHub, but that artifact does not become a second authoritative model.
 
-External ADR projections carry owner repository identity, immutable source
-commit, canonical path, and per-file SHA-256. Generated traceability keeps the
-external ADR ID attached to every Primitive that references it; the decision
-text remains at its owner.
+The decision inventory keeps imported repository identity, immutable source
+commit, original path, and per-file SHA-256 as migration provenance. The
+Architecture release pins the one canonical text file for each stable ID.
+Generated traceability resolves every Primitive ADR reference to a local
+Architecture record; external ADR text projections are forbidden. Consumer
+repositories will replace their copies with version-pinned references only in
+their own reviewed follow-up changes.
 
 ## 8.2 Work state and execution state
 

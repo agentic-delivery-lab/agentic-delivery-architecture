@@ -10,7 +10,7 @@
 | Agentic Delivery Control Plane | Event intake, repository enrollment, semantic routing, deterministic authorization, orchestration, and controlled write-back | Domain context `agentic-delivery-control-plane`; executable source remains in `agentic-delivery`. |
 | Agentic Primitives | Reusable agents, skills, instructions, hooks, validators, capabilities, and MCP contracts; catalog, releases, and projections | Domain context `agentic-primitives`; source remains in `agentic-delivery-primitives`. |
 | Developer Distribution | Reproducible development environment, bootstrap, bundles, and thin consumer integrations | Domain context `developer-distribution`; source remains in `agentic-delivery-distribution`. |
-| Architecture Authority | Principles, architecture description, context map, cross-context ADRs, and conformance | Cross-context authority and owner, not a bounded context. |
+| Architecture Authority | Canonical organization ADR, ADP, and ADD text; principles, architecture description, context map, and conformance | Cross-context authority and canonical decision-text owner, not a bounded context. |
 | Public `.github` adapter | Public profile, community-health files, issue-form artifacts, and pull-request template | GitHub repository adapter, not a bounded context. Whether each artifact is inherited by every repository is a separate live check. |
 | Private `.github-private` adapter | Member profile and reviewed agent-publication projections | GitHub repository adapter, not a bounded context. Publication entitlement remains unverified. |
 

@@ -21,12 +21,12 @@ scenarios:
   - id: QR-003
     name: complete ADR impact traceability
     stakeholder: architecture-reviewer
-    concern: a Primitive must not reference an unowned ADR or hide its canonical owner
+    concern: a Primitive must not reference an unknown or non-canonical ADR
     stimulus: A Primitive release adds, changes, or removes an ADR reference.
-    response: The Architecture release identifies applicable ADRs and the generated index resolves each reference to one Architecture record or immutable owner projection.
-    measure: Local Architecture ADR references resolve through the pinned Architecture release sourceCommit and contentSha256. External ADR references resolve through exactly one owner projection with repository ID and slug, source commit, canonical path, and per-file SHA-256. No reference is silently dropped.
-    evidence: [ADR-0013, ADR-0018, adr-owner-projection.yml]
-    status: Architecture release and external projection validation are implemented in this proposal; impact review/update enforcement remains a Primitive-phase contract
+    response: The Architecture release lists the exact local ADR set and the generated index resolves every pinned Primitive reference to one local record.
+    measure: Release ADR IDs equal local ADR file IDs; every Primitive ADR reference resolves once; unknown references fail; externalAdrs is empty; the generated index reproduces exactly.
+    evidence: [ADR-0013, ADR-0020, architecture/references/decision-inventory.yml]
+    status: Local resolution is validated in this proposal; semantic ADR impact review and Primitive release update enforcement remain a Primitive-phase contract
   - id: QR-004
     name: preserve issue-field semantics during rename
     stakeholder: organization-operator
@@ -77,7 +77,16 @@ scenarios:
     stakeholder: architecture-maintainer, primitive-maintainer, distribution-maintainer
     concern: generated contracts and consumer artifacts must identify the exact sources from which they were produced
     stimulus: An Architecture, Primitive, or Distribution release or projection is generated or proposed for activation.
-    response: The release records repository identity, immutable source commit, contract version, canonical source paths, and content digest; external ADR references additionally retain per-file SHA-256 in their owner projection.
-    measure: Local Architecture records reproduce from the pinned source commit and release digest; every external ADR resolves to exactly one matching repository ID, source commit, canonical path, and SHA-256; every generated consumer artifact matches its versioned manifest before activation.
-    evidence: [ADR-0013, ADR-0018, ADP-0001, ADD-0001, architecture/generated/architecture-release.json, adr-owner-projection.yml, system-evidence.yml#primitive-and-distribution-drafts]
-    status: Architecture source and owner projection are validated in this proposal; Primitive impact automation and Distribution activation evidence remain open
+    response: The Architecture release records its source identity, digest, contract version, and exact decision IDs; the inventory records immutable source pins for imported decisions.
+    measure: The source commit reproduces the release digest; each imported original SHA-256 matches `git show <sourceCommit>:<sourcePath>`; declared link-only adaptations reproduce the local text; every generated consumer artifact matches its versioned manifest before activation.
+    evidence: [ADR-0013, ADR-0018, ADR-0020, ADP-0001, ADD-0001, architecture/generated/architecture-release.json, architecture/references/decision-inventory.yml, system-evidence.yml#primitive-and-distribution-drafts]
+    status: Architecture source pins and draft digest are validated in this proposal; consumer projection validation and Distribution activation evidence remain open
+  - id: QR-011
+    name: route semantic decision review by bounded context
+    stakeholder: context-steward, architecture-reviewer
+    concern: canonical text ownership must not bypass the affected context's semantic review
+    stimulus: A canonical decision changes with one or more declared bounded contexts.
+    response: The Architecture inventory derives the required semantic reviewer roles from record domains and the bounded-context steward repository map.
+    measure: Every inventory domain resolves to exactly one stewarding repository and evidence path pinned in the audit snapshot; a cross-context record routes to every affected context; a repository mapping alone is never reported as human approval.
+    evidence: [ADR-0020, architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories]
+    status: Repository routing is structurally validated; independent human steward approval is blocked by the current one-member/CODEOWNERS gate

@@ -80,6 +80,9 @@ terms:
     avoid:
       - "architecture decision document"
   - context: "agentic-delivery-governance"
+    term: "context steward"
+    definition: "A human review role routed through the bounded-context register to the repository that stewards the affected model; it does not imply a named person, GitHub approval, or CODEOWNERS enforcement."
+  - context: "agentic-delivery-governance"
     term: "provisional decision"
     definition: "An architecture decision record addition, change, or removal that exists only on a feature branch and is not yet official repository context."
     avoid:

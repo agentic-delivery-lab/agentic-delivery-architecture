@@ -6,11 +6,11 @@
 
 | Building block | Canonical owner | Main responsibility | Contract or evidence |
 | --- | --- | --- | --- |
-| Architecture Authority | `agentic-delivery-architecture` | Cross-context ADRs, principles, context map, architecture description, conformance policy, release identity | Architecture release, ADR aliases, context IDs, content digest |
-| Governance | Domain context represented across the system | Issue and PR governance, reusable delivery rules, decision lifecycle | ADR-0001, ADR-0003, CP-owned repository rules |
+| Architecture Authority | `agentic-delivery-architecture` | All organization decision text (ADR, ADP, ADD), principles, context map, architecture description, conformance policy, release identity | Decision inventory, Architecture release, ID aliases, context IDs, content digest |
+| Governance | Domain context stewarded from `agentic-delivery` | Issue and PR governance, reusable delivery rules, decision lifecycle | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015, ADR-0016, ADR-0017, ADR-0018, ADR-0019, ADR-0020; context register and pinned Control Plane evidence |
 | Delivery Control Plane | `agentic-delivery` | Event intake, participant registry, routing, deterministic gates, workflow/session orchestration, controlled write-back, evidence | Controller pin, event/lifecycle/state-machine contracts |
-| Agentic Primitives | `agentic-delivery-primitives` | Canonical agent/skill/validator/capability source, catalog, release, and projection metadata | ADP-0001, primitive catalog and immutable release |
-| Developer Distribution | `agentic-delivery-distribution` | Reproducible bootstrap, compatible bundles, consumer workflow projections, conflict checks | ADD-0001, workflow bundle, distribution locks |
+| Agentic Primitives | `agentic-delivery-primitives` | Canonical agent/skill/validator/capability source, catalog, release, and projection metadata | Context steward; ADP-0001 decision text in Architecture; primitive catalog and immutable release |
+| Developer Distribution | `agentic-delivery-distribution` | Reproducible bootstrap, compatible bundles, consumer workflow projections, conflict checks | Context steward; ADD-0001 decision text in Architecture; workflow bundle and distribution locks |
 | Public GitHub adapter | `.github` | Public profile and repository community/template artifacts | Repository content and individual live consumer checks |
 | Private GitHub adapter | `.github-private` | Private member profile and reviewed agent publication | Surface contract, projection lock, entitlement evidence |
 | GitHub organization metadata | GitHub organization | Native Issue Types and organization-level field definitions and options | Read API and separate per-type pinning evidence |
@@ -44,6 +44,7 @@ The interface names are versioned contracts or observed surface roles. Where a
 live binding or consumer inheritance is not verified, the link is a target
 relationship rather than an observed runtime connection.
 
-**Evidence:** pinned source paths appear in
-[`system-evidence.yml`](../references/system-evidence.yml); owner metadata for
-external ADRs is in [`adr-owner-projection.yml`](../references/adr-owner-projection.yml).
+**Evidence:** pinned source paths and repository roles appear in
+[`system-evidence.yml`](../references/system-evidence.yml); canonical record
+IDs, imported hashes, and historical variants are in
+[`decision-inventory.yml`](../references/decision-inventory.yml).

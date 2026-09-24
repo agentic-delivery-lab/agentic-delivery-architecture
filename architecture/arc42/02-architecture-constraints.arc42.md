@@ -7,9 +7,9 @@
 - The system spans six repositories with distinct owners. The source commits
   observed on 2026-09-24 are listed in
   [system evidence](../references/system-evidence.yml).
-- Architecture Authority owns cross-context principles, terminology,
-  architecture descriptions, and organization-wide ADRs. It is a governance
-  authority, not a bounded context.
+- Architecture Authority owns principles, terminology, architecture
+  descriptions, and organization-wide decision text, including context-local
+  ADRs. It is a cross-context authority, not a bounded context.
 - Control Plane runtime, App integration, orchestration, runner/session
   handling, and controlled GitHub write-back remain in
   `agentic-delivery`.
@@ -41,10 +41,12 @@ write. Human review and merge authority remain with repository maintainers.
 ## 2.3 Interface and release constraints
 
 - Architecture and Primitive interfaces identify immutable source commits and
-  content digests. Consumer repositories use pinned projections; they do not
-  own copied decision prose or shared runtime state.
-- Every active external ADR reference resolves to a canonical owner and
-  immutable per-file SHA-256.
+  content digests. Consumer repositories replace decision-text copies with
+  pinned references only after separate reviewed follow-ups; they do not own
+  shared runtime state.
+- The decision inventory identifies imported origins and SHA-256 values;
+  Architecture release integrity pins canonical decision files. Primitive
+  ADR references resolve locally, without an external text projection.
 - Architecture releases remain drafts until their source, digest, and
   compatibility evidence have been reviewed and intentionally released.
 - ADR-0019 gates the field rename. The live field and option IDs must be

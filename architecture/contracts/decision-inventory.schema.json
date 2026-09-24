@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/decision-inventory.schema.json",
+  "title": "Architecture canonical decision inventory v1",
+  "description": "One canonical Architecture file per organization decision ID, with immutable origin metadata and no copied external decision prose.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "purpose", "sourceIssue", "canonicalRepository", "records", "historicalVariants"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "purpose": { "type": "string", "minLength": 1 },
+    "sourceIssue": { "type": "string", "format": "uri" },
+    "canonicalRepository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "repositoryId"],
+      "properties": {
+        "repository": { "const": "agentic-delivery-lab/agentic-delivery-architecture" },
+        "repositoryId": { "const": 1380894616 }
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "path", "domains", "origin"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^(ADR-[0-9]{4}|ADP-[0-9]{4}|ADD-[0-9]{4})$" },
+          "path": { "type": "string", "pattern": "^decisions/[^/]+\\.md$" },
+          "domains": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" } },
+          "origin": {
+            "type": "object",
+            "required": ["type", "repository", "repositoryId"],
+            "properties": {
+              "type": { "enum": ["architecture-baseline", "imported-text", "proposed"] },
+              "repository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+              "repositoryId": { "type": "integer", "minimum": 1 },
+              "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+              "sourcePath": { "type": "string", "pattern": "^(decisions|docs/decisions)/[^/]+\\.md$" },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "reviewEvidence": { "type": "string", "format": "uri" },
+              "sourceIssue": { "type": "string", "format": "uri" },
+              "transformations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["from", "to", "reason"],
+                  "properties": {
+                    "from": { "type": "string", "minLength": 1 },
+                    "to": { "type": "string", "minLength": 1 },
+                    "reason": { "type": "string", "minLength": 1 }
+                  }
+                }
+              }
+            },
+            "allOf": [
+              { "if": { "properties": { "type": { "const": "proposed" } } }, "then": { "required": ["sourceIssue"], "not": { "anyOf": [{ "required": ["sourceCommit"] }, { "required": ["sourcePath"] }, { "required": ["sha256"] }] } } },
+              { "if": { "properties": { "type": { "enum": ["architecture-baseline", "imported-text"] } } }, "then": { "required": ["sourceCommit", "sourcePath", "sha256"] } }
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "historicalVariants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "repository", "repositoryId", "sourceCommit", "sourcePath", "sha256", "disposition"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ADR-[0-9]{4}$" },
+          "repository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+          "repositoryId": { "type": "integer", "minimum": 1 },
+          "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+          "sourcePath": { "type": "string", "pattern": "^docs/decisions/[0-9]{4}-[a-z0-9-]+\\.md$" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "disposition": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

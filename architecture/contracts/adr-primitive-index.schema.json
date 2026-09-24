@@ -1,14 +1,24 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/adr-primitive-index.schema.json",
-  "title": "Architecture ADR to Primitive index v2",
+  "title": "Architecture ADR to Primitive index v3",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "source", "architecture", "primitiveRelease", "domains", "adrs", "externalAdrs", "uncoveredAdrs", "primitives"],
+  "required": ["schemaVersion", "source", "architecture", "decisionInventory", "primitiveRelease", "domains", "adrs", "externalAdrs", "uncoveredAdrs", "primitives"],
   "properties": {
-    "schemaVersion": { "const": 2 },
+    "schemaVersion": { "const": 3 },
     "source": { "const": "released-primitive-catalog" },
     "architecture": { "const": "urn:agentic-delivery:architecture:authority" },
+    "decisionInventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "schemaVersion"],
+      "properties": {
+        "path": { "const": "architecture/references/decision-inventory.yml" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "schemaVersion": { "const": 1 }
+      }
+    },
     "primitiveRelease": {
       "type": "object",
       "additionalProperties": false,
@@ -41,6 +51,7 @@
     },
     "externalAdrs": {
       "type": "array",
+      "maxItems": 0,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -80,7 +91,7 @@
           "enforcement": { "enum": ["instructional", "deterministic", "semantic"] },
           "adrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
           "localAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
-          "externalAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
+          "externalAdrs": { "type": "array", "maxItems": 0, "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
           "domains": { "type": "array", "items": { "type": "string" } }
         }
       }

@@ -13,11 +13,11 @@ before a proposed operation mutates lifecycle state) and G-04 (reviewers can
 distinguish contracts from evidence). Architecture ADR-0012 assigns lifecycle
 control to GitHub-backed contracts; ADR-0019 keeps Delivery State distinct
 from lifecycle position; and ADR-0011 defines an independent, read-only review
-contract. The Control Plane owns the runtime and invocation implementation in
-its ADRs, including the issue-execution, runner, and invocation-boundary
-records. The owner projection in
-[`adr-owner-projection.yml`](../references/adr-owner-projection.yml) identifies
-those external records without copying their decision text.
+contract. Architecture owns the canonical text for all organization decisions,
+including the issue-execution, runner, and invocation-boundary records. The
+Control Plane retains those records' runtime and invocation implementation.
+The decision inventory maps affected contexts to stewarding repositories and
+pins imported source history without a second decision-text projection.
 
 ## Consequences
 

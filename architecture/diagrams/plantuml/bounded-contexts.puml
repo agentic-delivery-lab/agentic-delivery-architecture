@@ -19,10 +19,10 @@ rectangle "Per-issue field values API\nRepository-scoped values" as fieldValues
 rectangle "Control Plane participant contract\nEnrollment + exact pins" as participants
 rectangle "Consumer repositories" as consumers
 
-architecture ..> governance : principles, language, cross-context ADRs
+architecture ..> governance : canonical organization decision text and architecture contract
 architecture ..> control : pinned Architecture release
-architecture ..> primitives : ADR and context references
-architecture ..> distribution : cross-context contracts
+architecture ..> primitives : canonical ADR text and context references
+architecture ..> distribution : canonical decision text and architecture contracts
 app --> control : access and event delivery
 participants --> control : separate enrollment check
 control --> nativeTypes : reads issue type identity

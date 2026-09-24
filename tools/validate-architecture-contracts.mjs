@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { parseRepositoryYaml } from './lib/yaml.mjs';
+import { validateDecisionInventory } from './decision-inventory.mjs';
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -13,13 +14,18 @@ async function json(relativePath) {
 export async function validateArchitectureContracts(root = repositoryRoot) {
   const errors = [];
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
-  if (release.schemaVersion !== 1 || release.status !== 'draft') errors.push('draft architecture release must use schemaVersion 1 and status draft');
+  const decisionInventory = await validateDecisionInventory(root);
+  if (release.schemaVersion !== 2 || release.status !== 'draft') errors.push('draft architecture release must use schemaVersion 2 and status draft');
   if (release.sourceRepository !== 'agentic-delivery-lab/agentic-delivery-architecture') errors.push('architecture release sourceRepository must identify Architecture Authority');
   if (!/^[0-9a-f]{40}$/.test(release.sourceCommit)) errors.push('architecture release sourceCommit must be immutable');
   if (!/^[0-9a-f]{64}$/.test(release.contentSha256 ?? '')) errors.push('architecture release contentSha256 must be a non-null SHA-256 digest');
   if (!Array.isArray(release.adrIds) || release.adrIds.length === 0) errors.push('architecture release must identify ADRs');
+  const expectedAdrUris = decisionInventory.adrIds.map((id) => `urn:agentic-delivery:adr:architecture:${id.slice(4)}`);
+  if (JSON.stringify(release.adrIds) !== JSON.stringify(expectedAdrUris)) errors.push('architecture release ADR IDs must exactly match local Architecture ADR records');
+  if (JSON.stringify(release.decisionIds) !== JSON.stringify(decisionInventory.decisionIds)) errors.push('architecture release decision IDs must exactly match the canonical decision inventory');
   if (!Array.isArray(release.contextIds) || release.contextIds.length === 0) errors.push('architecture release must identify bounded contexts');
-  if (release.contractVersions?.architectureRelease !== '2.0.0') errors.push('architecture release must pin contract 2.0.0 for the sourceCommit digest algorithm');
+  if (release.contractVersions?.architectureRelease !== '3.0.0') errors.push('architecture release must pin contract 3.0.0 for digest and exact decision-inventory semantics');
+  if (release.contractVersions?.decisionInventory !== '1.0.0') errors.push('architecture release must pin decision inventory contract 1.0.0');
   for (const name of ['conformancePolicy', 'toolingLock']) {
     const reference = release[name];
     if (!reference || typeof reference.path !== 'string' || !/^[0-9a-f]{64}$/.test(reference.sha256 ?? '')) errors.push(`architecture release ${name} integrity reference is required`);
@@ -31,10 +37,13 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   const releaseSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/architecture-release.schema.json'), 'utf8'));
   const indexSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/adr-primitive-index.schema.json'), 'utf8'));
   const generatedIndex = JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8'));
-  if (indexSchema.title !== 'Architecture ADR to Primitive index v2' || indexSchema.properties?.schemaVersion?.const !== 2) errors.push('ADR/Primitive index schema must be version 2');
-  if (generatedIndex.schemaVersion !== 2) errors.push('generated ADR/Primitive index must implement schemaVersion 2');
-  if (release.contractVersions?.adrPrimitiveIndex !== '2.0.0') errors.push('architecture release must pin ADR/Primitive index contract 2.0.0');
-  if (releaseSchema.properties?.contractVersions?.properties?.architectureRelease?.const !== '2.0.0') errors.push('Architecture release schema must require contract version 2.0.0');
+  if (indexSchema.title !== 'Architecture ADR to Primitive index v3' || indexSchema.properties?.schemaVersion?.const !== 3) errors.push('ADR/Primitive index schema must be version 3');
+  if (generatedIndex.schemaVersion !== 3) errors.push('generated ADR/Primitive index must implement schemaVersion 3');
+  if (generatedIndex.externalAdrs?.length !== 0) errors.push('generated index must not retain external ADR owners or copied-text projections');
+  if (release.contractVersions?.adrPrimitiveIndex !== '3.0.0') errors.push('architecture release must pin ADR/Primitive index contract 3.0.0');
+  if (releaseSchema.properties?.schemaVersion?.const !== 2 || releaseSchema.title !== 'Architecture release manifest schemaVersion 2') errors.push('Architecture release schema must describe manifest schemaVersion 2');
+  if (releaseSchema.properties?.contractVersions?.properties?.architectureRelease?.const !== '3.0.0') errors.push('Architecture release schema must require contract version 3.0.0');
+  if (releaseSchema.properties?.contractVersions?.properties?.decisionInventory?.const !== '1.0.0') errors.push('Architecture release schema must require decision inventory contract 1.0.0');
   if (tooling.schemaVersion !== 1 || tooling.status !== 'draft') errors.push('tooling lock must be schemaVersion 1 draft');
   if (tooling.arc42?.version !== '9.0') errors.push('arc42 tooling lock must pin the tested official version');
   if (tooling.arc42Language?.package !== '@doctc/arc42' || tooling.arc42Language?.version !== '0.24.0') errors.push('arc42-language tooling lock must pin @doctc/arc42 0.24.0');
@@ -47,6 +56,10 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   if (contextIds.length !== expectedContexts.length || new Set(contextIds).size !== contextIds.length) errors.push('bounded-context register must list the four distinct domain contexts exactly once');
   if (contextIds.includes('architecture-authority')) errors.push('Architecture Authority is a cross-context authority, not a bounded context');
   if ((contextModel.crossContextAuthority ?? {}).id !== 'architecture-authority') errors.push('bounded-context register must identify Architecture Authority separately');
+  if (contextModel.schemaVersion !== 3 || !(contextModel.crossContextAuthority?.owns ?? []).includes('organization-decision-text')) errors.push('bounded-context register must describe the organization decision text authority contract');
+  for (const [contextId, steward] of Object.entries(decisionInventory.contextStewards)) {
+    if (!contextIds.includes(contextId) || !steward?.repositoryId || !steward?.evidencePath) errors.push(`bounded context ${contextId} must identify an evidence-backed context steward repository`);
+  }
   const adapterIds = (contextModel.repositoryAdapters ?? []).map((adapter) => adapter.id);
   if (!adapterIds.includes('public-github-adapter') || !adapterIds.includes('private-github-adapter')) errors.push('bounded-context register must classify both .github repositories as adapters');
   const contextMap = parseRepositoryYaml(await readFile(path.join(root, 'architecture/domain/context-map.yml'), 'utf8'), 'context map');
@@ -60,12 +73,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   if (contextMap.infrastructureSurfaces?.find((surface) => surface.id === 'github-app')?.purpose?.includes('does not distribute generic templates') !== true) errors.push('context map must separate App access/events from template distribution');
   const principleIndex = parseRepositoryYaml(await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'), 'principle index');
   const goals = await readFile(path.join(root, 'architecture/arc42/01-introduction-and-goals.arc42.md'), 'utf8');
-  const knownOwners = {
-    architecture: 'agentic-delivery-lab/agentic-delivery-architecture',
-    'control-plane': 'agentic-delivery-lab/agentic-delivery',
-    primitives: 'agentic-delivery-lab/agentic-delivery-primitives',
-    distribution: 'agentic-delivery-lab/agentic-delivery-distribution',
-  };
+  const knownOwners = { architecture: 'agentic-delivery-lab/agentic-delivery-architecture' };
   const expectedPrincipleGoals = { 'AP-001': ['G-01'], 'AP-002': ['G-02', 'G-04'] };
   const principles = principleIndex.principles ?? [];
   if (principleIndex.schemaVersion !== 2 || principles.length !== 2) errors.push('principle index must contain only the two evidence-backed principles at schemaVersion 2');
@@ -92,7 +100,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   for (const file of [
     'architecture/contracts/architecture-release.schema.json',
     'architecture/contracts/adr-primitive-index.schema.json',
-    'architecture/contracts/adr-owner-projection.schema.json',
+    'architecture/contracts/decision-inventory.schema.json',
     'architecture/contracts/primitive-reference.schema.json',
     'architecture/contracts/conformance-request.schema.json',
     'architecture/contracts/conformance-result.schema.json',

@@ -1,7 +1,12 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "source": "released-primitive-catalog",
   "architecture": "urn:agentic-delivery:architecture:authority",
+  "decisionInventory": {
+    "path": "architecture/references/decision-inventory.yml",
+    "sha256": "652d1eb8b38e34e7f475484890acda76f4f318c899ab3e066bdaafe800b8e1f6",
+    "schemaVersion": 1
+  },
   "primitiveRelease": {
     "repository": "agentic-delivery-lab/agentic-delivery-primitives",
     "releaseId": "urn:agentic-delivery:primitive-release:0.1.0-draft.4",
@@ -32,6 +37,19 @@
       ]
     },
     {
+      "id": "ADR-0002",
+      "file": "decisions/0002-use-plain-language-for-human-agent-communication.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "instructional"
+      ],
+      "primitives": [
+        "plain-language-communication"
+      ]
+    },
+    {
       "id": "ADR-0003",
       "file": "decisions/0003-use-context-scoped-ubiquitous-language.md",
       "domains": [
@@ -43,6 +61,96 @@
       ],
       "primitives": [
         "ubiquitous-language"
+      ]
+    },
+    {
+      "id": "ADR-0004",
+      "file": "decisions/0004-use-trunk-based-delivery.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "commit-range-validator",
+        "delivery-workflow"
+      ]
+    },
+    {
+      "id": "ADR-0005",
+      "file": "decisions/0005-use-conventional-commits-with-gitmoji.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "commit-range-validator",
+        "delivery-workflow",
+        "gitmoji-validator",
+        "pull-request-title-validator"
+      ]
+    },
+    {
+      "id": "ADR-0006",
+      "file": "decisions/0006-curate-a-changelog.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "changelog-structure-validator",
+        "delivery-workflow"
+      ]
+    },
+    {
+      "id": "ADR-0007",
+      "file": "decisions/0007-use-issue-linked-conventional-branch-names.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "delivery-workflow",
+        "issue-branch-name-validator",
+        "pull-request-branch-validator",
+        "source-issue-validator"
+      ]
+    },
+    {
+      "id": "ADR-0008",
+      "file": "decisions/0008-use-pnpm-with-delayed-dependency-adoption.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "delivery-workflow",
+        "toolchain-policy-validator"
+      ]
+    },
+    {
+      "id": "ADR-0009",
+      "file": "decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "codex-delivery"
       ]
     },
     {
@@ -86,6 +194,19 @@
       "primitives": []
     },
     {
+      "id": "ADR-0015",
+      "file": "decisions/0015-isolate-resumable-runner-execution.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "codex-delivery"
+      ]
+    },
+    {
       "id": "ADR-0016",
       "file": "decisions/0016-require-structured-pull-request-descriptions.md",
       "domains": [
@@ -98,6 +219,19 @@
       ],
       "primitives": [
         "pull-request-body-validator"
+      ]
+    },
+    {
+      "id": "ADR-0017",
+      "file": "decisions/0017-use-an-explicit-agent-invocation-boundary.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "codex-delivery"
       ]
     },
     {
@@ -128,114 +262,30 @@
         "semantic"
       ],
       "primitives": []
+    },
+    {
+      "id": "ADR-0020",
+      "file": "decisions/0020-centralize-organization-decision-records.md",
+      "domains": [
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "semantic"
+      ],
+      "primitives": []
     }
   ],
-  "externalAdrs": [
-    {
-      "id": "ADR-0002",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0002-use-plain-language-for-human-agent-communication.md",
-        "sha256": "0a1e105b8decd7fde8ef6b7bc6d3598462416d4b35c019dfe72bb05449acdc8f",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0002-use-plain-language-for-human-agent-communication.md"
-      }
-    },
-    {
-      "id": "ADR-0004",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0004-use-trunk-based-delivery.md",
-        "sha256": "8fedc47ccf0f680848bae42fc784216707058f1cf5e3737ba317923a82d42923",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0004-use-trunk-based-delivery.md"
-      }
-    },
-    {
-      "id": "ADR-0005",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0005-use-conventional-commits-with-gitmoji.md",
-        "sha256": "92b57bac30a25b34529bb18cf3d325a40bce78a7e09f3340ca9d4556815f1962",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0005-use-conventional-commits-with-gitmoji.md"
-      }
-    },
-    {
-      "id": "ADR-0006",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0006-curate-a-changelog.md",
-        "sha256": "960899e2bd61f7cf9bfd7e36b0b858eb347c050b5c174a4dc0acc502e0a0c8f1",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0006-curate-a-changelog.md"
-      }
-    },
-    {
-      "id": "ADR-0007",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0007-use-issue-linked-conventional-branch-names.md",
-        "sha256": "bd118215329f889cb2bd8a6bd7f59ecb6279ccaba787e6f318d2c2df26675895",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0007-use-issue-linked-conventional-branch-names.md"
-      }
-    },
-    {
-      "id": "ADR-0008",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0008-use-pnpm-with-delayed-dependency-adoption.md",
-        "sha256": "055b5c8a7beb7ef3cf90319f3124996ba881c4bf987e147151c294e5f83543c7",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0008-use-pnpm-with-delayed-dependency-adoption.md"
-      }
-    },
-    {
-      "id": "ADR-0009",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md",
-        "sha256": "4a6d7b8c803c05540cba8266b97af6afc04419b9709f72cbcffc78acf872a1c7",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md"
-      }
-    },
-    {
-      "id": "ADR-0015",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0015-isolate-resumable-runner-execution.md",
-        "sha256": "ae0bf3f0fffc069c86cace8108f5dffd422f73fd07208609c046d63e5c760432",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0015-isolate-resumable-runner-execution.md"
-      }
-    },
-    {
-      "id": "ADR-0017",
-      "owner": {
-        "repository": "agentic-delivery-lab/agentic-delivery",
-        "repositoryId": 1358455028,
-        "sourceCommit": "c6c891fa937b7db06e3925c3e83ea83656b3d617",
-        "canonicalPath": "docs/decisions/0017-use-an-explicit-agent-invocation-boundary.md",
-        "sha256": "01b0a148bcbb37e1c1fa8f760bd00fce9d56e5fed24e1a1c1c68307a1ee260f4",
-        "url": "https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0017-use-an-explicit-agent-invocation-boundary.md"
-      }
-    }
-  ],
+  "externalAdrs": [],
   "uncoveredAdrs": [
     "ADR-0011",
     "ADR-0013",
     "ADR-0018",
-    "ADR-0019"
+    "ADR-0019",
+    "ADR-0020"
   ],
   "primitives": [
     {
@@ -268,10 +318,10 @@
       "adrs": [
         "ADR-0006"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0006"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -291,13 +341,12 @@
         "ADR-0017"
       ],
       "localAdrs": [
-        "ADR-0012"
-      ],
-      "externalAdrs": [
         "ADR-0009",
+        "ADR-0012",
         "ADR-0015",
         "ADR-0017"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-control-plane"
       ]
@@ -314,11 +363,11 @@
         "ADR-0004",
         "ADR-0005"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0004",
         "ADR-0005"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -338,14 +387,14 @@
         "ADR-0007",
         "ADR-0008"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0004",
         "ADR-0005",
         "ADR-0006",
         "ADR-0007",
         "ADR-0008"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -361,10 +410,10 @@
       "adrs": [
         "ADR-0005"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0005"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -380,10 +429,10 @@
       "adrs": [
         "ADR-0007"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0007"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -399,10 +448,10 @@
       "adrs": [
         "ADR-0002"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0002"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -437,10 +486,10 @@
       "adrs": [
         "ADR-0007"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0007"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -456,10 +505,10 @@
       "adrs": [
         "ADR-0005"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0005"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -475,10 +524,10 @@
       "adrs": [
         "ADR-0007"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0007"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -494,10 +543,10 @@
       "adrs": [
         "ADR-0008"
       ],
-      "localAdrs": [],
-      "externalAdrs": [
+      "localAdrs": [
         "ADR-0008"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]

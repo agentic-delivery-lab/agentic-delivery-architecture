@@ -48,19 +48,15 @@ resolve to the nearest heading anchor. ADR frontmatter declares its applicable
 domains and required enforcement classes. The generator produces sorted
 domain-to-ADR-to-primitive and primitive-to-ADR/domain views. The generated
 file is checked for equality in CI and is never edited as a source map.
-Architecture Authority owns its cross-context ADRs and publishes an
-Architecture release source commit and content digest. An ADR owned by another
-repository is not copied into this tree: an immutable owner projection records
-the owner's repository ID and slug, source commit, canonical path, and
-per-file SHA-256. The generated index must resolve each ADR in the pinned
-Primitive catalog to exactly one local Architecture record or one such
-external owner projection, preserving the original ADR identifier without
-its decision prose.
+Architecture Authority publishes the canonical text for all organization
+ADR, ADP, and ADD records, with an immutable Architecture source commit and
+content digest. The decision inventory preserves imported repository ID,
+source commit, original path, and per-file SHA-256 as provenance metadata; it
+does not retain a second external prose owner projection. External ADR
+projections are forbidden; every Primitive ADR reference resolves to exactly
+one local Architecture record and retains its original identifier.
 
-The architecture review compares base and head indexes. Every Primitive ADR
-reference must resolve to exactly one local record or immutable external
-owner projection; external projection entries not referenced by the pinned
-catalog are rejected. For local Architecture ADRs, the index retains their
+The architecture review compares base and head indexes. The index retains
 declared domain and enforcement metadata and reports local decisions that no
 Primitive currently references. Such an uncovered decision may be a design
 policy with no reusable Primitive implementation; semantic review determines
@@ -86,12 +82,13 @@ Codex to load every related ADR into every runtime context.
 
 ### Confirmation
 
-The current Architecture check validates the owner-projection shape, requires
-one local record or external owner entry for each ADR used by the pinned
-catalog, rejects unused external owner entries, and compares the generated
-index with its committed form. It does not prove that a semantic impact review
-occurred or that a Primitive release was updated after every ADR change; those
-controls remain a separate Primitive-phase acceptance requirement.
+The Architecture checks validate the decision inventory's exact identifier
+and file set, verify imported origins with `git show` and declared link-only
+adaptations, require exact release coverage, require each pinned Primitive ADR
+to resolve locally, and compare the generated index with its committed form.
+They do not prove that a semantic impact review occurred or that a Primitive
+release was updated after every ADR change; those controls remain a separate
+Primitive-phase acceptance requirement.
 
 ## Pros and Cons of the Options
 
@@ -115,8 +112,10 @@ controls remain a separate Primitive-phase acceptance requirement.
 
 - Related decision: [Run layered harness architecture reviews](0011-run-layered-harness-architecture-reviews.md)
 - Related decision: [Use context-scoped ubiquitous language](0003-use-context-scoped-ubiquitous-language.md)
+- Related decision: [Centralize organization decision records](0020-centralize-organization-decision-records.md), which assigns canonical ADR text ownership to Architecture Authority.
+- Related decision: [Centralize organization decision records](0020-centralize-organization-decision-records.md)
 - This base record is present on Architecture `main` and is official. No
   verifiable Architecture review PR for its historical addition was found, so
-  review provenance is unknown. The owner-projection and cross-repository
-  traceability amendments proposed by issue #3 remain provisional until their
+  review provenance is unknown. The canonical inventory and organization-wide
+  ownership amendments proposed by issue #3 remain provisional until their
   issue-linked review PR is merged.

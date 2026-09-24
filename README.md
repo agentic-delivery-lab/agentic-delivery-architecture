@@ -24,11 +24,12 @@ them domain contexts. See the [context model](architecture/domain/README.md),
 the [source and live-evidence snapshot](architecture/references/system-evidence.yml),
 and the twelve [arc42 chapters](architecture/arc42/).
 
-Architecture decisions retain their rationale only at their assigned owner.
-The [decision index](decisions/README.md) assigns those owners and links to
-immutable external records. The ADR-to-Primitive index is generated from a
-pinned Primitive catalog plus a validated owner projection; external ADR
-references carry identity and digests, not copied decision text.
+Architecture Authority is the proposed canonical text owner for all
+organization ADR, ADP, and ADD records. The [decision index](decisions/README.md)
+and [decision inventory](architecture/references/decision-inventory.yml) pin
+the exact records, context scope, imported source identities, and provenance.
+The ADR-to-Primitive index is generated from the pinned Primitive catalog and
+resolves every ADR reference to exactly one local Architecture record.
 
 The public Architecture repository and its draft release are versioned on
 `main`. A draft release is not a published or deployed architecture contract.

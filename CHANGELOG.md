@@ -6,15 +6,18 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
-- Bumped the Architecture release contract to `2.0.0` because its digest
-  algorithm now normalizes both self-referential pin fields; consumers must
-  dispatch by contract version and adopt it in their own gated phase.
-- Bumped the generated ADR/Primitive index to v2 so its schema covers
-  immutable external owner objects and per-Primitive external ADR references;
-  the draft Architecture release now pins contract version `2.0.0`.
-- Established Architecture Authority as the canonical owner for cross-context
-  decisions, principles, domain models, and conformance policy; recorded
-  immutable Control Plane owner projections and current evidence limits.
+- Centralized all 18 active ADRs plus ADP-0001, ADD-0001, and ADR-0020 in
+  Architecture Authority as the proposed canonical text set. Preserved
+  bounded-context metadata, routed semantic review through evidence-backed
+  context steward repositories, and recorded imported and differing historical
+  source hashes without a second prose projection.
+- Bumped the Architecture release manifest to schemaVersion 2 and contract
+  `3.0.0`; it pins the exact ADR/ADP/ADD decision ID set while retaining the
+  normalized sourceCommit/contentSha256 digest algorithm. Consumers must
+  dispatch by version and adopt it in their own gated phase.
+- Bumped the generated ADR/Primitive index to v3. Every Primitive ADR
+  reference must resolve to one local Architecture ADR; external text
+  projections are forbidden.
 - Updated ADR-0018 to select one organization App installation with
   `All repositories` access and an independent reviewed participant registry;
   recorded live-configuration and activation evidence gaps without changing
@@ -24,9 +27,9 @@ All notable changes to this repository are documented here.
 
 ### Fixed
 
-- Made the ADR owner-projection validator enforce all required fields,
-  prohibited extra properties, repository identity, immutable source, path,
-  and digest constraints from its published schema.
+- Verified imported source bytes with `git show` at pinned source commits and
+  recorded the two relative-link corrections required by relocating ADR-0008
+  and ADR-0009 into the Architecture decision directory.
 - Replaced the missing local architecture-decision skill link with the
   immutable canonical Primitive skill source.
 

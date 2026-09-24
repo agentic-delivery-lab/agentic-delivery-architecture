@@ -1,4 +1,4 @@
-schemaVersion: 2
+schemaVersion: 3
 contexts:
   - id: agentic-delivery-governance
     name: Agentic Delivery Governance
@@ -6,6 +6,11 @@ contexts:
     canonicalLanguageSource:
       repository: agentic-delivery-lab/agentic-delivery-architecture
       path: architecture/domain/ubiquitous-language.yml
+    contextStewardRepository:
+      repository: agentic-delivery-lab/agentic-delivery
+      repositoryId: 1358455028
+      evidenceRepository: control-plane
+      evidencePath: docs/domain/ubiquitous-language.yml
   - id: agentic-delivery-control-plane
     name: Agentic Delivery Control Plane
     definition: The delivery controller, event intake, enrollment, lifecycle contracts, orchestration, and authorized GitHub write-back.
@@ -13,6 +18,11 @@ contexts:
     canonicalLanguageSource:
       repository: agentic-delivery-lab/agentic-delivery-architecture
       path: architecture/domain/ubiquitous-language.yml
+    contextStewardRepository:
+      repository: agentic-delivery-lab/agentic-delivery
+      repositoryId: 1358455028
+      evidenceRepository: control-plane
+      evidencePath: docs/domain/ubiquitous-language.yml
   - id: agentic-primitives
     name: Agentic Primitives
     definition: The versioned catalog of reusable agent capabilities and contracts, with immutable release and projection rules.
@@ -21,6 +31,11 @@ contexts:
     canonicalLanguageSource:
       repository: agentic-delivery-lab/agentic-delivery-architecture
       path: architecture/domain/ubiquitous-language.yml
+    contextStewardRepository:
+      repository: agentic-delivery-lab/agentic-delivery-primitives
+      repositoryId: 1380894656
+      evidenceRepository: primitives
+      evidencePath: manifests/primitive-catalog.yml
   - id: developer-distribution
     name: Developer Distribution
     definition: The reproducible bootstrap, bundle, and thin consumer-integration model for installing pinned delivery artifacts.
@@ -29,12 +44,17 @@ contexts:
     canonicalLanguageSource:
       repository: agentic-delivery-lab/agentic-delivery-architecture
       path: architecture/domain/ubiquitous-language.yml
+    contextStewardRepository:
+      repository: agentic-delivery-lab/agentic-delivery-distribution
+      repositoryId: 1380894705
+      evidenceRepository: distribution
+      evidencePath: manifests/workflow-bundle.json
 
 crossContextAuthority:
   id: architecture-authority
   repository: agentic-delivery-lab/agentic-delivery-architecture
   classification: cross-context authority, not a bounded context
-  owns: [principles, architecture-description, cross-context-adrs, context-map, conformance]
+  owns: [principles, architecture-description, organization-decision-text, context-map, conformance]
 
 repositoryAdapters:
   - id: public-github-adapter

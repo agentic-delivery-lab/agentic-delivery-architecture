@@ -2,12 +2,22 @@
   "schemaVersion": 1,
   "aliases": {
     "ADR-0001": "urn:agentic-delivery:adr:architecture:0001",
+    "ADR-0002": "urn:agentic-delivery:adr:architecture:0002",
     "ADR-0003": "urn:agentic-delivery:adr:architecture:0003",
+    "ADR-0004": "urn:agentic-delivery:adr:architecture:0004",
+    "ADR-0005": "urn:agentic-delivery:adr:architecture:0005",
+    "ADR-0006": "urn:agentic-delivery:adr:architecture:0006",
+    "ADR-0007": "urn:agentic-delivery:adr:architecture:0007",
+    "ADR-0008": "urn:agentic-delivery:adr:architecture:0008",
+    "ADR-0009": "urn:agentic-delivery:adr:architecture:0009",
     "ADR-0011": "urn:agentic-delivery:adr:architecture:0011",
     "ADR-0012": "urn:agentic-delivery:adr:architecture:0012",
     "ADR-0013": "urn:agentic-delivery:adr:architecture:0013",
+    "ADR-0015": "urn:agentic-delivery:adr:architecture:0015",
     "ADR-0016": "urn:agentic-delivery:adr:architecture:0016",
+    "ADR-0017": "urn:agentic-delivery:adr:architecture:0017",
     "ADR-0018": "urn:agentic-delivery:adr:architecture:0018",
-    "ADR-0019": "urn:agentic-delivery:adr:architecture:0019"
+    "ADR-0019": "urn:agentic-delivery:adr:architecture:0019",
+    "ADR-0020": "urn:agentic-delivery:adr:architecture:0020"
   }
 }

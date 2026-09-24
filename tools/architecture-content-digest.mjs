@@ -53,9 +53,14 @@ export async function architectureContentDigest(root, revision = 'HEAD') {
   if (files.length === 0) throw new Error('Architecture Authority contains no authoritative files at the requested revision');
   const hash = createHash('sha256');
   for (const file of files) {
-    const contents = revision === 'WORKTREE'
-      ? await readFile(path.join(root, file))
-      : await git(root, ['show', `${revision}:${file}`], 'buffer');
+    let contents;
+    if (revision === 'WORKTREE') {
+      try { contents = await readFile(path.join(root, file)); }
+      catch (error) {
+        if (error.code === 'ENOENT') continue;
+        throw error;
+      }
+    } else contents = await git(root, ['show', `${revision}:${file}`], 'buffer');
     hash.update(file, 'utf8');
     hash.update('\0', 'utf8');
     hash.update(normalizeReleaseMetadata(file, contents));

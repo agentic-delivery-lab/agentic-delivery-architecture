@@ -1,0 +1,132 @@
+schemaVersion: 1
+purpose: >-
+  Canonical inventory of organization ADR, ADP, and ADD decision text. It records
+  one Architecture file per stable identifier and immutable origins without
+  reproducing decision prose from another repository.
+sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3
+canonicalRepository:
+  repository: agentic-delivery-lab/agentic-delivery-architecture
+  repositoryId: 1380894616
+records:
+  - id: ADR-0001
+    path: decisions/0001-use-madr-for-architecture-decisions.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0001-use-madr-for-architecture-decisions.md, sha256: a0c8676de2750a81a9421f6230a2eebb7fc8465a7bd5256ac1cb4fd77111417c}
+  - id: ADR-0002
+    path: decisions/0002-use-plain-language-for-human-agent-communication.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0002-use-plain-language-for-human-agent-communication.md, sha256: 0a1e105b8decd7fde8ef6b7bc6d3598462416d4b35c019dfe72bb05449acdc8f}
+  - id: ADR-0003
+    path: decisions/0003-use-context-scoped-ubiquitous-language.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0003-use-context-scoped-ubiquitous-language.md, sha256: 7fd5193a01969a7fa32b3f982e12df18e67f868992662a36a5fc6576162e9674}
+  - id: ADR-0004
+    path: decisions/0004-use-trunk-based-delivery.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0004-use-trunk-based-delivery.md, sha256: 8fedc47ccf0f680848bae42fc784216707058f1cf5e3737ba317923a82d42923}
+  - id: ADR-0005
+    path: decisions/0005-use-conventional-commits-with-gitmoji.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0005-use-conventional-commits-with-gitmoji.md, sha256: 92b57bac30a25b34529bb18cf3d325a40bce78a7e09f3340ca9d4556815f1962}
+  - id: ADR-0006
+    path: decisions/0006-curate-a-changelog.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0006-curate-a-changelog.md, sha256: 960899e2bd61f7cf9bfd7e36b0b858eb347c050b5c174a4dc0acc502e0a0c8f1}
+  - id: ADR-0007
+    path: decisions/0007-use-issue-linked-conventional-branch-names.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0007-use-issue-linked-conventional-branch-names.md, sha256: bd118215329f889cb2bd8a6bd7f59ecb6279ccaba787e6f318d2c2df26675895}
+  - id: ADR-0008
+    path: decisions/0008-use-pnpm-with-delayed-dependency-adoption.md
+    domains: [agentic-delivery-governance]
+    origin:
+      type: imported-text
+      repository: agentic-delivery-lab/agentic-delivery
+      repositoryId: 1358455028
+      sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+      sourcePath: docs/decisions/0008-use-pnpm-with-delayed-dependency-adoption.md
+      sha256: 055b5c8a7beb7ef3cf90319f3124996ba881c4bf987e147151c294e5f83543c7
+      transformations:
+        - from: ../domain/ubiquitous-language.yml
+          to: ../architecture/domain/ubiquitous-language.yml
+          reason: Link relocated to the canonical Architecture domain register.
+  - id: ADR-0009
+    path: decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md
+    domains: [agentic-delivery-governance]
+    origin:
+      type: imported-text
+      repository: agentic-delivery-lab/agentic-delivery
+      repositoryId: 1358455028
+      sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+      sourcePath: docs/decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md
+      sha256: 4a6d7b8c803c05540cba8266b97af6afc04419b9709f72cbcffc78acf872a1c7
+      transformations:
+        - from: ../delivery/codex-workflow.md
+          to: https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/delivery/codex-workflow.md
+          reason: Link pinned to the immutable Control Plane source because its runtime workflow remains context-owned.
+  - id: ADR-0011
+    path: decisions/0011-run-layered-harness-architecture-reviews.md
+    domains: [agentic-delivery-governance, agentic-delivery-control-plane]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0011-run-layered-harness-architecture-reviews.md, sha256: e23fce03179313aafadb19f222e750227d0bf32e1e4cd7359ac53ffe14f8319a}
+  - id: ADR-0012
+    path: decisions/0012-use-github-as-the-lifecycle-control-plane.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0012-use-github-as-the-lifecycle-control-plane.md, sha256: ea0ad1a87eecbe087643d70ec7dcdefe1978c8277231b010948f3589506d3f79}
+  - id: ADR-0013
+    path: decisions/0013-derive-adr-traceability-from-agentic-primitives.md
+    domains: [agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0013-derive-adr-traceability-from-agentic-primitives.md, sha256: c635d4e035b9409849660d20f9cf709f1027375a2cd87829639cdf6ac4216238}
+  - id: ADR-0015
+    path: decisions/0015-isolate-resumable-runner-execution.md
+    domains: [agentic-delivery-governance]
+    origin: {type: imported-text, repository: agentic-delivery-lab/agentic-delivery, repositoryId: 1358455028, sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617, sourcePath: docs/decisions/0015-isolate-resumable-runner-execution.md, sha256: ae0bf3f0fffc069c86cace8108f5dffd422f73fd07208609c046d63e5c760432}
+  - id: ADR-0016
+    path: decisions/0016-require-structured-pull-request-descriptions.md
+    domains: [agentic-delivery-governance, agentic-delivery-control-plane]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0016-require-structured-pull-request-descriptions.md, sha256: b4b4614b010a1202b60ad381b29b5615adf70807920f5f94ad54c5e71273af76}
+  - id: ADR-0017
+    path: decisions/0017-use-an-explicit-agent-invocation-boundary.md
+    domains: [agentic-delivery-governance]
+    origin: {type: imported-text, repository: agentic-delivery-lab/agentic-delivery, repositoryId: 1358455028, sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617, sourcePath: docs/decisions/0017-use-an-explicit-agent-invocation-boundary.md, sha256: 01b0a148bcbb37e1c1fa8f760bd00fce9d56e5fed24e1a1c1c68307a1ee260f4}
+  - id: ADR-0018
+    path: decisions/0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md
+    domains: [agentic-delivery-control-plane, agentic-delivery-governance]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md, sha256: 7b93434d9b226c1e64618fdcdbfcd87441b3bc27e6c226cd70c1deadaac06fa7, reviewEvidence: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/pull/2}
+  - id: ADR-0019
+    path: decisions/0019-canonicalize-delivery-state-field.md
+    domains: [agentic-delivery-governance, agentic-delivery-control-plane]
+    origin: {type: architecture-baseline, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceCommit: 107a97f4217682b23c11d136247abc423574b269, sourcePath: decisions/0019-canonicalize-delivery-state-field.md, sha256: f4115aa7bb6057e71f8cb33f316ad059c6e1a2baf29e21d72976e94f11cd0049}
+  - id: ADP-0001
+    path: decisions/ADP-0001-primitive-release-and-projection.md
+    domains: [agentic-primitives]
+    origin: {type: imported-text, repository: agentic-delivery-lab/agentic-delivery-primitives, repositoryId: 1380894656, sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7, sourcePath: docs/decisions/ADP-0001-primitive-release-and-projection.md, sha256: ad2f289212d8cabb5e36e8b2f54e0df46469a1001f0c8c8226a30c2d206214ed}
+  - id: ADD-0001
+    path: decisions/ADD-0001-distribution-boundary.md
+    domains: [developer-distribution]
+    origin: {type: imported-text, repository: agentic-delivery-lab/agentic-delivery-distribution, repositoryId: 1380894705, sourceCommit: b69c5710928b47efc4d3ab12ec4d5b596c80720c, sourcePath: docs/decisions/ADD-0001-distribution-boundary.md, sha256: d3589f0936b3d2db14df0cfa463d8bb910f68529039b4f9a646b9080b1c26e7e}
+  - id: ADR-0020
+    path: decisions/0020-centralize-organization-decision-records.md
+    domains: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
+    origin: {type: proposed, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3}
+historicalVariants:
+  - id: ADR-0012
+    repository: agentic-delivery-lab/agentic-delivery
+    repositoryId: 1358455028
+    sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+    sourcePath: docs/decisions/0012-use-github-as-the-lifecycle-control-plane.md
+    sha256: 19e0c3fb29dc4c1fab7a691c67d089a59f45b27751d22d2cce0228ec175046f5
+    disposition: The Architecture baseline remains canonical; the Control Plane variant uses context-local paths and ownership references.
+  - id: ADR-0018
+    repository: agentic-delivery-lab/agentic-delivery
+    repositoryId: 1358455028
+    sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+    sourcePath: docs/decisions/0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md
+    sha256: b94dabcb84fe7da679a0441442e97646196ae4bb88d4b0e9ad983a9519b4eef5
+    disposition: Historical older duplicate; the Architecture baseline record, reviewed by Architecture PR #2, remains canonical.
+  - id: ADR-0019
+    repository: agentic-delivery-lab/agentic-delivery
+    repositoryId: 1358455028
+    sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+    sourcePath: docs/decisions/0019-canonicalize-delivery-state-field.md
+    sha256: 6d826a70d5a048308b8b39fea9d490612f23654c03c86eb64f6256663a08c78a
+    disposition: The Architecture baseline remains canonical; the Control Plane variant points to Control Plane-specific contract paths.

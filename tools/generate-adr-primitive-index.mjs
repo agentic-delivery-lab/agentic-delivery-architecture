@@ -1,12 +1,13 @@
+import { createHash } from 'node:crypto';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { parseRepositoryYaml } from './lib/yaml.mjs';
+import { validateDecisionInventory } from './decision-inventory.mjs';
 
 const ADR_FILE = /^(\d{4})-[a-z0-9-]+\.md$/;
 const SHA1 = /^[0-9a-f]{40}$/;
-const SHA256 = /^[0-9a-f]{64}$/;
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const KINDS = new Set(['agent', 'skill', 'instruction', 'hook', 'validator', 'capability', 'mcp-contract']);
 const ENFORCEMENTS = new Set(['instructional', 'deterministic', 'semantic']);
@@ -69,47 +70,6 @@ function validateLock(lock) {
   if (errors.length) throw new Error(`primitive catalog lock validation failed:\n${errors.join('\n')}`);
 }
 
-export function validateOwnerProjection(projection) {
-  const errors = [];
-  const objectShape = (value, location, required, allowed) => {
-    if (!value || typeof value !== 'object' || Array.isArray(value)) {
-      errors.push(`${location} must be an object`);
-      return false;
-    }
-    for (const key of required) if (!Object.hasOwn(value, key)) errors.push(`${location}.${key} is required`);
-    for (const key of Object.keys(value)) if (!allowed.includes(key)) errors.push(`${location} contains unsupported property ${key}`);
-    return true;
-  };
-  const rootIsObject = objectShape(projection, 'ADR owner projection', ['schemaVersion', 'purpose', 'owner', 'records'], ['schemaVersion', 'purpose', 'owner', 'records']);
-  if (!rootIsObject) throw new Error(`ADR owner projection validation failed:\n${errors.join('\n')}`);
-  if (projection.schemaVersion !== 1) errors.push('ADR owner projection schemaVersion must be 1');
-  if (typeof projection.purpose !== 'string' || projection.purpose.trim().length === 0) errors.push('ADR owner projection purpose must be a non-empty string');
-  const ownerIsObject = objectShape(projection.owner, 'ADR owner projection owner', ['repository', 'repositoryId', 'sourceCommit'], ['repository', 'repositoryId', 'sourceCommit']);
-  if (ownerIsObject) {
-    if (projection.owner.repository !== 'agentic-delivery-lab/agentic-delivery') errors.push('ADR owner projection repository is invalid');
-    if (projection.owner.repositoryId !== 1358455028) errors.push('ADR owner projection repository ID is invalid');
-    if (!SHA1.test(projection.owner.sourceCommit ?? '')) errors.push('ADR owner projection source commit must be an immutable lowercase SHA-1');
-  }
-  if (!Array.isArray(projection.records) || projection.records.length === 0) errors.push('ADR owner projection records must be a non-empty array');
-  const ids = new Set();
-  for (const [index, record] of (Array.isArray(projection.records) ? projection.records : []).entries()) {
-    const location = `records[${index}]`;
-    if (!objectShape(record, location, ['id', 'canonicalPath', 'sha256'], ['id', 'canonicalPath', 'sha256'])) continue;
-    if (!/^ADR-[0-9]{4}$/.test(record.id ?? '') || ids.has(record.id)) errors.push(`${location}.id must be a unique ADR identifier`);
-    ids.add(record.id);
-    const expectedPrefix = typeof record.id === 'string' ? `docs/decisions/${record.id.slice(4)}-` : null;
-    if (typeof record.canonicalPath !== 'string'
-      || !/^docs\/decisions\/[0-9]{4}-[a-z0-9-]+\.md$/.test(record.canonicalPath)
-      || !expectedPrefix
-      || !record.canonicalPath.startsWith(expectedPrefix)) {
-      errors.push(`${location}.canonicalPath must be the owning repository's canonical ADR path`);
-    }
-    if (!SHA256.test(record.sha256 ?? '')) errors.push(`${location}.sha256 must be a lowercase per-file SHA-256 digest`);
-  }
-  if (errors.length) throw new Error(`ADR owner projection validation failed:\n${errors.join('\n')}`);
-  return new Map(projection.records.map((record) => [record.id, record]));
-}
-
 async function loadDomains(root) {
   const registry = parseRepositoryYaml(await readFile(path.join(root, 'architecture/domain/ubiquitous-language.yml'), 'utf8'), 'domain register');
   return (registry.bounded_contexts ?? []).map((context) => String(context.id)).sort();
@@ -117,20 +77,20 @@ async function loadDomains(root) {
 
 async function buildIndex(root) {
   const lockPath = path.join(root, 'architecture', 'references', 'primitive-catalog.lock.yml');
-  const ownerProjectionPath = path.join(root, 'architecture', 'references', 'adr-owner-projection.yml');
-  const [adrs, lock, domains, ownerProjection] = await Promise.all([
+  const inventoryPath = path.join(root, 'architecture', 'references', 'decision-inventory.yml');
+  const [adrs, lock, domains, inventoryResult, inventorySource] = await Promise.all([
     loadAdrs(root),
     readFile(lockPath, 'utf8').then((source) => parseRepositoryYaml(source, 'primitive catalog lock')),
     loadDomains(root),
-    readFile(ownerProjectionPath, 'utf8').then((source) => parseRepositoryYaml(source, 'ADR owner projection')),
+    validateDecisionInventory(root),
+    readFile(inventoryPath),
   ]);
   validateLock(lock);
-  const externalOwners = validateOwnerProjection(ownerProjection);
   const adrById = new Map(adrs.map((adr) => [adr.id, adr]));
   const primitiveByAdr = new Map(adrs.map((adr) => [adr.id, []]));
-  const externalIds = new Set(lock.primitives.flatMap((primitive) => primitive.adrs.filter((adr) => !adrById.has(adr))));
-  for (const id of externalIds) if (!externalOwners.has(id)) throw new Error(`ADR owner projection has no immutable owner entry for ${id}`);
-  for (const id of externalOwners.keys()) if (!externalIds.has(id)) throw new Error(`ADR owner projection contains unreferenced ADR ${id}`);
+  for (const primitive of lock.primitives) {
+    for (const id of primitive.adrs) if (!adrById.has(id)) throw new Error(`Primitive ADR reference ${id} has no canonical Architecture ADR record`);
+  }
   const primitiveRows = lock.primitives.map((primitive) => {
     const adrsForPrimitive = [...primitive.adrs].sort();
     for (const adr of adrsForPrimitive) if (primitiveByAdr.has(adr)) primitiveByAdr.get(adr).push(primitive.id);
@@ -143,8 +103,8 @@ async function buildIndex(root) {
       sourcePath: primitive.sourcePath,
       enforcement: primitive.enforcement,
       adrs: adrsForPrimitive,
-      localAdrs: adrsForPrimitive.filter((adr) => adrById.has(adr)),
-      externalAdrs: adrsForPrimitive.filter((adr) => !adrById.has(adr)),
+      localAdrs: adrsForPrimitive,
+      externalAdrs: [],
       domains: [...primitive.domains].sort(),
     };
   }).sort((left, right) => left.id.localeCompare(right.id));
@@ -152,25 +112,16 @@ async function buildIndex(root) {
     ...adr,
     primitives: [...(primitiveByAdr.get(adr.id) ?? [])].sort(),
   }));
-  const externalAdrs = [...externalIds].sort().map((id) => {
-    const record = externalOwners.get(id);
-    return {
-      id,
-      owner: {
-        repository: ownerProjection.owner.repository,
-        repositoryId: ownerProjection.owner.repositoryId,
-        sourceCommit: ownerProjection.owner.sourceCommit,
-        canonicalPath: record.canonicalPath,
-        sha256: record.sha256,
-        url: `https://github.com/${ownerProjection.owner.repository}/blob/${ownerProjection.owner.sourceCommit}/${record.canonicalPath}`,
-      },
-    };
-  });
   const uncoveredAdrs = adrRows.filter((adr) => adr.primitives.length === 0).map((adr) => adr.id);
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     source: 'released-primitive-catalog',
     architecture: 'urn:agentic-delivery:architecture:authority',
+    decisionInventory: {
+      path: 'architecture/references/decision-inventory.yml',
+      sha256: createHash('sha256').update(inventorySource).digest('hex'),
+      schemaVersion: inventoryResult.inventory.schemaVersion,
+    },
     primitiveRelease: {
       repository: lock.source.repository,
       releaseId: lock.source.releaseId,
@@ -181,7 +132,7 @@ async function buildIndex(root) {
     },
     domains,
     adrs: adrRows,
-    externalAdrs,
+    externalAdrs: [],
     uncoveredAdrs,
     primitives: primitiveRows,
   };
@@ -211,8 +162,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const root = args.find((argument) => argument !== '--check') ?? repositoryRoot;
     const index = await generateAdrPrimitiveIndex({ checkOnly, root });
     process.stdout.write(checkOnly
-      ? `ADR/Primitive index v2 check passed: ${index.adrs.length} Architecture ADR(s), ${index.externalAdrs.length} externally owned ADR(s), ${index.primitives.length} primitive reference(s).\n`
-      : `ADR/Primitive index v2 generated: ${index.adrs.length} Architecture ADR(s), ${index.externalAdrs.length} externally owned ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+      ? `ADR/Primitive index v3 check passed: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`
+      : `ADR/Primitive index v3 generated: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`);
   } catch (error) {
     process.stderr.write(`${error.message}\n`);
     process.exitCode = 1;

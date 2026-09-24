@@ -22,7 +22,7 @@ workspace "Agentic Delivery" "Organization-wide issue-based delivery architectur
       softwareSystem distribution "Developer Distribution" "Versioned bootstrap, bundle, and thin consumer integration."
     }
 
-    softwareSystem architecture "Architecture Authority" "Cross-context authority for principles, arc42 architecture description, context map, cross-context ADRs, and conformance; not a bounded context."
+    softwareSystem architecture "Architecture Authority" "Cross-context authority for organization ADR, ADP, and ADD text, principles, arc42 architecture description, context map, and conformance; not a bounded context."
     softwareSystem publicAdapter "Public .github repository adapter" "Public community-health, issue-form, and pull-request-template defaults."
     softwareSystem privateAdapter "Private .github-private repository adapter" "Private member-profile and approved agent-publication boundary."
     softwareSystem consumers "Consumer repositories" "Repositories that receive pinned bootstrap and workflow projections."
@@ -35,10 +35,10 @@ workspace "Agentic Delivery" "Organization-wide issue-based delivery architectur
     controller -> orgFields "reads organization field definitions and options"
     controller -> fieldValues "reads and writes validated per-issue values"
     controller -> actions "dispatches gated execution and review checks"
-    architecture -> governance "owns cross-context principles, language register, and decisions"
-    architecture -> control "governs through a pinned Architecture release"
-    architecture -> primitives "provides ADR and context references"
-    architecture -> distribution "provides cross-context architecture contracts"
+    architecture -> governance "publishes canonical organization decision text and architecture contracts"
+    architecture -> control "publishes canonical decision text through a pinned Architecture release"
+    architecture -> primitives "publishes canonical ADR text and context references"
+    architecture -> distribution "publishes canonical decision text and architecture contracts"
     primitives -> controller "supplies selected versioned capabilities"
     primitives -> privateAdapter "target: reviewed, versioned agent projection; entitlement remains unverified"
     primitives -> distribution "supplies versioned capability packages"

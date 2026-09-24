@@ -10,10 +10,13 @@ projection only where a consumer surface requires local files, and attach
 repository identity, source commit, content digest, policy version, and
 compatibility target.
 
-Architecture Authority owns cross-context rationale and architecture
-description. Context owners keep implementation and context-specific
-decisions. The owner map is in [section 9](09-architecture-decisions.arc42.md)
-and [decisions/README.md](../../decisions/README.md).
+Architecture Authority is the proposed canonical text owner for every
+organization ADR, ADP, and ADD record. A decision retains its bounded-context
+scope, and the affected context stewards review its semantics. The context
+repositories keep runtime, implementation, catalog, and bootstrap artifacts.
+The current owner and provenance inventory is in
+[section 9](09-architecture-decisions.arc42.md) and
+[decisions/README.md](../../decisions/README.md).
 
 ## 4.2 Proposal and enforcement
 

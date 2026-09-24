@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { parseRepositoryYaml } from './lib/yaml.mjs';
 
 const ADR_FILE = /^(\d{4})-[a-z0-9-]+\.md$/;
-const SHA1 = /^[0-9a-f]{40}$/i;
+const SHA1 = /^[0-9a-f]{40}$/;
 const SHA256 = /^[0-9a-f]{64}$/;
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const KINDS = new Set(['agent', 'skill', 'instruction', 'hook', 'validator', 'capability', 'mcp-contract']);
@@ -71,25 +71,43 @@ function validateLock(lock) {
 
 export function validateOwnerProjection(projection) {
   const errors = [];
-  if (projection?.schemaVersion !== 1) errors.push('ADR owner projection schemaVersion must be 1');
-  if (projection?.owner?.repository !== 'agentic-delivery-lab/agentic-delivery') errors.push('ADR owner projection repository is invalid');
-  if (projection?.owner?.repositoryId !== 1358455028) errors.push('ADR owner projection repository ID is invalid');
-  if (!SHA1.test(projection?.owner?.sourceCommit ?? '')) errors.push('ADR owner projection source commit must be immutable');
-  if (!Array.isArray(projection?.records) || projection.records.length === 0) errors.push('ADR owner projection must contain records');
+  const objectShape = (value, location, required, allowed) => {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+      errors.push(`${location} must be an object`);
+      return false;
+    }
+    for (const key of required) if (!Object.hasOwn(value, key)) errors.push(`${location}.${key} is required`);
+    for (const key of Object.keys(value)) if (!allowed.includes(key)) errors.push(`${location} contains unsupported property ${key}`);
+    return true;
+  };
+  const rootIsObject = objectShape(projection, 'ADR owner projection', ['schemaVersion', 'purpose', 'owner', 'records'], ['schemaVersion', 'purpose', 'owner', 'records']);
+  if (!rootIsObject) throw new Error(`ADR owner projection validation failed:\n${errors.join('\n')}`);
+  if (projection.schemaVersion !== 1) errors.push('ADR owner projection schemaVersion must be 1');
+  if (typeof projection.purpose !== 'string' || projection.purpose.trim().length === 0) errors.push('ADR owner projection purpose must be a non-empty string');
+  const ownerIsObject = objectShape(projection.owner, 'ADR owner projection owner', ['repository', 'repositoryId', 'sourceCommit'], ['repository', 'repositoryId', 'sourceCommit']);
+  if (ownerIsObject) {
+    if (projection.owner.repository !== 'agentic-delivery-lab/agentic-delivery') errors.push('ADR owner projection repository is invalid');
+    if (projection.owner.repositoryId !== 1358455028) errors.push('ADR owner projection repository ID is invalid');
+    if (!SHA1.test(projection.owner.sourceCommit ?? '')) errors.push('ADR owner projection source commit must be an immutable lowercase SHA-1');
+  }
+  if (!Array.isArray(projection.records) || projection.records.length === 0) errors.push('ADR owner projection records must be a non-empty array');
   const ids = new Set();
-  for (const [index, record] of (projection?.records ?? []).entries()) {
+  for (const [index, record] of (Array.isArray(projection.records) ? projection.records : []).entries()) {
     const location = `records[${index}]`;
-    if (!record || typeof record !== 'object' || Array.isArray(record)) { errors.push(`${location} must be an object`); continue; }
-    if (!/^ADR-\d{4}$/.test(record.id ?? '') || ids.has(record.id)) errors.push(`${location}.id must be a unique ADR identifier`);
+    if (!objectShape(record, location, ['id', 'canonicalPath', 'sha256'], ['id', 'canonicalPath', 'sha256'])) continue;
+    if (!/^ADR-[0-9]{4}$/.test(record.id ?? '') || ids.has(record.id)) errors.push(`${location}.id must be a unique ADR identifier`);
     ids.add(record.id);
-    const expectedPrefix = `docs/decisions/${record.id?.slice(4)}-`;
-    if (typeof record.canonicalPath !== 'string' || !record.canonicalPath.startsWith(expectedPrefix) || !record.canonicalPath.endsWith('.md') || record.canonicalPath.split('/').includes('..')) {
+    const expectedPrefix = typeof record.id === 'string' ? `docs/decisions/${record.id.slice(4)}-` : null;
+    if (typeof record.canonicalPath !== 'string'
+      || !/^docs\/decisions\/[0-9]{4}-[a-z0-9-]+\.md$/.test(record.canonicalPath)
+      || !expectedPrefix
+      || !record.canonicalPath.startsWith(expectedPrefix)) {
       errors.push(`${location}.canonicalPath must be the owning repository's canonical ADR path`);
     }
-    if (!SHA256.test(record.sha256 ?? '')) errors.push(`${location}.sha256 must be a per-file SHA-256 digest`);
+    if (!SHA256.test(record.sha256 ?? '')) errors.push(`${location}.sha256 must be a lowercase per-file SHA-256 digest`);
   }
   if (errors.length) throw new Error(`ADR owner projection validation failed:\n${errors.join('\n')}`);
-  return new Map((projection.records ?? []).map((record) => [record.id, record]));
+  return new Map(projection.records.map((record) => [record.id, record]));
 }
 
 async function loadDomains(root) {

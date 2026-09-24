@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/architecture-release.schema.json",
-  "title": "Architecture release v1",
+  "title": "Architecture release manifest schemaVersion 1",
+  "description": "The manifest structure uses schemaVersion 1. Digest semantics are versioned independently by contractVersions.architectureRelease, currently 2.0.0.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -27,12 +28,12 @@
     "sourceCommit": {
       "type": "string",
       "pattern": "^[0-9a-f]{40}$",
-      "description": "Immutable prepared source commit whose normalized Architecture tree must reproduce contentSha256."
+      "description": "For architectureRelease contract 2.0.0, this is the immutable prepared source commit whose normalized Architecture tree must reproduce contentSha256."
     },
     "contentSha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$",
-      "description": "Digest over authoritative Architecture files after normalizing only sourceCommit and contentSha256 in this manifest."
+      "description": "For architectureRelease contract 2.0.0, SHA-256 over authoritative Architecture files after normalizing only sourceCommit and contentSha256 in this manifest."
     },
     "status": { "enum": ["draft", "released", "withdrawn"] },
     "principleIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^AP-[0-9]{3}$" } },
@@ -56,6 +57,17 @@
         "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
       }
     },
-    "contractVersions": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "string" } }
+    "contractVersions": {
+      "type": "object",
+      "required": ["architectureRelease"],
+      "properties": {
+        "architectureRelease": {
+          "const": "2.0.0",
+          "description": "Contract 2.0.0 uses the prepared-source-commit digest algorithm defined for this manifest."
+        }
+      },
+      "minProperties": 1,
+      "additionalProperties": { "type": "string" }
+    }
   }
 }

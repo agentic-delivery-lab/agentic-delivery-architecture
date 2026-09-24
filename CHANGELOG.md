@@ -6,6 +6,9 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Bumped the Architecture release contract to `2.0.0` because its digest
+  algorithm now normalizes both self-referential pin fields; consumers must
+  dispatch by contract version and adopt it in their own gated phase.
 - Bumped the generated ADR/Primitive index to v2 so its schema covers
   immutable external owner objects and per-Primitive external ADR references;
   the draft Architecture release now pins contract version `2.0.0`.
@@ -18,6 +21,14 @@ All notable changes to this repository are documented here.
   App settings.
 - Marked the history-preserving Architecture extraction as published after
   verifying its public `main`, merged import, and active branch ruleset.
+
+### Fixed
+
+- Made the ADR owner-projection validator enforce all required fields,
+  prohibited extra properties, repository identity, immutable source, path,
+  and digest constraints from its published schema.
+- Replaced the missing local architecture-decision skill link with the
+  immutable canonical Primitive skill source.
 
 ### Added
 

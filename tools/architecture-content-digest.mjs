@@ -37,10 +37,11 @@ export async function architectureFiles(root, revision = 'HEAD') {
 
 function normalizeReleaseMetadata(file, contents) {
   if (file !== RELEASE_MANIFEST) return contents;
-  // The digest covers version, status, source repository, contracts, and all
-  // source files. Only the two mutually referential pin fields are normalized:
-  // contentSha256 cannot hash itself, and sourceCommit points to the prepared
-  // commit whose normalized tree is verified against that digest.
+  // Architecture release contract 2.0.0 covers version, status, source
+  // repository, contracts, and all source files. It normalizes only the two
+  // mutually referential pin fields: contentSha256 cannot hash itself, and
+  // sourceCommit points to the prepared commit whose normalized tree is
+  // verified against that digest.
   return contents.toString('utf8')
     .replace(/("sourceCommit"\s*:\s*)(?:"[0-9a-f]{40}"|null)/, '$1null')
     .replace(/("contentSha256"\s*:\s*)(?:"[0-9a-f]{64}"|null)/, '$1null');

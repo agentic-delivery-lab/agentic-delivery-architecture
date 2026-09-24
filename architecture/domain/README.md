@@ -77,11 +77,12 @@ bundle are not the same artifact.
 Treat language as part of the domain model. Update this register and affected
 artifacts in the same change when a modeled concept is missing, a term changes
 meaning, or a context boundary or translation changes. State the affected
-contexts and terms in decision work. Use the repository's
-[architecture-decision process](../../.agents/skills/architecture-decision/SKILL.md)
-for significant or cross-cutting changes. Review new context classifications
-against their authoritative contracts instead of assuming that a repository
-boundary proves a separate domain model.
+contexts and terms in decision work. Use the canonical
+[architecture-decision skill](https://github.com/agentic-delivery-lab/agentic-delivery-primitives/blob/e4933566fbf5b0f593830f8933f18fbd21024fa7/skills/architecture-decision/SKILL.md)
+from the pinned Agentic Primitives baseline for significant or cross-cutting
+changes. Review new context classifications against their authoritative
+contracts instead of assuming that a repository boundary proves a separate
+domain model.
 
 An `avoid` entry is context-specific review guidance. Exact names from
 external systems and identifiers remain unchanged; explain their context when

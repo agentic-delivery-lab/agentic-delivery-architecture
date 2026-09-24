@@ -46,6 +46,25 @@ test('external ADR owner projection requires immutable identity and file digests
   const projection = parseRepositoryYaml(await readFile(path.join(root, 'architecture/references/adr-owner-projection.yml'), 'utf8'), 'test owner projection');
   const owners = validateOwnerProjection(projection);
   assert.equal(owners.get('ADR-0002').canonicalPath, 'docs/decisions/0002-use-plain-language-for-human-agent-communication.md');
+  const withoutPurpose = { ...projection };
+  delete withoutPurpose.purpose;
+  assert.throws(() => validateOwnerProjection(withoutPurpose), /purpose is required/);
+  assert.throws(() => validateOwnerProjection({ ...projection, unexpected: true }), /unsupported property unexpected/);
+  const ownerWithoutSource = { ...projection.owner };
+  delete ownerWithoutSource.sourceCommit;
+  assert.throws(() => validateOwnerProjection({ ...projection, owner: ownerWithoutSource }), /owner.sourceCommit is required/);
+  assert.throws(() => validateOwnerProjection({
+    ...projection,
+    owner: { ...projection.owner, sourceCommit: 'A'.repeat(40) },
+  }), /immutable lowercase SHA-1/);
+  assert.throws(() => validateOwnerProjection({
+    ...projection,
+    owner: { ...projection.owner, unexpected: true },
+  }), /owner contains unsupported property unexpected/);
+  assert.throws(() => validateOwnerProjection({
+    ...projection,
+    records: projection.records.map((record, index) => index === 0 ? { ...record, unexpected: true } : record),
+  }), /records\[0\] contains unsupported property unexpected/);
   assert.throws(() => validateOwnerProjection({
     ...projection,
     owner: { ...projection.owner, repositoryId: 1 },
@@ -54,6 +73,11 @@ test('external ADR owner projection requires immutable identity and file digests
     ...projection,
     records: projection.records.map((record, index) => index === 0 ? { ...record, sha256: 'bad' } : record),
   }), /per-file SHA-256 digest/);
+  assert.throws(() => validateOwnerProjection({
+    ...projection,
+    records: projection.records.map((record, index) => index === 0 ? { ...record, canonicalPath: 42 } : record),
+  }), /canonical ADR path/);
+  assert.throws(() => validateOwnerProjection({ ...projection, records: [] }), /records must be a non-empty array/);
 });
 
 test('diagram sources remain model-first and structurally valid', async () => {
@@ -62,9 +86,14 @@ test('diagram sources remain model-first and structurally valid', async () => {
 
 test('architecture release identifies the target authority', async () => {
   const result = await validateArchitectureRelease(root);
+  const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
+  const releaseSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/architecture-release.schema.json'), 'utf8'));
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
+  assert.equal(release.contractVersions.architectureRelease, '2.0.0');
+  assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '2.0.0');
+  assert.match(releaseSchema.description, /Digest semantics are versioned independently/);
 });
 
 test('architecture release sourceCommit contains the digest-pinned authored tree', async () => {

@@ -19,6 +19,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   if (!/^[0-9a-f]{64}$/.test(release.contentSha256 ?? '')) errors.push('architecture release contentSha256 must be a non-null SHA-256 digest');
   if (!Array.isArray(release.adrIds) || release.adrIds.length === 0) errors.push('architecture release must identify ADRs');
   if (!Array.isArray(release.contextIds) || release.contextIds.length === 0) errors.push('architecture release must identify bounded contexts');
+  if (release.contractVersions?.architectureRelease !== '2.0.0') errors.push('architecture release must pin contract 2.0.0 for the sourceCommit digest algorithm');
   for (const name of ['conformancePolicy', 'toolingLock']) {
     const reference = release[name];
     if (!reference || typeof reference.path !== 'string' || !/^[0-9a-f]{64}$/.test(reference.sha256 ?? '')) errors.push(`architecture release ${name} integrity reference is required`);
@@ -27,11 +28,13 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   const aliasValues = Object.values(aliases.aliases ?? {});
   if (aliases.schemaVersion !== 1 || aliasValues.length === 0 || new Set(aliasValues).size !== aliasValues.length) errors.push('ADR aliases must be unique schemaVersion 1 records');
   const tooling = JSON.parse(await readFile(path.join(root, 'architecture/references/tooling-lock.json'), 'utf8'));
+  const releaseSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/architecture-release.schema.json'), 'utf8'));
   const indexSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/adr-primitive-index.schema.json'), 'utf8'));
   const generatedIndex = JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8'));
   if (indexSchema.title !== 'Architecture ADR to Primitive index v2' || indexSchema.properties?.schemaVersion?.const !== 2) errors.push('ADR/Primitive index schema must be version 2');
   if (generatedIndex.schemaVersion !== 2) errors.push('generated ADR/Primitive index must implement schemaVersion 2');
   if (release.contractVersions?.adrPrimitiveIndex !== '2.0.0') errors.push('architecture release must pin ADR/Primitive index contract 2.0.0');
+  if (releaseSchema.properties?.contractVersions?.properties?.architectureRelease?.const !== '2.0.0') errors.push('Architecture release schema must require contract version 2.0.0');
   if (tooling.schemaVersion !== 1 || tooling.status !== 'draft') errors.push('tooling lock must be schemaVersion 1 draft');
   if (tooling.arc42?.version !== '9.0') errors.push('arc42 tooling lock must pin the tested official version');
   if (tooling.arc42Language?.package !== '@doctc/arc42' || tooling.arc42Language?.version !== '0.24.0') errors.push('arc42-language tooling lock must pin @doctc/arc42 0.24.0');

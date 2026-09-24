@@ -44,6 +44,7 @@ export async function validateArchitectureRelease(root = repositoryRoot, expecte
   if (!SHA.test(release.sourceCommit ?? '')) errors.push('architecture release sourceCommit must be immutable');
   if (!SHA256.test(release.contentSha256 ?? '')) errors.push('architecture release contentSha256 must be a non-null SHA-256 digest');
   if (!['draft', 'released', 'withdrawn'].includes(release.status)) errors.push('architecture release status is invalid');
+  if (release.contractVersions?.architectureRelease !== '2.0.0') errors.push('architecture release contractVersions.architectureRelease must be 2.0.0');
   if (!Array.isArray(release.principleIds) || release.principleIds.length === 0) errors.push('architecture release must identify principles');
   if (!Array.isArray(release.adrIds) || release.adrIds.length === 0 || new Set(release.adrIds).size !== release.adrIds.length) errors.push('architecture release must identify unique ADRs');
   if (!Array.isArray(release.contextIds) || release.contextIds.length === 0 || new Set(release.contextIds).size !== release.contextIds.length) errors.push('architecture release must identify unique bounded contexts');

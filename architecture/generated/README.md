@@ -21,11 +21,18 @@ immutable source commit, content digest, context IDs, ADR identifiers, and
 integrity references. A draft does not prove live deployment, field pinning,
 App installation, or GitHub enforcement.
 
-The source commit points to a prepared commit containing the authored source,
-release version, status, and integrity references. Digest calculation
-normalizes only `sourceCommit` and `contentSha256` in the manifest; every other
-authoritative file and release field remains covered. The release validator
-recomputes the digest for both the working tree and the pinned source commit,
-and verifies the conformance-policy and tooling-lock file hashes at each
-revision. This makes the source-commit/digest pair reproducible without a
-self-referential hash.
+The manifest keeps its JSON `schemaVersion: 1` shape. Its
+`contractVersions.architectureRelease` value versions integrity semantics.
+Consumers must dispatch digest verification by that value. Contract `1.0.0`
+normalized `contentSha256` only. Contract `2.0.0` normalizes both
+`sourceCommit` and `contentSha256`; all other authoritative files and release
+fields remain covered. The source commit points to a prepared commit containing
+the authored source, release version, status, and integrity references. The
+release validator recomputes the `2.0.0` digest for both the working tree and
+the pinned source commit, and verifies the conformance-policy and tooling-lock
+file hashes at each revision.
+
+A consumer pinned to contract `1.0.0` retains that contract until its owner
+reviews and validates an update in its own gated issue and pull request. Each
+consumer must adopt `2.0.0` before it processes a release using the new digest
+semantics.

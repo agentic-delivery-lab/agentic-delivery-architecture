@@ -134,9 +134,8 @@ export async function validateDecisionInventory(root = repositoryRoot, { invento
       validateObjectShape(origin, ['type', 'repository', 'repositoryId', 'sourceIssue'], ['type', 'repository', 'repositoryId', 'sourceIssue'], `${location}.proposed origin`, add);
       if (origin.repository !== ARCH_REPOSITORY || origin.repositoryId !== ARCH_REPOSITORY_ID || origin.sourceIssue !== inventory.sourceIssue) add(`${location}.proposed origin must point to this Architecture proposal`);
       if (Object.hasOwn(origin, 'sourceCommit') || Object.hasOwn(origin, 'sourcePath') || Object.hasOwn(origin, 'sha256')) add(`${location}.proposed origin cannot claim a baseline source pin`);
-      continue;
     }
-    if (!SHA1.test(origin.sourceCommit ?? '') || typeof origin.sourcePath !== 'string' || !/^((docs\/)?decisions)\/[^/]+\.md$/.test(origin.sourcePath) || !SHA256.test(origin.sha256 ?? '')) add(`${location}.origin needs an immutable source commit, decision path, and SHA-256`);
+    if (origin.type !== 'proposed' && (!SHA1.test(origin.sourceCommit ?? '') || typeof origin.sourcePath !== 'string' || !/^((docs\/)?decisions)\/[^/]+\.md$/.test(origin.sourcePath) || !SHA256.test(origin.sha256 ?? ''))) add(`${location}.origin needs an immutable source commit, decision path, and SHA-256`);
     if (origin.type === 'architecture-baseline') {
       if (origin.repository !== ARCH_REPOSITORY || origin.repositoryId !== ARCH_REPOSITORY_ID || origin.sourcePath !== recordPath) add(`${location}.architecture baseline identity/path does not match canonical Architecture`);
       if (origin.reviewEvidence !== undefined && (typeof origin.reviewEvidence !== 'string' || !/^https:\/\/github\.com\/.+\/pull\/\d+$/.test(origin.reviewEvidence))) add(`${location}.origin.reviewEvidence must be a pull request URL`);

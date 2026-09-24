@@ -76,6 +76,10 @@ test('canonical inventory has exact record coverage and rejects projections and 
   withDuplicate.records[1].id = withDuplicate.records[0].id;
   await assert.rejects(validateDecisionInventory(root, { inventory: withDuplicate }), /must be a unique ADR, ADP, or ADD identifier/);
 
+  const proposedDomainDrift = structuredClone(result.inventory);
+  proposedDomainDrift.records.find((record) => record.id === 'ADR-0020').domains = ['agentic-delivery-governance'];
+  await assert.rejects(validateDecisionInventory(root, { inventory: proposedDomainDrift }), /domains must match the record's bounded-context frontmatter/);
+
   const withExternalProjection = structuredClone(result.inventory);
   withExternalProjection.externalAdrs = [];
   await assert.rejects(validateDecisionInventory(root, { inventory: withExternalProjection }), /external ADR projections are forbidden/);

@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/adr-primitive-index.schema.json",
-  "title": "Architecture ADR to Primitive index v1",
+  "title": "Architecture ADR to Primitive index v2",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "source", "architecture", "primitiveRelease", "domains", "adrs", "externalAdrs", "uncoveredAdrs", "primitives"],
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "const": 2 },
     "source": { "const": "released-primitive-catalog" },
     "architecture": { "const": "urn:agentic-delivery:architecture:authority" },
     "primitiveRelease": {

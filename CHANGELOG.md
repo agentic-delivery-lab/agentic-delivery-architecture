@@ -6,6 +6,9 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Bumped the generated ADR/Primitive index to v2 so its schema covers
+  immutable external owner objects and per-Primitive external ADR references;
+  the draft Architecture release now pins contract version `2.0.0`.
 - Established Architecture Authority as the canonical owner for cross-context
   decisions, principles, domain models, and conformance policy; recorded
   immutable Control Plane owner projections and current evidence limits.

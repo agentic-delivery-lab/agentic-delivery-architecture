@@ -24,6 +24,12 @@ test('architecture contracts and aliases are deterministic', async () => {
 
 test('ADR/Primitive traceability uses a pinned release projection', async () => {
   const index = JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8'));
+  const indexSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/adr-primitive-index.schema.json'), 'utf8'));
+  const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
+  assert.equal(index.schemaVersion, 2);
+  assert.equal(indexSchema.title, 'Architecture ADR to Primitive index v2');
+  assert.equal(indexSchema.properties.schemaVersion.const, 2);
+  assert.equal(release.contractVersions.adrPrimitiveIndex, '2.0.0');
   assert.equal(index.source, 'released-primitive-catalog');
   assert.match(index.primitiveRelease.sourceCommit, /^[0-9a-f]{40}$/);
   assert.ok(index.primitives.length > 0);
@@ -33,6 +39,7 @@ test('ADR/Primitive traceability uses a pinned release projection', async () => 
     && adr.owner.repositoryId === 1358455028
     && adr.owner.canonicalPath === 'docs/decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md'
     && /^[0-9a-f]{64}$/.test(adr.owner.sha256)));
+  assert.ok(index.primitives.some((primitive) => primitive.externalAdrs.includes('ADR-0009')));
 });
 
 test('external ADR owner projection requires immutable identity and file digests', async () => {

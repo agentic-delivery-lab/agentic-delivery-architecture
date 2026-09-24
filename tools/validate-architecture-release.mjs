@@ -47,6 +47,7 @@ export async function validateArchitectureRelease(root = repositoryRoot, expecte
   if (!Array.isArray(release.principleIds) || release.principleIds.length === 0) errors.push('architecture release must identify principles');
   if (!Array.isArray(release.adrIds) || release.adrIds.length === 0 || new Set(release.adrIds).size !== release.adrIds.length) errors.push('architecture release must identify unique ADRs');
   if (!Array.isArray(release.contextIds) || release.contextIds.length === 0 || new Set(release.contextIds).size !== release.contextIds.length) errors.push('architecture release must identify unique bounded contexts');
+  if (release.contractVersions?.adrPrimitiveIndex !== '2.0.0') errors.push('architecture release must pin ADR/Primitive index contract 2.0.0');
   for (const [name, reference] of [['conformancePolicy', release.conformancePolicy], ['toolingLock', release.toolingLock]]) {
     if (!reference || !pathIsSafe(reference.path) || !SHA256.test(reference.sha256 ?? '')) {
       errors.push(`architecture release ${name} must identify a safe path and SHA-256 digest`);

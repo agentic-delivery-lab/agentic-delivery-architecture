@@ -150,7 +150,7 @@ async function buildIndex(root) {
   });
   const uncoveredAdrs = adrRows.filter((adr) => adr.primitives.length === 0).map((adr) => adr.id);
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     source: 'released-primitive-catalog',
     architecture: 'urn:agentic-delivery:architecture:authority',
     primitiveRelease: {
@@ -193,8 +193,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const root = args.find((argument) => argument !== '--check') ?? repositoryRoot;
     const index = await generateAdrPrimitiveIndex({ checkOnly, root });
     process.stdout.write(checkOnly
-      ? `ADR/Primitive index check passed: ${index.adrs.length} Architecture ADR(s), ${index.externalAdrs.length} externally owned ADR(s), ${index.primitives.length} primitive reference(s).\n`
-      : `ADR/Primitive index generated: ${index.adrs.length} Architecture ADR(s), ${index.externalAdrs.length} externally owned ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+      ? `ADR/Primitive index v2 check passed: ${index.adrs.length} Architecture ADR(s), ${index.externalAdrs.length} externally owned ADR(s), ${index.primitives.length} primitive reference(s).\n`
+      : `ADR/Primitive index v2 generated: ${index.adrs.length} Architecture ADR(s), ${index.externalAdrs.length} externally owned ADR(s), ${index.primitives.length} primitive reference(s).\n`);
   } catch (error) {
     process.stderr.write(`${error.message}\n`);
     process.exitCode = 1;

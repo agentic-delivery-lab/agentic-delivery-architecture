@@ -2,7 +2,7 @@
   "$schema": "../contracts/architecture-release.schema.json",
   "schemaVersion": 1,
   "architectureId": "urn:agentic-delivery:architecture:authority",
-  "version": "0.1.0-draft.9",
+  "version": "0.1.0-draft.10",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
   "sourceCommit": "47f16351f28172d53583130aef667d26a675b586",
   "contentSha256": "536c3c245f784e607569e21ca2c59d768c6dc60d5df8c9e20dd3921e7368ae6b",
@@ -13,12 +13,7 @@
   ],
   "adrIds": [
     "urn:agentic-delivery:adr:architecture:0001",
-    "urn:agentic-delivery:adr:architecture:0002",
     "urn:agentic-delivery:adr:architecture:0003",
-    "urn:agentic-delivery:adr:architecture:0004",
-    "urn:agentic-delivery:adr:architecture:0005",
-    "urn:agentic-delivery:adr:architecture:0006",
-    "urn:agentic-delivery:adr:architecture:0007",
     "urn:agentic-delivery:adr:architecture:0011",
     "urn:agentic-delivery:adr:architecture:0012",
     "urn:agentic-delivery:adr:architecture:0013",
@@ -27,12 +22,10 @@
     "urn:agentic-delivery:adr:architecture:0019"
   ],
   "contextIds": [
-    "architecture-authority",
+    "agentic-delivery-governance",
     "agentic-delivery-control-plane",
     "agentic-primitives",
-    "developer-distribution",
-    "public-organization-governance",
-    "private-copilot-publication"
+    "developer-distribution"
   ],
   "conformancePolicy": {
     "path": "architecture/policies/conformance.yml",

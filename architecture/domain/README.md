@@ -1,81 +1,113 @@
-<!-- agentic-primitive: {"id":"delivery-state-domain-language","kind":"customization","enforcement":"semantic","adrs":["ADR-0019"],"domains":["agentic-delivery-governance"]} -->
+# Domain language and context boundaries
 
-# Domain language
+## Purpose and authority
 
-## Domain vision
+This register is the cross-context vocabulary for Agentic Delivery. It is
+maintained here as part of the Architecture Authority. The Control Plane's
+register at the baseline commit cited in
+[`system-evidence.yml`](../references/system-evidence.yml) has the same 83
+terms for the two original contexts; the four-context model here adds the
+distinct catalog/release and bootstrap/bundle models evidenced by the
+Primitive and Distribution contracts. The Control Plane remains responsible
+for its own executable model and must review any later language changes that
+affect its context.
 
-This repository defines a reliable way for people and coding agents to deliver changes together. Its domain model makes governance rules, review boundaries and reusable agent instructions explicit so that a future contributor can understand what is being changed, why it is being changed and when a decision becomes official.
+The architecture describes the system and its contracts. Architecture
+Authority is the cross-context owner of this description, principles,
+conformance rules, and organization-wide ADRs. It is not a fifth bounded
+context: this repository does not establish a separate business model or
+ubiquitous language. Likewise, `.github` and `.github-private` are GitHub
+adapters that hold public community/template artifacts and private profile or
+agent projections; repository boundaries alone do not create domain contexts.
 
-The canonical model vocabulary is stored in [`ubiquitous-language.yml`](ubiquitous-language.yml). Use the registered term and definition when discussing a modeled concept in documentation, agent instructions, issue or pull-request communication, and domain-bearing code.
+## Bounded contexts
 
-The control plane is GitHub: Issues, native issue types, pinned Lifecycle Stage
-and Delivery State fields (currently exposed as the legacy Delivery Readiness
-field), governance metadata, pull requests, and
-deterministic Actions own work state. The execution plane is Codex and the
-self-hosted runner: it performs bounded operations and records execution state
-but cannot decide or apply lifecycle transitions.
+The domain register contains four contexts supported by distinct language or
+model boundaries:
 
-Conversation events can request a delivery run only after they pass the
-versioned invocation boundary. The boundary identifies the activation mention,
-supported GitHub event, automation actor, source context, and deterministic
-authorization before Actions dispatches work. A mention activates processing;
-it does not choose a semantic route or bypass the lifecycle and readiness
-gates.
+| Context | Owns | Evidence and boundary |
+| --- | --- | --- |
+| `agentic-delivery-governance` | Repository delivery governance and reusable rules for proposing, reviewing, validating, and recording work | Defined in the Control Plane register and ADR-0003. The repository-level control plane is a GitHub surface; it is not the executable controller. |
+| `agentic-delivery-control-plane` | The delivery controller, event intake, enrollment, lifecycle contracts, orchestration, and controlled GitHub write-back | Defined in the Control Plane register; runtime implementation remains in `agentic-delivery`. It does not own Architecture or Primitive source. |
+| `agentic-primitives` | Versioned agents, skills, instructions, hooks, validators, capabilities, and MCP contracts, with a catalog and release/projection rules | Distinct catalog and release model in ADP-0001 and `manifests/primitive-catalog.yml` at the pinned Primitive revision. |
+| `developer-distribution` | Reproducible development-environment and thin consumer integration bundles, bootstrap, and consumer projections | Distinct bundle/bootstrap model in ADD-0001 and `manifests/workflow-bundle.json` at the pinned Distribution revision. |
 
-Issue type answers what the issue represents. Lifecycle Stage answers where it
-is in its lifecycle. Delivery State records the orthogonal authorization or
-hold gate (currently exposed as Delivery Readiness), while governance metadata
-records cross-cutting controls. The runner's
-execution state records resumable operations and is not a replacement for any
-of those GitHub values.
+The last two are domain contexts because their contracts define different
+catalog, release, compatibility, and bootstrap behavior. That classification
+is based on those models, not on the names or number of repositories. The
+contexts and their relationships are also recorded in
+[`bounded-contexts.yml`](bounded-contexts.yml) and
+[`context-map.yml`](context-map.yml).
 
-## Repository boundary
+## Context-scoped language
 
-The repository currently hosts two transitional bounded contexts. `agentic-delivery-governance` covers repository rules and reusable delivery primitives for proposing, reviewing, validating and recording work. `agentic-delivery-control-plane` covers the organization-aware executable controller, its signed event boundary, participant enrollment, lifecycle contracts, orchestration policy and controlled GitHub write-back. The latter is intentionally being extracted into the permanent Control Plane boundary; it must not absorb Architecture Authority or canonical Primitive implementation.
+The canonical machine-readable vocabulary is
+[`ubiquitous-language.yml`](ubiquitous-language.yml). A term has one meaning
+inside its listed context; the same spelling elsewhere is not presumed to
+have that meaning. At a boundary, name the owning context or use an explicit
+translation.
 
-The existing `control plane` term names GitHub's authoritative work-state
-surfaces. The executable implementation is called the `delivery controller` so
-that the two meanings are not silently conflated across the extraction.
+In Agentic Delivery Governance, **control plane** means GitHub Issues, native
+Issue Types, organization issue fields, pull requests, and deterministic
+Actions that hold work intent and state. In Agentic Delivery Control Plane,
+**delivery controller** means the executable service that consumes eligible
+events and proposes and applies authorized operations. Those meanings are
+related but are not interchangeable.
 
-Do not assume that a registered meaning applies outside its bounded context. Add another bounded context only when a model has a distinct purpose or a term needs a meaning that would conflict with the existing context. Describe translations at the boundary when two contexts must interact.
+In governance, **issue type** identifies what an issue represents;
+**Lifecycle Stage** records lifecycle position; **Delivery State** is the
+orthogonal operation authorization/hold field, currently exposed as the legacy
+`Delivery Readiness` name; governance metadata expresses cross-cutting
+controls; and runner execution state describes one operation. GitHub Projects
+fields are a separate projection surface. Native GitHub Issue Types and
+organization issue-field definitions are also separate organization
+settings. Their configuration and visible pinning are not proved merely by
+the existence of repository schemas or forms.
+
+In Agentic Primitives, **primitive catalog**, **primitive release**, and
+**primitive projection** refer to the versioned capability inventory, its
+immutable source/digest, and a generated consumer copy. In Developer
+Distribution, **distribution bundle**, **bootstrap**, and **consumer
+projection** refer to versioned installation inputs and the controlled update
+of thin repository integrations. A Primitive projection and a Distribution
+bundle are not the same artifact.
 
 ## Changing the model
 
-Treat language as part of the domain model. Include a register update in the same change set when work:
+Treat language as part of the domain model. Update this register and affected
+artifacts in the same change when a modeled concept is missing, a term changes
+meaning, or a context boundary or translation changes. State the affected
+contexts and terms in decision work. Use the repository's
+[architecture-decision process](../../.agents/skills/architecture-decision/SKILL.md)
+for significant or cross-cutting changes. Review new context classifications
+against their authoritative contracts instead of assuming that a repository
+boundary proves a separate domain model.
 
-- introduces a modeled concept that has no registered term;
-- uses a registered term with a conflicting meaning;
-- changes the meaning or preferred name of a term; or
-- introduces a bounded context or a translation between contexts.
+An `avoid` entry is context-specific review guidance. Exact names from
+external systems and identifiers remain unchanged; explain their context when
+the difference could be ambiguous.
 
-State the affected bounded contexts and terms in architecture-decision work. Review the change against relevant ADRs and update code, documentation, tests and agentic primitives that express the changed model. A significant or cross-cutting model change requires the repository's architecture-decision process.
+## Enforcement and evidence boundary
 
-An `avoid` entry names wording that can hide or confuse the intended meaning. It is review guidance within that term's context, not a repository-wide forbidden-word rule. Exact names from external systems, identifiers and quotations may remain unchanged. Explain their context or map them to the local term when the difference could be ambiguous.
+`tools/validate-domain-language.mjs` checks register structure, context
+references, and duplicate or conflicting terms. These checks do not prove
+semantic consistency. Reviewers must compare meaning with the bounded
+context's contract and inspect the source revisions cited by the architecture
+description. There is no repository-wide forbidden-word scan.
 
-## Enforcement boundary
+Agentic primitives carry concise metadata naming their ADR IDs and bounded
+contexts. The generated traceability index derives relationships from a
+pinned Primitive catalog and carries immutable owner metadata for external
+ADRs. It is not an editable rationale map and does not copy ADR prose.
 
-`scripts/validate-domain-language.mjs` checks the structure of the canonical register. CI also checks that the register, this documentation, agent instructions and the reusable skill remain linked. These checks can detect malformed data, duplicate names and broken references.
-
-Automation cannot prove that prose or code expresses the intended model. Agents and human reviewers must check semantic consistency, ambiguity and context. The repository deliberately does not scan all text for forbidden words.
-
-Agentic primitives carry a small `primitive reference` comment naming their
-governing ADRs and bounded contexts. The generated traceability index is
-derived from those comments; it is not a second editable decision map and its
-presence does not load complete ADRs into a model context.
+The evidence snapshot pins source commits and records live observations and
+their limits. It is historical evidence, not an assertion that live settings
+or runtime behavior remain unchanged after the observation date.
 
 ## Sources
 
-- [Eric Evans, *Domain-Driven Design Reference* (2015)](https://www.domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf): Bounded Context, Ubiquitous Language and Continuous Integration.
-- [ADR-0001: Use MADR and GitHub Issues for architectural decisions](../decisions/0001-use-madr-for-architecture-decisions.md).
-- [ADR-0002: Use plain language for human-agent communication](../decisions/0002-use-plain-language-for-human-agent-communication.md).
-- [ADR-0003: Use context-scoped ubiquitous language](../decisions/0003-use-context-scoped-ubiquitous-language.md).
-- [ADR-0004: Use trunk-based delivery with short-lived feature branches](../decisions/0004-use-trunk-based-delivery.md).
-- [ADR-0005: Use Conventional Commits with Gitmoji](../decisions/0005-use-conventional-commits-with-gitmoji.md).
-- [ADR-0006: Curate a human-readable changelog](../decisions/0006-curate-a-changelog.md).
-- [ADR-0012: Use GitHub as the lifecycle control plane](../decisions/0012-use-github-as-the-lifecycle-control-plane.md).
-- [ADR-0013: Derive ADR traceability from agentic primitives](../decisions/0013-derive-adr-traceability-from-agentic-primitives.md).
-- [ADR-0015: Isolate resumable runner execution](../decisions/0015-isolate-resumable-runner-execution.md).
-- [ADR-0016: Require structured pull request descriptions](../decisions/0016-require-structured-pull-request-descriptions.md).
-- [ADR-0017: Use an explicit agent-invocation boundary for conversation-driven delivery](../decisions/0017-use-an-explicit-agent-invocation-boundary.md).
-- [ADR-0018: Organization-wide Agentic Delivery control-plane distribution and versioning](../decisions/0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md).
-- [ADR-0019: Canonicalize the orthogonal delivery-state field](../decisions/0019-canonicalize-delivery-state-field.md).
+- [Eric Evans, *Domain-Driven Design Reference* (2015)](https://www.domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf): bounded contexts and context-scoped language.
+- [ADR-0001](../../decisions/0001-use-madr-for-architecture-decisions.md) and [ADR-0003](../../decisions/0003-use-context-scoped-ubiquitous-language.md): decision and language policies.
+- Control Plane decisions are owned in the Control Plane repository; immutable links and SHA-256 values are in [`adr-owner-projection.yml`](../references/adr-owner-projection.yml).
+- [ADP-0001](https://github.com/agentic-delivery-lab/agentic-delivery-primitives/blob/e4933566fbf5b0f593830f8933f18fbd21024fa7/docs/decisions/ADP-0001-primitive-release-and-projection.md) and its pinned catalog define the Primitive context.
+- [ADD-0001](https://github.com/agentic-delivery-lab/agentic-delivery-distribution/blob/b69c5710928b47efc4d3ab12ec4d5b596c80720c/docs/decisions/ADD-0001-distribution-boundary.md) and its pinned bundle define the Distribution context.

@@ -2,10 +2,11 @@
 date: 2026-09-10
 source-issue: https://github.com/agentic-delivery-lab/agentic-delivery/issues/25
 decision-makers: Sjef Jenniskens
-consulted: None
-informed: None
+consulted: Not recorded
+informed: Not recorded
 domains:
   - agentic-delivery-governance
+  - agentic-delivery-control-plane
 required-enforcement:
   - deterministic
   - semantic
@@ -15,139 +16,106 @@ required-enforcement:
 
 ## Context and Problem Statement
 
-The architecture-conformance baseline for issue #25 found that this
-repository encodes many decisions in validators and tests, but a reviewer
-cannot reliably connect a pull request to affected ADRs, bounded contexts,
-source-issue intent, Codex execution evidence and the limits of runtime
-observation. Documentation-only review is too weak, while model judgment
-cannot be treated as deterministic proof.
+A pull request may change a contract, a bounded-context term, a deterministic
+control, or only its implementation. Structural validators can identify
+objective contract failures but cannot establish that the change preserves a
+decision's intent. Semantic reviewers can assess meaning, but their judgment
+is not deterministic proof. Reviewers need cited evidence and must see when
+runtime evidence is unavailable.
+
+This is an organization-wide review contract. It does not assign one validator,
+workflow, or live ruleset to all repositories. Each repository may require its
+own adapter and hosting rule, and the availability of those rules is verified
+per repository.
 
 ## Decision Drivers
 
-- Detect objective architecture and evidence-contract violations early.
-- Review decision meaning, domain language and architectural drift with cited
-  evidence rather than unsupported model opinion.
-- Keep the official ADR context on the base branch and provisional changes on
-  the pull-request branch.
-- Give reviewers a path from the pull request to the source issue, delivery
-  run, Codex session, verified revision and validation summary.
-- Preserve human merge authority and avoid write permissions or duplicate
-  issue comments.
-- Reuse the existing Codex quota, sandbox, model selection and redaction
-  boundaries without silently falling back to another model or billing path.
+- Fail deterministically on objective contract and provenance violations.
+- Assess decision intent, bounded-context language, and architecture drift
+  with cited evidence.
+- Keep semantic findings advisory or inconclusive when they depend on
+  interpretation or missing runtime evidence.
+- Use official decisions from the base revision and treat branch-only ADR
+  changes as provisional.
+- Preserve human merge authority and keep review evidence read-only.
 
 ## Considered Options
 
-- **Documentation-only review.** Easy to maintain, but cannot detect drift or
-  provide repeatable evidence.
-- **Deterministic-only workflow.** Strong for schemas, links, permissions and
-  state rules, but cannot decide whether implementation preserves an ADR's
-  intent or a domain term's meaning.
-- **Mandatory model-gated review.** Interprets meaning, but makes a
-  safety-sensitive merge gate dependent on quota, model availability and
-  non-deterministic judgment.
-- **Layered read-only review.** Deterministic checks fail only on objective
-  violations; a bounded Sol High reviewer returns cited advisory findings.
+- Documentation-only review, which has low runtime cost but does not detect
+  structural drift predictably.
+- Deterministic-only review, which can enforce structure but cannot assess
+  meaning or evidence quality.
+- Mandatory semantic review as a merge gate, which makes merge eligibility
+  depend on model availability and non-deterministic judgment.
+- Layered review, which assigns objective rules to deterministic checks and
+  interpretation to a cited, read-only semantic review.
 
 ## Decision Outcome
 
-Chosen option: **Layered read-only review**, because it combines deterministic
-failure for deterministic rules with explicit, evidence-backed semantic review
-without pretending that model judgment is mathematical proof.
+Chosen option: **Layered review**, because it keeps deterministic rules
+repeatable and exposes semantic concerns without treating a model response as
+mathematical proof.
 
-The repository will run a dedicated internal pull-request workflow. It loads
-official ADRs from the base revision, provisional ADR changes from the head,
-the merge-base-to-head diff, the generated ADR-to-primitive traceability index,
-the domain register, the architecture impact map, the source issue and safe
-runtime evidence when available. It produces one
-machine-readable result and one concise check summary. It does not post issue
-comments, modify the pull request, merge, close issues or silently repair
-findings.
+The Architecture Authority owns the cross-context review contract: required
+inputs, applicable ADR and domain-language references, deterministic failure
+criteria, and the requirement that semantic findings cite exact evidence.
+Structural violations fail their check. Semantic concerns, invalid semantic
+output, and unavailable model or runtime evidence are reported as advisory or
+inconclusive findings. A human reviewer decides whether the cited evidence is
+sufficient and retains merge authority.
 
-The requested Git revisions are the evidence boundary. The review reads the
-architecture map, ADR index and records, primitive metadata, domain register,
-generated traceability, and decision index directly from the pull-request head;
-it does not substitute the runner working tree. Added, changed, and removed ADRs
-on that head are therefore the provisional truth for that branch. After merge,
-the same files become official on `main`, and every branch created from the new
-`main` inherits them. The base revision remains the official comparison point.
+The Architecture Authority's `architecture/harness-review.yml` describes the
+architecture surfaces to consider, and its conformance policy defines the
+review boundary. The Control Plane owns the executable review service,
+workflow permissions and triggers, model and reasoning configuration, quota,
+sandbox and network policy, redaction, session handling, and any runner-state
+or pull-request evidence projection. Its implementation and runtime contracts
+are pinned separately in the [Control Plane source baseline](https://github.com/agentic-delivery-lab/agentic-delivery/tree/c6c891fa937b7db06e3925c3e83ea83656b3d617),
+including [ADR-0009](https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md),
+[ADR-0015](https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0015-isolate-resumable-runner-execution.md),
+and the Control Plane review workflow and implementation. Primitive definitions
+remain in Agentic Primitives; they are not copied into the Architecture
+reviewer context beyond the pinned catalog metadata needed to assess impact.
 
-The deterministic layer validates the evidence schema, generated
-ADR/primitive relationships, domain applicability, required deterministic
-enforcement, source-issue and branch correlation, required durable-artifact
-relationships, deletion outcomes, supersession, and permission/state
-invariants. It fails the check only for a clear violation. The semantic layer
-uses GPT-5.6 Sol with
-high reasoning effort, read-only `delivery-review` permissions, the existing
-subscription-only budget boundary and no external network. It must cite exact
-repository, issue, run or session evidence. Findings, invalid semantic output,
-unavailable evidence and unavailable quota are reported as advisory or
-inconclusive results.
-
-Agent-created pull requests carry a versioned evidence projection derived from
-persisted delivery state. The projection contains source issue, workflow run,
-branch and verified revision, Codex session, model turn settings, ADR/context
-references, validation, bounded telemetry and an audit checkpoint. Runner
-state remains canonical; the pull-request projection is the reviewer-facing
-reference and is replaced idempotently on publication retry.
+The review reads official ADRs from the base revision and provisional changes
+from the pull-request head. It consumes bounded source-issue intent, the
+merge-base diff, generated traceability, the domain register, deterministic
+results, and whitelisted runtime evidence when available. A finding links to
+the exact repository, immutable revision, issue, run, or session evidence that
+supports it. Missing runtime data is recorded as a limit, not inferred from
+passing tests or documentation.
 
 ### Consequences
 
-- Good, because structural rules fail predictably and semantic concerns remain
-  visible without blocking on a model opinion.
-- Good, because a reviewer can begin at the pull request and follow stable
-  references toward the source issue and delivery run.
-- Good, because read-only permissions preserve human and controller ownership.
-- Bad, because semantic review consumes subscription allowance and can be
-  inconclusive when quota or runtime evidence is unavailable.
-- Bad, because the runtime-surface impact map must be maintained when
-  architectural surfaces move, although it does not duplicate ADR rationale
-  or the generated ADR-to-primitive relationship.
-- Neutral, because GitHub Free still cannot technically prevent every direct
-  push or bypass by another credential holder.
+- Good, because objective contract violations fail reproducibly.
+- Good, because semantic findings remain visible without becoming an
+  unsupported deterministic gate.
+- Good, because the owner of each concern is clear: Architecture owns review
+  criteria; the Control Plane owns execution and evidence publication.
+- Bad, because the Control Plane must keep its implementation aligned with the
+  versioned Architecture contract and pinned source release.
+- Bad, because semantic quality still depends on a human checking meaning and
+  cited evidence.
+- Neutral, because repository-specific workflows and rulesets remain separate
+  hosting adapters and must be audited individually.
 
 ### Confirmation
 
-Tests must cover impact-map coverage, evidence-schema validation, redaction,
-publication retry idempotency, deterministic failure codes, exact Sol High
-review settings, denied model network, cited semantic findings, inconclusive
-quota/evidence handling, workflow permissions and no-comment behavior. A
-human reviewer must inspect whether the baseline and semantic findings cite
-evidence rather than treating tests or documentation as runtime proof.
-
-## Pros and Cons of the Options
-
-### Layered read-only review
-
-- Good, because each question is assigned to deterministic tooling or human/
-  model interpretation according to its nature.
-- Good, because it closes the traceability gap without giving the reviewer
-  publication or issue-management authority.
-- Bad, because it adds a small impact map, evidence schema and model-review
-  runtime that need maintenance.
-
-### Documentation-only review
-
-- Good, because it has no runtime cost.
-- Bad, because drift is found only when a person remembers to inspect it.
-
-### Deterministic-only workflow
-
-- Good, because results are reproducible and cheap.
-- Bad, because it cannot assess intent, meaning or whether a test proves the
-  right architectural property.
-
-### Mandatory model-gated review
-
-- Good, because semantic concerns can be raised before merge.
-- Bad, because quota, availability and model judgment are not a sound
-  deterministic merge boundary.
+Architecture checks must verify the review contract, context and ADR
+references, and generated traceability. They must not claim that their
+structural checks prove runtime behavior. Control Plane tests must verify its
+workflow permissions, safe base/head inputs, deterministic failure codes,
+read-only semantic boundary, redaction, quota and execution handling, and
+idempotent evidence publication. An independent reviewer must inspect whether
+findings cite evidence and whether the cited evidence supports the conclusion.
+Live App permissions, issue-field APIs, rulesets, runner behavior, and end-to-end
+issue-to-pull-request execution require separate runtime evidence.
 
 ## More Information
 
-- Baseline: [`docs/architecture/harness-conformance-review.md`](../architecture/harness-conformance-review.md)
-- Domain register: [`ubiquitous-language.yml`](../domain/ubiquitous-language.yml)
-- Related decisions: [ADR-0001](0001-use-madr-for-architecture-decisions.md), [ADR-0003](0003-use-context-scoped-ubiquitous-language.md), [ADR-0009](0009-run-codex-from-source-issues-with-a-budget-boundary.md), [ADR-0012](0012-use-github-as-the-lifecycle-control-plane.md), and [ADR-0013](0013-derive-adr-traceability-from-agentic-primitives.md)
-- Amendment source: [issue #32](https://github.com/agentic-delivery-lab/agentic-delivery/issues/32)
-- This decision is provisional on its feature branch and becomes official only
-  after its review pull request is merged into `main`.
+- Historical source issue: [Issue #25](https://github.com/agentic-delivery-lab/agentic-delivery/issues/25). Its source and review history are not execution authorization.
+- The base record on Architecture `main` is official; no verifiable Architecture review PR for the original decision was found, so its review provenance is unknown. This issue #3 change proposes the Architecture Authority/Control Plane ownership split and cross-context review scope; those amendments remain provisional until their issue-linked review PR is merged.
+- Architecture review map: [`architecture/harness-review.yml`](../architecture/harness-review.yml).
+- Architecture conformance policy: [`architecture/policies/conformance.yml`](../architecture/policies/conformance.yml).
+- Pinned repository revisions and current evidence limits: [`system-evidence.yml`](../architecture/references/system-evidence.yml).
+- [ADR-0001](0001-use-madr-for-architecture-decisions.md), [ADR-0003](0003-use-context-scoped-ubiquitous-language.md), [ADR-0012](0012-use-github-as-the-lifecycle-control-plane.md), and [ADR-0013](0013-derive-adr-traceability-from-agentic-primitives.md) establish related ownership and review boundaries.

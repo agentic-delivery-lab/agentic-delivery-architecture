@@ -1,26 +1,47 @@
-schemaVersion: 1
+schemaVersion: 2
 contexts:
-  - id: architecture-authority
-    name: Architecture Authority
-    repository: agentic-delivery-architecture
-    owns: [principles, arc42, adrs, bounded-contexts, models, quality, risks, conformance]
+  - id: agentic-delivery-governance
+    name: Agentic Delivery Governance
+    definition: Repository delivery governance and reusable rules for proposing, reviewing, validating, and recording work.
+    canonicalLanguageSource:
+      repository: agentic-delivery-lab/agentic-delivery-architecture
+      path: architecture/domain/ubiquitous-language.yml
   - id: agentic-delivery-control-plane
     name: Agentic Delivery Control Plane
-    repository: agentic-delivery
-    owns: [event-routing, lifecycle, orchestration, github-app, actions, evidence]
+    definition: The delivery controller, event intake, enrollment, lifecycle contracts, orchestration, and authorized GitHub write-back.
+    repository: agentic-delivery-lab/agentic-delivery
+    canonicalLanguageSource:
+      repository: agentic-delivery-lab/agentic-delivery-architecture
+      path: architecture/domain/ubiquitous-language.yml
   - id: agentic-primitives
     name: Agentic Primitives
-    repository: agentic-delivery-primitives
-    owns: [agents, skills, instructions, hooks, validators, capabilities, mcp-contracts]
+    definition: The versioned catalog of reusable agent capabilities and contracts, with immutable release and projection rules.
+    repository: agentic-delivery-lab/agentic-delivery-primitives
+    evidence: ADP-0001 and manifests/primitive-catalog.yml at the pinned source revision.
+    canonicalLanguageSource:
+      repository: agentic-delivery-lab/agentic-delivery-architecture
+      path: architecture/domain/ubiquitous-language.yml
   - id: developer-distribution
     name: Developer Distribution
-    repository: agentic-delivery-distribution
-    owns: [devcontainer, features, bootstrap, plugins, consumer-projections]
-  - id: public-organization-governance
-    name: Public Organization Governance
-    repository: .github
-    owns: [public-profile, community-health, issue-forms, pull-request-template]
-  - id: private-copilot-publication
-    name: Private Copilot Publication
-    repository: .github-private
+    definition: The reproducible bootstrap, bundle, and thin consumer-integration model for installing pinned delivery artifacts.
+    repository: agentic-delivery-lab/agentic-delivery-distribution
+    evidence: ADD-0001 and manifests/workflow-bundle.json at the pinned source revision.
+    canonicalLanguageSource:
+      repository: agentic-delivery-lab/agentic-delivery-architecture
+      path: architecture/domain/ubiquitous-language.yml
+
+crossContextAuthority:
+  id: architecture-authority
+  repository: agentic-delivery-lab/agentic-delivery-architecture
+  classification: cross-context authority, not a bounded context
+  owns: [principles, architecture-description, cross-context-adrs, context-map, conformance]
+
+repositoryAdapters:
+  - id: public-github-adapter
+    repository: agentic-delivery-lab/.github
+    classification: GitHub repository adapter, not a bounded context
+    owns: [public-profile, community-health, issue-form-artifacts, pull-request-template]
+  - id: private-github-adapter
+    repository: agentic-delivery-lab/.github-private
+    classification: GitHub repository adapter, not a bounded context
     owns: [member-profile, promoted-agent-projections, publication-provenance]

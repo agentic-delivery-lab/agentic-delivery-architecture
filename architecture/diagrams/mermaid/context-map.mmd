@@ -1,17 +1,49 @@
 flowchart LR
-  architecture[Architecture Authority]
-  control[Agentic Delivery Control Plane]
-  primitives[Agentic Primitives]
-  distribution[Developer Distribution]
-  public[Public .github adapter]
-  private[Private .github-private adapter]
-  github[GitHub work state]
+  subgraph DOMAIN["Domain contexts"]
+    GOV["Agentic Delivery Governance"]
+    CP["Agentic Delivery Control Plane"]
+    PRIM["Agentic Primitives"]
+    DIST["Developer Distribution"]
+  end
 
-  architecture -->|architecture-release.v1| control
-  architecture -->|primitive-reference.v1| primitives
-  primitives -->|promoted agent projection| private
-  primitives -->|primitive-release.v1| distribution
-  distribution -->|thin workflow/bootstrap| control
-  public -->|public defaults| github
-  private -->|member profile and agents| github
-  control -->|controlled mutation| github
+  AUTH["Architecture Authority<br/>Cross-context authority, not a bounded context"]
+  AUTH -. "principles, context map, cross-context ADRs, conformance" .-> GOV
+  AUTH -. "architecture-release.v1" .-> CP
+  AUTH -. "ADR and context references" .-> PRIM
+  AUTH -. "architecture contract" .-> DIST
+
+  subgraph GHORG["GitHub organization surfaces"]
+    TYPE["Native Issue Types"]
+    DEFINITIONS["Organization issue-field definitions<br/>Lifecycle Stage + Delivery State<br/>(currently displayed as Delivery Readiness)"]
+    APP["GitHub App<br/>installation access + subscribed events"]
+  end
+  WORK["Repository Issues and pull requests"]
+  VALUES["Per-issue field values API<br/>repository-scoped values"]
+  PROJECTS["Projects fields<br/>separate planning projection; no lifecycle binding claimed"]
+  ENROLL["Control Plane participant contract<br/>selected repositories and pins"]
+  APP -->|"access and event delivery"| CP
+  ENROLL -->|"separate enrollment check"| CP
+  CP -->|"reads issue type and issue-field values"| TYPE
+  CP -->|"origin-scoped issue and PR operations"| WORK
+  CP -->|"reads definitions and options"| DEFINITIONS
+  CP -->|"reads/writes validated per-issue values"| VALUES
+  GOV -. "Issue Type, lifecycle, and delivery semantics" .-> TYPE
+
+  subgraph PUBLIC["Public .github repository adapter"]
+    FORMS["Community health, issue forms,<br/>and PR template artifacts"]
+  end
+  FORMS -->|"GitHub repository defaults; live form/type binding unverified"| WORK
+
+  subgraph PRIVATE["Private .github-private repository adapter"]
+    PROFILE["Member profile and approved agent-publication boundary"]
+  end
+  PRIM -->|"reviewed, versioned agent projection target"| PROFILE
+
+  PRIM -->|"primitive-release.v1"| DIST
+  CP -->|"pinned workflow bundle source"| DIST
+  DIST -->|"versioned bootstrap and consumer projection"| CONSUMER["Consumer repositories"]
+
+  NOTE["Target relationships are contracts; live bindings, publication entitlement,
+  and end-to-end activation remain evidence-gated."]
+  NOTE -.-> APP
+  NOTE -.-> PROFILE

@@ -9,6 +9,8 @@ import { validateArchitectureRelease } from '../tools/validate-architecture-rele
 import { validateConformanceRequest } from '../tools/validate-conformance-request.mjs';
 import { architectureContentDigest } from '../tools/architecture-content-digest.mjs';
 import { validateDiagrams } from '../tools/validate-diagrams.mjs';
+import { validateOwnerProjection } from '../tools/generate-adr-primitive-index.mjs';
+import { parseRepositoryYaml } from '../tools/lib/yaml.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 
@@ -17,7 +19,7 @@ test('official arc42 chapter structure is complete', async () => {
 });
 
 test('architecture contracts and aliases are deterministic', async () => {
-  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 5, aliases: 13 });
+  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 6, aliases: 8 });
 });
 
 test('ADR/Primitive traceability uses a pinned release projection', async () => {
@@ -27,7 +29,24 @@ test('ADR/Primitive traceability uses a pinned release projection', async () => 
   assert.ok(index.primitives.length > 0);
   assert.ok(index.primitives.every((primitive) => primitive.sourceRepository === 'agentic-delivery-lab/agentic-delivery-primitives'));
   assert.ok(index.primitives.every((primitive) => !primitive.sourcePath.startsWith('docs/')));
-  assert.ok(index.externalAdrs.includes('ADR-0009'));
+  assert.ok(index.externalAdrs.some((adr) => adr.id === 'ADR-0009'
+    && adr.owner.repositoryId === 1358455028
+    && adr.owner.canonicalPath === 'docs/decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md'
+    && /^[0-9a-f]{64}$/.test(adr.owner.sha256)));
+});
+
+test('external ADR owner projection requires immutable identity and file digests', async () => {
+  const projection = parseRepositoryYaml(await readFile(path.join(root, 'architecture/references/adr-owner-projection.yml'), 'utf8'), 'test owner projection');
+  const owners = validateOwnerProjection(projection);
+  assert.equal(owners.get('ADR-0002').canonicalPath, 'docs/decisions/0002-use-plain-language-for-human-agent-communication.md');
+  assert.throws(() => validateOwnerProjection({
+    ...projection,
+    owner: { ...projection.owner, repositoryId: 1 },
+  }), /repository ID is invalid/);
+  assert.throws(() => validateOwnerProjection({
+    ...projection,
+    records: projection.records.map((record, index) => index === 0 ? { ...record, sha256: 'bad' } : record),
+  }), /per-file SHA-256 digest/);
 });
 
 test('diagram sources remain model-first and structurally valid', async () => {
@@ -39,6 +58,13 @@ test('architecture release identifies the target authority', async () => {
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
+});
+
+test('architecture release sourceCommit contains the digest-pinned authored tree', async () => {
+  const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
+  const result = await validateArchitectureRelease(root, release.sourceCommit);
+  assert.equal(result.sourceCommit, release.sourceCommit);
+  assert.equal(result.contentSha256, release.contentSha256);
 });
 
 test('architecture content digest is deterministic for a pinned tree', async () => {

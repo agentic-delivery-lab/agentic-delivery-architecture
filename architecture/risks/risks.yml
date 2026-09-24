@@ -1,17 +1,57 @@
-schemaVersion: 1
+schemaVersion: 2
 risks:
   - id: R-001
-    title: GitHub entitlement differs from the design assumptions
+    title: Organization issue-field pinning and visibility are unverified
     status: open
     owner: organization-operator
-    mitigation: Verify repository visibility, Copilot entitlement, Projects access, and App installation permissions before activation.
+    evidence: system-evidence.yml#organization-issue-fields
+    mitigation: Verify field pinning on every intended native Issue Type and issues without a type; separately verify visibility and issue-value reads/writes with test issues.
   - id: R-002
-    title: Preview documentation tooling changes syntax
+    title: App installation access and Control Plane contract differ
     status: open
-    owner: architecture-maintainer
-    mitigation: Pin a tested tool version or commit and keep plain Markdown readable without the CLI.
+    owner: control-plane-maintainer
+    evidence: system-evidence.yml#invoker-installation
+    mitigation: Bind the exact installation to the controller identity, reconcile access and event expectations in a reviewed Control Plane change, and test before activation.
   - id: R-003
-    title: Publication projection drifts from Primitive source
+    title: Recovery issue intake fails before dependency installation
+    status: open
+    owner: control-plane-maintainer
+    evidence: system-evidence.yml#recovery-issue-intake-runs
+    mitigation: Correct the classify-job checkout path in its issue-linked branch, validate permissions and workflow tests, then observe a new shadow run.
+  - id: R-004
+    title: Participants have no end-to-end live delivery evidence
+    status: open
+    owner: control-plane-maintainer
+    evidence: system-evidence.yml#participant-modes-and-release-pins
+    mitigation: Keep all participants in shadow mode until event identity, field reads, deterministic gates, origin-only write-back, evidence publication, upgrade, and rollback are independently observed.
+  - id: R-005
+    title: Primitive main release manifest references an unresolved source commit
     status: open
     owner: primitive-maintainer
-    mitigation: Validate lock manifest, source commit, content hash, tools, and duplicate names on every publication PR.
+    evidence: system-evidence.yml#primitive-and-distribution-drafts
+    mitigation: Correct Primitive release provenance and validate the source commit and digest before the next Architecture/Distribution pin.
+  - id: R-006
+    title: Private adapter enforcement and publication entitlement are unknown
+    status: open
+    owner: organization-operator
+    evidence: system-evidence.yml#public-and-private-adapters
+    mitigation: Confirm plan entitlement, live ruleset state, profile rendering, and an approved agent projection with an operator; do not infer absence from the 403 response.
+  - id: R-007
+    title: Repository-scoped required checks may be mistaken for organization-wide protection
+    status: open
+    owner: organization-maintainer
+    evidence: system-evidence.yml#repository-releases-and-rulesets
+    mitigation: Audit each repo's live rulesets and branch settings separately and state the observation boundary in every review.
+  - id: R-009
+    title: Documentation tooling and diagram renderers are not fully reproducible
+    status: open
+    owner: architecture-maintainer
+    evidence: architecture/references/tooling-lock.json
+    mitigation: Keep sources readable without rendering; pin and verify tools before relying on generated output or activating a rendering pipeline.
+  - id: R-010
+    title: ADR and generated artifact provenance can drift across repository owners
+    status: open
+    owner: architecture-maintainer
+    relatedQualityScenario: QR-010
+    evidence: [architecture/references/adr-owner-projection.yml, system-evidence.yml#primitive-and-distribution-drafts]
+    mitigation: Validate repository identity, immutable source commits, canonical paths, per-file hashes for external ADRs, release digests for local Architecture records, and generated artifact manifests before activation.

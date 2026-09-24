@@ -1,150 +1,140 @@
 ---
 date: 2026-09-16
 source-issue: https://github.com/agentic-delivery-lab/agentic-delivery/issues/44
-decision-makers: Sjef Jenniskens
-consulted: GitHub Docs and Microsoft Engineering Fundamentals
-informed: None
+decision-makers: Repository maintainers
+consulted: GitHub documentation and organization maintainers
+informed: Organization maintainers
 domains:
   - agentic-delivery-governance
+  - agentic-delivery-control-plane
 required-enforcement:
   - instructional
   - deterministic
 ---
 
-# Require structured pull request descriptions
+# Require structured pull-request descriptions
 
 ## Context and Problem Statement
 
-Issue [#44](https://github.com/agentic-delivery-lab/agentic-delivery/issues/44)
-asks this repository to use the organization pull request template without a
-local override and to make its contents a required review input. A template by
-itself is advisory: an author or coding agent can leave sections empty, while
-Dependabot does not know the repository's planning and evidence contract.
-
-GitHub can make a stable Actions job a required status check through a branch
-ruleset. The repository was private when this decision was drafted and the
-Rulesets API rejected that scope. It is public now, so the repository endpoint
-is available, but the workflow is not yet on `main` and the active rule has not
-been verified. The repository must distinguish the desired, versioned rule
-from live hosting enforcement and must not claim that an unactivated control is
-active.
+Reviewers need a consistent description of the source issue, implementation
+plan, deviations, verification, risks, rollback, and review guidance. The
+contract is organization-wide, but its template artifact, validator
+implementation, and hosting rules have different owners. A template alone is
+advisory, and one repository's check or ruleset does not prove enforcement in
+another repository.
 
 ## Decision Drivers
 
-- Keep one organization pull request template as the canonical default.
-- Give reviewers separate `Source` and `Plan` sections for the source issue,
-  implementation plan and deviations, followed by evidence,
-  risks, delivery guidance and requested review focus.
-- Make the structural contract deterministic and visible as one stable check.
-- Evaluate trusted base-branch validator code without executing pull-request
-  code or exposing secrets.
-- Keep automated dependency updates usable without giving bots a broad ruleset
-  bypass.
-- Preserve a reviewable ruleset definition until an authorized maintainer
-  activates and verifies it after the workflow is on `main`.
-- Keep human merge authority and repository-specific semantic review.
+- Keep `Source` and `Plan` as separate pull-request headings.
+- Give reviewers the evidence needed to understand changes and assess rollback.
+- Keep the organization contract distinct from the template file and validator
+  implementation.
+- Run structural checks as trusted, deterministic code with only the
+  permissions they need.
+- Report live enforcement per repository; versioned definitions alone are not
+  proof of active hosting settings.
+- Preserve human merge authority and repository-specific semantic review.
 
 ## Considered Options
 
-- Organization template, deterministic base-branch check, narrow Dependabot
-  exemption, and a versioned required-check ruleset.
-- Repository-local template with a repository-local check.
-- Advisory organization template without deterministic validation.
-- A ruleset bypass for Dependabot or all bots.
+- An organization-wide body contract with a shared template artifact and
+  repository-scoped deterministic validation.
+- Independent repository-specific headings and templates.
+- An advisory template without a structural check.
+- A broad ruleset bypass for bot accounts.
 
 ## Decision Outcome
 
-Chosen option: **Organization template with a deterministic check and a narrow
-Dependabot exemption**, because it centralizes the author guidance while
-keeping repository-specific validation, agent instructions and review evidence
-under version control.
+Chosen option: **One organization-wide body contract with separately owned
+artifacts and controls**, because reviewers need a consistent description
+while each repository retains an auditable implementation and enforcement
+boundary.
 
-The repository will not contain a local pull request template. Pull request
-authors and coding agents must complete the organization template, including
-separate `Source` and `Plan` headings. A combined `Source and plan` heading is
-invalid. A dedicated
-`pull_request_target` workflow checks the body for all relevant body and
-revision events. It checks out the trusted base commit, has read-only contents
-permission, uses no secrets and never executes code from the pull request.
+Every review pull request uses separate `## Source` and `## Plan` headings.
+`Source` identifies the source issue. `Plan` records the implementation plan
+and material deviations. The remaining template sections capture verification,
+risks, rollback, and review guidance. A combined `## Source and plan` heading
+is invalid. A structural validator may check headings and required evidence,
+but a passing result does not prove that an answer is complete or true.
 
-The job name is `Validate pull request body`. It validates every author except
-the exact pull request author `dependabot[bot]`. Dependabot still receives a
-visible successful result from the same job. Other bots, GitHub Apps, users,
-teams and administrators are not exempt. The ruleset has no bypass actors,
-because a ruleset bypass would waive more than the pull request body contract.
+Ownership is explicit:
 
-The versioned ruleset requires the stable job on the default branch. It is a
-desired control, not current hosting state. An operator may activate it only
-after the workflow has reached `main`, reported the expected check, and the
-live ruleset has been verified through GitHub.
+- Architecture Authority owns this cross-context description contract and its
+  conformance criteria.
+- The public `.github` repository owns the organization pull-request template
+  artifact. Its source is pinned in the live baseline; form inheritance or
+  template visibility in every repository is separately verified.
+- The Control Plane owns the validator implementation and any reusable
+  workflow that invokes it. The validator is a Primitive implementation
+  reference, not Architecture-owned runtime code.
+- GitHub rulesets and required checks are repository-scoped hosting settings.
+  Each repository's settings and active checks require independent evidence.
+
+The validator must evaluate trusted code, use read-only permissions where
+possible, avoid secrets, and exempt only explicitly approved actors. Any
+Dependabot exception applies only to this body contract and does not bypass
+other required checks or reviews. Semantic completeness and evidence quality
+remain human review responsibilities.
 
 ### Consequences
 
-- Good, because reviewers receive a consistent description from people and
-  coding agents.
-- Good, because the validator is testable and runs trusted base-branch code.
-- Good, because Dependabot is exempt only from this description contract and
-  does not bypass unrelated review or status-check rules.
-- Bad, because the first pull request that introduces the workflow cannot run
-  the new base-branch workflow until the change is merged.
-- Bad, because activation is a separate privileged operation after the
-  workflow merge and cannot be proven by repository files alone.
-- Neutral, because deterministic structure does not prove that an answer is
-  complete or true; reviewers still assess meaning and evidence.
+- Good, because authors and reviewers have a shared, discoverable structure.
+- Good, because the decision owner, template owner, and validator owner are
+  distinct and traceable.
+- Good, because reviewers can tell a repository contract from live ruleset
+  enforcement.
+- Bad, because the template, validator, and consumer pins must remain
+  compatible across repositories.
+- Bad, because deterministic structure cannot prove the truth or adequacy of
+  the supplied plan and evidence.
+- Neutral, because the hosting platform must be checked repository by
+  repository.
 
 ### Confirmation
 
-- Contract tests reject every supported repository-local pull request template
-  location.
-- Unit tests cover complete bodies, missing content, unchecked author items,
-  the exact Dependabot exemption and rejection of other bots.
-- Workflow contract tests verify events, permissions, base-commit checkout,
-  stable job name and absence of secrets.
-- The automated delivery controller produces a body that passes the same
-  validator, and agentic primitives instruct coding agents to follow it.
-- The versioned ruleset has no bypass actors and requires only
-  `Validate pull request body` on the default branch.
-- The repository is public and the endpoint is now queryable; documentation
-  records the post-merge activation procedure and keeps live enforcement
-  unclaimed until an administrator verifies it.
+Architecture checks verify the decision and conformance contract. The public
+adapter check verifies the template has separate `Source` and `Plan` sections.
+Control Plane tests verify the validator's schema, permissions, trusted-code
+boundary, supported events, and approved exceptions. Integrated verification
+compares each participant's template source, validator version, check result,
+and active ruleset independently. The evidence snapshot at
+[`system-evidence.yml`](../architecture/references/system-evidence.yml) records
+that the Control Plane and public adapter currently require a body check, while
+the private adapter's ruleset status is unknown. This evidence does not prove
+that one validator or ruleset covers all repositories.
 
 ## Pros and Cons of the Options
 
-### Organization template with deterministic validation
+### One organization-wide contract with separate owners
 
-- Good, because organization guidance has one source while repository policy
-  remains testable.
-- Good, because one always-reported job can become a required status check.
-- Bad, because template changes and validator changes must remain compatible.
+- Good, because the review meaning stays consistent while each implementation
+  remains attributable to its repository.
+- Bad, because version pins and cross-repository changes require coordination.
 
-### Repository-local template and validation
+### Independent repository-specific contracts
 
-- Good, because both files could change in one repository pull request.
-- Bad, because the local file overrides and duplicates the organization
-  default, which is the opposite of the requested ownership boundary.
+- Good, because repositories can respond quickly to local needs.
+- Bad, because equivalent work can be described and reviewed differently.
 
 ### Advisory template only
 
-- Good, because it adds no workflow maintenance.
-- Bad, because empty or placeholder descriptions reach review without a clear
-  signal.
+- Good, because it requires little workflow maintenance.
+- Bad, because empty or placeholder sections may reach review without a signal.
 
-### Ruleset bypass for bots
+### Broad bot bypass
 
-- Good, because bot pull requests would never be blocked by this check.
-- Bad, because the bypass can waive unrelated rules and is broader than the
-  required Dependabot exception.
+- Good, because automation is less likely to be blocked by human-oriented
+  fields.
+- Bad, because a broad bypass can waive unrelated checks and reviews.
 
 ## More Information
 
-- Organization template proposal:
-  [`agentic-delivery-lab/.github#2`](https://github.com/agentic-delivery-lab/.github/pull/2)
-- [GitHub ruleset availability](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets)
-- [GitHub required-status-check behavior](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks)
-- [GitHub Dependabot Actions behavior](https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-on-actions)
-- [GitHub Rulesets REST API](https://docs.github.com/en/rest/repos/rules)
-- Related decisions: [ADR-0004](0004-use-trunk-based-delivery.md),
-  [ADR-0011](0011-run-layered-harness-architecture-reviews.md), and
-  [ADR-0012](0012-use-github-as-the-lifecycle-control-plane.md).
-- This decision is provisional on its feature branch and becomes official only
-  after its review pull request is merged into `main`.
+- Original template history: [public adapter PR #2](https://github.com/agentic-delivery-lab/.github/pull/2).
+- Architecture owns the contract; the source template is in the public adapter at [commit `af52c92`](https://github.com/agentic-delivery-lab/.github/tree/af52c92e49616e78f8d6647cf5cf538a7e571d78), and Control Plane enforcement sources are in the [pinned Control Plane tree](https://github.com/agentic-delivery-lab/agentic-delivery/tree/c6c891fa937b7db06e3925c3e83ea83656b3d617).
+- Live ruleset and branch evidence is recorded in [`system-evidence.yml`](../architecture/references/system-evidence.yml).
+- Related decisions: [ADR-0004](https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0004-use-trunk-based-delivery.md), [ADR-0011](0011-run-layered-harness-architecture-reviews.md), and [ADR-0012](0012-use-github-as-the-lifecycle-control-plane.md).
+- The base ADR-0016 is present on Architecture `main` and is official. The
+  public adapter PR #2 changed the template artifact, not review of this
+  Architecture decision; no verifiable Architecture review PR for the ADR was
+  found. The issue #3 ownership and content amendments remain provisional
+  until their issue-linked review PR is merged.

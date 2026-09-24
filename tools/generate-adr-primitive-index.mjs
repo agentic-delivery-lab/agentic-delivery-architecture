@@ -6,14 +6,12 @@ import { parseRepositoryYaml } from './lib/yaml.mjs';
 
 const ADR_FILE = /^(\d{4})-[a-z0-9-]+\.md$/;
 const SHA1 = /^[0-9a-f]{40}$/i;
+const SHA256 = /^[0-9a-f]{64}$/;
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const KINDS = new Set(['agent', 'skill', 'instruction', 'hook', 'validator', 'capability', 'mcp-contract']);
 const ENFORCEMENTS = new Set(['instructional', 'deterministic', 'semantic']);
 
-const root = path.resolve(process.argv.slice(2).find((argument) => argument !== '--check') ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'));
-const check = process.argv.includes('--check');
-const outputPath = path.join(root, 'architecture', 'generated', 'adr-primitive-index.json');
-const lockPath = path.join(root, 'architecture', 'references', 'primitive-catalog.lock.yml');
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 function frontmatter(source, file) {
   const lines = source.split(/\r?\n/);
@@ -27,7 +25,7 @@ function list(value) {
   return Array.isArray(value) ? value.map(String) : [];
 }
 
-async function loadAdrs() {
+async function loadAdrs(root) {
   const directory = path.join(root, 'decisions');
   const entries = await readdir(directory, { withFileTypes: true });
   const records = [];
@@ -71,20 +69,50 @@ function validateLock(lock) {
   if (errors.length) throw new Error(`primitive catalog lock validation failed:\n${errors.join('\n')}`);
 }
 
-async function loadDomains() {
+export function validateOwnerProjection(projection) {
+  const errors = [];
+  if (projection?.schemaVersion !== 1) errors.push('ADR owner projection schemaVersion must be 1');
+  if (projection?.owner?.repository !== 'agentic-delivery-lab/agentic-delivery') errors.push('ADR owner projection repository is invalid');
+  if (projection?.owner?.repositoryId !== 1358455028) errors.push('ADR owner projection repository ID is invalid');
+  if (!SHA1.test(projection?.owner?.sourceCommit ?? '')) errors.push('ADR owner projection source commit must be immutable');
+  if (!Array.isArray(projection?.records) || projection.records.length === 0) errors.push('ADR owner projection must contain records');
+  const ids = new Set();
+  for (const [index, record] of (projection?.records ?? []).entries()) {
+    const location = `records[${index}]`;
+    if (!record || typeof record !== 'object' || Array.isArray(record)) { errors.push(`${location} must be an object`); continue; }
+    if (!/^ADR-\d{4}$/.test(record.id ?? '') || ids.has(record.id)) errors.push(`${location}.id must be a unique ADR identifier`);
+    ids.add(record.id);
+    const expectedPrefix = `docs/decisions/${record.id?.slice(4)}-`;
+    if (typeof record.canonicalPath !== 'string' || !record.canonicalPath.startsWith(expectedPrefix) || !record.canonicalPath.endsWith('.md') || record.canonicalPath.split('/').includes('..')) {
+      errors.push(`${location}.canonicalPath must be the owning repository's canonical ADR path`);
+    }
+    if (!SHA256.test(record.sha256 ?? '')) errors.push(`${location}.sha256 must be a per-file SHA-256 digest`);
+  }
+  if (errors.length) throw new Error(`ADR owner projection validation failed:\n${errors.join('\n')}`);
+  return new Map((projection.records ?? []).map((record) => [record.id, record]));
+}
+
+async function loadDomains(root) {
   const registry = parseRepositoryYaml(await readFile(path.join(root, 'architecture/domain/ubiquitous-language.yml'), 'utf8'), 'domain register');
   return (registry.bounded_contexts ?? []).map((context) => String(context.id)).sort();
 }
 
-async function buildIndex() {
-  const [adrs, lock, domains] = await Promise.all([
-    loadAdrs(),
+async function buildIndex(root) {
+  const lockPath = path.join(root, 'architecture', 'references', 'primitive-catalog.lock.yml');
+  const ownerProjectionPath = path.join(root, 'architecture', 'references', 'adr-owner-projection.yml');
+  const [adrs, lock, domains, ownerProjection] = await Promise.all([
+    loadAdrs(root),
     readFile(lockPath, 'utf8').then((source) => parseRepositoryYaml(source, 'primitive catalog lock')),
-    loadDomains(),
+    loadDomains(root),
+    readFile(ownerProjectionPath, 'utf8').then((source) => parseRepositoryYaml(source, 'ADR owner projection')),
   ]);
   validateLock(lock);
+  const externalOwners = validateOwnerProjection(ownerProjection);
   const adrById = new Map(adrs.map((adr) => [adr.id, adr]));
   const primitiveByAdr = new Map(adrs.map((adr) => [adr.id, []]));
+  const externalIds = new Set(lock.primitives.flatMap((primitive) => primitive.adrs.filter((adr) => !adrById.has(adr))));
+  for (const id of externalIds) if (!externalOwners.has(id)) throw new Error(`ADR owner projection has no immutable owner entry for ${id}`);
+  for (const id of externalOwners.keys()) if (!externalIds.has(id)) throw new Error(`ADR owner projection contains unreferenced ADR ${id}`);
   const primitiveRows = lock.primitives.map((primitive) => {
     const adrsForPrimitive = [...primitive.adrs].sort();
     for (const adr of adrsForPrimitive) if (primitiveByAdr.has(adr)) primitiveByAdr.get(adr).push(primitive.id);
@@ -98,6 +126,7 @@ async function buildIndex() {
       enforcement: primitive.enforcement,
       adrs: adrsForPrimitive,
       localAdrs: adrsForPrimitive.filter((adr) => adrById.has(adr)),
+      externalAdrs: adrsForPrimitive.filter((adr) => !adrById.has(adr)),
       domains: [...primitive.domains].sort(),
     };
   }).sort((left, right) => left.id.localeCompare(right.id));
@@ -105,7 +134,20 @@ async function buildIndex() {
     ...adr,
     primitives: [...(primitiveByAdr.get(adr.id) ?? [])].sort(),
   }));
-  const externalAdrs = [...new Set(primitiveRows.flatMap((primitive) => primitive.adrs.filter((adr) => !adrById.has(adr))))].sort();
+  const externalAdrs = [...externalIds].sort().map((id) => {
+    const record = externalOwners.get(id);
+    return {
+      id,
+      owner: {
+        repository: ownerProjection.owner.repository,
+        repositoryId: ownerProjection.owner.repositoryId,
+        sourceCommit: ownerProjection.owner.sourceCommit,
+        canonicalPath: record.canonicalPath,
+        sha256: record.sha256,
+        url: `https://github.com/${ownerProjection.owner.repository}/blob/${ownerProjection.owner.sourceCommit}/${record.canonicalPath}`,
+      },
+    };
+  });
   const uncoveredAdrs = adrRows.filter((adr) => adr.primitives.length === 0).map((adr) => adr.id);
   return {
     schemaVersion: 1,
@@ -127,17 +169,34 @@ async function buildIndex() {
   };
 }
 
-const index = await buildIndex();
-if (check) {
-  let current;
-  try { current = JSON.parse(await readFile(outputPath, 'utf8')); } catch { current = null; }
-  if (JSON.stringify(current) !== JSON.stringify(index)) {
-    process.stderr.write('ADR/Primitive index check: generated index is stale.\n');
-    process.exitCode = 1;
+export async function generateAdrPrimitiveIndex({ checkOnly = false, root = repositoryRoot } = {}) {
+  const resolvedRoot = path.resolve(root);
+  const outputPath = path.join(resolvedRoot, 'architecture', 'generated', 'adr-primitive-index.json');
+  const index = await buildIndex(resolvedRoot);
+  if (checkOnly) {
+    let current;
+    try { current = JSON.parse(await readFile(outputPath, 'utf8')); } catch { current = null; }
+    if (JSON.stringify(current) !== JSON.stringify(index)) {
+      throw new Error('ADR/Primitive index check: generated index is stale.');
+    }
+    return index;
   } else {
-    process.stdout.write(`ADR/Primitive index check passed: ${index.adrs.length} ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+    await writeFile(outputPath, `${JSON.stringify(index, null, 2)}\n`);
+    return index;
   }
-} else {
-  await writeFile(outputPath, `${JSON.stringify(index, null, 2)}\n`);
-  process.stdout.write(`ADR/Primitive index generated: ${index.adrs.length} ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try {
+    const args = process.argv.slice(2);
+    const checkOnly = args.includes('--check');
+    const root = args.find((argument) => argument !== '--check') ?? repositoryRoot;
+    const index = await generateAdrPrimitiveIndex({ checkOnly, root });
+    process.stdout.write(checkOnly
+      ? `ADR/Primitive index check passed: ${index.adrs.length} Architecture ADR(s), ${index.externalAdrs.length} externally owned ADR(s), ${index.primitives.length} primitive reference(s).\n`
+      : `ADR/Primitive index generated: ${index.adrs.length} Architecture ADR(s), ${index.externalAdrs.length} externally owned ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+  } catch (error) {
+    process.stderr.write(`${error.message}\n`);
+    process.exitCode = 1;
+  }
 }

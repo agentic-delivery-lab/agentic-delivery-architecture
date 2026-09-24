@@ -59,11 +59,12 @@ validation, and conditional refinement/decomposition**, because it combines
 meaning-aware decisions and human-visible lineage with a testable safety
 boundary.
 
-GitHub is the control plane. Native organization issue types are the durable
+GitHub is the control plane. Native organization Issue Types are the durable
 work classification. The pinned `Lifecycle Stage` field is the lifecycle
-authority and the pinned `Delivery Readiness` field is an orthogonal temporary
-gate. Governance labels remain cross-cutting controls. Runner-local
-continuation and execution data is not GitHub lifecycle metadata.
+authority and the orthogonal `Delivery State` field is currently exposed under
+the legacy `Delivery Readiness` name. Governance labels remain cross-cutting
+controls. Runner-local continuation and execution data is not GitHub lifecycle
+metadata.
 
 Codex returns a structured refinement, routing, or transition proposal. A
 small deterministic validator checks the current type, fields, governance
@@ -85,9 +86,10 @@ keyword, phrase, or regular expression assigns intent.
 
 The proposal is untrusted. Deterministic code checks repository and issue
 identity, actor permission, schema, native type compatibility, current field
-values, allowed transition, readiness, governance, and exact membership in the
-configured orchestration policy. Only then does the controller write approved
-issue fields or invoke the selected profile. Unknown types, fields, stages,
+values, allowed transition, Delivery State (through the current readiness
+compatibility key), governance, and exact membership in the configured
+orchestration policy. Only then does the controller write approved issue
+fields or invoke the selected profile. Unknown types, fields, stages,
 profiles, capabilities, and MCP servers are rejected. Bot comments, pull
 request comments, closed issues, stale events, and unauthorized actors are
 rejected before model use.
@@ -105,10 +107,10 @@ lifecycle states.
 The organization taxonomy covers Idea, Research, Feature / Outcome, Bug, Task,
 Requirements, Architecture Decision, Implementation, and Validation. The
 universal lifecycle vocabulary is Intake, Discovery, Definition, Decision,
-Planning, Execution, Validation, Acceptance, Done, and Parked. Readiness
+Planning, Execution, Validation, Acceptance, Done, and Parked. Delivery State
 values such as Needs information, Ready, Working, Waiting, Awaiting human, and
-Blocked live in the separate readiness field. These vocabularies describe
-distinct concepts and do not form a mandatory waterfall.
+Blocked live in the separate field currently named Delivery Readiness. These
+vocabularies describe distinct concepts and do not form a mandatory waterfall.
 
 The versioned orchestration policy selects composable patterns from issue type,
 lifecycle stage, trigger, governance, lineage, plan validity, saved session,
@@ -180,9 +182,12 @@ operator bindings are installed.
 
 - Supersedes ADR-0010, the removed deterministic-only intake record. Its
   history remains in Git, while this record is the active replacement.
-- Refines ADR-0009: [Run Codex from source issues with a budget boundary](0009-run-codex-from-source-issues-with-a-budget-boundary.md)
-- This record is provisional until its review pull request is merged into
-  `main`.
+- Refines [ADR-0009](https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md).
+- The base record is present on Architecture `main` and is official; no
+  verifiable Architecture review PR for its historical addition was found,
+  so review provenance is unknown. Proposed amendments on issue #3 remain
+  provisional until its issue-linked review PR is merged. Earlier source
+  issues remain historical context and do not authorize live operations.
 - Amendment source: [issue #32](https://github.com/agentic-delivery-lab/agentic-delivery/issues/32)
   and [issue #35](https://github.com/agentic-delivery-lab/agentic-delivery/issues/35).
 - The active metadata contract is `config/issue-metadata.yml` in the Delivery
@@ -190,5 +195,5 @@ operator bindings are installed.
   `config/orchestration-policy.yml`. The former
   repository-local lifecycle file is migration history and is not loaded.
 - Conversation-driven activation is refined by
-  [ADR-0017](0017-use-an-explicit-agent-invocation-boundary.md); the mention is
+  [ADR-0017](https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/decisions/0017-use-an-explicit-agent-invocation-boundary.md); the mention is
   an invocation boundary, not a lifecycle or route authority.

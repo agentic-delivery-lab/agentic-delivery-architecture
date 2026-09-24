@@ -1,22 +1,62 @@
-schemaVersion: 1
+schemaVersion: 2
+boundedContexts:
+  - agentic-delivery-governance
+  - agentic-delivery-control-plane
+  - agentic-primitives
+  - developer-distribution
+crossContextAuthority:
+  id: architecture-authority
+  repository: agentic-delivery-lab/agentic-delivery-architecture
+  classification: authority, not a bounded context
+repositoryAdapters:
+  - id: public-github-adapter
+    repository: agentic-delivery-lab/.github
+    classification: adapter, not a bounded context
+  - id: private-github-adapter
+    repository: agentic-delivery-lab/.github-private
+    classification: adapter, not a bounded context
+infrastructureSurfaces:
+  - id: github-organization-metadata
+    includes: [native-issue-types, organization-issue-field-definitions]
+    distinctFrom: [github-project-fields]
+  - id: github-projects
+    includes: [project-specific-fields, organization-or-repository-project-views]
+    distinctFrom: [organization-issue-field-definitions]
+  - id: github-app
+    includes: [installation-access, subscribed-events, permissions]
+    purpose: grants repository access and supplies subscribed GitHub events; it does not distribute generic templates
+  - id: repository-templates
+    includes: [public-community-files, issue-form-artifacts, pull-request-template]
+    owner: public-github-adapter
+  - id: distribution-bootstrap
+    includes: [versioned-bundles, devcontainer-artifacts, consumer-workflows]
+    owner: developer-distribution
+governanceOverlay:
+  authority: architecture-authority
+  classification: cross-context authority, not a bounded-context endpoint
+  appliesTo:
+    - context: agentic-delivery-governance
+      contracts: [principles, context-map, cross-context-adrs, conformance]
+    - context: agentic-delivery-control-plane
+      contracts: [architecture-release.v1]
+    - context: agentic-primitives
+      contracts: [primitive-reference.v1]
+    - context: developer-distribution
+      contracts: [cross-context-architecture-contracts]
 relationships:
-  - upstream: architecture-authority
-    downstream: agentic-delivery-control-plane
-    contract: architecture-release.v1
-    direction: governs
-  - upstream: architecture-authority
-    downstream: agentic-primitives
-    contract: primitive-reference.v1
-    direction: governs
   - upstream: agentic-primitives
-    downstream: private-copilot-publication
+    downstream: private-github-adapter
     contract: agent-publication-lock.v1
-    direction: promotes
+    direction: promotes reviewed, versioned agent projections
   - upstream: agentic-primitives
     downstream: developer-distribution
     contract: primitive-release.v1
-    direction: distributes
+    direction: supplies selected versioned capabilities
   - upstream: agentic-delivery-control-plane
     downstream: developer-distribution
     contract: workflow-bundle.v1
-    direction: supplies
+    direction: supplies a pinned workflow bundle
+  - upstream: developer-distribution
+    downstream: consumer-repositories
+    contract: consumer-distribution-lock.v1
+    direction: installs thin, versioned consumer integration

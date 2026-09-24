@@ -6,6 +6,9 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Established Architecture Authority as the canonical owner for cross-context
+  decisions, principles, domain models, and conformance policy; recorded
+  immutable Control Plane owner projections and current evidence limits.
 - Updated ADR-0018 to select one organization App installation with
   `All repositories` access and an independent reviewed participant registry;
   recorded live-configuration and activation evidence gaps without changing

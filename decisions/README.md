@@ -82,29 +82,50 @@ decisions without retaining obsolete architectural context on `main`.
 
 The template intentionally lives beside README.md and the numbered records. Every record keeps a source-issue link, including when a separate ADR tracking issue is used.
 
-ADR-0019 retains Issue #52 as its historical plan source; Issue #52 is closed
-and is not implementation authorization. Issue #53 in the Control Plane
-repository is the successor gate for ADR-0018 and organization-wide
-distribution/versioning. The Architecture Authority PR for ADR-0018 references
-Issue #53 without closing it; the issue remains open for implementation,
-operator evidence, and later activation work.
+Issues #52 and #53 are closed historical sources; neither authorizes current
+implementation or live configuration changes. Architecture PR #2, which updated
+ADR-0018, merged on 2026-09-24. The ADR remains the official decision on
+`main`; its current runtime alignment and activation evidence remain separate
+questions. Current recovery work is tracked by the new parent issue #59 and
+Architecture issue #3.
 
-| Number | Decision | Source | Review/implementation |
-| --- | --- | --- | --- |
-| [0001](0001-use-madr-for-architecture-decisions.md) | Use MADR and GitHub Issues for architectural decisions | [Issue #1](https://github.com/agentic-delivery-lab/agentic-delivery/issues/1) | [PR #2](https://github.com/agentic-delivery-lab/agentic-delivery/pull/2) |
-| [0002](0002-use-plain-language-for-human-agent-communication.md) | Use plain language for human-agent communication | [Issue #3](https://github.com/agentic-delivery-lab/agentic-delivery/issues/3) | [PR #4](https://github.com/agentic-delivery-lab/agentic-delivery/pull/4) |
-| [0003](0003-use-context-scoped-ubiquitous-language.md) | Use context-scoped ubiquitous language | [Issue #5](https://github.com/agentic-delivery-lab/agentic-delivery/issues/5) | [PR #6](https://github.com/agentic-delivery-lab/agentic-delivery/pull/6) |
-| [0004](0004-use-trunk-based-delivery.md) | Use trunk-based delivery with short-lived feature branches | [Issue #7](https://github.com/agentic-delivery-lab/agentic-delivery/issues/7) | This review pull request |
-| [0005](0005-use-conventional-commits-with-gitmoji.md) | Use Conventional Commits with Gitmoji | [Issue #7](https://github.com/agentic-delivery-lab/agentic-delivery/issues/7) | This review pull request |
-| [0006](0006-curate-a-changelog.md) | Curate a human-readable changelog | [Issue #7](https://github.com/agentic-delivery-lab/agentic-delivery/issues/7) | This review pull request |
-| [0007](0007-use-issue-linked-conventional-branch-names.md) | Use issue-linked Conventional branch names | [Issue #11](https://github.com/agentic-delivery-lab/agentic-delivery/issues/11) | This review pull request |
-| [0008](0008-use-pnpm-with-delayed-dependency-adoption.md) | Use pnpm with delayed dependency adoption and Node.js automation | [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery/issues/12) | This review pull request |
-| [0009](0009-run-codex-from-source-issues-with-a-budget-boundary.md) | Run Codex from source issues with a budget boundary | [Issue #21](https://github.com/agentic-delivery-lab/agentic-delivery/issues/21), amending [Issue #18](https://github.com/agentic-delivery-lab/agentic-delivery/issues/18) and [Issue #15](https://github.com/agentic-delivery-lab/agentic-delivery/issues/15) | [PR #16](https://github.com/agentic-delivery-lab/agentic-delivery/pull/16), [PR #19](https://github.com/agentic-delivery-lab/agentic-delivery/pull/19), [PR #20](https://github.com/agentic-delivery-lab/agentic-delivery/pull/20), [PR #22](https://github.com/agentic-delivery-lab/agentic-delivery/pull/22), and [PR #23](https://github.com/agentic-delivery-lab/agentic-delivery/pull/23) |
-| [0011](0011-run-layered-harness-architecture-reviews.md) | Run layered harness architecture reviews on pull requests | [Issue #25](https://github.com/agentic-delivery-lab/agentic-delivery/issues/25) | This review pull request |
-| [0012](0012-use-github-as-the-lifecycle-control-plane.md) | Use GitHub as the lifecycle control plane | [Issue #29](https://github.com/agentic-delivery-lab/agentic-delivery/issues/29) | This review pull request |
-| [0013](0013-derive-adr-traceability-from-agentic-primitives.md) | Derive ADR traceability from agentic primitives | [Issue #29](https://github.com/agentic-delivery-lab/agentic-delivery/issues/29) | This review pull request |
-| [0015](0015-isolate-resumable-runner-execution.md) | Isolate resumable runner execution by source issue | [Issue #29](https://github.com/agentic-delivery-lab/agentic-delivery/issues/29) | This review pull request |
-| [0016](0016-require-structured-pull-request-descriptions.md) | Require structured pull request descriptions | [Issue #44](https://github.com/agentic-delivery-lab/agentic-delivery/issues/44) | This review pull request |
-| [0017](0017-use-an-explicit-agent-invocation-boundary.md) | Use an explicit agent-invocation boundary for conversation-driven delivery | [Issue #46](https://github.com/agentic-delivery-lab/agentic-delivery/issues/46) | This review pull request |
-| [0018](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md) | Organization-wide Agentic Delivery control-plane distribution and versioning | [Issue #53](https://github.com/agentic-delivery-lab/agentic-delivery/issues/53) | This review pull request |
-| [0019](0019-canonicalize-delivery-state-field.md) | Canonicalize the orthogonal delivery-state field | [Issue #52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52) | This review pull request |
+## Canonical decision ownership
+
+This table is the proposed owner map for the six-repository system. Ownership
+changes in this table and removal of duplicate files remain provisional until
+this feature branch is reviewed and merged. During the proposal, all Control
+Plane-owned records remain intact at their canonical paths in `agentic-delivery`.
+
+| Owner | ADR identifiers | Canonical record location |
+| --- | --- | --- |
+| Architecture Authority | ADR-0001, ADR-0003, ADR-0011, ADR-0012, ADR-0013, ADR-0016, ADR-0018, ADR-0019 | This repository's `decisions/` directory. |
+| Agentic Delivery Control Plane | ADR-0002, ADR-0004 through ADR-0009, ADR-0015, ADR-0017 | [Immutable Control Plane ADR owner projection](../architecture/references/adr-owner-projection.yml), pinned to `agentic-delivery` commit `c6c891fa937b7db06e3925c3e83ea83656b3d617`; it records paths and content digests without copying decision prose. |
+| Agentic Primitives | ADP-0001 | `agentic-delivery-primitives/docs/decisions/ADP-0001-primitive-release-and-projection.md`. |
+| Developer Distribution | ADD-0001 | `agentic-delivery-distribution/docs/decisions/ADD-0001-distribution-boundary.md`. |
+
+ADR-0010 is a historical record superseded by ADR-0012. ADR-0014 is a
+historical record superseded by ADR-0018. Neither has an active ADR file in the
+current source trees. `.github` owns the public issue-form and pull-request
+template artifacts, while the Control Plane owns the validator implementation
+for the organization-wide Source/Plan contract. The private `.github-private`
+repository owns only its private profile and agent-publication adapter. Those
+artifact boundaries do not give either adapter ownership of an ADR or bounded
+context.
+
+## Architecture Authority records
+
+| Number | Decision | Historical source | Verifiable review evidence |
+| --- | --- | --- |
+| [0001](0001-use-madr-for-architecture-decisions.md) | Use MADR and GitHub Issues for architectural decisions | [Issue #1](https://github.com/agentic-delivery-lab/agentic-delivery/issues/1) | Original decision review: [Control Plane PR #2](https://github.com/agentic-delivery-lab/agentic-delivery/pull/2); separate Architecture transfer review is unverified. |
+| [0003](0003-use-context-scoped-ubiquitous-language.md) | Use context-scoped ubiquitous language | [Issue #5](https://github.com/agentic-delivery-lab/agentic-delivery/issues/5) | Original decision review: [Control Plane PR #6](https://github.com/agentic-delivery-lab/agentic-delivery/pull/6); separate Architecture transfer review is unverified. |
+| [0011](0011-run-layered-harness-architecture-reviews.md) | Run layered harness architecture reviews on pull requests | [Issue #25](https://github.com/agentic-delivery-lab/agentic-delivery/issues/25) | Unknown; no verifiable review PR for this Architecture record was found. |
+| [0012](0012-use-github-as-the-lifecycle-control-plane.md) | Use GitHub as the lifecycle control plane | [Issue #29](https://github.com/agentic-delivery-lab/agentic-delivery/issues/29) | Unknown; no verifiable review PR for this Architecture record was found. |
+| [0013](0013-derive-adr-traceability-from-agentic-primitives.md) | Derive ADR traceability from agentic primitives | [Issue #29](https://github.com/agentic-delivery-lab/agentic-delivery/issues/29) | Unknown; no verifiable review PR for this Architecture record was found. |
+| [0016](0016-require-structured-pull-request-descriptions.md) | Require structured pull-request descriptions | [Issue #44](https://github.com/agentic-delivery-lab/agentic-delivery/issues/44) | [Public adapter PR #2](https://github.com/agentic-delivery-lab/.github/pull/2) changed the template artifact; it does not verify review of this Architecture ADR. |
+| [0018](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md) | Organization-wide Agentic Delivery Control Plane distribution and versioning | [Closed Issue #53](https://github.com/agentic-delivery-lab/agentic-delivery/issues/53) | [Architecture PR #2](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/pull/2) merged 2026-09-24. |
+| [0019](0019-canonicalize-delivery-state-field.md) | Canonicalize the orthogonal Delivery State field | [Closed Issue #52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52) | Unknown; no verifiable review PR for this Architecture record was found. The live rename remains separately gated. |
+
+The reviewer must keep the `Source` and `Plan` pull-request headings separate.
+ADR-0016 defines that organization-wide contract; it does not prove one
+validator or one ruleset covers all repositories. The live baseline is pinned
+in [`system-evidence.yml`](../architecture/references/system-evidence.yml).

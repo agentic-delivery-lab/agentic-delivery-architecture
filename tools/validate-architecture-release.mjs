@@ -55,18 +55,20 @@ export async function validateArchitectureRelease(root = repositoryRoot, expecte
   if (typeof release.contractVersions !== 'object' || release.contractVersions === null) errors.push('architecture release contract versions are required');
   if (revision !== 'WORKTREE' && revision !== 'HEAD' && !SHA.test(revision)) errors.push('expected architecture revision must be WORKTREE, HEAD, or an immutable commit');
   if (errors.length === 0) {
-    try {
-      const digest = await architectureContentDigest(root, revision);
-      if (digest !== release.contentSha256) errors.push(`architecture release contentSha256 does not match ${revision}: expected ${digest}, got ${release.contentSha256}`);
-      for (const [name, reference] of [['conformancePolicy', release.conformancePolicy], ['toolingLock', release.toolingLock]]) {
-        const contents = revision === 'WORKTREE'
-          ? await readFile(path.join(root, reference.path))
-          : await gitShow(root, revision, reference.path);
-        const digestForPath = sha256(contents);
-        if (digestForPath !== reference.sha256) errors.push(`architecture release ${name} digest does not match ${reference.path}`);
+    for (const sourceRevision of new Set([revision, release.sourceCommit])) {
+      try {
+        const digest = await architectureContentDigest(root, sourceRevision);
+        if (digest !== release.contentSha256) errors.push(`architecture release contentSha256 does not match ${sourceRevision}: expected ${digest}, got ${release.contentSha256}`);
+        for (const [name, reference] of [['conformancePolicy', release.conformancePolicy], ['toolingLock', release.toolingLock]]) {
+          const contents = sourceRevision === 'WORKTREE'
+            ? await readFile(path.join(root, reference.path))
+            : await gitShow(root, sourceRevision, reference.path);
+          const digestForPath = sha256(contents);
+          if (digestForPath !== reference.sha256) errors.push(`architecture release ${name} digest does not match ${reference.path} at ${sourceRevision}`);
+        }
+      } catch (error) {
+        errors.push(`architecture release integrity could not be reproduced at ${sourceRevision}: ${error.message}`);
       }
-    } catch (error) {
-      errors.push(`architecture release integrity could not be reproduced: ${error.message}`);
     }
   }
   if (errors.length) throw new Error(`architecture release validation failed:\n${errors.join('\n')}`);

@@ -39,14 +39,37 @@
         }
       }
     },
-    "externalAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
+    "externalAdrs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "owner"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ADR-[0-9]{4}$" },
+          "owner": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repository", "repositoryId", "sourceCommit", "canonicalPath", "sha256", "url"],
+            "properties": {
+              "repository": { "const": "agentic-delivery-lab/agentic-delivery" },
+              "repositoryId": { "const": 1358455028 },
+              "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+              "canonicalPath": { "type": "string", "pattern": "^docs/decisions/[0-9]{4}-[a-z0-9-]+\\.md$" },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "url": { "type": "string", "format": "uri" }
+            }
+          }
+        }
+      }
+    },
     "uncoveredAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
     "primitives": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "kind", "version", "sourceRepository", "sourceCommit", "sourcePath", "enforcement", "adrs", "localAdrs", "domains"],
+        "required": ["id", "kind", "version", "sourceRepository", "sourceCommit", "sourcePath", "enforcement", "adrs", "localAdrs", "externalAdrs", "domains"],
         "properties": {
           "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
           "kind": { "enum": ["agent", "skill", "instruction", "hook", "validator", "capability", "mcp-contract"] },
@@ -57,6 +80,7 @@
           "enforcement": { "enum": ["instructional", "deterministic", "semantic"] },
           "adrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
           "localAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
+          "externalAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
           "domains": { "type": "array", "items": { "type": "string" } }
         }
       }

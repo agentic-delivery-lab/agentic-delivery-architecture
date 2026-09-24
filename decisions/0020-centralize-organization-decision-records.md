@@ -98,7 +98,7 @@ replace its duplicate decision prose with a version-pinned reference only in
 its own reviewed follow-up. Until those follow-ups merge, this proposal does
 not claim that external copies have already been removed.
 
-## Consequences
+### Consequences
 
 - Good, because one released Architecture source resolves each organization
   decision identifier while origin hashes preserve migration provenance.

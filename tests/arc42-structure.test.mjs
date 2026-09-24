@@ -67,6 +67,10 @@ test('canonical inventory has exact record coverage and rejects projections and 
     assert.equal(origin.repositoryId, 1380894616);
     assert.equal(origin.sha256, sha256);
   }
+  assert.equal(result.recordById.get('ADR-0018').origin.reviewEvidence, 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/pull/2');
+  const historicalAdr18 = result.inventory.historicalVariants.find((variant) => variant.id === 'ADR-0018');
+  assert.equal(historicalAdr18.sha256, 'b94dabcb84fe7da679a0441442e97646196ae4bb88d4b0e9ad983a9519b4eef5');
+  assert.match(historicalAdr18.disposition, /older duplicate.*Architecture PR #2.*canonical/i);
 
   const withDuplicate = structuredClone(result.inventory);
   withDuplicate.records[1].id = withDuplicate.records[0].id;
@@ -79,6 +83,10 @@ test('canonical inventory has exact record coverage and rejects projections and 
   const withUnknownProperty = structuredClone(result.inventory);
   withUnknownProperty.records[0].unexpected = true;
   await assert.rejects(validateDecisionInventory(root, { inventory: withUnknownProperty }), /records\[0\] contains unsupported property unexpected/);
+
+  const withWrongPath = structuredClone(result.inventory);
+  withWrongPath.records[0].path = withWrongPath.records[1].path;
+  await assert.rejects(validateDecisionInventory(root, { inventory: withWrongPath }), /canonical decisions file/);
 
   const withChangedOriginHash = structuredClone(result.inventory);
   withChangedOriginHash.records.find((record) => record.id === 'ADR-0008').origin.sha256 = '0'.repeat(64);
@@ -96,9 +104,9 @@ test('architecture release identifies the target authority', async () => {
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
-  assert.equal(release.contractVersions.architectureRelease, '2.0.0');
-  assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '2.0.0');
-  assert.match(releaseSchema.description, /Digest semantics are versioned independently/);
+  assert.equal(release.contractVersions.architectureRelease, '3.0.0');
+  assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '3.0.0');
+  assert.match(releaseSchema.description, /consumers to dispatch by version/);
 });
 
 test('architecture release sourceCommit contains the digest-pinned authored tree', async () => {

@@ -122,7 +122,7 @@ historicalVariants:
     sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
     sourcePath: docs/decisions/0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md
     sha256: b94dabcb84fe7da679a0441442e97646196ae4bb88d4b0e9ad983a9519b4eef5
-    disposition: Historical older duplicate; the Architecture baseline record, reviewed by Architecture PR #2, remains canonical.
+    disposition: "Historical older duplicate; the Architecture baseline record, reviewed by Architecture PR #2, remains canonical."
   - id: ADR-0019
     repository: agentic-delivery-lab/agentic-delivery
     repositoryId: 1358455028

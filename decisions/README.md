@@ -137,20 +137,31 @@ repository owns only its private profile and agent-publication adapter. Those
 artifact boundaries do not give either adapter ownership of an ADR or bounded
 context.
 
-## Architecture Authority records
+## Decision source and review provenance
 
-The table below retains historical issue and review provenance for the
-Architecture-origin records. The complete canonical ID/file set and imported
-source metadata are enforced by the decision inventory.
+The table below retains known historical issue and review provenance. The
+complete canonical ID/file set, imported source metadata, and source variants
+are enforced by the decision inventory. “Not verified” means the audited
+source did not contain a verifiable review pull request; it does not claim that
+no review occurred.
 
 | Number | Decision | Historical source | Verifiable review evidence |
 | --- | --- | --- |
 | [0001](0001-use-madr-for-architecture-decisions.md) | Use MADR and GitHub Issues for architectural decisions | [Issue #1](https://github.com/agentic-delivery-lab/agentic-delivery/issues/1) | Original decision review: [Control Plane PR #2](https://github.com/agentic-delivery-lab/agentic-delivery/pull/2); separate Architecture transfer review is unverified. |
+| [0002](0002-use-plain-language-for-human-agent-communication.md) | Use plain language for human-agent communication | [Issue #3](https://github.com/agentic-delivery-lab/agentic-delivery/issues/3) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
 | [0003](0003-use-context-scoped-ubiquitous-language.md) | Use context-scoped ubiquitous language | [Issue #5](https://github.com/agentic-delivery-lab/agentic-delivery/issues/5) | Original decision review: [Control Plane PR #6](https://github.com/agentic-delivery-lab/agentic-delivery/pull/6); separate Architecture transfer review is unverified. |
+| [0004](0004-use-trunk-based-delivery.md) | Use trunk-based delivery with short-lived feature branches | [Issue #7](https://github.com/agentic-delivery-lab/agentic-delivery/issues/7) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
+| [0005](0005-use-conventional-commits-with-gitmoji.md) | Use Conventional Commits with Gitmoji | [Issue #7](https://github.com/agentic-delivery-lab/agentic-delivery/issues/7) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
+| [0006](0006-curate-a-changelog.md) | Curate a human-readable changelog | [Issue #7](https://github.com/agentic-delivery-lab/agentic-delivery/issues/7) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
+| [0007](0007-use-issue-linked-conventional-branch-names.md) | Use issue-linked Conventional branch names | [Issue #11](https://github.com/agentic-delivery-lab/agentic-delivery/issues/11) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
+| [0008](0008-use-pnpm-with-delayed-dependency-adoption.md) | Use pnpm with delayed dependency adoption and Node.js automation | [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery/issues/12) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
+| [0009](0009-run-codex-from-source-issues-with-a-budget-boundary.md) | Run Codex from source issues with a budget boundary | [Issue #21](https://github.com/agentic-delivery-lab/agentic-delivery/issues/21) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
 | [0011](0011-run-layered-harness-architecture-reviews.md) | Run layered harness architecture reviews on pull requests | [Issue #25](https://github.com/agentic-delivery-lab/agentic-delivery/issues/25) | Unknown; no verifiable review PR for this Architecture record was found. |
 | [0012](0012-use-github-as-the-lifecycle-control-plane.md) | Use GitHub as the lifecycle control plane | [Issue #29](https://github.com/agentic-delivery-lab/agentic-delivery/issues/29) | Unknown; no verifiable review PR for this Architecture record was found. |
 | [0013](0013-derive-adr-traceability-from-agentic-primitives.md) | Derive ADR traceability from agentic primitives | [Issue #29](https://github.com/agentic-delivery-lab/agentic-delivery/issues/29) | Unknown; no verifiable review PR for this Architecture record was found. |
+| [0015](0015-isolate-resumable-runner-execution.md) | Isolate resumable runner execution by source issue | [Issue #29](https://github.com/agentic-delivery-lab/agentic-delivery/issues/29) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
 | [0016](0016-require-structured-pull-request-descriptions.md) | Require structured pull-request descriptions | [Issue #44](https://github.com/agentic-delivery-lab/agentic-delivery/issues/44) | [Public adapter PR #2](https://github.com/agentic-delivery-lab/.github/pull/2) changed the template artifact; it does not verify review of this Architecture ADR. |
+| [0017](0017-use-an-explicit-agent-invocation-boundary.md) | Use an explicit agent-invocation boundary for conversation-driven delivery | [Issue #46](https://github.com/agentic-delivery-lab/agentic-delivery/issues/46) | Imported from the pinned Control Plane baseline; a historical review PR was not verified in the audit. |
 | [0018](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md) | Organization-wide Agentic Delivery Control Plane distribution and versioning | [Closed Issue #53](https://github.com/agentic-delivery-lab/agentic-delivery/issues/53) | [Architecture PR #2](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/pull/2) merged 2026-09-24. |
 | [0019](0019-canonicalize-delivery-state-field.md) | Canonicalize the orthogonal Delivery State field | [Closed Issue #52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52) | Unknown; no verifiable review PR for this Architecture record was found. The live rename remains separately gated. |
 | [0020](0020-centralize-organization-decision-records.md) | Centralize organization decision records in Architecture Authority | [Issue #3](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3) | Proposed on this issue-linked Architecture branch; context stewards and human review gate remain required. |

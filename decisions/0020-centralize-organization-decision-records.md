@@ -103,10 +103,16 @@ identifier and single canonical Architecture text source.
 Review candidate repository-local implementation decisions separately. Record
 whether each stays **local-only** or is **promoted** because evidence shows
 organization-wide or cross-context impact that requires an organization ADR.
-A purely repository-local implementation choice remains in its owning
-repository and is not copied into Architecture as organization decision
-text. A promoted candidate receives a new issue-linked Architecture record;
-the implementation choice remains in its owning repository.
+That is sufficient for promotion, but cross-context impact is not required: a
+decision within one bounded context may also be promoted as a context-specific
+organization ADR when it is a durable, formal architectural choice with
+enduring consequences for that context's model, boundaries, contracts, or
+conformance. The affected context steward reviews its rationale, source
+evidence, and consequences before proposing promotion. Routine or transient
+repository implementation details stay **local-only**. A purely local choice
+is not copied into Architecture as organization decision text. A promoted
+candidate receives a new issue-linked Architecture record; the implementation
+choice remains in its owning repository.
 
 The issue-linked review record is required to include:
 
@@ -161,6 +167,8 @@ not claim that external copies have already been removed.
   decision identifier while origin hashes preserve migration provenance.
 - Good, because the context's language and implementation model remain visible
   and its steward reviews semantic changes.
+- Good, because a durable context-specific architecture decision can be
+  recorded without inventing a cross-context impact.
 - Bad, because an organization-wide decision change requires coordinated
   semantic review and later consumer-repository reference updates.
 - Bad, because release-gated and annual scope reviews require issue-tracked
@@ -181,7 +189,10 @@ issue-linked review must record one of the three scope classifications for
 each formal ADR, ADP, and ADD record, and a local-only/promoted outcome for
 each candidate implementation decision. It records rationale, source
 evidence, affected contexts and steward routes, implementation/Primitive and
-consumer impacts, decision outcome, and review status. Pull-request review
+consumer impacts, decision outcome, and review status. Candidate promotion
+may be justified by organization-wide/cross-context impact or by a durable
+one-context architectural consequence reviewed by that context's steward;
+routine or transient implementation details remain local. Pull-request review
 records semantic review by affected stewards. Current deterministic checks
 validate inventory metadata and source pins. Checks may validate the presence
 and shape of issue-linked evidence, but they do not decide semantic scope or

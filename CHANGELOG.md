@@ -16,6 +16,8 @@ All notable changes to this repository are documented here.
   ADR/ADP/ADD gets an organization-wide, cross-context, or context-specific
   proposed scope; local candidates are marked local-only or promoted, with
   consumer impact and steward review status recorded for human semantic review.
+  Durable one-context architecture decisions may be promoted without claiming
+  cross-context impact; routine or transient implementation details stay local.
 - Bumped the Architecture release manifest to schemaVersion 2 and contract
   `3.0.0`; it pins the exact ADR/ADP/ADD decision ID set while retaining the
   normalized sourceCommit/contentSha256 digest algorithm. Consumers must

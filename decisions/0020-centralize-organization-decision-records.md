@@ -81,29 +81,52 @@ possible impact across bounded contexts. The periodic review considers both
 formal organization records and candidate decisions raised by repository-local
 implementation work.
 
-For each formal organization record, record whether its scope remains
-organization-wide or should be narrowed to one or more bounded contexts. For
-each candidate repository-local implementation decision, record whether there
-is evidenced cross-context or organization-wide impact that warrants
-promotion into the organization ADR set. A purely repository-local
-implementation choice may remain in its owning repository and is not copied
-into Architecture as organization ADR text. An existing organization ADR may
-be promoted to organization-wide scope or narrowed to context-scoped; that
-changes its domains and required steward reviewers while preserving its
-identifier and single canonical Architecture text source. A repository-local
-candidate promoted into the organization ADR set becomes a new issue-linked
-Architecture record; its implementation choice remains in its owning
-repository.
+For each formal ADR, ADP, and ADD record, review the current declared scope
+and record a proposed classification as exactly one of:
 
-The issue-linked review evidence records the current and proposed scope, the
-rationale, affected bounded contexts and their routed stewards, implementation
-and Primitive impact, and the source repository and immutable commit. Affected
-stewards review the meaning and scope semantically. Deterministic checks may
-validate that the inventory and review evidence record these fields and
-resolve to pinned sources; they do not infer whether a decision is generic,
-organization-wide, or context-local. The review is an issue-tracked human
-process. This decision adds no live scheduler, repository setting, or
-automation that claims the review occurred.
+- **Organization-wide:** applies across the organization and its repositories
+  by default.
+- **Cross-context:** applies to two or more named bounded contexts, without
+  being a default for the entire organization.
+- **Context-specific:** applies within one named bounded context.
+
+These are review outcomes, not current classifications asserted by this ADR.
+The reviewer grounds each record's outcome in its decision text and source
+evidence. An existing organization ADR can change between any of the three
+classifications. Expanding scope from context-specific to cross-context, or
+from either of those to organization-wide, is a promotion; narrowing scope
+from organization-wide to cross-context or context-specific, or from
+cross-context to context-specific, is a demotion. Either change updates the
+declared domains and required steward reviews while preserving that ADR's
+identifier and single canonical Architecture text source.
+
+Review candidate repository-local implementation decisions separately. Record
+whether each stays **local-only** or is **promoted** because evidence shows
+organization-wide or cross-context impact that requires an organization ADR.
+A purely repository-local implementation choice remains in its owning
+repository and is not copied into Architecture as organization decision
+text. A promoted candidate receives a new issue-linked Architecture record;
+the implementation choice remains in its owning repository.
+
+The issue-linked review record is required to include:
+
+- the record or candidate, its current scope, its proposed scope or
+  local-only/promoted outcome, and the rationale;
+- source evidence for the decision; for a repository-local candidate, its
+  source repository and immutable commit;
+- affected bounded contexts and the routed context steward repositories;
+- implementation impact, Primitive catalog/release impact, and consumer
+  impact;
+- the decision/outcome and its review status, including whether each affected
+  steward review is pending or complete.
+
+Affected stewards review meaning and scope semantically. Deterministic checks
+may validate that the inventory and issue evidence record these fields and
+resolve source references to pinned revisions; they do not infer whether a
+decision is organization-wide, cross-context, or context-specific, and do not
+prove that a human reviewed it. Scope review is an issue-tracked human process.
+This decision adds no live scheduler, repository setting, or automation that
+claims the review occurred.
 
 The context register maps each bounded context to the repository containing
 its current model or implementation evidence. That repository mapping routes a
@@ -142,6 +165,8 @@ not claim that external copies have already been removed.
   semantic review and later consumer-repository reference updates.
 - Bad, because release-gated and annual scope reviews require issue-tracked
   human effort across affected contexts.
+- Bad, because scope promotion, demotion, or local-only outcomes require
+  evidence and consumer-impact analysis before changing the canonical set.
 - Neutral, because Architecture owns decision text while bounded-context
   repositories continue to own executable behavior and artifacts.
 
@@ -152,13 +177,17 @@ and paths with the local decision files, reject duplicate IDs and provenance
 collisions, verify imported file hashes, require exact release coverage, and
 ensure Primitive ADR references resolve only to local Architecture records.
 Before a non-draft release, and at least once every twelve months, an
-issue-linked review must record the current/proposed scope and impact evidence
-for formal organization records and candidate implementation decisions.
-Pull-request review records semantic review by the steward role for each
-affected context. Deterministic checks validate metadata and source pins; they
-do not decide semantic scope or prove that a human review occurred. Each
-consumer repository must validate its version-pinned references in a separate
-reviewed change before its duplicate text is removed.
+issue-linked review must record one of the three scope classifications for
+each formal ADR, ADP, and ADD record, and a local-only/promoted outcome for
+each candidate implementation decision. It records rationale, source
+evidence, affected contexts and steward routes, implementation/Primitive and
+consumer impacts, decision outcome, and review status. Pull-request review
+records semantic review by affected stewards. Current deterministic checks
+validate inventory metadata and source pins. Checks may validate the presence
+and shape of issue-linked evidence, but they do not decide semantic scope or
+prove that a human review occurred. Each consumer repository must validate
+its version-pinned references in a separate reviewed change before its
+duplicate text is removed.
 
 ## Pros and Cons of the Options
 

@@ -2,6 +2,8 @@
 date: 2026-09-05
 source-issue: https://github.com/agentic-delivery-lab/agentic-delivery/issues/1
 decision-makers: Sjef Jenniskens
+consulted: Not recorded in original source
+informed: Not recorded in original source
 domains:
   - agentic-delivery-governance
 required-enforcement:
@@ -31,7 +33,7 @@ The repository needs a small convention that keeps reasons close to the code, gi
 
 ### Branch-local ADRs with protected `main`
 
-Keep ADRs as Markdown files under `docs/decisions/`. Add or remove them on a feature branch and review the complete change in a pull request. A file on `main` is official; a file only on a feature branch is provisional. Branch protection makes approval and merge the acceptance boundary.
+Keep ADRs as Markdown files under `decisions/`. Add or remove them on a feature branch and review the complete change in a pull request. A file on `main` is official; a file only on a feature branch is provisional. Branch and ruleset enforcement is a repository-scoped hosting concern and must be verified live; the policy alone does not prove protection.
 
 ### ADR status in YAML frontmatter with an acceptance workflow
 
@@ -103,6 +105,8 @@ ADR files have no lifecycle status in their YAML frontmatter. No GitHub Action a
 
 - Assignment brief: [GitHub issue #1](https://github.com/agentic-delivery-lab/agentic-delivery/issues/1)
 - Review and implementation: [pull request #2](https://github.com/agentic-delivery-lab/agentic-delivery/pull/2)
+- This record on Architecture `main` is official. The cited PR verifies the original Control Plane decision; a separate Architecture transfer review is unverified. Proposed edits for Architecture issue #3 remain provisional until its review PR is merged.
+- The original record did not identify consultation or informed parties; the canonical metadata preserves that gap instead of inferring participants.
 - Format reference: [MADR](https://adr.github.io/madr/)
 - Agent instruction loading: [OpenAI Docs — AGENTS.md](https://developers.openai.com/codex/guides/agents-md)
 - Reusable agent skills: [OpenAI Docs — Build skills](https://developers.openai.com/codex/skills)

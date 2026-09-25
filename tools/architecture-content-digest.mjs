@@ -37,12 +37,14 @@ export async function architectureFiles(root, revision = 'HEAD') {
 
 function normalizeReleaseMetadata(file, contents) {
   if (file !== RELEASE_MANIFEST) return contents;
-  // The release digest covers the manifest but not its own digest value. This
-  // keeps the published value reproducible without a self-referential hash.
-  return contents.toString('utf8').replace(
-    /("contentSha256"\s*:\s*)(?:"[0-9a-f]{64}"|null)/,
-    '$1null',
-  );
+  // Architecture release contract 2.0.0 covers version, status, source
+  // repository, contracts, and all source files. It normalizes only the two
+  // mutually referential pin fields: contentSha256 cannot hash itself, and
+  // sourceCommit points to the prepared commit whose normalized tree is
+  // verified against that digest.
+  return contents.toString('utf8')
+    .replace(/("sourceCommit"\s*:\s*)(?:"[0-9a-f]{40}"|null)/, '$1null')
+    .replace(/("contentSha256"\s*:\s*)(?:"[0-9a-f]{64}"|null)/, '$1null');
 }
 
 export async function architectureContentDigest(root, revision = 'HEAD') {
@@ -51,9 +53,14 @@ export async function architectureContentDigest(root, revision = 'HEAD') {
   if (files.length === 0) throw new Error('Architecture Authority contains no authoritative files at the requested revision');
   const hash = createHash('sha256');
   for (const file of files) {
-    const contents = revision === 'WORKTREE'
-      ? await readFile(path.join(root, file))
-      : await git(root, ['show', `${revision}:${file}`], 'buffer');
+    let contents;
+    if (revision === 'WORKTREE') {
+      try { contents = await readFile(path.join(root, file)); }
+      catch (error) {
+        if (error.code === 'ENOENT') continue;
+        throw error;
+      }
+    } else contents = await git(root, ['show', `${revision}:${file}`], 'buffer');
     hash.update(file, 'utf8');
     hash.update('\0', 'utf8');
     hash.update(normalizeReleaseMetadata(file, contents));

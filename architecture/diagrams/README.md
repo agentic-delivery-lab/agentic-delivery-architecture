@@ -8,8 +8,9 @@ The other source formats have deliberately smaller roles:
 
 - Mermaid is supporting model-as-code for readable context and runtime
   sequences that are useful in Markdown reviews.
-- PlantUML is optional supporting source for UML-oriented views. It may explain
-  a model element but may not introduce a competing ownership relationship.
+- `plantuml/bounded-contexts.puml` is the only optional PlantUML view. It may
+  explain a model element but may not introduce a competing ownership
+  relationship. There is no second bounded-context model under `models/uml/`.
 - UML terminology describes the view when it clarifies a concern; it does not
   create a second model source.
 
@@ -27,4 +28,3 @@ The mapping to arc42 is stable:
 | `mermaid/context-map.mmd` | 3, 5 |
 | `mermaid/issue-delivery-sequence.mmd` | 6 |
 | `plantuml/bounded-contexts.puml` | 5, optional UML view |
-

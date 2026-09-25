@@ -1,0 +1,224 @@
+{
+  "type": "object",
+  "properties": {
+    "arc42": {
+      "type": "object",
+      "properties": {
+        "representation": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "verifiedAt": {
+          "type": "string"
+        },
+        "version": {
+          "const": "9.0"
+        }
+      },
+      "required": [
+        "representation",
+        "source",
+        "verifiedAt",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "arc42Language": {
+      "type": "object",
+      "properties": {
+        "integrity": {
+          "type": "string"
+        },
+        "package": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "testedCommands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "upgradePolicy": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "integrity",
+        "package",
+        "source",
+        "status",
+        "testedCommands",
+        "upgradePolicy",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "diagramRenderers": {
+      "type": "object",
+      "properties": {
+        "mermaid": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "version": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "status",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "plantuml": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "version": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "status",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "structurizr": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "version": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "status",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "mermaid",
+        "plantuml",
+        "structurizr"
+      ],
+      "additionalProperties": false
+    },
+    "externalRendering": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "status": {
+      "type": "string"
+    },
+    "structuredData": {
+      "type": "object",
+      "properties": {
+        "coverage": {
+          "type": "string"
+        },
+        "jsonSchema": {
+          "type": "object",
+          "properties": {
+            "draft": {
+              "const": "2020-12"
+            },
+            "formats": {
+              "type": "string"
+            },
+            "formatsVersion": {
+              "const": "3.0.1"
+            },
+            "validationMode": {
+              "type": "string"
+            },
+            "validator": {
+              "type": "string"
+            },
+            "version": {
+              "const": "8.17.1"
+            }
+          },
+          "required": [
+            "draft",
+            "formats",
+            "formatsVersion",
+            "validationMode",
+            "validator",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "schemasPath": {
+          "type": "string"
+        },
+        "yaml": {
+          "type": "object",
+          "properties": {
+            "package": {
+              "type": "string"
+            },
+            "parseMode": {
+              "type": "string"
+            },
+            "specification": {
+              "const": "1.2.2"
+            },
+            "version": {
+              "const": "2.9.0"
+            }
+          },
+          "required": [
+            "package",
+            "parseMode",
+            "specification",
+            "version"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "coverage",
+        "jsonSchema",
+        "schemasPath",
+        "yaml"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "arc42",
+    "arc42Language",
+    "diagramRenderers",
+    "externalRendering",
+    "schemaVersion",
+    "status",
+    "structuredData"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/tooling-lock.schema.json",
+  "title": "tooling-lock",
+  "description": "Closed structural contract for architecture/references/tooling-lock.json; semantic and cross-file meaning is checked separately."
+}

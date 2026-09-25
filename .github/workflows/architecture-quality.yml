@@ -17,6 +17,27 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Check out pinned decision source repositories
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: agentic-delivery-lab/agentic-delivery
+          ref: c6c891fa937b7db06e3925c3e83ea83656b3d617
+          path: sources/control-plane
+          persist-credentials: false
+      - name: Check out pinned Primitive decision source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: agentic-delivery-lab/agentic-delivery-primitives
+          ref: e4933566fbf5b0f593830f8933f18fbd21024fa7
+          path: sources/primitives
+          persist-credentials: false
+      - name: Check out pinned Distribution decision source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: agentic-delivery-lab/agentic-delivery-distribution
+          ref: b69c5710928b47efc4d3ab12ec4d5b596c80720c
+          path: sources/distribution
+          persist-credentials: false
       - name: Set up pnpm
         uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
         with:

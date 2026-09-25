@@ -1,0 +1,369 @@
+{
+  "type": "object",
+  "properties": {
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "limitation": {
+            "type": "string"
+          },
+          "liveChecks": {
+            "type": "object",
+            "properties": {
+              "architectureRulesets": {
+                "type": "string"
+              },
+              "controlPlaneRulesets": {
+                "type": "string"
+              },
+              "distributionRulesets": {
+                "type": "string"
+              },
+              "primitiveRulesets": {
+                "type": "string"
+              },
+              "privateAdapterRulesets": {
+                "type": "string"
+              },
+              "privateBranch": {
+                "type": "string"
+              },
+              "privateRulesets": {
+                "type": "string"
+              },
+              "publicAdapterRulesets": {
+                "type": "string"
+              },
+              "publicRuleset": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "observedAt": {
+            "type": "string"
+          },
+          "request": {
+            "type": "string"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "absent": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "access": {
+                    "type": "string"
+                  },
+                  "appName": {
+                    "type": "string"
+                  },
+                  "architectureHasSeparateReviewAndPullRequestRules": {
+                    "type": "boolean"
+                  },
+                  "architectureParticipantCommit": {
+                    "type": "string"
+                  },
+                  "architectureParticipantDigest": {
+                    "type": "string"
+                  },
+                  "architectureParticipantPin": {
+                    "type": "string"
+                  },
+                  "available": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "contentSha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "controlPlaneRequiredCheck": {
+                    "type": "string"
+                  },
+                  "controllerCommit": {
+                    "type": "string"
+                  },
+                  "controllerRelease": {
+                    "type": "string"
+                  },
+                  "deliveryState": {
+                    "type": "object",
+                    "properties": {
+                      "fieldId": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "visibility": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "fieldId",
+                      "name",
+                      "visibility"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "deliveryStateCanonicalName": {
+                    "type": "string"
+                  },
+                  "deliveryStateCompatibilityMode": {
+                    "type": "string"
+                  },
+                  "deliveryStateFieldPresent": {
+                    "type": "boolean"
+                  },
+                  "distributionBundleStatus": {
+                    "type": "string"
+                  },
+                  "distributionBundleVersion": {
+                    "type": "string"
+                  },
+                  "duplicateLifecycleFieldFound": {
+                    "type": "boolean"
+                  },
+                  "events": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "installationId": {
+                    "type": "number"
+                  },
+                  "lifecycleStage": {
+                    "type": "object",
+                    "properties": {
+                      "fieldId": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "visibility": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "fieldId",
+                      "name",
+                      "visibility"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "mode": {
+                    "type": "string"
+                  },
+                  "participants": {
+                    "type": "string"
+                  },
+                  "primitiveContentSha256": {
+                    "type": "string"
+                  },
+                  "primitiveMainReleaseManifestSourceCommit": {
+                    "type": "string"
+                  },
+                  "primitiveParticipantCommit": {
+                    "type": "string"
+                  },
+                  "primitiveParticipantDigest": {
+                    "type": "string"
+                  },
+                  "primitiveParticipantPin": {
+                    "type": "string"
+                  },
+                  "primitiveSourceCommitInArchitectureLock": {
+                    "type": "string"
+                  },
+                  "primitiveVersion": {
+                    "type": "string"
+                  },
+                  "privateAdapterBranchApiProtectedReported": {
+                    "type": "boolean"
+                  },
+                  "privateAdapterRulesetStatus": {
+                    "type": "string"
+                  },
+                  "privateAgentProjectionLockEntries": {
+                    "type": "number"
+                  },
+                  "privateBranchApiProtectedReported": {
+                    "type": "boolean"
+                  },
+                  "privatePublicationStatus": {
+                    "type": "string"
+                  },
+                  "privateRulesetState": {
+                    "type": "string"
+                  },
+                  "publicAdapterRequiredCheck": {
+                    "type": "string"
+                  },
+                  "publicFormsToTypesBinding": {
+                    "type": "string"
+                  },
+                  "publicIssueForms": {
+                    "type": "number"
+                  },
+                  "publicNativeIssueTypes": {
+                    "type": "number"
+                  },
+                  "publicRulesetRequires": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "publishedReleasesOrTagsFound": {
+                    "type": "boolean"
+                  },
+                  "sourceCommit": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "suspended": {
+                    "type": "boolean"
+                  },
+                  "version": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "runs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "type": "string"
+          },
+          "sourceCommit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "sourcePath": {
+            "type": "string"
+          },
+          "sourcePaths": {
+            "type": "object",
+            "properties": {
+              "private-adapter": {
+                "type": "string"
+              },
+              "public-adapter": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "private-adapter",
+              "public-adapter"
+            ],
+            "additionalProperties": false
+          },
+          "sourceRepositories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "observedAt",
+          "result"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "evidencePaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "githubRepositoryId": {
+            "type": "number"
+          },
+          "id": {
+            "type": "string"
+          },
+          "mainCommit": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidencePaths",
+          "githubRepositoryId",
+          "id",
+          "mainCommit",
+          "role",
+          "slug"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "snapshotDate": {
+      "type": "string"
+    },
+    "snapshotKind": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "observations",
+    "purpose",
+    "repositories",
+    "schemaVersion",
+    "snapshotDate",
+    "snapshotKind"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/system-evidence.schema.json",
+  "title": "system-evidence",
+  "description": "Closed structural contract for architecture/references/system-evidence.yml; semantic and cross-file meaning is checked separately."
+}

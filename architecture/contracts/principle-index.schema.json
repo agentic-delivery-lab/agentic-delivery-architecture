@@ -1,0 +1,92 @@
+{
+  "type": "object",
+  "properties": {
+    "principles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "consequences": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "decisions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^(ADR|ADP|ADD)-[0-9]{4}$"
+                },
+                "owner": {
+                  "type": "string"
+                },
+                "repository": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "owner",
+                "repository"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "goalIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^G-[0-9]{2}$"
+            }
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^AP-[0-9]{3}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "statement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "consequences",
+          "decisions",
+          "evidence",
+          "goalIds",
+          "id",
+          "name",
+          "source",
+          "statement"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schemaVersion": {
+      "const": 2
+    }
+  },
+  "required": [
+    "principles",
+    "schemaVersion"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/principle-index.schema.json",
+  "title": "principle-index",
+  "description": "Closed structural contract for architecture/principles/index.yml; semantic and cross-file meaning is checked separately."
+}

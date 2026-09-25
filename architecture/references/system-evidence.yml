@@ -1,0 +1,217 @@
+schemaVersion: 1
+snapshotDate: '2026-09-24'
+snapshotKind: read-only-live-audit
+purpose: >-
+  Pin the repository revisions and live observations used by this Architecture
+  description. Live observations are historical evidence as of snapshotDate;
+  they are not claims about settings after that date.
+repositories:
+  - id: architecture
+    slug: agentic-delivery-lab/agentic-delivery-architecture
+    githubRepositoryId: 1380894616
+    mainCommit: 107a97f4217682b23c11d136247abc423574b269
+    role: cross-context architecture authority
+    evidencePaths:
+      - decisions/README.md
+      - architecture/domain/bounded-contexts.yml
+      - architecture/domain/ubiquitous-language.yml
+      - architecture/generated/architecture-release.json
+  - id: control-plane
+    slug: agentic-delivery-lab/agentic-delivery
+    githubRepositoryId: 1358455028
+    mainCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+    role: Agentic Delivery Control Plane
+    evidencePaths:
+      - config/issue-metadata.yml
+      - config/participants.yml
+      - config/github-app-contract.json
+      - .github/workflows/issue-intake.yml
+      - scripts/lib/issue-field-api.mjs
+      - docs/domain/ubiquitous-language.yml
+  - id: primitives
+    slug: agentic-delivery-lab/agentic-delivery-primitives
+    githubRepositoryId: 1380894656
+    mainCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
+    role: Agentic Primitives
+    evidencePaths:
+      - manifests/primitive-catalog.yml
+      - manifests/primitive-release.json
+      - docs/decisions/ADP-0001-primitive-release-and-projection.md
+  - id: distribution
+    slug: agentic-delivery-lab/agentic-delivery-distribution
+    githubRepositoryId: 1380894705
+    mainCommit: b69c5710928b47efc4d3ab12ec4d5b596c80720c
+    role: Developer Distribution
+    evidencePaths:
+      - manifests/workflow-bundle.json
+      - manifests/sources.lock.json
+      - docs/decisions/ADD-0001-distribution-boundary.md
+  - id: public-adapter
+    slug: agentic-delivery-lab/.github
+    githubRepositoryId: 1368850419
+    mainCommit: af52c92e49616e78f8d6647cf5cf538a7e571d78
+    role: public GitHub community and repository-template adapter
+    evidencePaths:
+      - README.md
+      - .github/ISSUE_TEMPLATE
+      - .github/pull_request_template.md
+  - id: private-adapter
+    slug: agentic-delivery-lab/.github-private
+    githubRepositoryId: 1380894756
+    mainCommit: f9e6589b65c71da9e7b35d8e026f3d4a91dab78f
+    role: private profile and agent-publication adapter
+    evidencePaths:
+      - profile/README.md
+      - agents/lock.json
+      - surface.yml
+observations:
+  - id: organization-issue-fields
+    observedAt: '2026-09-24'
+    source: https://docs.github.com/en/rest/orgs/issue-fields
+    request: https://api.github.com/orgs/agentic-delivery-lab/issue-fields
+    result:
+      lifecycleStage: {name: Lifecycle Stage, fieldId: 46888816, visibility: organization_members_only}
+      deliveryState: {name: Delivery Readiness, fieldId: 46888965, visibility: organization_members_only}
+      deliveryStateCanonicalName: Delivery State
+      deliveryStateCompatibilityMode: legacy-authoritative
+      deliveryStateFieldPresent: false
+      duplicateLifecycleFieldFound: false
+    limitation: >-
+      The read API confirmed definitions and identities. It does not report UI
+      pinning; pinning and visibility for each native Issue Type and issues
+      without a type remain unverified. Projects fields are a separate API and
+      no Projects inventory was read.
+  - id: organization-issue-field-values
+    observedAt: '2026-09-24'
+    source: https://docs.github.com/en/rest/issues/issue-field-values
+    request: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery/issues/59/fields
+    result: >-
+      Newly created recovery issues #59 and #60 had no issue-field values while
+      issue-intake failed. This is not evidence that existing issues have no
+      values.
+    limitation: Issue field definitions and issue field values use separate APIs.
+  - id: recovery-issue-intake-runs
+    observedAt: '2026-09-24'
+    sourceRepositories: [control-plane]
+    sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+    sourcePath: .github/workflows/issue-intake.yml
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/36050051251
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/36049717167
+    result: >-
+      Issue intake failed before dependency installation because the classify
+      job checked out trusted code at the default path but used
+      working-directory trusted-intake. This is a live workflow failure, not a
+      conclusion that the field gate code is absent.
+  - id: invoker-installation
+    observedAt: '2026-09-24'
+    source: https://docs.github.com/en/rest/apps/installations
+    request: https://api.github.com/orgs/agentic-delivery-lab/installations
+    result:
+      appName: agentic-delivery-lab-invoker-7f3a
+      installationId: 163255060
+      access: all-repositories
+      events: [issue_comment, pull_request_review, pull_request_review_comment]
+      suspended: false
+    limitation: >-
+      The installation's repository list could not be read with the available
+      identity. The controller's credential identity was not verified. The
+      observed installation differs from the selected-repositories and event
+      expectations in the Control Plane contract; no App setting was changed.
+  - id: cli-oauth-scopes
+    observedAt: '2026-09-24'
+    result:
+      available: [gist, read:org, repo, workflow]
+      absent: [read:project, admin:org]
+    limitation: >-
+      Organization issue-field definitions were readable with read:org. Routine
+      work did not request admin:org. Projects inventory was not read; no
+      project mutation was performed.
+  - id: participant-modes-and-release-pins
+    observedAt: '2026-09-24'
+    sourceRepositories: [control-plane]
+    sourceCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+    sourcePath: config/participants.yml
+    result:
+      participants: all six audited repositories
+      mode: shadow
+      controllerRelease: 0.2.0-draft.37
+      controllerCommit: 7d38227f7f8d8377ed7cd1b883d90b71b69bfc9
+      architectureParticipantPin: 0.1.0-draft.8
+      architectureParticipantCommit: 9d4872c39e9c52075a7a299ad4584ac3eb704a1b
+      architectureParticipantDigest: ac4430f7aa86c016c51ea8f9458627d4412d36256960c1bf54b63e851dc2350c
+      primitiveParticipantPin: 0.1.0-draft.4
+      primitiveParticipantCommit: 01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e
+      primitiveParticipantDigest: 36a7e7e95a89ee00288f08a30ac41e4166e11516165e93af47b342026ce894d0
+    limitation: >-
+      Shadow registrations and source manifests do not prove that event delivery,
+      identity binding, field pinning, or write-back works end to end.
+  - id: architecture-draft-release
+    observedAt: '2026-09-24'
+    sourceRepositories: [architecture]
+    sourceCommit: 107a97f4217682b23c11d136247abc423574b269
+    sourcePath: architecture/generated/architecture-release.json
+    result:
+      version: 0.1.0-draft.9
+      sourceCommit: 47f16351f28172d53583130aef667d26a675b586
+      contentSha256: 536c3c245f784e607569e21ca2c59d768c6dc60d5df8c9e20dd3921e7368ae6b
+      status: draft
+  - id: primitive-and-distribution-drafts
+    observedAt: '2026-09-24'
+    sourceRepositories: [primitives, distribution]
+    result:
+      primitiveVersion: 0.1.0-draft.4
+      primitiveSourceCommitInArchitectureLock: 01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e
+      primitiveContentSha256: 36a7e7e95a89ee00288f08a30ac41e4166e11516165e93af47b342026ce894d0
+      primitiveMainReleaseManifestSourceCommit: a39267da
+      distributionBundleVersion: 0.1.0-draft.25
+      distributionBundleStatus: draft
+    limitation: >-
+      The Primitive release manifest's a39267da sourceCommit did not resolve in
+      the live Primitive repository. Its content digest reproduced at the valid
+      commit pinned above; this mismatch remains a Primitive provenance issue.
+  - id: public-and-private-adapters
+    observedAt: '2026-09-24'
+    sourceRepositories: [public-adapter, private-adapter]
+    sourcePaths:
+      public-adapter: .github/ISSUE_TEMPLATE
+      private-adapter: surface.yml
+    liveChecks:
+      publicRuleset: https://api.github.com/repos/agentic-delivery-lab/.github/rulesets
+      privateBranch: https://api.github.com/repos/agentic-delivery-lab/.github-private/branches/main
+      privateRulesets: https://api.github.com/repos/agentic-delivery-lab/.github-private/rulesets
+    result:
+      publicIssueForms: 9
+      publicNativeIssueTypes: 9
+      publicFormsToTypesBinding: unverified
+      publicRulesetRequires: [Validate pull request body]
+      privatePublicationStatus: pending-entitlement
+      privateAgentProjectionLockEntries: 0
+      privateBranchApiProtectedReported: false
+      privateRulesetState: unknown
+    limitation: >-
+      Matching form and Issue Type counts do not prove binding or pinning. The
+      private repository's intended ruleset could not be confirmed on the live
+      hosting plan; no entitlement or settings were changed.
+  - id: repository-releases-and-rulesets
+    observedAt: '2026-09-24'
+    liveChecks:
+      controlPlaneRulesets: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery/rulesets
+      architectureRulesets: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery-architecture/rulesets
+      primitiveRulesets: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery-primitives/rulesets
+      distributionRulesets: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery-distribution/rulesets
+      publicAdapterRulesets: https://api.github.com/repos/agentic-delivery-lab/.github/rulesets
+      privateAdapterRulesets: https://api.github.com/repos/agentic-delivery-lab/.github-private/rulesets
+    result:
+      publishedReleasesOrTagsFound: false
+      controlPlaneRequiredCheck: Validate pull request body
+      publicAdapterRequiredCheck: Validate pull request body
+      architectureHasSeparateReviewAndPullRequestRules: true
+      privateAdapterBranchApiProtectedReported: false
+      privateAdapterRulesetStatus: unknown
+    limitation: >-
+      The private branch API reported protected=false, while the ruleset API
+      returned 403 on the live plan, so its ruleset state remains unknown.
+      Rulesets are repository-scoped. No rule in one repository proves a rule
+      or review gate in another repository; versioned definitions are not live
+      enforcement evidence.

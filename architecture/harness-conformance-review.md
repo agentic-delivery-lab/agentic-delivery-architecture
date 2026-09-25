@@ -195,7 +195,7 @@ and duplicate synchronization comments.
 | `docs/architecture/harness-conformance-review.md` | Store this baseline and its limitations | All ADRs and evidence-quality contract | documentation | high |
 | `docs/decisions/0011-run-layered-harness-architecture-reviews.md` and index | Record recurring review alternatives and choice | ADR governance, domain, delivery observability | decision | high |
 | `docs/architecture/harness-review.yml` | Map ADRs/contexts to affected paths | Continuous baseline comparison | deterministic enforcement | high |
-| `docs/architecture/delivery-evidence.schema.json` | Define stable evidence fields | Issue/session/run/PR traceability | observability | high |
+| `docs/architecture/delivery-evidence.schema.json` (historical #29 proposal; its canonical owner is Control Plane) | Define stable evidence fields | Issue/session/run/PR traceability | observability | high |
 | `scripts/codex-delivery.mjs`, `scripts/lib/codex-client.mjs`, `scripts/lib/codex-loop.mjs` | Capture safe metadata and project evidence | ADR-0009 | runtime evidence | high |
 | `scripts/lib/architecture-review.mjs`, `scripts/harness-architecture-review.mjs` | Run deterministic and semantic review | ADR-0011 | deterministic/semantic review | high |
 | `.github/workflows/harness-architecture-review.yml` | Trigger read-only review on internal PRs | ADR-0011 and permission boundary | deterministic/semantic review | high |

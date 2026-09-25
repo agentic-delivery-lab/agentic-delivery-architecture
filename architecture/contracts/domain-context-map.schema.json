@@ -1,0 +1,183 @@
+{
+  "type": "object",
+  "properties": {
+    "boundedContexts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "agentic-delivery-governance",
+          "agentic-delivery-control-plane",
+          "agentic-primitives",
+          "developer-distribution"
+        ]
+      }
+    },
+    "crossContextAuthority": {
+      "type": "object",
+      "properties": {
+        "classification": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "classification",
+        "id",
+        "repository"
+      ],
+      "additionalProperties": false
+    },
+    "governanceOverlay": {
+      "type": "object",
+      "properties": {
+        "appliesTo": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "context": {
+                "type": "string",
+                "enum": [
+                  "agentic-delivery-governance",
+                  "agentic-delivery-control-plane",
+                  "agentic-primitives",
+                  "developer-distribution"
+                ]
+              },
+              "contracts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "context",
+              "contracts"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "authority": {
+          "type": "string"
+        },
+        "classification": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "appliesTo",
+        "authority",
+        "classification"
+      ],
+      "additionalProperties": false
+    },
+    "infrastructureSurfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "distinctFrom": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "includes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "owner": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "includes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "contract": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "downstream": {
+            "type": "string"
+          },
+          "upstream": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "contract",
+          "direction",
+          "downstream",
+          "upstream"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "repositoryAdapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "classification": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "repository": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "classification",
+          "id",
+          "repository"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schemaVersion": {
+      "const": 2
+    }
+  },
+  "required": [
+    "boundedContexts",
+    "crossContextAuthority",
+    "governanceOverlay",
+    "infrastructureSurfaces",
+    "relationships",
+    "repositoryAdapters",
+    "schemaVersion"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/domain-context-map.schema.json",
+  "title": "domain-context-map",
+  "description": "Closed structural contract for architecture/domain/context-map.yml; semantic and cross-file meaning is checked separately."
+}

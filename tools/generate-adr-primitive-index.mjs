@@ -1,19 +1,18 @@
+import { createHash } from 'node:crypto';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { parseRepositoryYaml } from './lib/yaml.mjs';
+import { validateDecisionInventory } from './decision-inventory.mjs';
 
 const ADR_FILE = /^(\d{4})-[a-z0-9-]+\.md$/;
-const SHA1 = /^[0-9a-f]{40}$/i;
+const SHA1 = /^[0-9a-f]{40}$/;
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const KINDS = new Set(['agent', 'skill', 'instruction', 'hook', 'validator', 'capability', 'mcp-contract']);
 const ENFORCEMENTS = new Set(['instructional', 'deterministic', 'semantic']);
 
-const root = path.resolve(process.argv.slice(2).find((argument) => argument !== '--check') ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'));
-const check = process.argv.includes('--check');
-const outputPath = path.join(root, 'architecture', 'generated', 'adr-primitive-index.json');
-const lockPath = path.join(root, 'architecture', 'references', 'primitive-catalog.lock.yml');
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 function frontmatter(source, file) {
   const lines = source.split(/\r?\n/);
@@ -27,7 +26,7 @@ function list(value) {
   return Array.isArray(value) ? value.map(String) : [];
 }
 
-async function loadAdrs() {
+async function loadAdrs(root) {
   const directory = path.join(root, 'decisions');
   const entries = await readdir(directory, { withFileTypes: true });
   const records = [];
@@ -71,20 +70,27 @@ function validateLock(lock) {
   if (errors.length) throw new Error(`primitive catalog lock validation failed:\n${errors.join('\n')}`);
 }
 
-async function loadDomains() {
+async function loadDomains(root) {
   const registry = parseRepositoryYaml(await readFile(path.join(root, 'architecture/domain/ubiquitous-language.yml'), 'utf8'), 'domain register');
   return (registry.bounded_contexts ?? []).map((context) => String(context.id)).sort();
 }
 
-async function buildIndex() {
-  const [adrs, lock, domains] = await Promise.all([
-    loadAdrs(),
+async function buildIndex(root) {
+  const lockPath = path.join(root, 'architecture', 'references', 'primitive-catalog.lock.yml');
+  const inventoryPath = path.join(root, 'architecture', 'references', 'decision-inventory.yml');
+  const [adrs, lock, domains, inventoryResult, inventorySource] = await Promise.all([
+    loadAdrs(root),
     readFile(lockPath, 'utf8').then((source) => parseRepositoryYaml(source, 'primitive catalog lock')),
-    loadDomains(),
+    loadDomains(root),
+    validateDecisionInventory(root),
+    readFile(inventoryPath),
   ]);
   validateLock(lock);
   const adrById = new Map(adrs.map((adr) => [adr.id, adr]));
   const primitiveByAdr = new Map(adrs.map((adr) => [adr.id, []]));
+  for (const primitive of lock.primitives) {
+    for (const id of primitive.adrs) if (!adrById.has(id)) throw new Error(`Primitive ADR reference ${id} has no canonical Architecture ADR record`);
+  }
   const primitiveRows = lock.primitives.map((primitive) => {
     const adrsForPrimitive = [...primitive.adrs].sort();
     for (const adr of adrsForPrimitive) if (primitiveByAdr.has(adr)) primitiveByAdr.get(adr).push(primitive.id);
@@ -97,7 +103,8 @@ async function buildIndex() {
       sourcePath: primitive.sourcePath,
       enforcement: primitive.enforcement,
       adrs: adrsForPrimitive,
-      localAdrs: adrsForPrimitive.filter((adr) => adrById.has(adr)),
+      localAdrs: adrsForPrimitive,
+      externalAdrs: [],
       domains: [...primitive.domains].sort(),
     };
   }).sort((left, right) => left.id.localeCompare(right.id));
@@ -105,12 +112,16 @@ async function buildIndex() {
     ...adr,
     primitives: [...(primitiveByAdr.get(adr.id) ?? [])].sort(),
   }));
-  const externalAdrs = [...new Set(primitiveRows.flatMap((primitive) => primitive.adrs.filter((adr) => !adrById.has(adr))))].sort();
   const uncoveredAdrs = adrRows.filter((adr) => adr.primitives.length === 0).map((adr) => adr.id);
   return {
-    schemaVersion: 1,
+    schemaVersion: 3,
     source: 'released-primitive-catalog',
     architecture: 'urn:agentic-delivery:architecture:authority',
+    decisionInventory: {
+      path: 'architecture/references/decision-inventory.yml',
+      sha256: createHash('sha256').update(inventorySource).digest('hex'),
+      schemaVersion: inventoryResult.inventory.schemaVersion,
+    },
     primitiveRelease: {
       repository: lock.source.repository,
       releaseId: lock.source.releaseId,
@@ -121,23 +132,40 @@ async function buildIndex() {
     },
     domains,
     adrs: adrRows,
-    externalAdrs,
+    externalAdrs: [],
     uncoveredAdrs,
     primitives: primitiveRows,
   };
 }
 
-const index = await buildIndex();
-if (check) {
-  let current;
-  try { current = JSON.parse(await readFile(outputPath, 'utf8')); } catch { current = null; }
-  if (JSON.stringify(current) !== JSON.stringify(index)) {
-    process.stderr.write('ADR/Primitive index check: generated index is stale.\n');
-    process.exitCode = 1;
+export async function generateAdrPrimitiveIndex({ checkOnly = false, root = repositoryRoot } = {}) {
+  const resolvedRoot = path.resolve(root);
+  const outputPath = path.join(resolvedRoot, 'architecture', 'generated', 'adr-primitive-index.json');
+  const index = await buildIndex(resolvedRoot);
+  if (checkOnly) {
+    let current;
+    try { current = JSON.parse(await readFile(outputPath, 'utf8')); } catch { current = null; }
+    if (JSON.stringify(current) !== JSON.stringify(index)) {
+      throw new Error('ADR/Primitive index check: generated index is stale.');
+    }
+    return index;
   } else {
-    process.stdout.write(`ADR/Primitive index check passed: ${index.adrs.length} ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+    await writeFile(outputPath, `${JSON.stringify(index, null, 2)}\n`);
+    return index;
   }
-} else {
-  await writeFile(outputPath, `${JSON.stringify(index, null, 2)}\n`);
-  process.stdout.write(`ADR/Primitive index generated: ${index.adrs.length} ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  try {
+    const args = process.argv.slice(2);
+    const checkOnly = args.includes('--check');
+    const root = args.find((argument) => argument !== '--check') ?? repositoryRoot;
+    const index = await generateAdrPrimitiveIndex({ checkOnly, root });
+    process.stdout.write(checkOnly
+      ? `ADR/Primitive index v3 check passed: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`
+      : `ADR/Primitive index v3 generated: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+  } catch (error) {
+    process.stderr.write(`${error.message}\n`);
+    process.exitCode = 1;
+  }
 }

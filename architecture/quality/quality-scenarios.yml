@@ -1,17 +1,92 @@
-schemaVersion: 1
+schemaVersion: 2
 scenarios:
   - id: QR-001
     name: preserve originating repository identity
+    stakeholder: organization-operator
+    concern: a valid lifecycle event must never target the controller repository by accident
     stimulus: A lifecycle event arrives from an enrolled repository.
-    response: The same repository ID is retained through routing, mutation, and evidence.
-    measure: No mutation targets the controller repository unless it is the origin.
+    response: The source repository ID is checked and retained through routing, mutation, and evidence.
+    measure: Zero mutations target a repository ID other than the event origin or an explicitly approved control-plane record.
+    evidence: [ADR-0012, ADR-0018, system-evidence.yml#participant-modes-and-release-pins]
+    status: target; no end-to-end runtime evidence yet
   - id: QR-002
-    name: safe controller upgrade
-    stimulus: A new compatible controller release is proposed.
-    response: It runs in shadow mode before participant activation.
-    measure: Upgrade and exact-commit rollback have auditable evidence.
+    name: safe controller upgrade and rollback
+    stakeholder: repository-owner
+    concern: a release must not silently change behavior or make recovery ambiguous
+    stimulus: A compatible controller, Architecture, Primitive, or Distribution release is proposed.
+    response: The participant validates the exact source commit, digest, contract versions, repository identity, and rollback pin in shadow mode before activation.
+    measure: Upgrade and rollback both restore the expected immutable commit and content digest with no untracked consumer files.
+    evidence: [ADR-0018, ADD-0001, system-evidence.yml#participant-modes-and-release-pins]
+    status: target; participants observed in shadow mode
   - id: QR-003
-    name: readable architecture without tooling
-    stimulus: A reviewer opens the architecture repository without the CLI.
-    response: Markdown, YAML, JSON, and model sources remain understandable.
-    measure: Every rendered view has a checked-in source file.
+    name: complete ADR impact traceability
+    stakeholder: architecture-reviewer
+    concern: a Primitive must not reference an unknown or non-canonical ADR
+    stimulus: A Primitive release adds, changes, or removes an ADR reference.
+    response: The Architecture release lists the exact local ADR set and the generated index resolves every pinned Primitive reference to one local record.
+    measure: Release ADR IDs equal local ADR file IDs; every Primitive ADR reference resolves once; unknown references fail; externalAdrs is empty; the generated index reproduces exactly.
+    evidence: [ADR-0013, ADR-0020, architecture/references/decision-inventory.yml]
+    status: Local resolution is validated in this proposal; semantic ADR impact review and Primitive release update enforcement remain a Primitive-phase contract
+  - id: QR-004
+    name: preserve issue-field semantics during rename
+    stakeholder: organization-operator
+    concern: native Issue Type, lifecycle position, authorization state, governance metadata, and runner state stay separate
+    stimulus: Delivery Readiness is considered for migration to Delivery State.
+    response: One existing field and its option identities are inventoried; old and new readers compare by option ID in shadow; rollout has an exact rollback.
+    measure: Exactly two lifecycle-related organization issue fields remain; one Delivery State field identity and all option identities are preserved; both fields are visible on every intended native Issue Type and issues without type.
+    evidence: [ADR-0012, ADR-0019, system-evidence.yml#organization-issue-fields]
+    status: target; UI pinning and rename capability are unverified
+  - id: QR-005
+    name: safe Distribution conflict handling
+    stakeholder: consumer-repository-owner
+    concern: bootstrap must not overwrite unowned local files or strand a partial upgrade
+    stimulus: A pinned bundle applies to a repository with an existing conflicting file.
+    response: Bootstrap reports the conflict before mutation or completes an auditable managed update that can be rolled back to the prior bundle.
+    measure: Conflict tests leave repository contents unchanged; rollback reproduces the previous bundle digest and target-file set.
+    evidence: [ADD-0001, system-evidence.yml#primitive-and-distribution-drafts]
+    status: contract requirement; rollback proof remains open
+  - id: QR-006
+    name: readable architecture without renderer tooling
+    stakeholder: all-maintainers
+    concern: reviewers must understand architecture sources and decisions in a normal text editor
+    stimulus: A reviewer opens the repository without diagram or documentation tooling.
+    response: Markdown, YAML, JSON, Mermaid, PlantUML, and Structurizr sources explain the relevant view and its scope.
+    measure: Every diagram has a checked-in text source; every arc42 section names its evidence basis and does not rely on a rendered image alone.
+    evidence: [ADR-0001, ADR-0003, arc42 documentation and method]
+    status: target; checked-in source is available
+  - id: QR-007
+    name: repository-scoped enforcement claims
+    stakeholder: organization-maintainer
+    concern: a passing check in one repo must not be reported as a guarantee for all repos
+    stimulus: A review reports required checks, branch protection, or an App capability.
+    response: The claim names the repository, observation time, exact source, and API/UI limitation.
+    measure: Each live claim has a repository identity and evidence link; unknown settings are labeled unknown.
+    evidence: [ADR-0011, ADR-0016, system-evidence.yml#repository-releases-and-rulesets]
+    status: target; private ruleset status remains unknown
+  - id: QR-008
+    name: independent semantic review
+    stakeholder: repository-writer
+    concern: authorship and validation must be separate for high-risk or long-running work
+    stimulus: A fan-out/fan-in work path reaches implementation completion.
+    response: Read-only researchers are synthesized by one writer and a separate Validator checks the result with cited sources.
+    measure: The Validator identity differs from the implementation author and reports each finding as evidence-backed, advisory, or inconclusive.
+    evidence: [ADR-0011, "recovery issue #59"]
+    status: target; integrated orchestration path not yet demonstrated
+  - id: QR-010
+    name: verifiable release and projection provenance
+    stakeholder: architecture-maintainer, primitive-maintainer, distribution-maintainer
+    concern: generated contracts and consumer artifacts must identify the exact sources from which they were produced
+    stimulus: An Architecture, Primitive, or Distribution release or projection is generated or proposed for activation.
+    response: The Architecture release records its source identity, digest, contract version, and exact decision IDs; the inventory records immutable source pins for imported decisions.
+    measure: The source commit reproduces the release digest; each imported original SHA-256 matches `git show <sourceCommit>:<sourcePath>`; every declared source-preserving adaptation is exact and reviewable; every generated consumer artifact matches its versioned manifest before activation.
+    evidence: [ADR-0013, ADR-0018, ADR-0020, ADP-0001, ADD-0001, architecture/generated/architecture-release.json, architecture/references/decision-inventory.yml, system-evidence.yml#primitive-and-distribution-drafts]
+    status: Architecture source pins and draft digest are validated in this proposal; consumer projection validation and Distribution activation evidence remain open
+  - id: QR-011
+    name: route semantic decision review by bounded context
+    stakeholder: context-steward, architecture-reviewer
+    concern: canonical text ownership must not bypass the affected context's semantic review
+    stimulus: A canonical decision changes with one or more declared bounded contexts.
+    response: The Architecture inventory derives the required semantic reviewer roles from record domains and the bounded-context steward repository map.
+    measure: Every inventory domain resolves to exactly one stewarding repository and evidence path pinned in the audit snapshot; a cross-context record routes to every affected context; a repository mapping alone is never reported as human approval.
+    evidence: [ADR-0020, architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories]
+    status: Repository routing is structurally validated; independent human steward approval is blocked by the current one-member/CODEOWNERS gate

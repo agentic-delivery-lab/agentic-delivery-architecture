@@ -1,13 +1,27 @@
 sequenceDiagram
-  participant GH as GitHub event
-  participant APP as GitHub App gateway
+  participant GH as GitHub event source
+  participant APP as GitHub App installation
   participant CP as Agentic Delivery Control Plane
+  participant ENROLL as Control Plane participant contract
   participant ORIGIN as Origin repository
+  participant TYPES as Native Issue Type on issue
+  participant DEFINITIONS as Organization issue-field definitions API
+  participant VALUES as Per-issue field values API
 
-  GH->>APP: signed issue/comment event
-  APP->>APP: verify organization, installation, signature and replay
-  APP->>CP: immutable event envelope with repository ID
-  CP->>ORIGIN: re-fetch issue and participant contract
-  CP->>CP: semantic proposal then deterministic authorization
-  CP->>ORIGIN: mutate only the originating issue or branch
-  CP-->>GH: evidence and write-back links
+  GH->>APP: subscribed issue or review event
+  APP->>APP: apply installation access and deliver event
+  APP->>CP: event envelope with repository ID
+  CP->>ENROLL: check selected repository and exact participant pins
+  Note over APP,ENROLL: App installation access and Control Plane enrollment are separate checks
+  CP->>ORIGIN: re-fetch issue, repository identity, and native Issue Type
+  CP->>DEFINITIONS: read organization field definitions and option IDs
+  CP->>VALUES: read this issue's field values using repository permissions
+  Note over TYPES,ORIGIN: Organization Issue Type definitions and an issue's native type value are related but distinct surfaces
+  Note over TYPES,VALUES: Issue Type, lifecycle position, delivery authorization, governance metadata, and runner state remain distinct
+  CP->>CP: interpret intent; propose route and field values
+  CP->>CP: deterministically validate identity, permission, schema, option, transition, and orchestration contracts
+  CP->>ORIGIN: mutate only the originating issue or branch after gates pass
+  CP->>VALUES: write only validated per-issue field values
+  Note over CP,VALUES: GitHub Projects fields are a separate surface and are not this lifecycle contract; issue-value writes do not change org field definitions
+  CP-->>GH: publish evidence and origin write-back links
+  Note over GH,ORIGIN: Target sequence; the 2026-09-24 live audit had no passing end-to-end run

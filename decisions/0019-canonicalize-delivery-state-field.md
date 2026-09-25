@@ -113,7 +113,14 @@ Deterministic evidence for the migration must show:
 
 - Refines [ADR-0012: Use GitHub as the lifecycle control plane](0012-use-github-as-the-lifecycle-control-plane.md).
 - Extends [ADR-0018: Organization-wide Agentic Delivery control-plane distribution and versioning](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md), which explicitly leaves this rename to a separate decision.
+- Issue #52 is closed and remains the historical plan source for this decision;
+  it does not authorize field changes.
 - The current live logical contract remains in the Delivery Control Plane's
-  [`config/issue-metadata.yml`](https://github.com/agentic-delivery-lab/agentic-delivery/blob/main/config/issue-metadata.yml)
+  [`config/issue-metadata.yml`](https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/config/issue-metadata.yml)
   until the migration described here is authorized.
-- This record is provisional until its review pull request is merged into `main`.
+- The base record is present on Architecture `main` and is official; no
+  verifiable Architecture review PR for its historical addition was found,
+  so review provenance is unknown. Proposed issue #3 owner-map and terminology
+  amendments remain provisional until their issue-linked review PR is merged.
+  Any live rename remains a separate, gated migration and requires its own
+  reviewed implementation.

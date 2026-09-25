@@ -18,6 +18,8 @@ const requiredHeadings = [
   '### Confirmation',
   '## More Information',
 ];
+const adrFilename = /^\d{4}-[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?\.md$/;
+const importedDecisionFilename = /^(?:ADP|ADD)-\d{4}-[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?\.md$/;
 
 export class AdrValidationError extends Error {
   constructor(message, exitCode = 1) {
@@ -77,12 +79,13 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
   }
 
   const records = (await readdir(decisionsDirectory, { withFileTypes: true }))
-    .filter((entry) => entry.isFile() && /^\d{4}-.*\.md$/.test(entry.name))
+    .filter((entry) => entry.isFile() && (adrFilename.test(entry.name) || importedDecisionFilename.test(entry.name)))
     .map(({ name }) => name)
     .sort()
     .map((name) => path.join(decisionsDirectory, name));
 
-  if (records.length === 0) addError('no numbered ADR records found');
+  if (records.length === 0) addError('no ADR, ADP, or ADD decision records found');
+  const adrRecords = records.filter((record) => /^\d{4}-/.test(path.basename(record)));
 
   // A removed ADR number is historical identity, not a reusable slot. When
   // Git history is available, reject a current record whose number previously
@@ -96,7 +99,7 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
       names.add(path.basename(file));
       historicalNames.set(number, names);
     }
-    for (const record of records) {
+    for (const record of adrRecords) {
       const filename = path.basename(record);
       const number = filename.slice(0, 4);
       const priorNames = historicalNames.get(number);
@@ -108,7 +111,7 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
 
   let previousNumber = 0;
   const recordNumbers = new Set();
-  for (const record of records) {
+  for (const record of adrRecords) {
     const filename = path.basename(record);
     const number = filename.slice(0, 4);
     const numericNumber = Number(number);
@@ -117,10 +120,6 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
     if (recordNumbers.has(number)) addError(`${filename} reuses ADR number ${number}`);
     previousNumber = numericNumber;
     recordNumbers.add(number);
-
-    if (!/^\d{4}-[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?\.md$/.test(filename)) {
-      addError(`${filename} does not use the NNNN-title-with-dashes.md format`);
-    }
 
     let source;
     try {
@@ -156,6 +155,9 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
     if (typeof metadata?.['source-issue'] !== 'string' || !/^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/issues\/\d+$/.test(metadata['source-issue'])) {
       addError(`${filename} has no valid GitHub source-issue URL in its frontmatter`);
     }
+    for (const key of ['decision-makers', 'consulted', 'informed']) {
+      if (typeof metadata?.[key] !== 'string' || metadata[key].trim() === '') addError(`${filename} has no ${key} provenance in its frontmatter`);
+    }
     const domains = metadata?.domains;
     if (!Array.isArray(domains) || domains.length === 0 || domains.some((domain) => typeof domain !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(domain))) {
       addError(`${filename} must declare one or more valid domains in frontmatter`);
@@ -169,10 +171,15 @@ export async function validateAdrs(repositoryRoot = process.cwd()) {
       addError(`${filename} has invalid supersedes metadata`);
     }
 
+    let previousHeadingIndex = -1;
     for (const heading of requiredHeadings) {
-      if (!source.split(/\r?\n/).includes(heading)) {
+      const headingIndex = source.split(/\r?\n/).indexOf(heading);
+      if (headingIndex < 0) {
         addError(`${filename} is missing required heading: ${heading}`);
+      } else if (headingIndex <= previousHeadingIndex) {
+        addError(`${filename} does not follow the shared MADR heading order at ${heading}`);
       }
+      previousHeadingIndex = headingIndex;
     }
     if (!/https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/issues\/\d+/.test(source)) {
       addError(`${filename} does not link its source issue`);

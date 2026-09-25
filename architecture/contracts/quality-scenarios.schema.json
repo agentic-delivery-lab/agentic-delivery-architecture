@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "properties": {
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "concern": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^QR-[0-9]{3}$"
+          },
+          "measure": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "response": {
+            "type": "string"
+          },
+          "stakeholder": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "stimulus": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "concern",
+          "evidence",
+          "id",
+          "measure",
+          "name",
+          "response",
+          "stakeholder",
+          "status",
+          "stimulus"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schemaVersion": {
+      "const": 2
+    }
+  },
+  "required": [
+    "scenarios",
+    "schemaVersion"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/quality-scenarios.schema.json",
+  "title": "quality-scenarios",
+  "description": "Closed structural contract for architecture/quality/quality-scenarios.yml; semantic and cross-file meaning is checked separately."
+}

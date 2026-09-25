@@ -1,10 +1,39 @@
-schemaVersion: 1
+schemaVersion: 2
 principles:
   - id: AP-001
     name: One authoritative state
     statement: Each durable fact has one canonical owner and other layers hold references, projections, or evidence.
     source: principles/AP-001-one-authoritative-state.md
+    goalIds: [G-01]
+    decisions:
+      - {id: ADR-0012, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0013, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0018, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADP-0001, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADD-0001, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+    consequences:
+      - GitHub work state and runtime, primitive, and distribution artifacts remain with their context owners; Architecture owns organization decision text.
+      - Consumer projections identify immutable repository sources and digests; the decision inventory preserves imported origins without a second prose source.
+    evidence:
+      - references/system-evidence.yml#repositories
+      - references/system-evidence.yml#participant-modes-and-release-pins
+      - references/decision-inventory.yml
   - id: AP-002
     name: Deterministic enforcement after semantic proposal
     statement: Reasoning may propose a route, but deterministic contracts authorize every state mutation.
     source: principles/AP-002-deterministic-enforcement.md
+    goalIds: [G-02, G-04]
+    decisions:
+      - {id: ADR-0011, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0012, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0019, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0009, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0017, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+    consequences:
+      - The Control Plane checks repository identity, actor permission, participant pins, field schema and options, transitions, and the requested orchestration before write-back.
+      - Architecture review stays read-only and independent; structural failures are distinct from advisory or inconclusive semantic findings, and maintainers retain merge authority.
+    evidence:
+      - references/system-evidence.yml#recovery-issue-intake-runs
+      - references/system-evidence.yml#organization-issue-fields
+      - references/system-evidence.yml#participant-modes-and-release-pins
+      - references/decision-inventory.yml

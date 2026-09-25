@@ -1,12 +1,32 @@
-schemaVersion: 1
+schemaVersion: 2
 items:
   - id: TD-001
-    title: Legacy ADR numbers and paths still exist in the migration source
+    title: Historical ADR numbers and import paths remain in migration history
     status: transitional
     owner: architecture-maintainer
-    exit: Remove aliases only after Architecture v1 and one supported release cycle.
+    evidence: migration/manifest.json
+    exit: Keep historical aliases only while needed for source-commit traceability; remove a live alias after the Architecture release and all supported consumers have completed the compatibility window.
   - id: TD-002
-    title: Delivery Readiness remains the live organization field name
+    title: Delivery Readiness remains the live field name for Delivery State
     status: transitional
     owner: control-plane-maintainer
-    exit: Perform the explicit Delivery State migration while preserving field and option IDs.
+    evidence: system-evidence.yml#organization-issue-fields
+    exit: Complete the explicit ADR-0019 migration with retained field and option IDs, shadow comparison, versioned participants, and rollback; stop for another decision if in-place rename is unsupported.
+  - id: TD-003
+    title: Control Plane participant pins lag the current Architecture draft
+    status: open
+    owner: control-plane-maintainer
+    evidence: system-evidence.yml#participant-modes-and-release-pins
+    exit: Update the Architecture participant pin only after this Architecture change is reviewed, merged, digested, and released through the Control Plane's own reviewed change.
+  - id: TD-004
+    title: Primitive release manifest sourceCommit does not resolve at the pinned main revision
+    status: open
+    owner: primitive-maintainer
+    evidence: system-evidence.yml#primitive-and-distribution-drafts
+    exit: Replace the invalid source reference with a verified immutable Primitive commit and reproduce the release digest before consumer repinning.
+  - id: TD-005
+    title: Distribution bundle has no immutable source identity for its own bundle contents
+    status: open
+    owner: distribution-maintainer
+    evidence: system-evidence.yml#primitive-and-distribution-drafts
+    exit: Add a reviewed source commit and content digest to the bundle contract and verify reproducibility and rollback.

@@ -1,7 +1,12 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "source": "released-primitive-catalog",
   "architecture": "urn:agentic-delivery:architecture:authority",
+  "decisionInventory": {
+    "path": "architecture/references/decision-inventory.yml",
+    "sha256": "4413f265e1c8785636cbf5b470ad92984b6e6d6ced324cf91a4060c713976590",
+    "schemaVersion": 1
+  },
   "primitiveRelease": {
     "repository": "agentic-delivery-lab/agentic-delivery-primitives",
     "releaseId": "urn:agentic-delivery:primitive-release:0.1.0-draft.4",
@@ -12,7 +17,9 @@
   },
   "domains": [
     "agentic-delivery-control-plane",
-    "agentic-delivery-governance"
+    "agentic-delivery-governance",
+    "agentic-primitives",
+    "developer-distribution"
   ],
   "adrs": [
     {
@@ -119,9 +126,38 @@
       ]
     },
     {
+      "id": "ADR-0008",
+      "file": "decisions/0008-use-pnpm-with-delayed-dependency-adoption.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "delivery-workflow",
+        "toolchain-policy-validator"
+      ]
+    },
+    {
+      "id": "ADR-0009",
+      "file": "decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional"
+      ],
+      "primitives": [
+        "codex-delivery"
+      ]
+    },
+    {
       "id": "ADR-0011",
       "file": "decisions/0011-run-layered-harness-architecture-reviews.md",
       "domains": [
+        "agentic-delivery-control-plane",
         "agentic-delivery-governance"
       ],
       "requiredEnforcement": [
@@ -158,9 +194,23 @@
       "primitives": []
     },
     {
+      "id": "ADR-0015",
+      "file": "decisions/0015-isolate-resumable-runner-execution.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "codex-delivery"
+      ]
+    },
+    {
       "id": "ADR-0016",
       "file": "decisions/0016-require-structured-pull-request-descriptions.md",
       "domains": [
+        "agentic-delivery-control-plane",
         "agentic-delivery-governance"
       ],
       "requiredEnforcement": [
@@ -169,6 +219,19 @@
       ],
       "primitives": [
         "pull-request-body-validator"
+      ]
+    },
+    {
+      "id": "ADR-0017",
+      "file": "decisions/0017-use-an-explicit-agent-invocation-boundary.md",
+      "domains": [
+        "agentic-delivery-governance"
+      ],
+      "requiredEnforcement": [
+        "deterministic"
+      ],
+      "primitives": [
+        "codex-delivery"
       ]
     },
     {
@@ -199,19 +262,47 @@
         "semantic"
       ],
       "primitives": []
+    },
+    {
+      "id": "ADR-0020",
+      "file": "decisions/0020-centralize-organization-decision-records.md",
+      "domains": [
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "semantic"
+      ],
+      "primitives": []
+    },
+    {
+      "id": "ADR-0021",
+      "file": "decisions/0021-define-architecture-artifact-contracts.md",
+      "domains": [
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional",
+        "semantic"
+      ],
+      "primitives": []
     }
   ],
-  "externalAdrs": [
-    "ADR-0008",
-    "ADR-0009",
-    "ADR-0015",
-    "ADR-0017"
-  ],
+  "externalAdrs": [],
   "uncoveredAdrs": [
     "ADR-0011",
     "ADR-0013",
     "ADR-0018",
-    "ADR-0019"
+    "ADR-0019",
+    "ADR-0020",
+    "ADR-0021"
   ],
   "primitives": [
     {
@@ -228,6 +319,7 @@
       "localAdrs": [
         "ADR-0001"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -246,6 +338,7 @@
       "localAdrs": [
         "ADR-0006"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -265,8 +358,12 @@
         "ADR-0017"
       ],
       "localAdrs": [
-        "ADR-0012"
+        "ADR-0009",
+        "ADR-0012",
+        "ADR-0015",
+        "ADR-0017"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-control-plane"
       ]
@@ -287,6 +384,7 @@
         "ADR-0004",
         "ADR-0005"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -310,8 +408,10 @@
         "ADR-0004",
         "ADR-0005",
         "ADR-0006",
-        "ADR-0007"
+        "ADR-0007",
+        "ADR-0008"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -330,6 +430,7 @@
       "localAdrs": [
         "ADR-0005"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -348,6 +449,7 @@
       "localAdrs": [
         "ADR-0007"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -366,6 +468,7 @@
       "localAdrs": [
         "ADR-0002"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -384,6 +487,7 @@
       "localAdrs": [
         "ADR-0016"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -402,6 +506,7 @@
       "localAdrs": [
         "ADR-0007"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -420,6 +525,7 @@
       "localAdrs": [
         "ADR-0005"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -438,6 +544,7 @@
       "localAdrs": [
         "ADR-0007"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -453,7 +560,10 @@
       "adrs": [
         "ADR-0008"
       ],
-      "localAdrs": [],
+      "localAdrs": [
+        "ADR-0008"
+      ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]
@@ -472,6 +582,7 @@
       "localAdrs": [
         "ADR-0003"
       ],
+      "externalAdrs": [],
       "domains": [
         "agentic-delivery-governance"
       ]

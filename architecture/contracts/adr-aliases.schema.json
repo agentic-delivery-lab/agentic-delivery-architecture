@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "properties": {
+    "aliases": {
+      "type": "object",
+      "properties": {
+        "ADR-0001": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0001"
+        },
+        "ADR-0002": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0002"
+        },
+        "ADR-0003": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0003"
+        },
+        "ADR-0004": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0004"
+        },
+        "ADR-0005": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0005"
+        },
+        "ADR-0006": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0006"
+        },
+        "ADR-0007": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0007"
+        },
+        "ADR-0008": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0008"
+        },
+        "ADR-0009": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0009"
+        },
+        "ADR-0011": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0011"
+        },
+        "ADR-0012": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0012"
+        },
+        "ADR-0013": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0013"
+        },
+        "ADR-0015": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0015"
+        },
+        "ADR-0016": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0016"
+        },
+        "ADR-0017": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0017"
+        },
+        "ADR-0018": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0018"
+        },
+        "ADR-0019": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0019"
+        },
+        "ADR-0020": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0020"
+        },
+        "ADR-0021": {
+          "type": "string",
+          "const": "urn:agentic-delivery:adr:architecture:0021"
+        }
+      },
+      "required": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0004",
+        "ADR-0005",
+        "ADR-0006",
+        "ADR-0007",
+        "ADR-0008",
+        "ADR-0009",
+        "ADR-0011",
+        "ADR-0012",
+        "ADR-0013",
+        "ADR-0015",
+        "ADR-0016",
+        "ADR-0017",
+        "ADR-0018",
+        "ADR-0019",
+        "ADR-0020",
+        "ADR-0021"
+      ],
+      "additionalProperties": false
+    },
+    "schemaVersion": {
+      "const": 1
+    }
+  },
+  "required": [
+    "aliases",
+    "schemaVersion"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/adr-aliases.schema.json",
+  "title": "adr-aliases",
+  "description": "Closed structural contract for architecture/references/adr-aliases.json; semantic and cross-file meaning is checked separately."
+}

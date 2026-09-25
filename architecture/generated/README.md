@@ -9,7 +9,7 @@ inventory path and SHA-256. Every Primitive ADR reference must resolve to one
 local Architecture record; the v3 schema forbids external ADR projections.
 The Architecture release pins this contract as `3.0.0`. Imported source
 repository IDs, immutable source commits, original paths, per-file SHA-256
-values, and declared link-only adaptations are recorded in
+values, and declared source-preserving transformations are recorded in
 `architecture/references/decision-inventory.yml`.
 
 The generator fails when a Primitive ADR reference has no local Architecture
@@ -23,17 +23,16 @@ App installation, or GitHub enforcement.
 
 Manifest schemaVersion 2 adds `decisionIds`, which must exactly match the
 Architecture inventory, while `adrIds` must exactly match local ADR files.
-`contractVersions.architectureRelease` is `3.0.0`: it retains the `2.0.0`
-digest algorithm, which normalizes only `sourceCommit` and `contentSha256`, and
-adds exact ADR/ADP/ADD inventory coverage. The source commit points to a
-prepared commit containing the authored source, release version, status, and
-integrity references. The release validator recomputes the digest for both
-the working tree and pinned source commit and verifies source file hashes.
-Consumers must dispatch by `architectureRelease` version; a consumer on an
-older contract must adapt in its own reviewed, gated phase before processing
-this manifest.
+`contractVersions.architectureRelease` is `4.0.0`: it retains the normalized
+digest algorithm, which excludes only `sourceCommit` and `contentSha256` from
+the digest input, and pins the per-family Architecture artifact contract as
+`architectureArtifacts` `1.0.0`. The prepared source commit contains the
+authored source, release version, status, and integrity references. The
+validator recomputes the digest for both the working tree and pinned source
+commit and verifies source file hashes. Consumers must dispatch by
+`architectureRelease` version and adopt this release and artifact contract in
+their own reviewed, gated phase before processing the manifest.
 
-A consumer pinned to contract `1.0.0` retains that contract until its owner
-reviews and validates an update in its own gated issue and pull request. Each
-consumer must adopt `2.0.0` before it processes a release using the new digest
-semantics.
+An older consumer retains its current contract until its owner reviews and
+validates an update in its own issue and pull request. This draft does not
+activate a consumer migration or publish a release.

@@ -15,7 +15,7 @@ organization ADR, ADP, and ADD record. A decision retains its bounded-context
 scope, and the affected context stewards review its semantics. The context
 repositories keep runtime, implementation, catalog, and bootstrap artifacts.
 The current owner and provenance inventory is in
-[section 9](09-architecture-decisions.arc42.md) and
+[section 9](09-architecture-decisions.md) and
 [decisions/README.md](../../decisions/README.md).
 
 ## 4.2 Proposal and enforcement

@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "evidence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^R-[0-9]{3}$"
+          },
+          "mitigation": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "relatedQualityScenario": {
+            "type": "string",
+            "pattern": "^QR-[0-9]{3}$"
+          },
+          "status": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence",
+          "id",
+          "mitigation",
+          "owner",
+          "status",
+          "title"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schemaVersion": {
+      "const": 2
+    }
+  },
+  "required": [
+    "risks",
+    "schemaVersion"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/risk-register.schema.json",
+  "title": "risk-register",
+  "description": "Closed structural contract for architecture/risks/risks.yml; semantic and cross-file meaning is checked separately."
+}

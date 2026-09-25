@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { cp, mkdtemp, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 
@@ -10,6 +11,8 @@ import { validateConformanceRequest } from '../tools/validate-conformance-reques
 import { architectureContentDigest } from '../tools/architecture-content-digest.mjs';
 import { validateDiagrams } from '../tools/validate-diagrams.mjs';
 import { validateDecisionInventory } from '../tools/decision-inventory.mjs';
+import { validateStructuredData, validateStructuredValue } from '../tools/validate-structured-data.mjs';
+import { parseRepositoryYaml } from '../tools/lib/yaml.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 
@@ -17,8 +20,80 @@ test('official arc42 chapter structure is complete', async () => {
   assert.deepEqual(await validateArc42Structure(root), { chapters: 12 });
 });
 
+test('arc42 contract rejects legacy suffixes and non-template headings', async () => {
+  const fixture = await mkdtemp(path.join(tmpdir(), 'architecture-arc42-'));
+  const chapters = path.join(fixture, 'architecture/arc42');
+  try {
+    await cp(path.join(root, 'architecture/arc42'), chapters, { recursive: true });
+    await mkdir(path.join(fixture, 'architecture/generated'), { recursive: true });
+    await cp(
+      path.join(root, 'architecture/generated/architecture-release.json'),
+      path.join(fixture, 'architecture/generated/architecture-release.json'),
+    );
+    const chapter = path.join(chapters, '01-introduction-and-goals.md');
+    await rename(chapter, `${chapter}.arc42`);
+    await assert.rejects(validateArc42Structure(fixture), /must exactly match the twelve pinned chapter paths/);
+
+    await rename(`${chapter}.arc42`, chapter);
+    const original = await readFile(chapter, 'utf8');
+    await writeFile(chapter, original.replace('# 1. Introduction and Goals', '# 1. Wrong Heading'));
+    await assert.rejects(validateArc42Structure(fixture), /must start with the pinned official arc42 heading/);
+  } finally {
+    await rm(fixture, { recursive: true, force: true });
+  }
+});
+
 test('architecture contracts and aliases are deterministic', async () => {
-  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 6, aliases: 18 });
+  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 6, aliases: 19 });
+});
+
+test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
+  assert.deepEqual(await validateStructuredData(root), { files: 17, schemas: 20 });
+
+  const principleIndex = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),
+    'principle index test fixture',
+  );
+  principleIndex.unexpectedProperty = true;
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/principles/index.yml', principleIndex),
+    /must NOT have additional properties/,
+  );
+
+  const missingRequired = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),
+    'principle index missing-field fixture',
+  );
+  delete missingRequired.principles;
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/principles/index.yml', missingRequired),
+    /must have required property 'principles'/,
+  );
+
+  const contextMap = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/domain/context-map.yml'), 'utf8'),
+    'context map test fixture',
+  );
+  contextMap.boundedContexts[0] = 'architecture-authority';
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/domain/context-map.yml', contextMap),
+    /must be equal to one of the allowed values/,
+  );
+});
+
+test('structured-data check rejects an invalid schema definition', async () => {
+  const fixture = await mkdtemp(path.join(tmpdir(), 'architecture-schema-'));
+  const contracts = path.join(fixture, 'architecture/contracts');
+  try {
+    await cp(path.join(root, 'architecture/contracts'), contracts, { recursive: true });
+    const schemaPath = path.join(contracts, 'principle-index.schema.json');
+    const schema = JSON.parse(await readFile(schemaPath, 'utf8'));
+    schema.properties.schemaVersion = { type: 'not-a-json-schema-type' };
+    await writeFile(schemaPath, `${JSON.stringify(schema, null, 2)}\n`);
+    await assert.rejects(validateStructuredData(fixture), /is not a valid Draft 2020-12 schema/);
+  } finally {
+    await rm(fixture, { recursive: true, force: true });
+  }
 });
 
 test('ADR/Primitive traceability resolves only through the canonical Architecture inventory', async () => {
@@ -45,11 +120,11 @@ test('ADR/Primitive traceability resolves only through the canonical Architectur
 test('canonical inventory has exact record coverage and rejects projections and duplicate IDs', async () => {
   const result = await validateDecisionInventory(root);
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
-  assert.equal(result.decisionIds.length, 20);
-  assert.equal(result.adrIds.length, 18);
+  assert.equal(result.decisionIds.length, 21);
+  assert.equal(result.adrIds.length, 19);
   assert.ok(result.recordById.has('ADP-0001'));
   assert.ok(result.recordById.has('ADD-0001'));
-  assert.equal(result.importedTransforms.length, 2);
+  assert.equal(result.importedTransforms.length, 9);
   assert.deepEqual(release.decisionIds, result.decisionIds);
   assert.deepEqual(release.adrIds, result.adrIds.map((id) => `urn:agentic-delivery:adr:architecture:${id.slice(4)}`));
   assert.deepEqual(JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8')).externalAdrs, []);
@@ -108,8 +183,8 @@ test('architecture release identifies the target authority', async () => {
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
-  assert.equal(release.contractVersions.architectureRelease, '3.0.0');
-  assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '3.0.0');
+  assert.equal(release.contractVersions.architectureRelease, '4.0.0');
+  assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '4.0.0');
   assert.match(releaseSchema.description, /consumers to dispatch by version/);
 });
 

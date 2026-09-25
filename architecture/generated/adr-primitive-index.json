@@ -4,7 +4,7 @@
   "architecture": "urn:agentic-delivery:architecture:authority",
   "decisionInventory": {
     "path": "architecture/references/decision-inventory.yml",
-    "sha256": "059729b64725c0f604f130ec645285427fa4e5c53133689dd01fe8385c542ad4",
+    "sha256": "4413f265e1c8785636cbf5b470ad92984b6e6d6ced324cf91a4060c713976590",
     "schemaVersion": 1
   },
   "primitiveRelease": {
@@ -277,6 +277,22 @@
         "semantic"
       ],
       "primitives": []
+    },
+    {
+      "id": "ADR-0021",
+      "file": "decisions/0021-define-architecture-artifact-contracts.md",
+      "domains": [
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "instructional",
+        "semantic"
+      ],
+      "primitives": []
     }
   ],
   "externalAdrs": [],
@@ -285,7 +301,8 @@
     "ADR-0013",
     "ADR-0018",
     "ADR-0019",
-    "ADR-0020"
+    "ADR-0020",
+    "ADR-0021"
   ],
   "primitives": [
     {

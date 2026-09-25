@@ -39,7 +39,7 @@ operational fact.
 
 ## Evidence and current limits
 
-Goal G-01 is described in [arc42 chapter 1](../arc42/01-introduction-and-goals.arc42.md).
+Goal G-01 is described in [arc42 chapter 1](../arc42/01-introduction-and-goals.md).
 The [system evidence snapshot](../references/system-evidence.yml) pins all six
 repository sources, participant release pins, and the observed draft/shadow
 state. It does not prove active end-to-end execution or current live settings

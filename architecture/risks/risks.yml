@@ -54,11 +54,11 @@ risks:
     owner: architecture-maintainer
     relatedQualityScenario: QR-010
     evidence: [architecture/references/decision-inventory.yml, system-evidence.yml#primitive-and-distribution-drafts]
-    mitigation: Validate repository identity, immutable source commits, original paths, per-file hashes, link-only adaptations, release digests for canonical Architecture records, and generated artifact manifests before activation.
+    mitigation: Validate repository identity, immutable source commits, original paths, per-file hashes, declared source-preserving transformations, release digests for canonical Architecture records, and generated artifact manifests before activation.
   - id: R-011
     title: Context steward review cannot be independently enforced with the current approval gate
     status: open
     owner: organization-maintainer
     relatedQualityScenario: QR-011
-    evidence: [architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories, recovery issue #59]
+    evidence: [architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories, "recovery issue #59"]
     mitigation: Keep repository mapping as review routing only; an authorized maintainer must resolve the one-member/CODEOWNERS limitation and verify actual human reviews before claiming enforcement.

@@ -58,3 +58,10 @@ Explain how implementation or compliance with this decision will be reviewed or 
 ## More Information
 
 Record related ADRs, implementation links, review decisions, revisit conditions and the date or signal that should trigger reconsideration.
+
+For an imported decision whose original date or participants are absent from
+the pinned source, do not infer them from repository history. Use the date the
+canonical record was prepared, mark unavailable historical participants as
+`Not recorded in pinned source`, and explain that limitation here. Keep the
+original source repository, commit, path, and content digest in the decision
+inventory.

@@ -16,6 +16,24 @@
     "testedCommands": ["validate", "get", "coverage", "rules", "explain", "guide", "diff", "serve", "build"],
     "upgradePolicy": "pin a tested release or immutable commit before activation"
   },
+  "structuredData": {
+    "yaml": {
+      "package": "yaml",
+      "version": "2.9.0",
+      "specification": "1.2.2",
+      "parseMode": "strict YAML 1.2 core; aliases and merge keys disabled"
+    },
+    "jsonSchema": {
+      "draft": "2020-12",
+      "validator": "ajv",
+      "version": "8.17.1",
+      "formats": "ajv-formats",
+      "formatsVersion": "3.0.1",
+      "validationMode": "strict; unknown properties rejected by closed schemas"
+    },
+    "schemasPath": "architecture/contracts/",
+    "coverage": "authoritative and generated Architecture YAML and JSON sources"
+  },
   "diagramRenderers": {
     "structurizr": { "status": "supporting", "version": null },
     "plantuml": { "status": "supporting", "version": null },

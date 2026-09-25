@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "policy": {
+      "type": "object",
+      "properties": {
+        "architectureDigestRequired": {
+          "type": "boolean"
+        },
+        "architecturePinRequired": {
+          "type": "boolean"
+        },
+        "consumerWriteAccess": {
+          "type": "boolean"
+        },
+        "deterministicFindingsAreBlocking": {
+          "type": "boolean"
+        },
+        "renderedImagesMayNotBeSoleSource": {
+          "type": "boolean"
+        },
+        "semanticReviewIsAdvisory": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "architectureDigestRequired",
+        "architecturePinRequired",
+        "consumerWriteAccess",
+        "deterministicFindingsAreBlocking",
+        "renderedImagesMayNotBeSoleSource",
+        "semanticReviewIsAdvisory"
+      ],
+      "additionalProperties": false
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "policy",
+    "schemaVersion",
+    "sections"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/conformance-policy.schema.json",
+  "title": "conformance-policy",
+  "description": "Closed structural contract for architecture/policies/conformance.yml; semantic and cross-file meaning is checked separately."
+}

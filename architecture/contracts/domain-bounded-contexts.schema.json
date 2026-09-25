@@ -1,0 +1,153 @@
+{
+  "type": "object",
+  "properties": {
+    "contexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "canonicalLanguageSource": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "repository": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "repository"
+            ],
+            "additionalProperties": false
+          },
+          "contextStewardRepository": {
+            "type": "object",
+            "properties": {
+              "evidencePath": {
+                "type": "string"
+              },
+              "evidenceRepository": {
+                "type": "string"
+              },
+              "repository": {
+                "type": "string"
+              },
+              "repositoryId": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "evidencePath",
+              "evidenceRepository",
+              "repository",
+              "repositoryId"
+            ],
+            "additionalProperties": false
+          },
+          "definition": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "enum": [
+              "agentic-delivery-governance",
+              "agentic-delivery-control-plane",
+              "agentic-primitives",
+              "developer-distribution"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "repository": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "canonicalLanguageSource",
+          "contextStewardRepository",
+          "definition",
+          "id",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "crossContextAuthority": {
+      "type": "object",
+      "properties": {
+        "classification": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "owns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "repository": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "classification",
+        "id",
+        "owns",
+        "repository"
+      ],
+      "additionalProperties": false
+    },
+    "repositoryAdapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "classification": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "owns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "repository": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "classification",
+          "id",
+          "owns",
+          "repository"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schemaVersion": {
+      "const": 3
+    }
+  },
+  "required": [
+    "contexts",
+    "crossContextAuthority",
+    "repositoryAdapters",
+    "schemaVersion"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/domain-bounded-contexts.schema.json",
+  "title": "domain-bounded-contexts",
+  "description": "Closed structural contract for architecture/domain/bounded-contexts.yml; semantic and cross-file meaning is checked separately."
+}

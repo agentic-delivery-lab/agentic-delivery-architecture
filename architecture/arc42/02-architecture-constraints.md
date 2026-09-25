@@ -62,7 +62,8 @@ write. Human review and merge authority remain with repository maintainers.
 [arc42](https://arc42.org/documentation/) supplies the twelve-section
 documentation template. Its [method](https://arc42.org/method/) supports
 iterative, docs-as-code maintenance; its
-[examples](https://docs.arc42.org/examples/) inform section detail. The
+[official examples](https://github.com/arc42/examples.arc42.org-site) inform
+section detail. The
 Markdown and model files live with the architecture and are reviewed in Git.
 arc42 is used as a template and method, not as a formal norm.
 

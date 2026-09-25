@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "filterSpecification": {
+      "type": "string"
+    },
+    "filterTool": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "tagCommit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "tagCommit",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "generatedProjection": {
+      "type": "boolean"
+    },
+    "issueAndPullRequestUrls": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "sourceCommit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sourceRepository": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "filterSpecification",
+    "filterTool",
+    "generatedProjection",
+    "issueAndPullRequestUrls",
+    "schemaVersion",
+    "sourceCommit",
+    "sourceRepository"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/source-provenance.schema.json",
+  "title": "source-provenance",
+  "description": "Closed structural contract for architecture/references/source-provenance.yml; semantic and cross-file meaning is checked separately."
+}

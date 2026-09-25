@@ -43,7 +43,7 @@ validator or one organization-wide live gate.
 
 ## Evidence and current limits
 
-Goal G-02 is described in [arc42 chapter 1](../arc42/01-introduction-and-goals.arc42.md).
+Goal G-02 is described in [arc42 chapter 1](../arc42/01-introduction-and-goals.md).
 At the pinned Control Plane revision, the source evidence includes
 `config/issue-metadata.yml`, `config/participants.yml`,
 `config/github-app-contract.json`, `.github/workflows/issue-intake.yml`, and

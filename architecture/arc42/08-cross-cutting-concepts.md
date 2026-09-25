@@ -1,4 +1,4 @@
-# 8. Cross-cutting Concepts
+# 8. Crosscutting Concepts
 
 <!-- arc42:section 08 -->
 

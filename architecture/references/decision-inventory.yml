@@ -99,13 +99,144 @@ records:
   - id: ADP-0001
     path: decisions/ADP-0001-primitive-release-and-projection.md
     domains: [agentic-primitives]
-    origin: {type: imported-text, repository: agentic-delivery-lab/agentic-delivery-primitives, repositoryId: 1380894656, sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7, sourcePath: docs/decisions/ADP-0001-primitive-release-and-projection.md, sha256: ad2f289212d8cabb5e36e8b2f54e0df46469a1001f0c8c8226a30c2d206214ed}
+    origin:
+      type: imported-text
+      repository: agentic-delivery-lab/agentic-delivery-primitives
+      repositoryId: 1380894656
+      sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
+      sourcePath: docs/decisions/ADP-0001-primitive-release-and-projection.md
+      sha256: ad2f289212d8cabb5e36e8b2f54e0df46469a1001f0c8c8226a30c2d206214ed
+      transformations:
+        - from: "## Decision Outcome"
+          to: |-
+            ## Considered Options
+
+            The pinned source record does not enumerate alternatives. Its context states
+            the need for one canonical source and controlled consumer projections.
+
+            ## Decision Outcome
+          reason: Added the shared MADR section while explicitly recording that the pinned source has no alternatives section.
+        - from: "## Consequences"
+          to: "### Consequences"
+          reason: Matched the shared MADR consequence subsection without changing its content.
+        - from: |
+            ## More Information
+
+            This local decision refines the global architecture and traceability decisions
+            referenced by primitive metadata. Issue #52 is the plan-persistence source
+            record, not implementation authorization; official adoption requires a
+            separately authorized review issue and pull request.
+
+            ## Confirmation
+
+            - Catalog validation covers every listed primitive and metadata block.
+            - Release metadata contains immutable source and Architecture references.
+            - Publication and Distribution validators reject missing provenance and
+              prohibited tools or secrets.
+          to: |
+            ### Confirmation
+
+            - Catalog validation covers every listed primitive and metadata block.
+            - Release metadata contains immutable source and Architecture references.
+            - Publication and Distribution validators reject missing provenance and
+              prohibited tools or secrets.
+
+            ## More Information
+
+            This local decision refines the global architecture and traceability decisions
+            referenced by primitive metadata. Issue #52 is the plan-persistence source
+            record, not implementation authorization; official adoption requires a
+            separately authorized review issue and pull request.
+          reason: Moved the existing confirmation checks into the shared MADR outcome and kept the historical issue reference intact.
   - id: ADD-0001
     path: decisions/ADD-0001-distribution-boundary.md
     domains: [developer-distribution]
-    origin: {type: imported-text, repository: agentic-delivery-lab/agentic-delivery-distribution, repositoryId: 1380894705, sourceCommit: b69c5710928b47efc4d3ab12ec4d5b596c80720c, sourcePath: docs/decisions/ADD-0001-distribution-boundary.md, sha256: d3589f0936b3d2db14df0cfa463d8bb910f68529039b4f9a646b9080b1c26e7e}
+    origin:
+      type: imported-text
+      repository: agentic-delivery-lab/agentic-delivery-distribution
+      repositoryId: 1380894705
+      sourceCommit: b69c5710928b47efc4d3ab12ec4d5b596c80720c
+      sourcePath: docs/decisions/ADD-0001-distribution-boundary.md
+      sha256: d3589f0936b3d2db14df0cfa463d8bb910f68529039b4f9a646b9080b1c26e7e
+      transformations:
+        - from: "# ADD-0001 — Distribution boundary"
+          to: |-
+            ---
+            date: 2026-09-25
+            source-issue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3
+            decision-makers: Not recorded in pinned source
+            consulted: Not recorded in pinned source
+            informed: Not recorded in pinned source
+            domains:
+              - developer-distribution
+            required-enforcement:
+              - instructional
+            ---
+
+            # ADD-0001 — Distribution boundary
+          reason: Added the shared MADR frontmatter; historical date, participants, and issue remain explicitly unrecorded, while the current Architecture source issue and domain scope are identified.
+        - from: |
+            The Distribution repository owns reproducible developer-environment and thin
+            consumer integration artifacts. It does not own lifecycle state, generic
+            orchestration, credentials, or canonical Primitive implementations.
+          to: |
+            ## Context and Problem Statement
+
+            The Distribution repository owns reproducible developer-environment and thin
+            consumer integration artifacts. It does not own lifecycle state, generic
+            orchestration, credentials, or canonical Primitive implementations.
+          reason: Placed the source's existing responsibility statement under the shared MADR context heading without changing its claims.
+        - from: |
+            implementations.
+
+            The first release is draft because external image digests, Agent Plugin
+            support, and the supported VS Code Automation surface still require entitlement
+            and preview verification.
+          to: |-
+            implementations.
+
+            ## Decision Drivers
+
+            The pinned source does not separately record decision drivers.
+
+            ## Considered Options
+
+            The pinned Distribution source record does not enumerate alternatives.
+
+            ## Decision Outcome
+
+            The recorded outcome is the Distribution ownership and exclusions in the
+            Context and Problem Statement above.
+
+            ### Consequences
+
+            The first release is draft because external image digests, Agent Plugin
+            support, and the supported VS Code Automation surface still require entitlement
+            and preview verification.
+          reason: Added shared MADR headings and marked source omissions directly; retained the pinned release-readiness statement without adding an unsupported rationale.
+        - from: "verification."
+          to: |
+            verification.
+
+            ### Confirmation
+
+            The pinned source does not show that these verifications were completed; this
+            record makes no release-acceptance claim.
+
+            ## More Information
+
+            The pinned Distribution source did not record a historical date, decision
+            participants, or source issue. The date and source issue in this frontmatter
+            identify this canonical record preparation; the source revision and original
+            content digest are retained in
+            [`decision-inventory.yml`](../architecture/references/decision-inventory.yml).
+          reason: Recorded the source metadata limitation and Architecture tracking source for this canonicalization.
   - id: ADR-0020
     path: decisions/0020-centralize-organization-decision-records.md
+    domains: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
+    origin: {type: proposed, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3}
+  - id: ADR-0021
+    path: decisions/0021-define-architecture-artifact-contracts.md
     domains: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
     origin: {type: proposed, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3}
 historicalVariants:

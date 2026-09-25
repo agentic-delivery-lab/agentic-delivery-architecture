@@ -1,0 +1,99 @@
+{
+  "type": "object",
+  "properties": {
+    "bounded_contexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "definition": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "enum": [
+              "agentic-delivery-governance",
+              "agentic-delivery-control-plane",
+              "agentic-primitives",
+              "developer-distribution"
+            ]
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "definition",
+          "id",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "domain": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "purpose"
+      ],
+      "additionalProperties": false
+    },
+    "terms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "avoid": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "context": {
+            "type": "string",
+            "enum": [
+              "agentic-delivery-governance",
+              "agentic-delivery-control-plane",
+              "agentic-primitives",
+              "developer-distribution"
+            ]
+          },
+          "definition": {
+            "type": "string"
+          },
+          "term": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "context",
+          "definition",
+          "term"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "version": {
+      "const": 2
+    }
+  },
+  "required": [
+    "bounded_contexts",
+    "domain",
+    "terms",
+    "version"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/domain-language.schema.json",
+  "title": "domain-language",
+  "description": "Closed structural contract for architecture/domain/ubiquitous-language.yml; semantic and cross-file meaning is checked separately."
+}

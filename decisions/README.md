@@ -91,8 +91,8 @@ Architecture issue #3.
 
 ## Canonical decision ownership
 
-The proposed owner map centralizes the 18 active ADR IDs plus ADP-0001,
-ADD-0001, and their new ownership decision ADR-0020 in Architecture Authority.
+The proposed owner map centralizes 19 active ADR IDs, ADP-0001, and ADD-0001
+in Architecture Authority.
 The assignment is based on organization-wide decision stewardship, not on the
 historical repository path. This remains provisional until the issue-linked
 Architecture pull request is reviewed and merged. The repository-local copies
@@ -101,7 +101,7 @@ revisions until each repository updates them in its own reviewed follow-up.
 
 | Canonical text owner | Decision identifiers | Canonical text location |
 | --- | --- | --- |
-| Architecture Authority | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015 through ADR-0019, ADR-0020, ADP-0001, ADD-0001 | This repository's `decisions/` directory, listed in the [decision inventory](../architecture/references/decision-inventory.yml) and pinned by the Architecture release. |
+| Architecture Authority | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015 through ADR-0021, ADP-0001, ADD-0001 | This repository's `decisions/` directory, listed in the [decision inventory](../architecture/references/decision-inventory.yml) and pinned by the Architecture release. |
 
 The active identifiers preserve the historical gaps: ADR-0010 is superseded by
 ADR-0012, and ADR-0014 is superseded by ADR-0018. Neither has an active record
@@ -165,6 +165,9 @@ no review occurred.
 | [0018](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md) | Organization-wide Agentic Delivery Control Plane distribution and versioning | [Closed Issue #53](https://github.com/agentic-delivery-lab/agentic-delivery/issues/53) | [Architecture PR #2](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/pull/2) merged 2026-09-24. |
 | [0019](0019-canonicalize-delivery-state-field.md) | Canonicalize the orthogonal Delivery State field | [Closed Issue #52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52) | Unknown; no verifiable review PR for this Architecture record was found. The live rename remains separately gated. |
 | [0020](0020-centralize-organization-decision-records.md) | Centralize organization decision records in Architecture Authority | [Issue #3](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3) | Proposed on this issue-linked Architecture branch; context stewards and human review gate remain required. |
+| [0021](0021-define-architecture-artifact-contracts.md) | Define per-family Architecture artifact contracts | [Issue #3](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3) | Proposed on this issue-linked Architecture branch; context stewards and human review gate remain required. |
+| [ADP-0001](ADP-0001-primitive-release-and-projection.md) | Primitive release and projection boundary | [Issue #52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52) | Imported from the pinned Primitive baseline; original source issue remains historical. |
+| [ADD-0001](ADD-0001-distribution-boundary.md) | Distribution boundary | Not recorded in pinned source | Imported from the pinned Distribution baseline; historical issue and participants were not recorded. |
 
 The reviewer must keep the `Source` and `Plan` pull-request headings separate.
 ADR-0016 defines that organization-wide contract; it does not prove one

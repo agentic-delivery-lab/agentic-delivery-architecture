@@ -18,6 +18,7 @@
     "ADR-0017": "urn:agentic-delivery:adr:architecture:0017",
     "ADR-0018": "urn:agentic-delivery:adr:architecture:0018",
     "ADR-0019": "urn:agentic-delivery:adr:architecture:0019",
-    "ADR-0020": "urn:agentic-delivery:adr:architecture:0020"
+    "ADR-0020": "urn:agentic-delivery:adr:architecture:0020",
+    "ADR-0021": "urn:agentic-delivery:adr:architecture:0021"
   }
 }

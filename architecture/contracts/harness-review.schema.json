@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "bounded-contexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "agentic-delivery-governance",
+              "agentic-delivery-control-plane",
+              "agentic-primitives",
+              "developer-distribution"
+            ]
+          },
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "register": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "paths",
+          "register"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "runtime-surfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "evidence",
+          "id",
+          "paths"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "version": {
+      "const": 2
+    }
+  },
+  "required": [
+    "bounded-contexts",
+    "runtime-surfaces",
+    "version"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/harness-review.schema.json",
+  "title": "harness-review",
+  "description": "Closed structural contract for architecture/harness-review.yml; semantic and cross-file meaning is checked separately."
+}

@@ -7,7 +7,7 @@
 | Building block | Canonical owner | Main responsibility | Contract or evidence |
 | --- | --- | --- | --- |
 | Architecture Authority | `agentic-delivery-architecture` | All organization decision text (ADR, ADP, ADD), principles, context map, architecture description, conformance policy, release identity | Decision inventory, Architecture release, ID aliases, context IDs, content digest |
-| Governance | Domain context stewarded from `agentic-delivery` | Issue and PR governance, reusable delivery rules, decision lifecycle | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015, ADR-0016, ADR-0017, ADR-0018, ADR-0019, ADR-0020; context register and pinned Control Plane evidence |
+| Governance | Domain context stewarded from `agentic-delivery` | Issue and PR governance, reusable delivery rules, decision lifecycle | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015, ADR-0016, ADR-0017, ADR-0018, ADR-0019, ADR-0020, ADR-0021; context register and pinned Control Plane evidence |
 | Delivery Control Plane | `agentic-delivery` | Event intake, participant registry, routing, deterministic gates, workflow/session orchestration, controlled write-back, evidence | Controller pin, event/lifecycle/state-machine contracts |
 | Agentic Primitives | `agentic-delivery-primitives` | Canonical agent/skill/validator/capability source, catalog, release, and projection metadata | Context steward; ADP-0001 decision text in Architecture; primitive catalog and immutable release |
 | Developer Distribution | `agentic-delivery-distribution` | Reproducible bootstrap, compatible bundles, consumer workflow projections, conflict checks | Context steward; ADD-0001 decision text in Architecture; workflow bundle and distribution locks |

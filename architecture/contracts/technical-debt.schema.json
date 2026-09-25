@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "evidence": {
+            "type": "string"
+          },
+          "exit": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^TD-[0-9]{3}$"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence",
+          "exit",
+          "id",
+          "owner",
+          "status",
+          "title"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schemaVersion": {
+      "const": 2
+    }
+  },
+  "required": [
+    "items",
+    "schemaVersion"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/technical-debt.schema.json",
+  "title": "technical-debt",
+  "description": "Closed structural contract for architecture/risks/technical-debt.yml; semantic and cross-file meaning is checked separately."
+}

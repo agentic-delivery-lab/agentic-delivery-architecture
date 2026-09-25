@@ -29,6 +29,11 @@ second editable control plane or capability catalog.
 - Fail closed on unknown tools, secret-like content, missing ADR references,
   or incompatible target surfaces.
 
+## Considered Options
+
+The pinned source record does not enumerate alternatives. Its context states
+the need for one canonical source and controlled consumer projections.
+
 ## Decision Outcome
 
 Agentic Primitives is canonical for reusable capability source. Its catalog and
@@ -43,7 +48,7 @@ release remains identifiable but may not be newly promoted. A compatible
 consumer may remain on an older release until an intentional upgrade or a
 published security withdrawal requires a controlled rollback or replacement.
 
-## Consequences
+### Consequences
 
 - Consumers can verify provenance and detect drift without filesystem-relative
   cross-repository references.
@@ -53,16 +58,16 @@ published security withdrawal requires a controlled rollback or replacement.
 - Runtime lifecycle, issue state, App credentials, and runner state remain
   outside this bounded context.
 
+### Confirmation
+
+- Catalog validation covers every listed primitive and metadata block.
+- Release metadata contains immutable source and Architecture references.
+- Publication and Distribution validators reject missing provenance and
+  prohibited tools or secrets.
+
 ## More Information
 
 This local decision refines the global architecture and traceability decisions
 referenced by primitive metadata. Issue #52 is the plan-persistence source
 record, not implementation authorization; official adoption requires a
 separately authorized review issue and pull request.
-
-## Confirmation
-
-- Catalog validation covers every listed primitive and metadata block.
-- Release metadata contains immutable source and Architecture references.
-- Publication and Distribution validators reject missing provenance and
-  prohibited tools or secrets.

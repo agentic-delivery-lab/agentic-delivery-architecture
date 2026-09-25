@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/architecture-release.schema.json",
   "title": "Architecture release manifest schemaVersion 2",
-  "description": "Manifest schemaVersion 2 adds exact decisionIds coverage for ADR, ADP, and ADD records. contractVersions.architectureRelease 3.0.0 retains the normalized sourceCommit/contentSha256 digest algorithm from 2.0.0 and requires consumers to dispatch by version and adopt the new inventory contract in their own gated phase.",
+  "description": "Manifest schemaVersion 2 carries exact decision coverage, the architectureArtifacts contract pin, and integrity references. contractVersions.architectureRelease 4.0.0 retains the normalized sourceCommit/contentSha256 digest algorithm and requires consumers to dispatch by version and adopt the per-family path, template, and schema contract in their own gated phase.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -19,59 +19,149 @@
     "contextIds",
     "conformancePolicy",
     "toolingLock",
-    "contractVersions"
+    "contractVersions",
+    "$schema"
   ],
   "properties": {
-    "schemaVersion": { "const": 2 },
-    "architectureId": { "type": "string", "pattern": "^urn:agentic-delivery:architecture:[a-z0-9-]+$" },
-    "version": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$" },
-    "sourceRepository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+    "schemaVersion": {
+      "const": 2
+    },
+    "architectureId": {
+      "type": "string",
+      "pattern": "^urn:agentic-delivery:architecture:[a-z0-9-]+$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "sourceRepository": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+    },
     "sourceCommit": {
       "type": "string",
       "pattern": "^[0-9a-f]{40}$",
-      "description": "For architectureRelease contracts 2.0.0 and 3.0.0, this is the immutable prepared source commit whose normalized Architecture tree must reproduce contentSha256."
+      "description": "For architectureRelease contract 4.0.0, this is the immutable prepared source commit whose normalized Architecture tree must reproduce contentSha256."
     },
     "contentSha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$",
-      "description": "For architectureRelease contracts 2.0.0 and 3.0.0, SHA-256 over authoritative Architecture files after normalizing only sourceCommit and contentSha256 in this manifest."
+      "description": "For architectureRelease contract 4.0.0, SHA-256 over authoritative Architecture files after normalizing only sourceCommit and contentSha256 in this manifest."
     },
-    "status": { "enum": ["draft", "released", "withdrawn"] },
-    "principleIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^AP-[0-9]{3}$" } },
-    "adrIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^urn:agentic-delivery:adr:architecture:[0-9]{4}$" } },
-    "decisionIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^(ADR|ADP|ADD)-[0-9]{4}$" } },
-    "contextIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9-]+$" } },
+    "status": {
+      "enum": [
+        "draft",
+        "released",
+        "withdrawn"
+      ]
+    },
+    "principleIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^AP-[0-9]{3}$"
+      }
+    },
+    "adrIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^urn:agentic-delivery:adr:architecture:[0-9]{4}$"
+      }
+    },
+    "decisionIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^(ADR|ADP|ADD)-[0-9]{4}$"
+      }
+    },
+    "contextIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "agentic-delivery-governance",
+          "agentic-delivery-control-plane",
+          "agentic-primitives",
+          "developer-distribution"
+        ]
+      }
+    },
     "conformancePolicy": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "sha256"],
+      "required": [
+        "path",
+        "sha256"
+      ],
       "properties": {
-        "path": { "type": "string", "pattern": "^(?!/)(?!.*\\.\\.)[^\\s]+$" },
-        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\.\\.)[^\\s]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
       }
     },
     "toolingLock": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path", "sha256"],
+      "required": [
+        "path",
+        "sha256"
+      ],
       "properties": {
-        "path": { "type": "string", "pattern": "^(?!/)(?!.*\\.\\.)[^\\s]+$" },
-        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\.\\.)[^\\s]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
       }
     },
     "contractVersions": {
       "type": "object",
-      "required": ["architectureRelease", "adrPrimitiveIndex", "decisionInventory"],
+      "required": [
+        "architectureRelease",
+        "adrPrimitiveIndex",
+        "decisionInventory",
+        "architectureArtifacts"
+      ],
       "properties": {
         "architectureRelease": {
-          "const": "3.0.0",
-          "description": "Contract 3.0.0 retains the 2.0.0 prepared-source-commit digest algorithm and adds exact decision inventory coverage."
+          "const": "4.0.0",
+          "description": "Contract 4.0.0 retains the normalized prepared-source-commit digest algorithm and requires consumers to dispatch by version for artifact family contracts."
         },
-        "adrPrimitiveIndex": { "const": "3.0.0" },
-        "decisionInventory": { "const": "1.0.0" }
+        "adrPrimitiveIndex": {
+          "const": "3.0.0"
+        },
+        "decisionInventory": {
+          "const": "1.0.0"
+        },
+        "architectureArtifacts": {
+          "const": "1.0.0"
+        }
       },
       "minProperties": 1,
-      "additionalProperties": { "type": "string" }
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "$schema": {
+      "const": "../contracts/architecture-release.schema.json"
     }
   }
 }

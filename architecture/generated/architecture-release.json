@@ -2,7 +2,7 @@
   "$schema": "../contracts/architecture-release.schema.json",
   "schemaVersion": 2,
   "architectureId": "urn:agentic-delivery:architecture:authority",
-  "version": "0.1.0-draft.15",
+  "version": "0.1.0-draft.16",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
   "sourceCommit": "68b5b21648e1c994c840b9ecffd807ed4f22b719",
   "contentSha256": "3ba9835418c7f1c2b7bf4a18cad6180724ecd247d154225d2fd8ee34fc9e2692",
@@ -29,7 +29,8 @@
     "urn:agentic-delivery:adr:architecture:0017",
     "urn:agentic-delivery:adr:architecture:0018",
     "urn:agentic-delivery:adr:architecture:0019",
-    "urn:agentic-delivery:adr:architecture:0020"
+    "urn:agentic-delivery:adr:architecture:0020",
+    "urn:agentic-delivery:adr:architecture:0021"
   ],
   "decisionIds": [
     "ADR-0001",
@@ -51,7 +52,8 @@
     "ADR-0019",
     "ADP-0001",
     "ADD-0001",
-    "ADR-0020"
+    "ADR-0020",
+    "ADR-0021"
   ],
   "contextIds": [
     "agentic-delivery-governance",
@@ -65,12 +67,13 @@
   },
   "toolingLock": {
     "path": "architecture/references/tooling-lock.json",
-    "sha256": "fc307c9f7307dfa9c5b58013a474a919a2a8534ee22a18962125d85c8fff3a91"
+    "sha256": "e8811d66793adc4fac82ac3b67dae6b75bc49f6967d4ee96e8e7ddfa8ed83766"
   },
   "contractVersions": {
-    "architectureRelease": "3.0.0",
+    "architectureRelease": "4.0.0",
     "conformance": "1.0.0",
     "adrPrimitiveIndex": "3.0.0",
-    "decisionInventory": "1.0.0"
+    "decisionInventory": "1.0.0",
+    "architectureArtifacts": "1.0.0"
   }
 }

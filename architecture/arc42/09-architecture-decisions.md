@@ -11,11 +11,13 @@ its review pull request is merged.
 
 | Canonical text owner | Decisions |
 | --- | --- |
-| Architecture Authority | 18 ADRs (ADR-0001–0009, ADR-0011–0013, ADR-0015–0020), ADP-0001, ADD-0001 |
+| Architecture Authority | 19 ADRs (ADR-0001–0009, ADR-0011–0013, ADR-0015–0021), ADP-0001, ADD-0001 |
 
 Proposed ADR-0020 makes Architecture Authority the canonical text owner for
 all organization ADR, ADP, and ADD records while preserving each record's
 bounded-context scope and routing semantic review to affected context stewards.
+Proposed ADR-0021 defines the separate path, template, and schema contracts for
+each Architecture artifact family without broadening the domain model.
 
 Bounded-context scope remains on each record. The context registry maps each
 scope to the repository where semantic review is routed: governance and
@@ -56,5 +58,5 @@ with this repository's [Architecture issue #3](https://github.com/agentic-delive
 [`decisions/README.md`](../../decisions/README.md); external Control Plane
 records and source variants are pinned in
 [`decision-inventory.yml`](../references/decision-inventory.yml). The release
-lists the exact 20 decision IDs and pins canonical Architecture content by
+lists the exact 21 decision IDs and pins canonical Architecture content by
 source commit and digest.

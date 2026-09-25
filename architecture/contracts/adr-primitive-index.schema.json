@@ -32,7 +32,7 @@
         "status": { "enum": ["draft", "released", "withdrawn"] }
       }
     },
-    "domains": { "type": "array", "items": { "type": "string" } },
+    "domains": { "type": "array", "items": { "type": "string", "enum": ["agentic-delivery-governance", "agentic-delivery-control-plane", "agentic-primitives", "developer-distribution"] } },
     "adrs": {
       "type": "array",
       "items": {
@@ -42,7 +42,7 @@
         "properties": {
           "id": { "type": "string", "pattern": "^ADR-[0-9]{4}$" },
           "file": { "type": "string", "pattern": "^decisions/" },
-          "domains": { "type": "array", "items": { "type": "string" } },
+          "domains": { "type": "array", "items": { "type": "string", "enum": ["agentic-delivery-governance", "agentic-delivery-control-plane", "agentic-primitives", "developer-distribution"] } },
           "requiredEnforcement": { "type": "array", "items": { "type": "string" } },
           "primitives": { "type": "array", "items": { "type": "string" } },
           "supersedes": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } }
@@ -92,7 +92,7 @@
           "adrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
           "localAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
           "externalAdrs": { "type": "array", "maxItems": 0, "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
-          "domains": { "type": "array", "items": { "type": "string" } }
+          "domains": { "type": "array", "items": { "type": "string", "enum": ["agentic-delivery-governance", "agentic-delivery-control-plane", "agentic-primitives", "developer-distribution"] } }
         }
       }
     }

@@ -83,8 +83,8 @@ Codex to load every related ADR into every runtime context.
 ### Confirmation
 
 The Architecture checks validate the decision inventory's exact identifier
-and file set, verify imported origins with `git show` and declared link-only
-adaptations, require exact release coverage, require each pinned Primitive ADR
+and file set, verify imported origins with `git show` and declared
+source-preserving adaptations, require exact release coverage, require each pinned Primitive ADR
 to resolve locally, and compare the generated index with its committed form.
 They do not prove that a semantic impact review occurred or that a Primitive
 release was updated after every ADR change; those controls remain a separate
@@ -113,7 +113,6 @@ Primitive-phase acceptance requirement.
 - Related decision: [Run layered harness architecture reviews](0011-run-layered-harness-architecture-reviews.md)
 - Related decision: [Use context-scoped ubiquitous language](0003-use-context-scoped-ubiquitous-language.md)
 - Related decision: [Centralize organization decision records](0020-centralize-organization-decision-records.md), which assigns canonical ADR text ownership to Architecture Authority.
-- Related decision: [Centralize organization decision records](0020-centralize-organization-decision-records.md)
 - This base record is present on Architecture `main` and is official. No
   verifiable Architecture review PR for its historical addition was found, so
   review provenance is unknown. The canonical inventory and organization-wide

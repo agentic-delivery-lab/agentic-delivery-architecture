@@ -19,11 +19,19 @@ contracts.
 
 ## Authoritative sources
 
-- arc42 chapter files are the documentation structure.
-- MADR records are the individual decision records.
+- `architecture/arc42/NN-title.md` chapters follow the pinned arc42 template;
+  `architecture/arc42/README.md` records chapter concerns and evidence rules.
+- ADR, ADP, and ADD records use the shared MADR base structure in
+  `decisions/adr-template.md`; their stable identifier prefixes are part of
+  their identity.
+- `architecture/contracts/` owns per-family JSON Schema Draft 2020-12
+  contracts for authoritative and generated structured Architecture data.
+  Cross-file integrity and context-semantic review remain separate checks.
 - `architecture/principles/index.yml` assigns stable principle identities.
 - `architecture/domain/` owns bounded contexts and terminology.
-- `architecture/models/` and `architecture/diagrams/` own model sources.
+- `architecture/models/workspace.dsl` is the canonical C4 model source;
+  `architecture/diagrams/` contains supporting Mermaid/PlantUML views and
+  generated review output.
 - `architecture/generated/` contains derived release and traceability output.
 - `architecture/references/primitive-catalog.lock.yml` is a pinned generated
   projection from the Primitive release; it is not an editable Primitive

@@ -1,0 +1,112 @@
+{
+  "type": "object",
+  "properties": {
+    "architectureId": {
+      "type": "string"
+    },
+    "primitives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "adrs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(ADR|ADP|ADD)-[0-9]{4}$"
+            }
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "agentic-delivery-governance",
+                "agentic-delivery-control-plane",
+                "agentic-primitives",
+                "developer-distribution"
+              ]
+            }
+          },
+          "enforcement": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "sourcePath": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "adrs",
+          "domains",
+          "enforcement",
+          "id",
+          "kind",
+          "sourcePath",
+          "version"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "contentSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "releaseId": {
+          "type": "string"
+        },
+        "releaseVersion": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "sourceCommit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "released",
+            "withdrawn"
+          ]
+        }
+      },
+      "required": [
+        "contentSha256",
+        "releaseId",
+        "releaseVersion",
+        "repository",
+        "sourceCommit",
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "architectureId",
+    "primitives",
+    "schemaVersion",
+    "source"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/primitive-catalog-lock.schema.json",
+  "title": "primitive-catalog-lock",
+  "description": "Closed structural contract for architecture/references/primitive-catalog.lock.yml; semantic and cross-file meaning is checked separately."
+}

@@ -4,10 +4,26 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Proposed per-family Architecture naming, template, and structured-data
+  contracts with pinned schema validation.
+
 ### Changed
 
-- Centralized all 18 active ADRs plus ADP-0001, ADD-0001, and ADR-0020 in
-  Architecture Authority as the proposed canonical text set. Preserved
+- Renamed the twelve arc42 chapter files to the documented `NN-title.md`
+  pattern and routed all Architecture decision families through the shared
+  MADR base structure.
+
+### Removed
+
+- Removed the copied Control Plane evidence schema and the unreferenced
+  duplicate bounded-context UML model.
+
+### Changed
+
+- Centralized all 19 active ADRs, ADP-0001, and ADD-0001 in Architecture
+  Authority as the proposed canonical text set. Preserved
   bounded-context metadata, routed semantic review through evidence-backed
   context steward repositories, and recorded imported and differing historical
   source hashes without a second prose projection.
@@ -19,9 +35,12 @@ All notable changes to this repository are documented here.
   Durable one-context architecture decisions may be promoted without claiming
   cross-context impact; routine or transient implementation details stay local.
 - Bumped the Architecture release manifest to schemaVersion 2 and contract
-  `3.0.0`; it pins the exact ADR/ADP/ADD decision ID set while retaining the
-  normalized sourceCommit/contentSha256 digest algorithm. Consumers must
-  dispatch by version and adopt it in their own gated phase.
+  `4.0.0`; it pins the exact ADR/ADP/ADD decision ID set and the new artifact
+  family contract while retaining the normalized sourceCommit/contentSha256
+  digest algorithm. Consumers must dispatch by version and adopt it in their
+  own gated phase.
+- Added per-family Draft 2020-12 schemas for all authoritative and generated
+  Architecture structured data, with pinned YAML, Ajv, and format packages.
 - Bumped the generated ADR/Primitive index to v3. Every Primitive ADR
   reference must resolve to one local Architecture ADR; external text
   projections are forbidden.

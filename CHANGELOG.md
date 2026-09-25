@@ -11,6 +11,9 @@ All notable changes to this repository are documented here.
   bounded-context metadata, routed semantic review through evidence-backed
   context steward repositories, and recorded imported and differing historical
   source hashes without a second prose projection.
+- Added issue-linked ADR scope review before each non-draft Architecture release
+  and at least annually, with explicit triggers and evidence fields; scope
+  classification remains semantic steward review, not an automated inference.
 - Bumped the Architecture release manifest to schemaVersion 2 and contract
   `3.0.0`; it pins the exact ADR/ADP/ADD decision ID set while retaining the
   normalized sourceCommit/contentSha256 digest algorithm. Consumers must

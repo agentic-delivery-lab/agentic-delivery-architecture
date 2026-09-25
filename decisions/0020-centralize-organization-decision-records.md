@@ -71,6 +71,40 @@ require review from each affected context. Architecture Authority maintains
 the cross-context inventory and release contract, but it is not an additional
 bounded context.
 
+### Periodic scope review
+
+Review the complete organization decision inventory before every Architecture
+release moves from draft to non-draft, and at least once in every twelve-month
+period. Open or update an issue-linked review when a repository or context
+boundary changes, decision copies are found or diverge, or an issue demonstrates
+possible impact across bounded contexts. The periodic review considers both
+formal organization records and candidate decisions raised by repository-local
+implementation work.
+
+For each formal organization record, record whether its scope remains
+organization-wide or should be narrowed to one or more bounded contexts. For
+each candidate repository-local implementation decision, record whether there
+is evidenced cross-context or organization-wide impact that warrants
+promotion into the organization ADR set. A purely repository-local
+implementation choice may remain in its owning repository and is not copied
+into Architecture as organization ADR text. An existing organization ADR may
+be promoted to organization-wide scope or narrowed to context-scoped; that
+changes its domains and required steward reviewers while preserving its
+identifier and single canonical Architecture text source. A repository-local
+candidate promoted into the organization ADR set becomes a new issue-linked
+Architecture record; its implementation choice remains in its owning
+repository.
+
+The issue-linked review evidence records the current and proposed scope, the
+rationale, affected bounded contexts and their routed stewards, implementation
+and Primitive impact, and the source repository and immutable commit. Affected
+stewards review the meaning and scope semantically. Deterministic checks may
+validate that the inventory and review evidence record these fields and
+resolve to pinned sources; they do not infer whether a decision is generic,
+organization-wide, or context-local. The review is an issue-tracked human
+process. This decision adds no live scheduler, repository setting, or
+automation that claims the review occurred.
+
 The context register maps each bounded context to the repository containing
 its current model or implementation evidence. That repository mapping routes a
 review request; it does not grant GitHub approval, establish CODEOWNERS
@@ -106,6 +140,8 @@ not claim that external copies have already been removed.
   and its steward reviews semantic changes.
 - Bad, because an organization-wide decision change requires coordinated
   semantic review and later consumer-repository reference updates.
+- Bad, because release-gated and annual scope reviews require issue-tracked
+  human effort across affected contexts.
 - Neutral, because Architecture owns decision text while bounded-context
   repositories continue to own executable behavior and artifacts.
 
@@ -115,12 +151,14 @@ The deterministic Architecture checks compare the decision inventory's IDs
 and paths with the local decision files, reject duplicate IDs and provenance
 collisions, verify imported file hashes, require exact release coverage, and
 ensure Primitive ADR references resolve only to local Architecture records.
-The pull-request review must record semantic review by the steward role for
-each context listed by a changed record. These checks do not infer a steward's
-identity or prove that a human review occurred; the required reviews remain a
-review-process obligation. Each consumer repository must validate its
-version-pinned references in a separate reviewed change before its duplicate
-text is removed.
+Before a non-draft release, and at least once every twelve months, an
+issue-linked review must record the current/proposed scope and impact evidence
+for formal organization records and candidate implementation decisions.
+Pull-request review records semantic review by the steward role for each
+affected context. Deterministic checks validate metadata and source pins; they
+do not decide semantic scope or prove that a human review occurred. Each
+consumer repository must validate its version-pinned references in a separate
+reviewed change before its duplicate text is removed.
 
 ## Pros and Cons of the Options
 

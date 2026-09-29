@@ -26,7 +26,7 @@ const requiredCoverage = new Map([
   ['06-runtime-view.md', ['short gated loop', 'long-running fan-out/fan-in', 'continuous feedback', 'Issue-intake runs']],
   ['07-deployment-view.md', ['Intended deployment topology', 'Observed deployment snapshot', 'unknown', 'read:org']],
   ['08-cross-cutting-concepts.md', ['One owner', 'Work state and execution state', 'Semantic proposals and deterministic authorization', 'GitHub organization settings']],
-  ['09-architecture-decisions.md', ['ADR-0001', 'ADR-0020', 'ADR-0021', 'ADP-0001', 'ADD-0001', 'decision-inventory.yml', 'No external ADR text projection is']],
+  ['09-architecture-decisions.md', ['ADR-0001', 'ADR-0020', 'ADR-0021', 'ADR-0022', 'ADP-0001', 'ADD-0001', 'decision-inventory.yml', 'No external ADR text projection is']],
   ['10-quality-requirements.md', ['QR-001', 'QR-003', 'QR-004', 'QR-005', 'QR-007', 'QR-008', 'QR-010', 'QR-011', 'quality-scenarios.yml']],
   ['11-risks-and-technical-debt.md', ['risks.yml', 'technical-debt.yml', 'system-evidence.yml']],
   ['12-glossary.md', ['context-scoped terms', 'Agentic Delivery Governance', 'Agentic Delivery Control Plane', 'Agentic Primitives', 'Developer Distribution']],

@@ -9,7 +9,11 @@
   "properties": {
     "schemaVersion": { "const": 1 },
     "purpose": { "type": "string", "minLength": 1 },
-    "sourceIssue": { "type": "string", "format": "uri" },
+    "sourceIssue": {
+      "type": "string",
+      "format": "uri",
+      "description": "Issue that tracks the canonical inventory itself; an individual proposal has its own issue under its proposed origin."
+    },
     "canonicalRepository": {
       "type": "object",
       "additionalProperties": false,
@@ -41,7 +45,11 @@
               "sourcePath": { "type": "string", "pattern": "^(decisions|docs/decisions)/[^/]+\\.md$" },
               "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
               "reviewEvidence": { "type": "string", "format": "uri" },
-              "sourceIssue": { "type": "string", "format": "uri" },
+              "sourceIssue": {
+                "type": "string",
+                "format": "uri",
+                "description": "Architecture issue that tracks this provisional record; its decision file may link a different originating source issue."
+              },
               "transformations": {
                 "type": "array",
                 "items": {

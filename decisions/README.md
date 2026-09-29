@@ -21,6 +21,11 @@ A GitHub Issue is an assignment brief and audit trail, not automatically an ADR.
 
 The source issue also serves as the ADR tracking issue when it directly tracks the decision work. During triage or refining, create a linked sub-issue with the architecture-decision issue form when a separate ADR tracking issue is useful. If the original issue already uses that form, use it directly. If the need appears during implementation, create or update the ADR tracking issue before adding the ADR to the feature branch. For a removal, record the affected ADR path and the reason there.
 
+The inventory's top-level `sourceIssue` records the issue that introduced the
+inventory. Each provisional record keeps its own Architecture tracking issue
+in `origin.sourceIssue`; the ADR frontmatter retains the source issue where its
+decision work began.
+
 If no source issue is supplied, search existing issues read-only and present a likely candidate for confirmation. If no suitable issue exists, show an issue-form preview and require explicit confirmation before creating one. Stop on search, authentication or access failures. Never replace an inaccessible issue or publish a partial issue.
 
 ## Runbook
@@ -91,7 +96,7 @@ Architecture issue #3.
 
 ## Canonical decision ownership
 
-The proposed owner map centralizes 19 active ADR IDs, ADP-0001, and ADD-0001
+The proposed owner map centralizes 20 active ADR IDs, ADP-0001, and ADD-0001
 in Architecture Authority.
 The assignment is based on organization-wide decision stewardship, not on the
 historical repository path. This remains provisional until the issue-linked
@@ -101,7 +106,7 @@ revisions until each repository updates them in its own reviewed follow-up.
 
 | Canonical text owner | Decision identifiers | Canonical text location |
 | --- | --- | --- |
-| Architecture Authority | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015 through ADR-0021, ADP-0001, ADD-0001 | This repository's `decisions/` directory, listed in the [decision inventory](../architecture/references/decision-inventory.yml) and pinned by the Architecture release. |
+| Architecture Authority | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015 through ADR-0022, ADP-0001, ADD-0001 | This repository's `decisions/` directory, listed in the [decision inventory](../architecture/references/decision-inventory.yml) and pinned by the Architecture release. |
 
 The active identifiers preserve the historical gaps: ADR-0010 is superseded by
 ADR-0012, and ADR-0014 is superseded by ADR-0018. Neither has an active record
@@ -166,6 +171,7 @@ no review occurred.
 | [0019](0019-canonicalize-delivery-state-field.md) | Canonicalize the orthogonal Delivery State field | [Closed Issue #52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52) | Unknown; no verifiable review PR for this Architecture record was found. The live rename remains separately gated. |
 | [0020](0020-centralize-organization-decision-records.md) | Centralize organization decision records in Architecture Authority | [Issue #3](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3) | Proposed on this issue-linked Architecture branch; context stewards and human review gate remain required. |
 | [0021](0021-define-architecture-artifact-contracts.md) | Define per-family Architecture artifact contracts | [Issue #3](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/3) | Proposed on this issue-linked Architecture branch; context stewards and human review gate remain required. |
+| [0022](0022-use-neon-postgres-for-webhook-replay-state.md) | Use Neon Postgres for webhook replay state | Control Plane [source issue #60](https://github.com/agentic-delivery-lab/agentic-delivery/issues/60); Architecture [tracking issue #5](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/5) | Proposed on this issue-linked Architecture branch; the solo maintainer has authorized bypass of the independent-review gate. |
 | [ADP-0001](ADP-0001-primitive-release-and-projection.md) | Primitive release and projection boundary | [Issue #52](https://github.com/agentic-delivery-lab/agentic-delivery/issues/52) | Imported from the pinned Primitive baseline; original source issue remains historical. |
 | [ADD-0001](ADD-0001-distribution-boundary.md) | Distribution boundary | Not recorded in pinned source | Imported from the pinned Distribution baseline; historical issue and participants were not recorded. |
 

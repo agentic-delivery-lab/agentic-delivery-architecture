@@ -13,6 +13,7 @@ const SHA1 = /^[0-9a-f]{40}$/;
 const SHA256 = /^[0-9a-f]{64}$/;
 const ARCH_REPOSITORY = 'agentic-delivery-lab/agentic-delivery-architecture';
 const ARCH_REPOSITORY_ID = 1380894616;
+const ARCHITECTURE_ISSUE_URL = /^https:\/\/github\.com\/agentic-delivery-lab\/agentic-delivery-architecture\/issues\/[1-9][0-9]*$/;
 const IMPORTED_IDS = ['ADR-0008', 'ADR-0009', 'ADR-0015', 'ADR-0017', 'ADP-0001', 'ADD-0001'];
 const VARIANT_IDS = ['ADR-0012', 'ADR-0018', 'ADR-0019'];
 const SOURCE_REPOSITORIES = {
@@ -132,7 +133,7 @@ export async function validateDecisionInventory(root = repositoryRoot, { invento
     if (!Number.isSafeInteger(origin.repositoryId) || origin.repositoryId < 1) add(`${location}.origin.repositoryId is invalid`);
     if (origin.type === 'proposed') {
       validateObjectShape(origin, ['type', 'repository', 'repositoryId', 'sourceIssue'], ['type', 'repository', 'repositoryId', 'sourceIssue'], `${location}.proposed origin`, add);
-      if (origin.repository !== ARCH_REPOSITORY || origin.repositoryId !== ARCH_REPOSITORY_ID || origin.sourceIssue !== inventory.sourceIssue) add(`${location}.proposed origin must point to this Architecture proposal`);
+      if (origin.repository !== ARCH_REPOSITORY || origin.repositoryId !== ARCH_REPOSITORY_ID || !ARCHITECTURE_ISSUE_URL.test(origin.sourceIssue ?? '')) add(`${location}.proposed origin must point to an issue in this Architecture repository`);
       if (Object.hasOwn(origin, 'sourceCommit') || Object.hasOwn(origin, 'sourcePath') || Object.hasOwn(origin, 'sha256')) add(`${location}.proposed origin cannot claim a baseline source pin`);
     }
     if (origin.type !== 'proposed' && (!SHA1.test(origin.sourceCommit ?? '') || typeof origin.sourcePath !== 'string' || !/^((docs\/)?decisions)\/[^/]+\.md$/.test(origin.sourcePath) || !SHA256.test(origin.sha256 ?? ''))) add(`${location}.origin needs an immutable source commit, decision path, and SHA-256`);

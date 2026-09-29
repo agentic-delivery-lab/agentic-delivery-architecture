@@ -6,6 +6,11 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Proposed ADR-0022 to use Neon Postgres for durable webhook replay claims.
+  The decision records the provider and replay-store constraints only; it does
+  not provision a database or activate the webhook.
+- Allowed each proposed inventory record to link its own Architecture tracking
+  issue, separate from the issue that introduced the canonical inventory.
 - Proposed per-family Architecture naming, template, and structured-data
   contracts with pinned schema validation.
 

@@ -44,7 +44,7 @@ test('arc42 contract rejects legacy suffixes and non-template headings', async (
 });
 
 test('architecture contracts and aliases are deterministic', async () => {
-  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 6, aliases: 19 });
+  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 6, aliases: 20 });
 });
 
 test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
@@ -120,8 +120,8 @@ test('ADR/Primitive traceability resolves only through the canonical Architectur
 test('canonical inventory has exact record coverage and rejects projections and duplicate IDs', async () => {
   const result = await validateDecisionInventory(root);
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
-  assert.equal(result.decisionIds.length, 21);
-  assert.equal(result.adrIds.length, 19);
+  assert.equal(result.decisionIds.length, 22);
+  assert.equal(result.adrIds.length, 20);
   assert.ok(result.recordById.has('ADP-0001'));
   assert.ok(result.recordById.has('ADD-0001'));
   assert.equal(result.importedTransforms.length, 9);
@@ -143,6 +143,8 @@ test('canonical inventory has exact record coverage and rejects projections and 
     assert.equal(origin.sha256, sha256);
   }
   assert.equal(result.recordById.get('ADR-0018').origin.reviewEvidence, 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/pull/2');
+  assert.equal(result.recordById.get('ADR-0022').origin.sourceIssue, 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/5');
+  assert.notEqual(result.recordById.get('ADR-0022').origin.sourceIssue, result.inventory.sourceIssue);
   const historicalAdr18 = result.inventory.historicalVariants.find((variant) => variant.id === 'ADR-0018');
   assert.equal(historicalAdr18.sha256, 'b94dabcb84fe7da679a0441442e97646196ae4bb88d4b0e9ad983a9519b4eef5');
   assert.match(historicalAdr18.disposition, /older duplicate.*Architecture PR #2.*canonical/i);
@@ -158,6 +160,10 @@ test('canonical inventory has exact record coverage and rejects projections and 
   const withExternalProjection = structuredClone(result.inventory);
   withExternalProjection.externalAdrs = [];
   await assert.rejects(validateDecisionInventory(root, { inventory: withExternalProjection }), /external ADR projections are forbidden/);
+
+  const proposalFromOtherRepository = structuredClone(result.inventory);
+  proposalFromOtherRepository.records.find((record) => record.id === 'ADR-0022').origin.sourceIssue = 'https://github.com/agentic-delivery-lab/agentic-delivery/issues/60';
+  await assert.rejects(validateDecisionInventory(root, { inventory: proposalFromOtherRepository }), /must point to an issue in this Architecture repository/);
 
   const withUnknownProperty = structuredClone(result.inventory);
   withUnknownProperty.records[0].unexpected = true;

@@ -4,7 +4,7 @@
   "architecture": "urn:agentic-delivery:architecture:authority",
   "decisionInventory": {
     "path": "architecture/references/decision-inventory.yml",
-    "sha256": "4413f265e1c8785636cbf5b470ad92984b6e6d6ced324cf91a4060c713976590",
+    "sha256": "5454d10e0fdbe7c0196060bd34fb511345f5ef0ab42fb0349b5075614717c9c5",
     "schemaVersion": 1
   },
   "primitiveRelease": {
@@ -293,6 +293,18 @@
         "semantic"
       ],
       "primitives": []
+    },
+    {
+      "id": "ADR-0022",
+      "file": "decisions/0022-use-neon-postgres-for-webhook-replay-state.md",
+      "domains": [
+        "agentic-delivery-control-plane"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "semantic"
+      ],
+      "primitives": []
     }
   ],
   "externalAdrs": [],
@@ -302,7 +314,8 @@
     "ADR-0018",
     "ADR-0019",
     "ADR-0020",
-    "ADR-0021"
+    "ADR-0021",
+    "ADR-0022"
   ],
   "primitives": [
     {

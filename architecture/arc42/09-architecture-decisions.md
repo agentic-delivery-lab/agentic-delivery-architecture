@@ -18,9 +18,10 @@ all organization ADR, ADP, and ADD records while preserving each record's
 bounded-context scope and routing semantic review to affected context stewards.
 Proposed ADR-0021 defines the separate path, template, and schema contracts for
 each Architecture artifact family without broadening the domain model.
-Proposed ADR-0022 selects Neon Postgres as the durable shared replay store for
-the Control Plane webhook; runtime provisioning and activation remain separate
-work.
+ADR-0022 selects Neon Postgres as the durable shared replay store for the
+Control Plane webhook. Its recovery amendment proposes minimal dispatch state,
+a scheduled GitHub App failed-delivery reconciler, and idempotent controller
+handling; runtime provisioning and activation remain separate work.
 
 Bounded-context scope remains on each record. The context registry maps each
 scope to the repository where semantic review is routed: governance and

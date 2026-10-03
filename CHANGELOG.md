@@ -4,6 +4,13 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- Amended ADR-0022 with recovery for ambiguous Neon writes, a scheduled
+  GitHub App failed-delivery reconciler, and durable controller idempotency.
+  GitHub does not automatically redeliver failed webhook deliveries; the
+  amendment keeps event bodies and credentials out of Neon.
+
 ### Added
 
 - Proposed ADR-0022 to use Neon Postgres for durable webhook replay claims.

@@ -95,9 +95,9 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
     errors.push('principle template must define the AP family heading and shared sections');
   }
   const knownOwners = { architecture: 'agentic-delivery-lab/agentic-delivery-architecture' };
-  const expectedPrincipleGoals = { 'AP-001': ['G-01'], 'AP-002': ['G-02', 'G-04'] };
+  const expectedPrincipleGoals = { 'AP-001': ['G-01'], 'AP-002': ['G-02', 'G-04'], 'AP-003': ['G-01', 'G-02', 'G-04'] };
   const principles = principleIndex.principles ?? [];
-  if (principleIndex.schemaVersion !== 2 || principles.length !== 2) errors.push('principle index must contain only the two evidence-backed principles at schemaVersion 2');
+  if (principleIndex.schemaVersion !== 2 || principles.length !== Object.keys(expectedPrincipleGoals).length) errors.push('principle index must contain the registered principles at schemaVersion 2');
   if (new Set(principles.map((principle) => principle.id)).size !== principles.length) errors.push('principle identifiers must be unique');
   for (const principle of principles) {
     const location = `principle ${principle.id ?? '(missing id)'}`;
@@ -128,7 +128,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
       if (!/^(ADR|ADP|ADD)-\d{4}$/.test(decision.id ?? '') || knownOwners[decision.owner] !== decision.repository) errors.push(`${location} has an invalid decision owner mapping`);
     }
   }
-  if (Object.keys(expectedPrincipleGoals).some((id) => !principles.some((principle) => principle.id === id))) errors.push('principle index is missing AP-001 or AP-002');
+  if (Object.keys(expectedPrincipleGoals).some((id) => !principles.some((principle) => principle.id === id))) errors.push('principle index is missing a registered principle');
   for (const file of [
     'architecture/contracts/architecture-release.schema.json',
     'architecture/contracts/adr-primitive-index.schema.json',

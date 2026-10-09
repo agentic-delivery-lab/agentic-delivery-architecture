@@ -6,6 +6,8 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Amended ADR-0004 and ADR-0007 with managed workspace ownership, safe exact-tip cleanup, sibling worktree topology and failure-safe artifact teardown; registered AP-003 and QR-012, with profile rollout retained as implementation debt (Architecture #7).
+
 - Amended ADR-0022 with recovery for ambiguous Neon writes, a scheduled
   GitHub App failed-delivery reconciler, and durable controller idempotency.
   GitHub does not automatically redeliver failed webhook deliveries; the

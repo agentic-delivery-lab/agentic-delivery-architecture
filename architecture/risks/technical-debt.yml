@@ -30,3 +30,9 @@ items:
     owner: distribution-maintainer
     evidence: system-evidence.yml#primitive-and-distribution-drafts
     exit: Add a reviewed source commit and content digest to the bundle contract and verify reproducibility and rollback.
+  - id: TD-006
+    title: Workspace lifecycle guards and profile distribution are not yet demonstrated organization-wide
+    status: open
+    owner: primitive-maintainer, distribution-maintainer, control-plane-maintainer
+    evidence: "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/7"
+    exit: Implement one reviewed reusable lifecycle contract, install pinned projections into each supported Codex profile with rollback, register failure-safe producer teardown, and provide QR-012 conformance and rollout evidence before claiming universal enforcement.

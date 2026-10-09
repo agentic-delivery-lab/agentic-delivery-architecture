@@ -72,3 +72,18 @@ its source revisions and evidence limitations.
 **Evidence:** AP-001 and AP-002 consequences, ADR-0003, ADR-0011 through
 ADR-0019, the domain register, and pinned cross-repository sources in
 [`system-evidence.yml`](../references/system-evidence.yml).
+
+## 8.7 Workspace and artifact lifecycle
+
+AP-003 and ADR-0004 require explicit ownership and disposition for source
+workspaces and artifacts. Prefer a clean primary checkout; necessary isolated
+work uses a sibling `<repo>.worktrees` container with the ADR-0007 branch-name
+projection. Source checkouts stay outside temporary storage. Scratch/test
+producers register immediate teardown; incident evidence has private durable
+storage and retention gates. Cleanup proves exact-tip integration, checks dirty
+and active consumers, guards remote races, and preserves unknown work.
+
+Primitives owns reusable guards; Distribution owns pinned profile installation;
+the Control Plane applies those contracts to execution and artifact producers.
+QR-012 is a target scenario. Architecture issue #7 tracks implementation and
+rollout; this text does not demonstrate universal installation or enforcement.

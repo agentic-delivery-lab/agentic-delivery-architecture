@@ -6,6 +6,7 @@ consulted: None
 informed: None
 domains:
   - agentic-delivery-governance
+  - developer-distribution
 required-enforcement:
   - deterministic
 ---
@@ -16,7 +17,7 @@ required-enforcement:
 
 Issue [#11](https://github.com/agentic-delivery-lab/agentic-delivery/issues/11) asks the repository to improve branch naming based on trunk-based delivery and Conventional Commits. A branch name should show the kind of change and make its source issue immediately traceable. The repository also needs an early, repeatable way to reject work that starts from a closed issue.
 
-The affected bounded context is `agentic-delivery-governance`. The relevant terms are `short-lived feature branch`, `source issue`, `issue-linked branch name`, `trunk` and `conventional commit`.
+The affected bounded contexts are `agentic-delivery-governance`, which owns branch identity and source-issue rules, and `developer-distribution`, which installs the managed local workspace projection. Distribution must preserve the branch grammar and issue authorization; it does not own a second branch identity. The relevant terms are `short-lived feature branch`, `source issue`, `issue-linked branch name`, `managed worktree`, `trunk` and `conventional commit`.
 
 ## Decision Drivers
 
@@ -48,6 +49,17 @@ Allowed types are `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refact
 The source issue check accepts only an open GitHub Issue in this repository. A GitHub sub-issue is valid when it is open. A pull request number, closed issue, missing issue, API error or authentication error is rejected. The local branch starter performs this check before `git switch -c`; CI repeats it for every internal pull request. The branch validator rejects `main`, which is the protected trunk rather than a change branch.
 
 The repository cannot intercept a contributor who invokes raw `git switch -c` directly. The supported `pnpm branch:start <type> <issue-number> <summary>` command prevents that error before branch creation, while the pull-request check prevents an invalid branch from entering the review workflow.
+
+### Local workspace projection
+
+Under the workspace lifecycle in ADR-0004, project an issue-linked branch into
+`<parent>/<repo>.worktrees/<branch-with-slashes-replaced-by-hyphens>`. For example,
+`docs/issue-7-workspace-lifecycle` projects to
+`agentic-delivery-architecture.worktrees/docs-issue-7-workspace-lifecycle`.
+The Git branch remains its canonical identity; the directory grants no new
+branch grammar, source-issue exception or authorization. This sibling layout is
+an organization convention, not a requirement of Git. The 2026-10-09 amendment
+is sourced by [Architecture issue #7](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/7).
 
 ### Consequences
 

@@ -14,6 +14,7 @@
 | Essential | Release and projection provenance can be recomputed from immutable sources. | Architecture, Primitive, and Distribution maintainers | QR-010 |
 | Important | Live hosting evidence is scoped to the repository actually checked and unknown settings remain unknown. | Maintainer, security reviewer | QR-007 |
 | Important | Semantic review is routed to every affected context steward and remains distinct from implementation authorship. | Repository writer, context stewards, independent Validator | QR-008, QR-011 |
+| Essential | Workspace cleanup preserves retained and active work and disposes owned task artifacts. | Repository owner, execution-profile owner | QR-012 |
 
 ## 10.2 Quality scenarios
 
@@ -34,3 +35,7 @@ evidence gaps, not satisfied quality goals.
 
 **Evidence:** source revisions and runtime checks are linked by identifier in
 [`system-evidence.yml`](../references/system-evidence.yml).
+
+QR-012 requires exact-tip, ownership, concurrent-use and producer-teardown
+evidence in the implementing repositories. Its cross-profile rollout remains
+a target under Architecture issue #7.

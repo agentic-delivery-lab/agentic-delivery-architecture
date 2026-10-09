@@ -980,3 +980,60 @@ observations:
       Project topology decision in Architecture #15 remains open. The latest
       complete inventory at 17:37–17:39 returned no Projects in the queried
       owners; this Issue readback confirmed no Project association.
+  - id: pull-request-release-inventory-20261009-1830
+    observedAt: '2026-10-09T18:30:42Z'
+    source: https://cli.github.com/manual/gh_pr_list
+    request: >-
+      Read the open PR list, exact head/base commits, draft/merge/review state,
+      PR checks, and Releases in each of the six visible organization
+      repositories. No repository or GitHub state was changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 6b0a4eef61cbfdc076f10c65bfdb5b9f11e6a437
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/37973330319
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37953235259
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37953235296
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37953716379
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37953717239
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37916206653
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37916206682
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37916737931
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37916738642
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37339049466
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37339049543
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37339049560
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37339050312
+      - https://github.com/agentic-delivery-lab/agentic-delivery-primitives/actions/runs/37925578386
+    result: >-
+      Five PRs were open. Architecture #14 head
+      `6b0a4eef61cbfdc076f10c65bfdb5b9f11e6a437` against base
+      `4ae924966280706c28cb602ea0b3d338e8e4a875` was `BLOCKED` with no
+      recorded review decision; exact-head `validate` run 37973330319 passed.
+      Control Plane #102 head `c98b24e57159037f74af4d234300cdc21483bfe5`
+      and #104 head `2cf258d5a48a75524514d67f440d0f5bb16fb85a`, both against
+      base `67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf`, were `CLEAN` with no
+      recorded review decisions. Their review, quality, macOS/Ubuntu/Windows
+      portability, recovery-sql, validate, and Vercel checks passed;
+      `classify_updater` was skipped. Control Plane #86 head
+      `3c21e2aa4200f51171f88db226260baf97314661` against base
+      `898a3efc2cfa40a7347ddf4d09685ce42c046c42` was `DIRTY` with no recorded
+      review decision; its listed checks passed. Draft Primitives #4 head
+      `b5f0050547f5e8e7fea94f1aa3fd6da666aa74ff` against base
+      `e4933566fbf5b0f593830f8933f18fbd21024fa7` was `BLOCKED` and
+      `REVIEW_REQUIRED`; validate passed. Distribution and both GitHub adapter
+      repositories had no open PRs. The Release listing returned no Releases
+      for any of the six repositories.
+    limitation: >-
+      This is a point-in-time PR/check/Release read of six visible repositories.
+      The open-Issue total of 22 was last refreshed at 18:21:44, and the full
+      Project inventory remains the 17:37–17:39 snapshot. Blank review-decision
+      fields do not establish independent approval. Passing checks and merge
+      state labels do not establish merge, release adoption, App runtime
+      permissions, Project integration, or live delivery. Draft tags were not
+      queried in this refresh.

@@ -358,6 +358,17 @@ deferred, fail-closed selector and offline fixtures; it blocks target selection
 on Architecture #15 and contract adoption on PR #14/#101. No Project or
 runtime permission was changed.
 
+At 18:30:42 UTC, the read-only PR/check/Release refresh found five open PRs
+and no Releases in the six visible repositories. Architecture #14 remained
+BLOCKED at `6b0a4eef` with exact-head validation passed; Control Plane #102 and
+#104 were CLEAN with checks passed and no review decisions; Control Plane #86
+was DIRTY; and draft Primitives #4 remained BLOCKED and `REVIEW_REQUIRED`.
+Distribution and both adapters had no open PRs. The open-Issue count remained
+the last observed total of 22 from 18:21:44; no new Issue or Project query was
+part of this refresh. Exact commits, checks, and limitations are in
+[`strategy-foundation-gap-matrix.md`](../architecture/references/strategy-foundation-gap-matrix.md)
+and observation `pull-request-release-inventory-20261009-1830`.
+
 The pre-continuation Architecture review identified three proposal gaps:
 strategy traceability stopped before quality goals, principles, ADRs,
 capabilities/contracts, owner Issues/Project planning, and evaluation evidence;

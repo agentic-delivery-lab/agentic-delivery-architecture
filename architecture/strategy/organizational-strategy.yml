@@ -293,14 +293,15 @@ projectPlanning:
   primarySurface: GitHub Projects
   proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-09 inventory returned no Project, so any creation requires a separate human decision tracked in Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: project-inventory-readable
+  projectInventoryEvidenceId: project-inventory-20261009-1033
   inventoryEvidence:
     observedAt: '2026-10-09'
     projectIds: []
     scopeSummary: >-
       Authenticated organization and personal Project inventories were complete
-      with no Projects returned; twelve deliverable Issue associations also
-      returned zero items. Relevant CLI scopes were project and admin:org.
+      with no Projects returned; all nineteen open Issues in the six visible
+      organization repositories returned zero Project associations. The CLI
+      reported project and admin:org scopes.
   planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the approved Project view can expose it. Project-owned fields may express distinct cross-Issue grouping, sequencing, or planned dependencies; do not duplicate Issue Priority or lifecycle values.
   executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation never authorizes or blocks execution or authorizes a model call, repository write, issue-field write, pull request, release, or activation.
   issueFieldConstraint: The six audited organization Issue Fields, including Priority and lifecycle and delivery fields, are organization-members-only. No Project was returned by the complete 2026-10-09 inventory, so Project-specific field visibility remains unverified and must be checked before any future view design.

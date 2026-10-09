@@ -28,16 +28,17 @@ participant is active or that each hosting rule has been enabled.
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
 | Repository sources | Six factory repositories and adapters have current main commit pins in system evidence. | Pins identify the observed default-branch commits; they do not prove release compatibility or active deployment. |
-| GitHub Projects | The CLI query failed for missing read:project scope; the organization projectsV2 query returned INSUFFICIENT_SCOPES. | Project existence, identity, membership, fields, visibility, entitlement, and source-Issue association remain unknown. |
+| GitHub Projects | At 10:33 UTC, the authenticated CLI and complete organization and personal GraphQL inventories returned zero Projects. All 19 open Issues across the six visible organization repositories returned zero Project associations. | No Project was visible to the queried identity. Project membership, fields, and visibility could not be inspected; App installation access and owners outside the queried scopes remain unknown. |
 | Organization Issue Fields | Six fields were read; Priority, dates, effort, Lifecycle Stage, and Delivery Readiness are all organization-members-only. | Current Project visibility fit and Issue Field pinning remain unverified. |
 | Per-issue field values | Documented API reads for Architecture #11 and Control Plane #59, #60, and #62 returned 404. | The response does not establish that any issue has or lacks field values. |
 | Control Plane execution | All six participants remain in shadow mode; latest run succeeded at authorization, classification, and finalization while delivery was skipped. | No completed delivery, central #62 canary, receipt completion, or independent field read-back is proven. |
 | Control Plane release candidate | PR #86 for Codex CLI 0.160.0 remains open without reviews; current main uses a prior pin. | Passing checks do not constitute review, merge, smoke evidence, or activation. |
-| Open work and releases | The current open Issue inventory spans all six repos; Control Plane PR #86 is the only open PR observed. No published GitHub Release was found; Control Plane has draft tag .37 and other repos only have draft manifests or no tags. | Exact Issues, tags, and current draft identities are recorded in system evidence; draft pins do not prove activation. |
+| Open work and releases | The 10:33 UTC snapshot records 19 open Issues and three open PRs: Architecture #14 (BLOCKED), Control Plane #102 (CLEAN), and #86 (DIRTY), all without a recorded review decision. No published GitHub Release was returned. | Exact open Issues and PR heads are recorded in system evidence. Draft pins do not prove activation; release and tag inventory is a separate observation. |
 
 The current default-branch commits and observations are recorded in
-[system evidence](../references/system-evidence.yml). Project inventory
-remains a specific access gap, not a claim that no Project exists.
+[system evidence](../references/system-evidence.yml). The inventory found no
+organization or personal Project visible to the queried identity; it does not
+resolve Project owners outside those scopes or App installation access.
 
 ## 7.3 Historical deployment snapshot (2026-09-24)
 
@@ -61,15 +62,18 @@ desired topology separate from observed deployment.
 
 ## 7.4 Access and change boundary
 
-Read-only organization metadata access uses read:org; reading an issue's
-field values uses a separate issue endpoint with repository access. The
-read:project scope is required for Projects API inventory and was unavailable
-to this session. No scope change was requested and no Project mutation was
-performed. Persistent admin:org is not a routine requirement. Any organization
-field-definition change would require a separate, temporary, reviewed operator
-action and is outside this Architecture change.
+The initial Projects read failed because the session lacked Project access.
+The later read-only inventory ran after `gh auth status` reported `project`
+and `admin:org`; it returned no organization or personal Project and no
+association for the 19 open Issues in the six visible repositories. No scope
+change was requested and no Project mutation was performed. OAuth scopes do
+not establish GitHub App installation access. Persistent `admin:org` is not a
+routine requirement. Any organization field-definition change would require a
+separate, temporary, reviewed operator action and is outside this Architecture
+change.
 
 **Evidence:** see observations `organization-issue-fields`,
+`project-inventory-20261009-1033`,
 `organization-issue-field-values`, `cli-oauth-scopes`,
 `invoker-installation`, `participant-modes-and-release-pins`,
 `recovery-issue-intake-runs`, and `repository-releases-and-rulesets` in

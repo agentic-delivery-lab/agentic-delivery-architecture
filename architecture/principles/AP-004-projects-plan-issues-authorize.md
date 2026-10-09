@@ -42,8 +42,11 @@ Factory Evolution and Software Product Delivery.
 ## Evidence and current limits
 
 The organizational strategy is a proposal linked to Architecture Issue #11.
-The 2026-10-09 live audit could not read Projects because the session lacked
-read:project; Project existence and configuration remain unknown. The
-organization Issue Field catalog reports member-only visibility, and Project
-view suitability has not been verified. The principle does not claim an
-implemented or passing live integration.
+The initial 2026-10-09 live audit lacked Project access. A later complete
+read-only inventory under an identity reporting `project` and `admin:org`
+returned no organization or personal Project and no associations for the 19
+open Issues in the six visible repositories. This does not cover owners outside
+those scopes or GitHub App access. The organization Issue Field catalog reports
+member-only visibility, and suitability for a future Project has not been
+verified. The principle does not claim an implemented or passing live
+integration.

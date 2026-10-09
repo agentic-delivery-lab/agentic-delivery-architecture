@@ -6,8 +6,9 @@ The maintained risk register is [`../risks/risks.yml`](../risks/risks.yml);
 technical debt and exit conditions are in
 [`../risks/technical-debt.yml`](../risks/technical-debt.yml).
 
-The highest current risks include unverified Project inventory and field
-visibility, unverified organization field pinning, mismatch between the App
+The highest current risks include no Project visible in the authenticated
+organization and user inventories, unverified Project field visibility and
+organization field pinning, mismatch between the App
 installation and the Control Plane contract, lack of completed end-to-end
 delivery evidence, and repository-by-repository gaps in live protection
 evidence. The Primitive main release manifest also contains a source commit

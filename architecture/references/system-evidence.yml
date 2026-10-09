@@ -276,6 +276,39 @@ observations:
       that organization Issue Fields can be exposed in a future Project.
       The six organization Issue Fields are separately recorded as
       organization_members_only in organization-issue-fields.
+  - id: project-inventory-20261009-1033
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/graphql/reference/projects
+    request: >-
+      Read-only inventory completed at 2026-10-09 10:33 UTC as authenticated
+      account sjefsharp. `gh auth status` reported `project` and `admin:org`
+      scopes. `gh project list --owner agentic-delivery-lab --limit 100
+      --format json` and GraphQL `organization.projectsV2(first: 100)` plus
+      `viewer.projectsV2(first: 100)` requested complete first pages and
+      pagination state. One GraphQL query traversed all six visible
+      organization repositories and every open Issue (up to 20 per repository),
+      querying `Issue.projectItems(first: 20)` for each.
+    projectInventoryComplete: true
+    projectIds: []
+    result: >-
+      The CLI returned projects=[] and totalCount=0. Organization and personal
+      GraphQL inventories each returned totalCount=0, nodes=[], and
+      hasNextPage=false. The organization repository connection returned all
+      six repositories with no next page. Its 19 open Issues returned zero
+      Project items each; every Issue and Project-item connection had
+      hasNextPage=false. The Issues were Control Plane #59, #60, #62, #66, #85,
+      #101, and #103; Architecture #7, #11, #12, #13, and #15; Primitives #2
+      and #3; Distribution #2 and #3; public .github #10 and #11; and private
+      .github-private #2. No Project data or settings were changed.
+    limitation: >-
+      This complete inventory covers Projects visible to the authenticated
+      account under the queried organization and user, plus open Issues in the
+      six visible organization repositories. It does not assess owners outside
+      those scopes, Project membership or fields when no Project was returned,
+      or whether organization Issue Fields can be exposed in a future Project.
+      OAuth scopes do not establish GitHub App installation access. The six
+      organization Issue Fields remain separately recorded as
+      organization_members_only.
   - id: current-issue-field-value-read
     observedAt: '2026-10-09'
     source: https://docs.github.com/en/rest/issues/issue-field-values
@@ -346,6 +379,28 @@ observations:
       This is a dated repository-visible inventory. Issue and pull-request
       state can change; it does not prove Project association or live
       prioritization.
+  - id: current-open-work-and-pull-requests-20261009-1033
+    observedAt: '2026-10-09T10:33:36Z'
+    request: >-
+      Read-only `gh issue list --state open` and `gh pr list --state open`
+      inventory across all six visible organization repositories.
+    result: >-
+      Open Issues: Control Plane #59, #60, #62, #66, #85, #101, and #103;
+      Architecture #7, #11, #12, #13, and #15; Primitives #2 and #3;
+      Distribution #2 and #3; public .github #10 and #11; and private
+      .github-private #2 (19 total). Open pull requests: Control Plane #86 at
+      3c21e2aa4200f51171f88db226260baf97314661 (DIRTY), Control Plane #102 at
+      c98b24e57159037f74af4d234300cdc21483bfe5 (CLEAN), and Architecture #14
+      at 82b02e6e727707468922ec32f0a1d73f9f186796 (BLOCKED). None had a
+      recorded human review decision in the query; the other four repositories
+      had no open pull requests. Each repository still requires its normal
+      review and merge gates.
+    limitation: >-
+      This is a point-in-time repository-visible snapshot. Issue and pull
+      request state can change; it does not prove Project association,
+      prioritization, approval, or live runtime behavior. See the adjacent
+      project-inventory-20261009-1033 observation for current Project
+      associations.
   - id: current-release-and-tag-inventory
     observedAt: '2026-10-09'
     request: Read-only GitHub release and tag inventory across the six visible repositories

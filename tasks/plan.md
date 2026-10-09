@@ -302,6 +302,21 @@ budgets and safe recovery receipts. At 17:18, all six repository open-Issue
 counts totaled 20; #105 had no Project item. Architecture #15 remains the
 human topology gate, and no live Project or runtime setting changed.
 
+At 17:37 UTC, the full organization, authenticated-user, and six-repository
+GraphQL Project inventory still returned no Projects or additional pages; the
+organization and user `gh project list --closed` checks were also empty at
+17:39. The broad OAuth identity enabled a fresh inventory of 20 open Issues,
+five open PRs, all six default-branch commits, and release/tag state. No
+published Release exists; Control Plane has 31 draft tags. Architecture #14
+remains BLOCKED without a human review decision, while #102 and #104 are CLEAN
+with required checks passing and no review decisions; Control Plane #86 is
+DIRTY and Primitives #4 is draft, BLOCKED, and `REVIEW_REQUIRED`. The exact
+heads and evidence limits are recorded in observation
+`project-inventory-20261009-1737`.
+Broad human OAuth scopes do not add Projects permission to the runtime App or
+resolve Architecture #15; no Project, App, permission, release, or participant
+was changed.
+
 The pre-continuation Architecture review identified three proposal gaps:
 strategy traceability stopped before quality goals, principles, ADRs,
 capabilities/contracts, owner Issues/Project planning, and evaluation evidence;

@@ -38,12 +38,12 @@ participant is active or that each hosting rule has been enabled.
 | Run budgets and failure recovery | QR-017/QR-018 define per-run hard limits and durable recovery evidence across webhook, Actions/Codex, and evaluation replay. | No accepted end-to-end receipt proves all budget limits, hard-stop behavior, or safe recovery; available quota/spend values remain unknown when the approved runtime does not expose them. |
 | Codex runtime | The exact Control Plane main source installs CLI 0.159.3; static review and an isolated package fixture verified instruction discovery and separate controller/task workspaces. | No Actions-run observation confirms the current runner binary, runtime CWD, or end-to-end issue delivery. |
 | Product delivery | The strategy specifies an owning product repository and steward boundary. | The read-only six-repository inventory found no distinct product repository or accountable steward; no product bootstrap or outcome baseline is claimed. |
-| GitHub Projects | The authenticated CLI's 17:11 complete organization, personal, and six repository GraphQL inventories returned zero Projects. Issue #105 was created later without a Project item. The organization REST response reported both Project capability flags as true; the account has the active `admin` role. | No Project is configured in the queried owner scopes. Membership, fields, views, and visibility could not be inspected. The selected-repository invoker declares no Projects permission; its exact repository membership and Projects owned outside the queried scopes remain unknown. |
+| GitHub Projects | At 17:37, the authenticated identity's complete organization, user, and six repository GraphQL inventories returned zero Projects. Organization and user `gh project list --closed` calls were also empty at 17:39. The six repositories have 20 open Issues; #105 has no Project item. The identity has broad OAuth scopes including `project`, `admin:org`, `repo`, and `workflow`. | No Project is configured in the queried owner scopes. Membership, fields, views, and visibility could not be inspected. The selected-repository invoker declares no Projects permission; its exact repository membership and deployed credential binding remain unknown. |
 | Organization Issue Fields | Six fields were read; Priority, dates, effort, Lifecycle Stage, and Delivery Readiness are all organization-members-only. | Current Project visibility fit and Issue Field pinning remain unverified. |
-| Per-issue field values | At 11:52 UTC, the documented `/issue-field-values` endpoint returned an empty array for each of the 19 open Issues in the six visible repositories. | The read is limited to open Issues at that time. It does not establish Issue Type pinning or future Project visibility. The earlier request path was not captured and its 404 is inconclusive. |
+| Per-issue field values | At 11:52 UTC, the documented `/issue-field-values` endpoint returned an empty array for each of the 19 then-open Issues in the six visible repositories. | The read is limited to open Issues at that time. It does not establish Issue Type pinning or future Project visibility. The earlier request path was not captured and its 404 is inconclusive. |
 | Control Plane execution | All six participants remain in shadow mode; latest run succeeded at authorization, classification, and finalization while delivery was skipped. | No completed delivery, central #62 canary, receipt completion, or independent field read-back is proven. |
 | Control Plane release candidate | PR #86 for Codex CLI 0.160.0 remains open without reviews; current main uses a prior pin. | Passing checks do not constitute review, merge, smoke evidence, or activation. |
-| Open work and releases | The 11:53 UTC snapshot records 19 open Issues and four open PRs: Architecture #14 at `d3fd429` (BLOCKED), Control Plane #102 at `c98b24e` (CLEAN) and #86 at `3c21e2a` (DIRTY), and Primitives #4 at `b5f0050` (BLOCKED). None has an approved human review decision. Architecture #14's exact-head validation passed. No Architecture GitHub Release was listed. | Exact open Issues, PR heads, checks, and release state are recorded in system evidence. Passing checks do not equal review; draft pins do not prove activation. |
+| Open work and releases | At 17:37, the six repositories had 20 open Issues and five open PRs: Architecture #14 at `88358c1` (BLOCKED; exact-head validation passed), Control Plane #102 at `c98b24e` and #104 at `2cf258d` (CLEAN; required checks passed), Control Plane #86 at `3c21e2a` (DIRTY; checks stale), and draft Primitives #4 at `b5f0050` (BLOCKED, `REVIEW_REQUIRED`; validate passed). None has a human review decision. No published GitHub Release was listed in any repository; Control Plane has 31 draft tags. | Exact open Issues, PR heads, checks, and release state are recorded in system evidence. Passing checks do not equal review; draft pins do not prove activation. |
 
 The current default-branch commits and observations are recorded in
 [system evidence](../references/system-evidence.yml). The Projects inventory
@@ -63,6 +63,11 @@ to inspect field options, views, or membership.
 At 17:17 UTC, Control Plane Issue [#105](https://github.com/agentic-delivery-lab/agentic-delivery/issues/105)
 was created as a native Task for run-budget and recovery work; its read-back
 shows no Project item. The six visible repositories now have 20 open Issues.
+The 17:37 GraphQL inventory again found no organization, user, or repository
+Projects; 17:39 CLI listings including closed Projects were also empty. The
+same snapshot recorded five open PRs, no published Releases, and 31
+Control-Plane-only draft tags; exact heads and checks are in the cited system
+evidence.
 
 ## 7.3 Historical deployment snapshot (2026-09-24)
 
@@ -100,11 +105,12 @@ Persistent `admin:org` is not a routine requirement. Any organization
 field-definition change would require a separate, temporary, reviewed
 operator action and is outside this Architecture change.
 
-The 17:02–17:11 recheck observed the authenticated `sjefsharp` account with
-additional organization, hook, repository, deletion, package, user, and
-workflow scopes as well as `project`. These scopes enabled the current Project,
-Issue Type, Issue Field, and App-installation metadata reads; they remain human
-OAuth authority and do not authorize writes through or expand the App.
+The 17:02–17:39 recheck observed the authenticated `sjefsharp` account with
+broad OAuth scopes including organization, hook, repository, deletion,
+package, user, workflow, `project`, and `admin:org`. These scopes enabled the
+current Project, Issue Type, Issue Field, and App-installation metadata reads;
+they remain human OAuth authority and do not authorize writes through or
+expand the App.
 
 The 10:44 UTC organization inventory also reported `allowed_actions=all` and
 `sha_pinning_required=false`; this is organization policy, not an audit of each
@@ -124,6 +130,7 @@ does not prove the ruleset is absent.
 `expanded-gh-auth-project-and-issue-inventory-20261009-1711`,
 `control-plane-budget-recovery-issue-created-20261009-1717`,
 `github-app-installation-permissions-20261009-1725`,
+`project-inventory-20261009-1737`,
 `issue-field-values-20261009-1152`,
 `current-open-work-and-pull-requests-20261009-1153`,
 `current-organization-capability-inventory-20261009-1044`,

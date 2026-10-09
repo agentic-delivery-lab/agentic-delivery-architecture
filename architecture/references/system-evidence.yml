@@ -921,3 +921,34 @@ observations:
       participant activation. Its parent association does not resolve the
       Project topology or product ownership decisions in Architecture #15 and
       #13.
+  - id: control-plane-project-planning-test-audit-20261009-1801
+    observedAt: '2026-10-09T18:01:05Z'
+    source: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery/contents/tests/delivery/project-planning-context.test.mjs
+    request: >-
+      Read-only review of Control Plane Issue #101, PR #102 metadata and
+      check rollup at its exact head, `project-planning-context.test.mjs`, and
+      `valid-offline-fixture.json`. No GitHub state or source was changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: 4e4c156981da776fae31ced204c86ec8c065361b
+    result: >-
+      Control Plane #101 remains open and out of scope for live Project
+      integration. PR #102 is open at `c98b24e57159037f74af4d234300cdc21483bfe5`
+      against `67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf`, CLEAN, with no human
+      review decision; required checks pass and its two `classify_updater`
+      runs were skipped. The exact offline fixture binds source Issue #44 and
+      Project item Issue #44 in `agentic-delivery-lab/service-a`. The test
+      mutates the Project item's repository identity to a foreign repository
+      without changing number 44 and expects fixed `PROJECT_SOURCE_ISSUE_MISMATCH`,
+      so the same-number-across-repositories case is covered. The suite also
+      covers Project-only cards, access failures, mismatched Projects, stale
+      fields, Issue-owned fields, and dependency-only planning input. The
+      single-item normalizer does not implement or test selecting among
+      multiple candidate links; that broader Architecture #11 acceptance case
+      remains open for any future Project-link selection path.
+    limitation: >-
+      This is an offline source/test review at one immutable PR head, not live
+      Project access, runtime enforcement, or proof that the Control Plane
+      prevents model invocation or protected side effects. Control Plane #101
+      does not itself authorize live integration or multi-candidate selection.

@@ -1183,3 +1183,27 @@ observations:
       limitation, not evidence that the selection is empty. No App token,
       runtime write, webhook, or deployed credential was inspected or tested;
       no permission or installation changed.
+  - id: architecture-pr14-check-refresh-20261009-1849
+    observedAt: '2026-10-09T18:49:12Z'
+    source: https://docs.github.com/en/graphql/reference/objects#pullrequest
+    request: >-
+      Read Architecture PR #14's head, base, review decision, merge state, and
+      check rollup; read the exact-head check with `gh pr checks 14`; read back
+      the refreshed PR body. No review or merge action was taken.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: 7b3d1ff51a293c1800435bc99885af32afdf2bce
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/37975873683
+    result: >-
+      PR #14 is open at head `7b3d1ff51a293c1800435bc99885af32afdf2bce`
+      against base `4ae924966280706c28cb602ea0b3d338e8e4a875`. The PR has no
+      review decision and reports merge state `BLOCKED`. Its exact-head
+      `validate` check completed successfully at 18:49:12 UTC. The refreshed
+      description was read back and records the current Project/Issue inventory,
+      Issue Type/Field definitions, App installation limits, release digest,
+      local verification, and exact hosted run.
+    limitation: >-
+      This read confirms only PR metadata and the listed check result. A passing
+      check is not independent semantic approval, merge authorization, release,
+      Project/App configuration, or runtime evidence.

@@ -13,6 +13,11 @@ import { validateDiagrams } from '../tools/validate-diagrams.mjs';
 import { validateDecisionInventory } from '../tools/decision-inventory.mjs';
 import { validateStructuredData, validateStructuredValue } from '../tools/validate-structured-data.mjs';
 import { parseRepositoryYaml } from '../tools/lib/yaml.mjs';
+import {
+  validateOrganizationalStrategy,
+  validateOrganizationalStrategyValue,
+  validateProjectInventoryEvidence,
+} from '../tools/organizational-strategy.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 
@@ -44,11 +49,11 @@ test('arc42 contract rejects legacy suffixes and non-template headings', async (
 });
 
 test('architecture contracts and aliases are deterministic', async () => {
-  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 6, aliases: 20 });
+  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 7, aliases: 21 });
 });
 
 test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
-  assert.deepEqual(await validateStructuredData(root), { files: 17, schemas: 20 });
+  assert.deepEqual(await validateStructuredData(root), { files: 18, schemas: 21 });
 
   const principleIndex = parseRepositoryYaml(
     await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),
@@ -120,8 +125,8 @@ test('ADR/Primitive traceability resolves only through the canonical Architectur
 test('canonical inventory has exact record coverage and rejects projections and duplicate IDs', async () => {
   const result = await validateDecisionInventory(root);
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
-  assert.equal(result.decisionIds.length, 22);
-  assert.equal(result.adrIds.length, 20);
+  assert.equal(result.decisionIds.length, 23);
+  assert.equal(result.adrIds.length, 21);
   assert.ok(result.recordById.has('ADP-0001'));
   assert.ok(result.recordById.has('ADD-0001'));
   assert.equal(result.importedTransforms.length, 9);
@@ -144,6 +149,7 @@ test('canonical inventory has exact record coverage and rejects projections and 
   }
   assert.equal(result.recordById.get('ADR-0018').origin.reviewEvidence, 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/pull/2');
   assert.equal(result.recordById.get('ADR-0022').origin.sourceIssue, 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/5');
+  assert.equal(result.recordById.get('ADR-0023').origin.sourceIssue, 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11');
   assert.notEqual(result.recordById.get('ADR-0022').origin.sourceIssue, result.inventory.sourceIssue);
   const historicalAdr18 = result.inventory.historicalVariants.find((variant) => variant.id === 'ADR-0018');
   assert.equal(historicalAdr18.sha256, 'b94dabcb84fe7da679a0441442e97646196ae4bb88d4b0e9ad983a9519b4eef5');
@@ -179,7 +185,117 @@ test('canonical inventory has exact record coverage and rejects projections and 
 });
 
 test('diagram sources remain model-first and structurally valid', async () => {
-  assert.deepEqual(await validateDiagrams(root), { structurizr: 1, mermaid: 2, plantuml: 1 });
+  assert.deepEqual(await validateDiagrams(root), { structurizr: 1, mermaid: 5, plantuml: 1 });
+});
+
+test('organizational strategy has stable goals, measurable evidence, and fail-closed Project boundaries', async () => {
+  const result = await validateOrganizationalStrategy(root);
+  assert.equal(result.goals, 7);
+  assert.equal(result.measures, 9);
+  assert.equal(result.valueStreams, 2);
+
+  const strategy = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/strategy/organizational-strategy.yml'), 'utf8'),
+    'organizational strategy test fixture',
+  );
+  const duplicated = structuredClone(strategy);
+  duplicated.strategicGoals[1].id = duplicated.strategicGoals[0].id;
+  assert.ok(validateOrganizationalStrategyValue(duplicated).some((error) => /identifiers must be unique/.test(error)));
+
+  const projectCanAuthorize = structuredClone(strategy);
+  projectCanAuthorize.projectPlanning.executionAuthorizationRule = 'Project status authorizes execution.';
+  assert.ok(validateOrganizationalStrategyValue(projectCanAuthorize).some((error) => /never authorize execution/.test(error)));
+
+  const inventedTarget = structuredClone(strategy);
+  inventedTarget.successMeasures[0].targetStatus = 95;
+  assert.ok(validateOrganizationalStrategyValue(inventedTarget).some((error) => /invalid target status/.test(error)));
+
+  const unsupportedAdoption = structuredClone(strategy);
+  unsupportedAdoption.strategicGoals[0].status = 'adopted';
+  assert.ok(validateOrganizationalStrategyValue(unsupportedAdoption).some((error) => /adoption record/.test(error)));
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', unsupportedAdoption),
+    /adoptionEvidence/,
+  );
+  unsupportedAdoption.strategicGoals[0].adoptionEvidence = {
+    record: 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11',
+    recordedAt: '2026-10-09',
+  };
+  assert.deepEqual(validateOrganizationalStrategyValue(unsupportedAdoption), []);
+  await validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', unsupportedAdoption);
+
+  const measured = structuredClone(strategy);
+  measured.successMeasures[0].baselineStatus = 'measured';
+  measured.successMeasures[0].baseline = {
+    value: 0.75,
+    numerator: 3,
+    denominator: 4,
+    unit: 'ratio',
+    reportingWindow: '2026-Q3',
+    observedAt: '2026-10-09',
+    evidence: ['https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11'],
+  };
+  measured.successMeasures[0].targetStatus = 'approved';
+  measured.successMeasures[0].target = {
+    value: 0.9,
+    unit: 'ratio',
+    approvedAt: '2026-10-09',
+    approvalIssue: 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11',
+  };
+  assert.deepEqual(validateOrganizationalStrategyValue(measured), []);
+  await validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', measured);
+
+  const inconsistentRatio = structuredClone(measured);
+  inconsistentRatio.successMeasures[0].baseline.value = 0.8;
+  assert.ok(validateOrganizationalStrategyValue(inconsistentRatio).some((error) => /must equal numerator divided by denominator/.test(error)));
+
+  const impossibleRatio = structuredClone(measured);
+  impossibleRatio.successMeasures[0].baseline.numerator = 5;
+  impossibleRatio.successMeasures[0].baseline.denominator = 4;
+  impossibleRatio.successMeasures[0].baseline.value = 1.25;
+  assert.ok(validateOrganizationalStrategyValue(impossibleRatio).some((error) => /numerator cannot exceed denominator/.test(error)));
+
+  const projectOwnsExecutionDependency = structuredClone(strategy);
+  projectOwnsExecutionDependency.sourceOfTruth.find((entry) => /portfolio sequencing/i.test(entry.fact)).rule =
+    'Issue Priority remains the canonical per-Issue priority value when assigned; Project fields may own distinct portfolio sequencing or grouping and execution dependency gates.';
+  assert.ok(validateOrganizationalStrategyValue(projectOwnsExecutionDependency).some((error) => /execution dependency gates remain owned by the source Issue/.test(error)));
+
+  const productRegressionMeasure = strategy.successMeasures.find((measure) => measure.id === 'SM-007');
+  assert.match(productRegressionMeasure.computation, /same completed observation window/i);
+  const zeroDenominator = structuredClone(measured);
+  zeroDenominator.successMeasures[0].baseline.denominator = 0;
+  assert.ok(validateOrganizationalStrategyValue(zeroDenominator).some((error) => /zero denominator and numerator as undefined/.test(error)));
+  const impossibleZeroDenominator = structuredClone(zeroDenominator);
+  impossibleZeroDenominator.successMeasures[0].baseline.numerator = 1;
+  assert.ok(validateOrganizationalStrategyValue(impossibleZeroDenominator).some((error) => /zero denominator and numerator as undefined/.test(error)));
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', impossibleZeroDenominator),
+    /must be equal to constant/,
+  );
+
+  const impossibleTarget = structuredClone(measured);
+  impossibleTarget.successMeasures[0].target.value = 1.1;
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', impossibleTarget),
+    /must be <= 1/,
+  );
+
+  const evidence = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/references/system-evidence.yml'), 'utf8'),
+    'system evidence test fixture',
+  );
+  assert.deepEqual(validateProjectInventoryEvidence(strategy, evidence), []);
+  const unsupportedInventory = structuredClone(strategy);
+  unsupportedInventory.projectPlanning.currentInventoryStatus = 'inventoried';
+  assert.ok(validateProjectInventoryEvidence(unsupportedInventory, evidence).some((error) => /completed dated inventory/.test(error)));
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', unsupportedInventory),
+    /inventoryEvidence/,
+  );
+
+  const duplicateFact = structuredClone(strategy);
+  duplicateFact.sourceOfTruth.push(structuredClone(duplicateFact.sourceOfTruth[0]));
+  assert.ok(validateOrganizationalStrategyValue(duplicateFact).some((error) => /exactly one canonical row/.test(error)));
 });
 
 test('architecture release identifies the target authority', async () => {

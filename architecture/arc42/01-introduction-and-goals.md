@@ -15,6 +15,12 @@ system itself. The terms **stakeholder**, **concern**, **viewpoint**, and
 **view** follow ISO/IEC/IEEE 42010:2022 usage. This is a practical architecture
 description, not a claim of conformance to that standard.
 
+The single organizational purpose, mission, vision, strategic goals, value
+streams, measures, and review triggers are maintained in the
+[organizational strategy](../strategy/organizational-strategy.yml). Repository
+responsibility language in an AGENTS.md file remains local operating guidance
+and is not a second organizational mission statement.
+
 ## 1.2 Goals
 
 | ID | Goal | Evidence or decision |
@@ -27,6 +33,11 @@ description, not a claim of conformance to that standard.
 These are architecture goals supported by the recovery brief and existing
 decisions. They do not claim that current production operation satisfies
 them; section 7 and the evidence snapshot record observed gaps.
+
+The proposed organizational goals SG-01–SG-07 refine these architecture goals
+into user, portfolio, evaluation, and adoption outcomes. Their measures are
+proposals with unmeasured baselines and deferred targets; see the canonical
+[strategy source](../strategy/organizational-strategy.yml).
 
 ## 1.3 Quality goals
 
@@ -50,6 +61,7 @@ uses ISO/IEC/IEEE 42010:2022 terminology; it does not reproduce the standard.
 | Architecture reviewer and context stewards | Decision meaning, bounded-context language, quality evidence, and provenance | Architecture conformance | Sections 3–5, 8–11; context map, decision inventory, quality scenarios |
 | Primitive maintainer | Catalog impact, release identity, and consumer projections | Capability release | Sections 5, 8–9; generated ADR-to-Primitive index |
 | Distribution maintainer and consumer owner | Exact pins, safe bootstrap, conflict handling, and rollback | Distribution and deployment | Sections 5–7; bundle and deployment view |
+| Product user or operator | A real problem is solved and the change behaves as intended after delivery | Product outcome | Product Issue and its post-delivery evidence; no product repository is confirmed in the six-repository factory inventory |
 | Independent Validator | Separate authorship, test evidence, semantic review, and source pins | Validation | Sections 9–11; ADR map and quality scenarios |
 
 ## 1.5 Scope

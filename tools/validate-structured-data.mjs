@@ -14,6 +14,7 @@ export const architectureDataContracts = Object.freeze({
   'architecture/domain/bounded-contexts.yml': 'domain-bounded-contexts.schema.json',
   'architecture/domain/context-map.yml': 'domain-context-map.schema.json',
   'architecture/domain/ubiquitous-language.yml': 'domain-language.schema.json',
+  'architecture/strategy/organizational-strategy.yml': 'organizational-strategy.schema.json',
   'architecture/principles/index.yml': 'principle-index.schema.json',
   'architecture/quality/quality-scenarios.yml': 'quality-scenarios.schema.json',
   'architecture/risks/risks.yml': 'risk-register.schema.json',

@@ -27,9 +27,12 @@ because they have separate repositories. The machine-readable context map is
   issue-field definitions. These are distinct from Project-specific fields.
 - **GitHub Issues and pull requests:** durable issue work state, lineage, and
   review records.
-- **GitHub Projects:** optional planning/projection surface. No current
-  Projects inventory or lifecycle binding is claimed; Project operations are
-  outside the acceptance scope of this Architecture change.
+- **GitHub Projects:** required primary planning, prioritization,
+  coordination, and progress-visibility surface for Factory Evolution and
+  Software Product Delivery. Origin repository Issues remain canonical work
+  records and the only source of execution authorization. Project inventory,
+  membership, field visibility, and entitlement remain unknown; no live
+  configuration or lifecycle binding is claimed.
 - **GitHub App:** installation access, permissions, and subscribed event
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.

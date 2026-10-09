@@ -62,3 +62,10 @@ risks:
     relatedQualityScenario: QR-011
     evidence: [architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories, "recovery issue #59"]
     mitigation: Keep repository mapping as review routing only; an authorized maintainer must resolve the one-member/CODEOWNERS limitation and verify actual human reviews before claiming enforcement.
+  - id: R-012
+    title: Project inventory, field visibility, and API access are unverified
+    status: open
+    owner: organization-operator
+    relatedQualityScenario: QR-013
+    evidence: system-evidence.yml#project-inventory-access
+    mitigation: Obtain a read-only Project inventory through an authorized identity, inspect the existing topology and field visibility, and record the result before selecting a Project or proposing any configuration or write integration.

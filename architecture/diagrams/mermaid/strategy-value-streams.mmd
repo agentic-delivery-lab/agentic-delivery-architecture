@@ -1,0 +1,49 @@
+flowchart LR
+  STATUS["PROPOSED TARGET<br/>Project inventory is unknown; no product repository or live end-to-end flow is confirmed"]
+  MAINTAINERS["Organization maintainers and operators"]
+  TEAMS["Product and delivery teams"]
+  USERS["Product users and operators"]
+  REVIEWERS["Context stewards and independent reviewers"]
+  CONTROL["Agentic Delivery Control Plane<br/>bounded authorized execution"]
+
+  subgraph PORTFOLIO["One governed portfolio"]
+    PROJECT["GitHub Projects<br/>Factory Evolution and Software Product Delivery views"]
+    ISSUE["Owning-repository source Issues<br/>only execution authorization"]
+  end
+
+  subgraph FACTORY["Factory Evolution"]
+    F1["Evidence or capability gap"]
+    F2["Authorized factory Issue"]
+    F3["Bounded implementation and PR"]
+    F4["Reusable capability or control improvement"]
+    F1 --> F2 --> F3 --> F4
+  end
+
+  subgraph PRODUCT["Software Product Delivery"]
+    P1["User or operator need"]
+    P2["Product-repository Issue"]
+    P3["Validated, reviewed software change"]
+    P4["Observed product behavior and feedback"]
+    P1 --> P2 --> P3 --> P4
+  end
+
+  MAINTAINERS --> PROJECT
+  TEAMS --> ISSUE
+  REVIEWERS --> F3
+  ISSUE --> PROJECT
+  PROJECT -. "prioritizes and coordinates; does not authorize" .-> F2
+  PROJECT -. "prioritizes and coordinates; does not authorize" .-> P2
+  F2 --> CONTROL --> F3
+  P2 --> CONTROL --> P3
+  F4 --> F1
+  P4 --> P1
+  F4 --> PROJECT
+  P4 --> PROJECT
+  USERS --> P1
+  F3 --> REVIEWERS
+
+  NOTE["Evaluation findings become Issues in the owning repository.<br/>People prioritize them in Projects before any new execution."]
+  NOTE -.-> PROJECT
+  NOTE -.-> ISSUE
+  STATUS -.-> PROJECT
+  STATUS -.-> PRODUCT

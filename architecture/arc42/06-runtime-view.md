@@ -4,7 +4,9 @@
 
 ## 6.1 Desired short gated loop
 
-1. A person creates or updates an issue in its origin repository.
+1. A person creates or updates a source Issue in its origin repository and
+   links it to the portfolio Project for prioritization and progress visibility.
+   A Project-only card is planning input and cannot invoke execution.
 2. The invocation boundary and participant contract decide whether processing
    may begin.
 3. Semantic classification proposes a route, metadata, and orchestration
@@ -12,9 +14,9 @@
 4. Deterministic checks validate issue identity, actor permission, type,
    fields/options, dependencies, policy, and transition.
 5. One authorized writer performs bounded work on an issue-linked branch.
-6. Tests and an independent Validator report evidence; the writer publishes a
-   review pull request.
-7. A human reviewer decides whether to merge. The source issue remains open
+6. Tests, a versioned evaluation, and an independent Validator report evidence;
+   the writer publishes a review pull request.
+7. A human reviewer decides whether to merge. The source Issue remains open
    until its normal disposition.
 
 Any failed gate blocks mutation. The semantic proposal is not authorization.
@@ -37,22 +39,47 @@ metadata records impacted capability identifiers and versions. A reviewed
 Primitive release feeds a versioned Distribution bundle. A consumer upgrades
 by immutable pins in shadow mode, records validation and provenance, then
 activates only after its own review gate. Rollback restores its prior commit
-and contract pins.
+and contract pins. Product delivery additionally records whether the Issue's
+user or operator outcome was observed; factory delivery records capability,
+authorization, and operating evidence. Actionable findings return as Issues
+for human prioritization in Projects before any subsequent execution.
 
-## 6.4 Current runtime evidence and gaps
+## 6.4 Target: evaluation and recursive improvement
+
+This is a target contract. Versioned evaluation datasets, graders, and report
+implementation remain unassigned to an owner Issue; no live evaluation loop is
+claimed here.
+
+The target offline evaluation uses a versioned representative dataset, grader definition,
+candidate source pin, baseline, and attributable report. Deterministic checks
+produce repeatable pass/fail results; semantic graders are identified
+separately as advisory, approved, or inconclusive. Evaluation replay repeats
+that dataset and grader against a named candidate. It is distinct from
+webhook-delivery replay, which retries event handling, and Codex-session
+continuation, which restores one bounded runner operation.
+
+Under this target, an evaluation miss, operational anomaly, unmet product outcome, or agent
+improvement suggestion is recorded as a new or updated Issue in its owning
+repository and prioritized in the portfolio Project. It cannot edit its own
+policy, activate its own participant, approve or merge its change, or trigger
+an unbounded follow-up run.
+
+## 6.5 Current runtime evidence and gaps
 
 | Observation | Evidence | Limit |
 | --- | --- | --- |
+| Projects are the required portfolio planning surface in the proposed model. | project-inventory-access and current-organization-issue-fields observations. | Inventory and membership are unknown because read:project is unavailable; all six organization Issue Fields are member-only and Project visibility fit is unverified. |
+| The latest issue run completed authorization, classification, and finalization while delivery was skipped. | current-delivery-and-release-state observation. | A skipped delivery does not prove a completed issue-to-PR flow or independent field-value read-back. |
 | Participant registry lists all six repositories in shadow mode with exact controller and Architecture/Primitive pins. | `participant-modes-and-release-pins` in system evidence. | Shadow configuration does not prove delivery, API identity, or write-back. |
 | Issue-intake runs for recovery issues #59 and #60 failed before dependencies could install because the classify checkout path did not match its working directory. | [Run 36050051251](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/36050051251), [run 36049717167](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/36049717167), workflow at pinned Control Plane commit. | This identifies a workflow defect; it does not establish that field gate code is absent. |
 | New recovery issues had no issue-field values after intake failed. | `organization-issue-field-values` observation. | This is limited to those new issues. |
 | The observed App installation has All repositories access and comment/review subscriptions, while the Control Plane contract expects selected repositories and broader events. | `invoker-installation` observation and `config/github-app-contract.json` at CP commit. | The installation could not be bound to the credential used by the controller. No setting was changed. |
 | Field definitions exist for Lifecycle Stage and Delivery Readiness; user-visible pinning remains unverified. | `organization-issue-fields` observation. | The definitions API does not report pinning; Projects are a separate surface outside this issue-field observation. |
 
-The
-[issue-delivery sequence](../diagrams/mermaid/issue-delivery-sequence.mmd)
-shows the intended processing order. It is a contract view, not evidence that
-the current runtime completed the path.
+The [issue-delivery sequence](../diagrams/mermaid/issue-delivery-sequence.mmd)
+and [Project-Issue lifecycle](../diagrams/mermaid/project-issue-lifecycle.mmd)
+show the intended processing order. They are contract views, not evidence
+that the current runtime completed the path.
 
 **Evidence:** this section separates target flow from run observations and
 references pinned in [system evidence](../references/system-evidence.yml).

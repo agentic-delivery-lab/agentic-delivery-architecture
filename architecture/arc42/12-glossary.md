@@ -29,6 +29,13 @@ Key distinctions for this architecture description:
   issue types. Its definition does not prove UI pinning or user visibility.
 - **GitHub Projects field** is a Project-specific field, distinct from an
   organization issue-field definition.
+- **Portfolio Project** is the proposed primary planning, prioritization,
+  coordination, and progress-visibility surface. It references source Issues
+  and cannot authorize their execution.
+- **Factory Evolution** is the value stream that improves the delivery
+  factory through evidence-backed, human-prioritized Issues.
+- **Software Product Delivery** is the value stream that delivers software
+  changes for user or operator outcomes and records post-delivery evidence.
 - **Primitive projection** is a generated copy of selected canonical Primitive
   source. **Distribution bundle** is a versioned set of bootstrap and consumer
   integration artifacts. They serve different interfaces.

@@ -1,0 +1,312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/organizational-strategy.schema.json",
+  "title": "organizational strategy",
+  "description": "Closed structural contract for the canonical organizational strategy proposal; evidence, status, and cross-reference integrity are checked separately.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "status",
+    "asOf",
+    "sourceIssue",
+    "purpose",
+    "mission",
+    "vision",
+    "marketAndProductContext",
+    "audiences",
+    "valuePropositions",
+    "valueStreams",
+    "strategicGoals",
+    "successMeasures",
+    "projectPlanning",
+    "sourceOfTruth",
+    "guardrails",
+    "nonGoals",
+    "references"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "status": { "enum": ["proposed", "adopted", "superseded"] },
+    "adoptionEvidence": { "$ref": "#/$defs/statusEvidence" },
+    "supersessionEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["successor", "recordedAt"],
+      "properties": {
+        "successor": { "type": "string", "format": "uri" },
+        "recordedAt": { "type": "string", "format": "date" }
+      }
+    },
+    "asOf": { "type": "string", "format": "date" },
+    "sourceIssue": { "type": "string", "format": "uri" },
+    "purpose": { "type": "string", "minLength": 1 },
+    "mission": { "type": "string", "minLength": 1 },
+    "vision": { "type": "string", "minLength": 1 },
+    "marketAndProductContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currentEvidence", "workingHypotheses", "unknowns"],
+      "properties": {
+        "currentEvidence": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "workingHypotheses": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "unknowns": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "audiences": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "role", "needs"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+          "role": { "type": "string", "minLength": 1 },
+          "needs": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "valuePropositions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["audienceId", "proposition"],
+        "properties": {
+          "audienceId": { "type": "string", "pattern": "^[a-z][a-z0-9-]+$" },
+          "proposition": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "valueStreams": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "outcome", "operatingLoop"],
+        "properties": {
+          "id": { "enum": ["factory-evolution", "software-product-delivery"] },
+          "outcome": { "type": "string", "minLength": 1 },
+          "operatingLoop": { "type": "array", "minItems": 3, "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "strategicGoals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "title", "outcome", "rationale", "stakeholders", "stewardRoles",
+          "contextIds", "architectureGoalIds", "measureIds", "reviewTriggers", "status"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^SG-[0-9]{2}$" },
+          "title": { "type": "string", "minLength": 1 },
+          "outcome": { "type": "string", "minLength": 1 },
+          "rationale": { "type": "string", "minLength": 1 },
+          "stakeholders": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "stewardRoles": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "contextIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "agentic-delivery-governance",
+                "agentic-delivery-control-plane",
+                "agentic-primitives",
+                "developer-distribution"
+              ]
+            }
+          },
+          "architectureGoalIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "enum": ["G-01", "G-02", "G-03", "G-04"] }
+          },
+          "measureIds": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^SM-[0-9]{3}$" }
+          },
+          "reviewTriggers": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "status": { "enum": ["proposed", "adopted", "retired"] },
+          "adoptionEvidence": { "$ref": "#/$defs/statusEvidence" },
+          "retirementEvidence": { "$ref": "#/$defs/statusEvidence" }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "status": { "const": "adopted" } }, "required": ["status"] },
+            "then": { "required": ["adoptionEvidence"] }
+          },
+          {
+            "if": { "properties": { "status": { "const": "retired" } }, "required": ["status"] },
+            "then": { "required": ["retirementEvidence"] }
+          }
+        ]
+      }
+    },
+    "successMeasures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "name", "definition", "computation", "dataSources", "stewardRole",
+          "reviewCadence", "baselineStatus", "targetStatus"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^SM-[0-9]{3}$" },
+          "name": { "type": "string", "minLength": 1 },
+          "definition": { "type": "string", "minLength": 1 },
+          "computation": { "type": "string", "minLength": 1 },
+          "dataSources": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "stewardRole": { "type": "string", "minLength": 1 },
+          "reviewCadence": { "type": "string", "minLength": 1 },
+          "baselineStatus": { "enum": ["unmeasured", "measured"] },
+          "baseline": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["value", "numerator", "denominator", "unit", "reportingWindow", "observedAt", "evidence"],
+            "properties": {
+              "value": { "anyOf": [{ "type": "number", "minimum": 0, "maximum": 1 }, { "const": "undefined" }] },
+              "numerator": { "type": "integer", "minimum": 0 },
+              "denominator": { "type": "integer", "minimum": 0 },
+              "unit": { "const": "ratio" },
+              "reportingWindow": { "type": "string", "minLength": 1 },
+              "observedAt": { "type": "string", "format": "date" },
+              "evidence": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uri" } }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "denominator": { "const": 0 } }, "required": ["denominator"] },
+                "then": { "properties": { "numerator": { "const": 0 }, "value": { "const": "undefined" } } },
+                "else": { "properties": { "value": { "type": "number", "minimum": 0, "maximum": 1 } } }
+              }
+            ]
+          },
+          "targetStatus": { "enum": ["set-after-baseline", "approved"] },
+          "target": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["value", "unit", "approvedAt", "approvalIssue"],
+            "properties": {
+              "value": { "type": "number", "minimum": 0, "maximum": 1 },
+              "unit": { "const": "ratio" },
+              "approvedAt": { "type": "string", "format": "date" },
+              "approvalIssue": { "type": "string", "format": "uri" }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "baselineStatus": { "const": "measured" } }, "required": ["baselineStatus"] },
+            "then": { "required": ["baseline"] },
+            "else": { "not": { "required": ["baseline"] } }
+          },
+          {
+            "if": { "properties": { "targetStatus": { "const": "approved" } }, "required": ["targetStatus"] },
+            "then": {
+              "required": ["target", "baselineStatus"],
+              "properties": { "baselineStatus": { "const": "measured" } }
+            },
+            "else": { "not": { "required": ["target"] } }
+          }
+        ]
+      }
+    },
+    "projectPlanning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primarySurface", "proposedTopology", "currentInventoryStatus", "projectInventoryEvidenceId", "planningFieldRule",
+        "executionAuthorizationRule", "issueFieldConstraint", "projectOnlyCardRule"
+      ],
+      "properties": {
+        "primarySurface": { "const": "GitHub Projects" },
+        "proposedTopology": { "type": "string", "minLength": 1 },
+        "currentInventoryStatus": { "enum": ["unknown-no-read-project-scope", "inventoried"] },
+        "projectInventoryEvidenceId": { "type": "string", "pattern": "^project-inventory-[a-z0-9-]+$" },
+        "inventoryEvidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["observedAt", "projectIds", "scopeSummary"],
+          "properties": {
+            "observedAt": { "type": "string", "format": "date" },
+            "projectIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+            "scopeSummary": { "type": "string", "minLength": 1 }
+          }
+        },
+        "planningFieldRule": { "type": "string", "minLength": 1 },
+        "executionAuthorizationRule": { "type": "string", "minLength": 1 },
+        "issueFieldConstraint": { "type": "string", "minLength": 1 },
+        "projectOnlyCardRule": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "currentInventoryStatus": { "const": "inventoried" } }, "required": ["currentInventoryStatus"] },
+          "then": { "required": ["inventoryEvidence"] },
+          "else": { "not": { "required": ["inventoryEvidence"] } }
+        }
+      ]
+    },
+    "sourceOfTruth": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fact", "owner", "rule"],
+        "properties": {
+          "fact": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string", "minLength": 1 },
+          "rule": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "guardrails": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "nonGoals": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "url"],
+        "properties": {
+          "title": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "adopted" } }, "required": ["status"] },
+      "then": { "required": ["adoptionEvidence"] }
+    },
+    {
+      "if": { "properties": { "status": { "const": "superseded" } }, "required": ["status"] },
+      "then": { "required": ["supersessionEvidence"] }
+    }
+  ],
+  "$defs": {
+    "statusEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["record", "recordedAt"],
+      "properties": {
+        "record": { "type": "string", "format": "uri" },
+        "recordedAt": { "type": "string", "format": "date" }
+      }
+    }
+  }
+}

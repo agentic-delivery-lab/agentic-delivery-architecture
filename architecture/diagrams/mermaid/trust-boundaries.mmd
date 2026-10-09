@@ -1,0 +1,43 @@
+flowchart LR
+  STATUS["PROPOSED TRUST MODEL<br/>Project integration and evaluation implementation are not verified live"]
+  subgraph HUMAN["Human authority boundary"]
+    PEOPLE["Maintainers, product owners, context stewards"]
+    REVIEWERS["Independent reviewers"]
+    MERGE["Human approval, merge, release, and activation"]
+  end
+
+  subgraph GITHUB["GitHub organization boundary"]
+    PROJECT["Portfolio Project<br/>planning facts and views"]
+    ISSUE["Origin repository Issue<br/>canonical work and authorization record"]
+    PR["Origin repository pull request"]
+    ORG["Issue Types and organization Issue Fields"]
+  end
+
+  subgraph AUTOMATION["Bounded automation boundary"]
+    APP["GitHub App installation<br/>repository access and event delivery"]
+    CP["Agentic Delivery Control Plane<br/>identity, permission, policy, and contract gates"]
+    RUNNER["Isolated bounded runner session"]
+    AGENT["Agent capability<br/>proposes and implements authorized task"]
+  end
+
+  subgraph EVIDENCE["Validation and evidence boundary"]
+    VALIDATOR["Independent Validator"]
+    EVAL["Versioned evaluation dataset and grader"]
+    RECEIPT["Delivery, provenance, and outcome evidence"]
+  end
+
+  PEOPLE --> PROJECT
+  PEOPLE --> ISSUE
+  PROJECT -. "planning context only" .-> CP
+  ISSUE -->|"origin identity and actor permission"| CP
+  ORG -->|"native type, definitions, values"| CP
+  APP -->|"signed event"| CP
+  CP -->|"all deterministic gates pass"| RUNNER --> AGENT
+  AGENT -->|"bounded branch change"| PR
+  PR --> VALIDATOR --> EVAL --> RECEIPT
+  VALIDATOR -->|"independent findings"| REVIEWERS
+  REVIEWERS --> MERGE
+  MERGE --> RECEIPT
+  RECEIPT -->|"improvement evidence"| ISSUE
+  STATUS -.-> PROJECT
+  STATUS -.-> EVAL

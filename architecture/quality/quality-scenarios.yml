@@ -99,3 +99,39 @@ scenarios:
     measure: Zero retained or active work is deleted; a concurrent tip change blocks deletion and a concurrent session cannot acquire workspace use during cleanup; no owned completed disposable artifact remains without an explicit retention reason; each supported profile identifies its installed policy pin and cleanup record.
     evidence: [ADR-0004, ADR-0007, AP-003, "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/7"]
     status: target; reusable deterministic implementation and supported-profile rollout require reviewed owner changes and run evidence
+  - id: QR-013
+    name: project-only cards cannot authorize execution
+    stakeholder: organization-operator, repository-owner
+    concern: portfolio planning must not bypass source Issue identity or authorization
+    stimulus: A Project-only card or Project event requests agent implementation.
+    response: The Control Plane leaves work unchanged and requires a source Issue in its owning repository before deterministic identity, actor-permission, policy, type, and transition checks can authorize execution.
+    measure: Zero model calls, repository writes, issue-field writes, pull requests, releases, or activations start from a Project-only card; every authorized run identifies the source repository and Issue.
+    evidence: [ADR-0012, ADR-0023, AP-004, strategy/organizational-strategy.yml#projectPlanning]
+    status: target; Control Plane fixture and live Project integration evidence remain open
+  - id: QR-014
+    name: Project access and identity failures fail closed
+    stakeholder: organization-operator, security-reviewer
+    concern: missing or ambiguous Project data must not authorize or redirect work
+    stimulus: Project identity, membership, fields, visibility, repository identity, or permission is missing, unreadable, or inconsistent.
+    response: The planning view reports the gap; execution re-fetches the origin Issue and stops before mutation when identity, access, or authorization cannot be verified.
+    measure: Offline fixtures cover missing read scope, inaccessible Project, foreign repository ID, and missing Issue permission; each leaves Issue and repository state unchanged.
+    evidence: [ADR-0023, AP-002, system-evidence.yml#project-inventory-access]
+    status: target; Project inventory is blocked by missing read:project scope
+  - id: QR-015
+    name: evaluation replay reproduces an attributable result
+    stakeholder: capability-consumer, independent-reviewer
+    concern: an agent or policy change must be compared against a stable and representative baseline
+    stimulus: A candidate capability, controller, grader, or model version is evaluated.
+    response: A versioned offline dataset, grader definition, candidate source pin, baseline, and result are recorded; semantic judgments remain separately labeled.
+    measure: Replaying the same fixture and deterministic graders from the same pins reproduces the same pass/fail result; every candidate report identifies dataset, grader, source commit, digest, and reviewer.
+    evidence: [strategy/organizational-strategy.yml#SG-04, strategy/organizational-strategy.yml#SG-07, "https://developers.openai.com/api/docs/guides/evals", "https://developers.openai.com/api/docs/guides/graders"]
+    status: target; Architecture specifies the evaluation boundary; owner implementation remains unassigned
+  - id: QR-016
+    name: recursive improvement returns to human-prioritized work
+    stakeholder: maintainer, independent-reviewer
+    concern: evaluation or runtime findings must not become unbounded self-executing work
+    stimulus: Evaluation, incident, user feedback, or product observation identifies a possible factory or product improvement.
+    response: The finding links to a new or updated Issue in the owning repository, enters the portfolio Project for human prioritization, and starts only from that authorized Issue.
+    measure: Every actionable finding has a source evidence link and owner Issue; zero findings directly mutate agent policy, activate a participant, merge, release, or trigger another implementation without human prioritization and authorization.
+    evidence: [ADR-0023, AP-004, strategy/organizational-strategy.yml#guardrails]
+    status: target; issue-to-project evaluation and recursive-run fixture coverage remain open

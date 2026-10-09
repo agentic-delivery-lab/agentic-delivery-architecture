@@ -5,7 +5,9 @@
 ## 7.1 Intended deployment topology
 
 - GitHub hosts the six repositories, organization-level Issue Types and issue
-  fields, Issues, pull requests, Actions, and optional Projects.
+  fields, Issues, pull requests, Actions, and the primary planning surface in
+  GitHub Projects. Issues remain the canonical work and execution-authorization
+  records.
 - A GitHub App installation grants repository access and emits subscribed
   events to the Control Plane. Installation access and the participant
   registry are separate gates.
@@ -21,7 +23,23 @@
 This is the desired logical deployment. It does not imply that every
 participant is active or that each hosting rule has been enabled.
 
-## 7.2 Observed deployment snapshot (2026-09-24)
+## 7.2 Current inventory snapshot (2026-10-09)
+
+| Surface | Observed state | Evidence limit |
+| --- | --- | --- |
+| Repository sources | Six factory repositories and adapters have current main commit pins in system evidence. | Pins identify the observed default-branch commits; they do not prove release compatibility or active deployment. |
+| GitHub Projects | The CLI query failed for missing read:project scope; the organization projectsV2 query returned INSUFFICIENT_SCOPES. | Project existence, identity, membership, fields, visibility, entitlement, and source-Issue association remain unknown. |
+| Organization Issue Fields | Six fields were read; Priority, dates, effort, Lifecycle Stage, and Delivery Readiness are all organization-members-only. | Current Project visibility fit and Issue Field pinning remain unverified. |
+| Per-issue field values | Documented API reads for Architecture #11 and Control Plane #59, #60, and #62 returned 404. | The response does not establish that any issue has or lacks field values. |
+| Control Plane execution | All six participants remain in shadow mode; latest run succeeded at authorization, classification, and finalization while delivery was skipped. | No completed delivery, central #62 canary, receipt completion, or independent field read-back is proven. |
+| Control Plane release candidate | PR #86 for Codex CLI 0.160.0 remains open without reviews; current main uses a prior pin. | Passing checks do not constitute review, merge, smoke evidence, or activation. |
+| Open work and releases | The current open Issue inventory spans all six repos; Control Plane PR #86 is the only open PR observed. No published GitHub Release was found; Control Plane has draft tag .37 and other repos only have draft manifests or no tags. | Exact Issues, tags, and current draft identities are recorded in system evidence; draft pins do not prove activation. |
+
+The current default-branch commits and observations are recorded in
+[system evidence](../references/system-evidence.yml). Project inventory
+remains a specific access gap, not a claim that no Project exists.
+
+## 7.3 Historical deployment snapshot (2026-09-24)
 
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
@@ -41,12 +59,13 @@ The complete immutable repository commit pins and live API/run references are
 in [system evidence](../references/system-evidence.yml). The above table keeps
 desired topology separate from observed deployment.
 
-## 7.3 Access and change boundary
+## 7.4 Access and change boundary
 
-Read-only organization metadata access uses `read:org`; reading an issue's
-field values uses a separate issue endpoint with repository access. A
-`read:project` expansion was not requested because no project change is in
-scope. Persistent `admin:org` is not a routine requirement. Any organization
+Read-only organization metadata access uses read:org; reading an issue's
+field values uses a separate issue endpoint with repository access. The
+read:project scope is required for Projects API inventory and was unavailable
+to this session. No scope change was requested and no Project mutation was
+performed. Persistent admin:org is not a routine requirement. Any organization
 field-definition change would require a separate, temporary, reviewed operator
 action and is outside this Architecture change.
 

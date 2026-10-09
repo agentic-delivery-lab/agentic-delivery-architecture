@@ -1,15 +1,16 @@
 schemaVersion: 1
-snapshotDate: '2026-09-24'
+snapshotDate: '2026-10-09'
 snapshotKind: read-only-live-audit
 purpose: >-
-  Pin the repository revisions and live observations used by this Architecture
-  description. Live observations are historical evidence as of snapshotDate;
-  they are not claims about settings after that date.
+  Pin current repository revisions and dated live observations used by this
+  Architecture description. Earlier observations retain their individual
+  timestamps and remain historical evidence; snapshotDate is the latest audit
+  date, not a claim that every observation was refreshed then.
 repositories:
   - id: architecture
     slug: agentic-delivery-lab/agentic-delivery-architecture
     githubRepositoryId: 1380894616
-    mainCommit: 107a97f4217682b23c11d136247abc423574b269
+    mainCommit: 4ae924966280706c28cb602ea0b3d338e8e4a875
     role: cross-context architecture authority
     evidencePaths:
       - decisions/README.md
@@ -19,7 +20,7 @@ repositories:
   - id: control-plane
     slug: agentic-delivery-lab/agentic-delivery
     githubRepositoryId: 1358455028
-    mainCommit: c6c891fa937b7db06e3925c3e83ea83656b3d617
+    mainCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
     role: Agentic Delivery Control Plane
     evidencePaths:
       - config/issue-metadata.yml
@@ -215,3 +216,117 @@ observations:
       Rulesets are repository-scoped. No rule in one repository proves a rule
       or review gate in another repository; versioned definitions are not live
       enforcement evidence.
+  - id: current-organization-issue-fields
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/rest/orgs/issue-fields
+    request: https://api.github.com/orgs/agentic-delivery-lab/issue-fields
+    result: >-
+      Live read confirmed six organization Issue Fields, all with
+      organization_members_only visibility: Priority (46797139), Start date
+      (46797140), Target date (46797141), Effort (46797142), Lifecycle Stage
+      (46888816), and Delivery Readiness (46888965). Delivery Readiness remains
+      the live field name for the Delivery State concept.
+    limitation: >-
+      The catalog does not prove issue-type pinning or suitability and
+      visibility in the selected Project. No field definition, visibility, or
+      value was changed.
+  - id: project-inventory-access
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
+    request: gh project list --owner agentic-delivery-lab; organization projectsV2 GraphQL query
+    result: >-
+      The CLI reported that read:project is required; GraphQL returned
+      INSUFFICIENT_SCOPES for projectsV2. No Project ID, URL, membership,
+      item inventory, field configuration, visibility, or entitlement was
+      retrieved. Project existence is unknown, not absent.
+    limitation: >-
+      This session did not request a scope change or perform Project
+      configuration. The source Issue's Project association could not be
+      verified.
+  - id: current-issue-field-value-read
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/rest/issues/issue-field-values
+    request: GET issue field values for Architecture #11 and Control Plane #59, #60, and #62 using API version 2026-03-10
+    result: >-
+      Each documented issue field values request returned HTTP 404. No
+      conclusion about the presence or absence of values on those issues is
+      supported by this response.
+    limitation: >-
+      Field definitions and per-issue values use distinct API operations; the
+      endpoint response prevented a current per-issue value inventory.
+  - id: current-architecture-draft-release
+    observedAt: '2026-10-09'
+    sourceRepositories: [architecture]
+    sourceCommit: 4ae924966280706c28cb602ea0b3d338e8e4a875
+    sourcePath: architecture/generated/architecture-release.json
+    result:
+      version: 0.1.0-draft.19
+      sourceCommit: d29be1e27100175889f10d000ba59bd5c633e9c2
+      contentSha256: e4c5c58172d2eba4c7a0898d433cd09bee160ab3a78770a12dabec05718f5a12
+      status: draft
+    limitation: >-
+      This is the live main baseline before the proposed strategy and ADR-0023
+      change. A draft release is not a published or deployed Architecture
+      contract.
+  - id: current-organization-repository-inventory
+    observedAt: '2026-10-09'
+    request: gh repo list agentic-delivery-lab --limit 100 --json name,url,isPrivate,description,defaultBranchRef
+    result: >-
+      The authenticated inventory returned six organization repositories:
+      agentic-delivery, agentic-delivery-architecture,
+      agentic-delivery-primitives, agentic-delivery-distribution, .github,
+      and .github-private. Their observed descriptions and pinned contracts
+      identify the software-factory, architecture, capability, distribution,
+      and GitHub-adapter surfaces; none is identified as a distinct product
+      repository.
+    limitation: >-
+      This inventory is scoped to repositories visible to the authenticated
+      identity. No repository was created, and no external market or customer
+      evidence was inferred from the repository list.
+  - id: current-open-work-and-pull-requests
+    observedAt: '2026-10-09'
+    request: Read-only GitHub issue and pull-request inventory across the six visible repositories
+    result: >-
+      Open Issues are Control Plane #59, #60, #62, #66, #85, and #101;
+      Architecture #7, #11, #12, and #13; Primitives #2 and #3; Distribution
+      #2 and #3; public .github #10 and #11; and private .github-private #2.
+      The only open pull request found across the six repositories is Control
+      Plane PR #86, which has passing recorded checks but no reviews. Older
+      recovery status in #59 predates merged PR #61; #59 remains open context
+      and is not expanded by this task.
+    limitation: >-
+      This is a dated repository-visible inventory. Issue and pull-request
+      state can change; it does not prove Project association or live
+      prioritization.
+  - id: current-release-and-tag-inventory
+    observedAt: '2026-10-09'
+    request: Read-only GitHub release and tag inventory across the six visible repositories
+    result: >-
+      No GitHub Release was found in the six repositories. The Control Plane
+      has draft controller tag .37 while main stages draft .66. Primitives
+      main stages draft .4; Distribution stages workflow-bundle draft .25;
+      Architecture stages draft .19. The public and private adapters have no
+      release or tag. Draft manifests and tags are not published releases or
+      proof of consumer activation.
+    limitation: >-
+      Draft source pins and consumer compatibility remain owner-specific and
+      require reviewed release-chain validation; the current audit does not
+      reconcile or mutate those pins.
+  - id: current-delivery-and-release-state
+    observedAt: '2026-10-09'
+    sourceRepositories: [control-plane]
+    sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+    sourcePath: config/participants.yml
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37882199849
+    result: >-
+      All six participants remain in shadow mode. The Control Plane main
+      manifest stages draft .66 while the latest published controller tag is
+      .37. In the cited run, authorization, classification, and finalization
+      succeeded while delivery was skipped. The central #62 canary, complete
+      receipt flow, and independent field-value read-back remain unproven.
+      Control Plane issues #85 and #101 and PR #86 remain open; PR #86 has no reviews.
+    limitation: >-
+      A skipped delivery job is not a completed delivery. Draft manifests,
+      successful observation runs, and passing offline checks do not prove
+      end-to-end production operation.

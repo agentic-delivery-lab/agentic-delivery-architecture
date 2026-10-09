@@ -29,9 +29,10 @@ Native GitHub Issue Types classify work. The organization-level
 `Lifecycle Stage` field records lifecycle position. The separate orthogonal
 `Delivery State` concept controls or holds the next operation; its current
 live display name is `Delivery Readiness`. Governance metadata and runner
-execution state remain separate. GitHub Projects fields are a distinct
-projection surface. An issue form or configuration file does not prove that
-fields are pinned or visible to users.
+execution state remain separate. GitHub Projects is the primary portfolio
+planning and coordination surface; its fields remain distinct from
+organization Issue Fields. An issue form or configuration file does not prove
+that fields are pinned or visible to users.
 
 Semantic reasoning may propose an action. Deterministic code must validate the
 origin repository and issue, actor authorization, schema, native type,

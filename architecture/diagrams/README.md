@@ -7,7 +7,7 @@ container relationships. No rendered image is authoritative.
 The other source formats have deliberately smaller roles:
 
 - Mermaid is supporting model-as-code for readable context and runtime
-  sequences that are useful in Markdown reviews.
+  sequences and portfolio lifecycle views that are useful in Markdown reviews.
 - `plantuml/bounded-contexts.puml` is the only optional PlantUML view. It may
   explain a model element but may not introduce a competing ownership
   relationship. There is no second bounded-context model under `models/uml/`.
@@ -27,4 +27,7 @@ The mapping to arc42 is stable:
 | `../models/workspace.dsl` | 3, 5, 7 |
 | `mermaid/context-map.mmd` | 3, 5 |
 | `mermaid/issue-delivery-sequence.mmd` | 6 |
+| `mermaid/strategy-value-streams.mmd` | 1, 4, 5 |
+| `mermaid/project-issue-lifecycle.mmd` | 4, 6, 8 |
+| `mermaid/trust-boundaries.mmd` | 3, 6, 8 |
 | `plantuml/bounded-contexts.puml` | 5, optional UML view |

@@ -14,7 +14,7 @@
 | Public GitHub adapter | `.github` | Public profile and repository community/template artifacts | Repository content and individual live consumer checks |
 | Private GitHub adapter | `.github-private` | Private member profile and reviewed agent publication | Surface contract, projection lock, entitlement evidence |
 | GitHub organization metadata | GitHub organization | Native Issue Types and organization-level field definitions and options | Read API and separate per-type pinning evidence |
-| GitHub Projects | GitHub Projects service | Optional project-specific views and fields | Separate scope, field bindings, and API access |
+| GitHub Projects | GitHub Projects service | Primary portfolio planning, prioritization, coordination, and progress views for both value streams | Proposed one-Project/two-view topology; inventory, membership, field visibility, and API access remain unknown |
 | GitHub App | GitHub App installation | Repository access, permissions, and subscribed event delivery | Installation manifest and live App evidence |
 | Consumer repository | Each enrolled repository | Origin work records and pinned local integration | Repository ID, controller/contract/architecture/primitive pins |
 

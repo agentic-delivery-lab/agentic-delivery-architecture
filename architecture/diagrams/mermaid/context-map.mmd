@@ -19,7 +19,7 @@ flowchart LR
   end
   WORK["Repository Issues and pull requests"]
   VALUES["Per-issue field values API<br/>repository-scoped values"]
-  PROJECTS["Projects fields<br/>separate planning projection; no lifecycle binding claimed"]
+  PROJECTS["GitHub Projects<br/>primary portfolio planning and coordination<br/>not an execution authority"]
   ENROLL["Control Plane participant contract<br/>selected repositories and pins"]
   APP -->|"access and event delivery"| CP
   ENROLL -->|"separate enrollment check"| CP
@@ -28,6 +28,8 @@ flowchart LR
   CP -->|"reads definitions and options"| DEFINITIONS
   CP -->|"reads/writes validated per-issue values"| VALUES
   GOV -. "Issue Type, lifecycle, and delivery semantics" .-> TYPE
+  WORK -->|"canonical source Issue and PR references"| PROJECTS
+  PROJECTS -. "prioritization and progress views; never execution authorization" .-> WORK
 
   subgraph PUBLIC["Public .github repository adapter"]
     FORMS["Community health, issue forms,<br/>and PR template artifacts"]

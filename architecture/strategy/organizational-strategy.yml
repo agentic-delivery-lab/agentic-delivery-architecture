@@ -1,0 +1,322 @@
+schemaVersion: 1
+status: proposed
+asOf: '2026-10-09'
+sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
+purpose: Make software engineering continuously improvable, explainable, and trustworthy.
+mission: >-
+  Build and operate a governed software factory that helps people and AI agents
+  turn authorized intent into working software through domain-driven
+  architecture, reusable agent capabilities, automated delivery, and
+  evidence-based evaluation. Apply the same discipline to improving the factory.
+vision: >-
+  Teams can delegate bounded work to capable agents while people retain
+  direction and authority. Every change traces to intent, is checked against
+  explicit rules, is independently reviewed, and contributes evidence that
+  informs the next prioritized improvement.
+marketAndProductContext:
+  currentEvidence:
+    - The six inventoried repositories are the software-factory architecture, controller, capability, distribution, and GitHub-adapter surfaces.
+    - Their issues, pull requests, version pins, tests, and operational runs provide evidence about factory needs and constraints.
+  workingHypotheses:
+    - The initial user segment is GitHub-centered engineering teams adopting coding agents for bounded software work; this is a hypothesis, not market research.
+    - The factory's value is lower coordination and setup effort with stronger authorization, provenance, validation, and recovery evidence.
+    - Product changes should be selected from evidenced user or operator problems in an identified product repository.
+  unknowns:
+    - No distinct product repository, named external customer, market size, willingness-to-pay evidence, or product outcome baseline is confirmed by the current six-repository inventory.
+    - A product steward, product telemetry policy, and approved user-feedback collection path have not been designated.
+audiences:
+  - id: maintainers
+    role: Organization maintainers and operators
+    needs:
+      - Prioritize factory work against product outcomes and operational risk.
+      - See ownership, authorization, progress, evidence, and rollback readiness.
+  - id: delivery-teams
+    role: Engineers and product teams using the factory
+    needs:
+      - Delegate bounded implementation work without losing source intent or review control.
+      - Integrate useful changes with low setup friction and visible validation.
+  - id: capability-consumers
+    role: Teams consuming agents, skills, validators, and development workflows
+    needs:
+      - Adopt compatible, reusable capabilities from versioned sources.
+      - Understand installation effects, provenance, and recovery options.
+  - id: independent-reviewers
+    role: Human reviewers and context stewards
+    needs:
+      - Assess semantic impact, test evidence, live-operation limits, and the exact change.
+      - Retain independent approval and merge authority.
+  - id: software-users
+    role: Users and operators of software delivered by product teams
+    needs:
+      - Receive changes that address evidenced problems and behave reliably in their actual workflow.
+      - Provide feedback through an identified product owner and approved evidence path.
+valuePropositions:
+  - audienceId: maintainers
+    proposition: One governed portfolio makes factory investment, product delivery, dependencies, and evidence visible together while keeping each durable fact with its canonical owner.
+  - audienceId: delivery-teams
+    proposition: An authorized Issue can lead through bounded agent work to a tested pull request with traceable evidence and a human merge decision.
+  - audienceId: capability-consumers
+    proposition: Reusable capabilities and workflow bundles have versioned sources, compatibility information, and a reviewable rollback path.
+  - audienceId: independent-reviewers
+    proposition: Review can distinguish deterministic gate results, semantic judgments, offline fixtures, and live operational evidence.
+  - audienceId: software-users
+    proposition: Product changes address a concrete user or operator need, retain traceability to that need, and are checked against observed behavior after delivery.
+valueStreams:
+  - id: factory-evolution
+    outcome: The factory becomes safer, more useful, easier to operate, and better evidenced.
+    operatingLoop:
+      - Record a factory need or evidence-backed improvement as a source Issue in its owning repository.
+      - Prioritize and sequence the Issue in the portfolio Project.
+      - Authorize bounded work only from that source Issue after deterministic identity, permission, policy, and contract checks.
+      - Validate the change with automated checks and independent semantic review; humans decide merge and activation.
+      - Record outcomes, regressions, operational evidence, and rollback results.
+      - Convert a validated finding into a new or updated Issue for portfolio prioritization.
+  - id: software-product-delivery
+    outcome: Users receive useful, reliable software changes with evidence of the problem addressed and the result observed.
+    operatingLoop:
+      - Capture a user or operator problem, desired outcome, and evidence in an Issue owned by the product repository.
+      - Prioritize the linked Issue in the portfolio Project.
+      - Deliver through the same authorized Issue, pull request, automated validation, independent review, and human merge boundary.
+      - Observe product behavior and user feedback against the Issue's stated outcome.
+      - Route unmet needs, defects, and capability gaps to Issues in the product or factory owner repository.
+strategicGoals:
+  - id: SG-01
+    title: Deliver authorized work with end-to-end traceability
+    outcome: Every agent-assisted change can be followed from an authorized source Issue through repository-scoped execution, validation, review, merge, and evidence.
+    rationale: Traceability makes work attributable and keeps Projects from becoming an execution authority.
+    stakeholders: [maintainers, delivery-teams, independent-reviewers]
+    stewardRoles: [architecture-authority, control-plane-context-steward]
+    contextIds: [agentic-delivery-governance, agentic-delivery-control-plane]
+    architectureGoalIds: [G-01, G-02, G-04]
+    measureIds: [SM-001, SM-002]
+    reviewTriggers:
+      - A work path can start from a Project item without an authorized source Issue.
+      - A merged agent-assisted change cannot be traced to its source Issue or validation evidence.
+      - A source repository or authorization contract changes.
+    status: proposed
+  - id: SG-02
+    title: Improve product outcomes for real users
+    outcome: Product changes address evidenced user or operator needs, and post-delivery observations inform subsequent priorities.
+    rationale: Delivery volume and successful deployment are not substitutes for user value.
+    stakeholders: [delivery-teams, capability-consumers, software-users]
+    stewardRoles: [product-owner-to-be-designated, owning-product-repository-steward]
+    contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
+    architectureGoalIds: [G-04]
+    measureIds: [SM-003, SM-004]
+    reviewTriggers:
+      - A product repository or accountable product owner is identified.
+      - A delivered change has no observable outcome or user-feedback path.
+      - A product outcome is missed, regresses, or lacks usable instrumentation.
+    status: proposed
+  - id: SG-03
+    title: Keep autonomy bounded by explicit trust and review boundaries
+    outcome: Agents execute only authorized bounded work; policy changes, approvals, merges, releases, and activation remain under designated human control.
+    rationale: Reasoning can propose an action, while deterministic checks and human roles decide whether it is allowed.
+    stakeholders: [maintainers, delivery-teams, independent-reviewers]
+    stewardRoles: [architecture-authority, control-plane-context-steward, context-stewards]
+    contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
+    architectureGoalIds: [G-02, G-04]
+    measureIds: [SM-002, SM-005]
+    reviewTriggers:
+      - An agent can change its own policy, activate itself, approve or merge its change, or create unbounded follow-up execution.
+      - An identity, permission, repository boundary, or human review gate changes.
+      - A failed or unknown authorization check does not leave work state unchanged.
+    status: proposed
+  - id: SG-04
+    title: Make agent capabilities reusable and dependable
+    outcome: Capabilities are versioned, tested against representative tasks, attributable to source, and reused only where their measured behavior fits.
+    rationale: Reuse should reduce repeated setup without hiding compatibility or quality regressions.
+    stakeholders: [delivery-teams, capability-consumers, independent-reviewers]
+    stewardRoles: [agentic-primitives-context-steward, architecture-authority]
+    contextIds: [agentic-primitives, agentic-delivery-control-plane]
+    architectureGoalIds: [G-03, G-04]
+    measureIds: [SM-005, SM-006]
+    reviewTriggers:
+      - A capability release changes its source, contract, model setting, or supported use.
+      - Representative evaluation shows a regression or insufficient task coverage.
+      - A consumer cannot reproduce the source version or validation evidence.
+    status: proposed
+  - id: SG-05
+    title: Make adoption reproducible and reversible
+    outcome: Consumers can discover, install, validate, update, and roll back compatible factory components with clear ownership and provenance.
+    rationale: A useful capability must reach its intended users without unreviewed overwrites or ambiguous recovery.
+    stakeholders: [maintainers, capability-consumers]
+    stewardRoles: [developer-distribution-context-steward, agentic-primitives-context-steward]
+    contextIds: [agentic-primitives, developer-distribution]
+    architectureGoalIds: [G-03, G-04]
+    measureIds: [SM-006, SM-007]
+    reviewTriggers:
+      - A supported consumer surface or distribution channel changes.
+      - A rollout cannot be reproduced from exact source pins or restored to its previous state.
+      - Adoption friction, conflict, or support evidence changes the supported bundle.
+    status: proposed
+  - id: SG-06
+    title: Use Projects as the primary planning and coordination surface
+    outcome: Authorized Issues and related pull requests are visible in a governed portfolio that supports prioritization, sequencing, dependencies, and progress views across both value streams.
+    rationale: The current Issue lifecycle contract is sound but does not alone provide the requested portfolio coordination and progress visibility.
+    stakeholders: [maintainers, delivery-teams, independent-reviewers]
+    stewardRoles: [architecture-authority, control-plane-context-steward]
+    contextIds: [agentic-delivery-governance, agentic-delivery-control-plane]
+    architectureGoalIds: [G-01, G-02, G-04]
+    measureIds: [SM-001, SM-008]
+    reviewTriggers:
+      - A Project item is missing a canonical source Issue or has ambiguous ownership.
+      - Project access, field visibility, organization entitlement, or portfolio topology changes.
+      - Planning requires copying an Issue-owned lifecycle or priority value into a conflicting field.
+    status: proposed
+  - id: SG-07
+    title: Turn evaluation and operating evidence into reviewed improvement
+    outcome: Representative offline evaluations and live operational evidence surface regressions and product or factory opportunities that humans can prioritize as Issues.
+    rationale: Repeated, attributable evaluation makes improvement observable without granting agents authority to change governance or recursively execute their own proposals.
+    stakeholders: [maintainers, delivery-teams, independent-reviewers]
+    stewardRoles: [architecture-authority, control-plane-context-steward, agentic-primitives-context-steward]
+    contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
+    architectureGoalIds: [G-03, G-04]
+    measureIds: [SM-005, SM-009]
+    reviewTriggers:
+      - An evaluation dataset, grader, model, capability, or policy changes.
+      - A failed, inconclusive, or newly discovered live observation has no owner Issue.
+      - An improvement proposal can trigger itself or bypass Project prioritization and human authorization.
+    status: proposed
+successMeasures:
+  - id: SM-001
+    name: Traceable agent-assisted delivery coverage
+    definition: Share of merged agent-assisted changes in the reporting window with an authorized source Issue, linked pull request, completed validation record, and recorded human merge decision.
+    computation: Count qualifying merged changes divided by all merged agent-assisted changes in the same repositories and reporting window.
+    dataSources: [source Issues, pull requests, delivery receipts, validation records]
+    stewardRole: control-plane-context-steward
+    reviewCadence: quarterly after the delivery evidence contract is operational
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-002
+    name: Authorization gate containment
+    definition: Share of denied, invalid, or unresolved execution attempts that leave source Issue state, repository identity, and protected artifacts unchanged.
+    computation: Count failed authorization attempts with verified zero protected mutations divided by all failed authorization attempts in the reporting window.
+    dataSources: [authorization decisions, webhook and controller receipts, repository audit records]
+    stewardRole: control-plane-context-steward
+    reviewCadence: quarterly and after any authorization-boundary change
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-003
+    name: Product outcome evidence coverage
+    definition: Share of accepted product changes whose source Issue defines a user or operator outcome and has a post-delivery observation against it.
+    computation: Count accepted product changes with a recorded outcome observation divided by accepted product changes in the same product repository and review window.
+    dataSources: [product Issues, release notes, product telemetry where approved, user or operator feedback]
+    stewardRole: owning-product-repository-steward
+    reviewCadence: quarterly after a product repository and evidence owner are designated
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-004
+    name: Product change outcome attainment
+    definition: Share of evaluated product changes whose stated user or operator outcome was met at the agreed observation point.
+    computation: Count evaluated changes meeting their Issue-defined outcome divided by all changes due for outcome evaluation; report unevaluated changes separately.
+    dataSources: [product Issues, approved product measures, release observations, user or operator feedback]
+    stewardRole: owning-product-repository-steward
+    reviewCadence: quarterly after a product repository and outcome measures are designated
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-005
+    name: Evaluation regression coverage
+    definition: Share of capability and controller release candidates tested on a versioned representative dataset with explicit deterministic and semantic graders and a recorded baseline comparison.
+    computation: Count release candidates with a complete evaluation report divided by all candidate releases in the reporting window.
+    dataSources: [versioned offline datasets, grader definitions, run reports, source commits and digests]
+    stewardRole: agentic-primitives-context-steward
+    reviewCadence: every candidate release and quarterly dataset review
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-006
+    name: Reproducible consumer adoption
+    definition: Share of in-scope consumer upgrades that validate exact source pins, complete conflict checks, and demonstrate rollback to the recorded previous version.
+    computation: Count consumer upgrades with reproducible validation and rollback divided by all completed in-scope consumer upgrades.
+    dataSources: [Distribution manifests, consumer pull requests, validation runs, rollback evidence]
+    stewardRole: developer-distribution-context-steward
+    reviewCadence: quarterly after consumer upgrades are instrumented
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-007
+    name: Post-release product regression rate
+    definition: Rate of accepted product changes that cause a user-visible defect or rollback during the agreed post-release observation window.
+    computation: Count released changes with an attributed defect or rollback in a completed observation window divided by released changes with that same completed observation window; report incomplete windows separately.
+    dataSources: [product Issues, release incidents, approved telemetry, rollback records]
+    stewardRole: owning-product-repository-steward
+    reviewCadence: quarterly after product release evidence exists
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-008
+    name: Portfolio coverage of authorized work
+    definition: Share of in-scope open work Issues with exactly one visible item in the approved portfolio Project and a verified canonical Issue link.
+    computation: Count eligible open Issues represented exactly once divided by all eligible open Issues across both value streams.
+    dataSources: [repository Issues, Project item inventory, source repository IDs]
+    stewardRole: architecture-authority
+    reviewCadence: monthly after read and write access and the Project topology are approved
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-009
+    name: Evidence-to-prioritized-improvement closure
+    definition: Share of actionable evaluation or operational findings that reach an owner Issue, are prioritized in Projects, and receive a human-reviewed disposition.
+    computation: Count actionable findings with a linked, prioritized Issue and recorded disposition divided by actionable findings in the reporting window.
+    dataSources: [evaluation reports, incident records, Issues, Project item history, pull requests]
+    stewardRole: architecture-authority
+    reviewCadence: quarterly after Project visibility and evidence links are operational
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+projectPlanning:
+  primarySurface: GitHub Projects
+  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views; reuse a suitable existing Project if inventory confirms fit, otherwise propose any creation separately.
+  currentInventoryStatus: unknown-no-read-project-scope
+  projectInventoryEvidenceId: project-inventory-access
+  planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the approved Project view can expose it. Project-owned fields may express distinct cross-Issue grouping, sequencing, or planned dependencies; do not duplicate Issue Priority or lifecycle values.
+  executionAuthorizationRule: Project membership, status, priority, or automation never authorizes a model call, repository write, issue-field write, pull request, release, or activation.
+  issueFieldConstraint: The audited organization Issue Fields, including Priority and the lifecycle and delivery fields, are organization-members-only; field visibility and suitability for the selected Project must be verified before view design.
+  projectOnlyCardRule: A Project-only card is planning input. Before agent execution it must be converted to or linked with an authorized source Issue in its owning repository and pass the normal deterministic gates.
+sourceOfTruth:
+  - fact: organizational purpose, mission, vision, strategy, and review triggers
+    owner: Architecture Authority
+    rule: One canonical editable source in this repository; other repositories link to the reviewed Architecture release.
+  - fact: work intent, scope, lineage, and execution authorization
+    owner: Origin repository Issue
+    rule: A Project item may reference an Issue but cannot replace it or authorize execution.
+  - fact: native Issue Type, Lifecycle Stage, Delivery State, and other Issue-owned field values
+    owner: Origin repository Issue and organization Issue Field contracts
+    rule: Preserve existing identities and semantics; do not create duplicate lifecycle state in a Project.
+  - fact: portfolio sequencing, planned dependency, and cross-stream visibility
+    owner: Approved organization portfolio Project, after inventory and field-ownership review
+    rule: Issue Priority remains the canonical per-Issue priority value when assigned; Project fields may own distinct portfolio sequencing, grouping, and planning dependencies only. Execution dependency gates remain owned by the source Issue and Control Plane contract.
+  - fact: runner, session, webhook, and controller operation state
+    owner: Agentic Delivery Control Plane
+    rule: Keep webhook delivery replay, resumable Codex session state, and evaluation replay as separate mechanisms.
+  - fact: reusable agent capabilities and their source versions
+    owner: Agentic Primitives
+    rule: Consumers use pinned sources, explicit contracts, and evaluation provenance.
+  - fact: bootstrap and consumer workflow projections
+    owner: Developer Distribution
+    rule: Apply through conflict-aware, versioned integration with a recorded rollback.
+  - fact: product behavior and user outcome evidence
+    owner: Owning product repository and its designated product steward
+    rule: No product repository or accountable product owner is asserted as confirmed by the current six-repository inventory.
+guardrails:
+  - People retain direction, policy ownership, independent review, merge authority, and release or activation approval.
+  - Agents may implement only bounded work authorized by an Issue in its origin repository and deterministic contract checks.
+  - Evaluation findings and agent-generated improvement ideas become Issues; people prioritize them in Projects before new execution.
+  - No agent may edit its own policy, select itself for activation, approve or merge its own changes, or trigger an unbounded recursive run.
+  - Offline fixtures, hosted CI, and live production observations are reported as separate evidence classes.
+  - Ratio measures publish numerator, denominator, reporting window, and evidence source; a zero denominator is reported as undefined, never as a zero outcome.
+  - Unknown identity, permissions, Project state, product outcomes, or baseline metrics remain unknown and fail closed where execution is concerned.
+nonGoals:
+  - Claim a verified addressable market size, production product, customer count, or outcome baseline without product and user evidence.
+  - Create or configure a GitHub Project, change Project access, or expand the App or OAuth permissions in this strategy proposal.
+  - Replace source Issues, native Issue Types, organization Issue Fields, pull requests, or context-owned runtime and release artifacts with strategy fields.
+  - Let strategy prose, a Project card, an evaluation result, or an agent decide whether its own implementation is authorized.
+references:
+  - title: GitHub Projects overview and planning capabilities
+    url: https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects
+  - title: GitHub organization Issue Fields, visibility, and Project behavior
+    url: https://docs.github.com/en/issues/planning-and-tracking-with-projects/understanding-fields/about-issue-fields
+  - title: GitHub Projects API permissions and operations
+    url: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
+  - title: arc42 quality requirements
+    url: https://docs.arc42.org/section-10/
+  - title: OpenAI evaluation datasets and evaluation runs
+    url: https://developers.openai.com/api/docs/guides/evals
+  - title: OpenAI graders and explicit scoring criteria
+    url: https://developers.openai.com/api/docs/guides/graders

@@ -25,13 +25,22 @@ The GitHub control plane owns native Issue Type, Lifecycle Stage, Delivery
 State, governance metadata, and source-issue lineage. The current live Delivery
 State field name is Delivery Readiness; the logical `readiness` key remains a
 versioned compatibility alias until an explicit migration. Runner state is
-separate and describes one resumable operation. Projects fields are a
-projection, not an alternate lifecycle authority.
+separate and describes one resumable operation. GitHub Projects is the primary
+portfolio planning and coordination surface, while Issues remain canonical
+work and authorization records. Project-owned planning fields must remain
+distinct from Issue-owned lifecycle values; a Project card never authorizes
+execution.
 
 A field rename must retain the one existing field identity and option IDs where
 the platform supports in-place change, compare old/new projections in shadow,
 and preserve rollback. The current architecture change does not mutate a
 field.
+
+The selected Project, its members, field IDs, visibility, and entitlement were
+not observable in the 2026-10-09 session because read:project was unavailable.
+All six organization Issue Fields were readable and have organization-members-
+only visibility. This constrains which Projects can expose them and remains a
+view-design input.
 
 ## 8.3 Semantic proposals and deterministic authorization
 

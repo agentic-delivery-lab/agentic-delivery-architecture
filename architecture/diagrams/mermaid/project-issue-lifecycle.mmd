@@ -1,0 +1,37 @@
+flowchart TD
+  STATUS["PROPOSED TARGET CONTRACT<br/>Project inventory is unknown; diagram does not assert live integration"]
+  PROJECT["GitHub Projects<br/>portfolio planning and progress visibility"]
+  CARD["Project-only card"]
+  HUMAN["Maintainer creates or links an Issue"]
+  ISSUE["Source Issue in the owning repository"]
+  EVENT["Eligible Issue event"]
+  CONTROL["Agentic Delivery Control Plane"]
+  IDENTITY["Deterministic origin identity and actor permission"]
+  CONTRACT["Issue Type, lifecycle, field, dependency, and policy checks"]
+  HOLD["Hold without mutation"]
+  WRITER["One bounded authorized writer"]
+  PR["Issue-linked pull request"]
+  REVIEW["Independent validation and evaluation"]
+  MERGE["Human review and merge decision"]
+  EVIDENCE["Provenance and product or factory outcome evidence"]
+  FINDING["Finding becomes an owner Issue"]
+  LOOP["People prioritize in Projects before next authorization"]
+
+  CARD -->|"planning input only"| PROJECT
+  PROJECT -->|"must link or convert before execution"| HUMAN
+  HUMAN --> ISSUE
+  ISSUE --> PROJECT
+  PROJECT -. "never an execution trigger" .-> IDENTITY
+  ISSUE --> EVENT --> CONTROL --> IDENTITY --> CONTRACT
+  IDENTITY -->|"identity or permission fails"| HOLD
+  CONTRACT -->|"unknown or invalid"| HOLD
+  CONTRACT -->|"all gates pass"| WRITER --> PR --> REVIEW --> MERGE --> EVIDENCE
+  EVIDENCE --> FINDING --> LOOP --> PROJECT
+
+  subgraph REPLAY["Separate state owners"]
+    WEBHOOK["Webhook delivery replay<br/>event-processing state"]
+    SESSION["Codex session continuation<br/>one bounded runner operation"]
+    EVALUATION["Evaluation replay<br/>versioned dataset and grader"]
+  end
+  STATUS -.-> PROJECT
+  STATUS -.-> CONTROL

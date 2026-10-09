@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 import { parseRepositoryYaml } from './lib/yaml.mjs';
 import { validateDecisionInventory } from './decision-inventory.mjs';
+import { validateOrganizationalStrategy } from './organizational-strategy.mjs';
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -15,6 +16,11 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   const errors = [];
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
   const decisionInventory = await validateDecisionInventory(root);
+  try {
+    await validateOrganizationalStrategy(root);
+  } catch (error) {
+    errors.push(error.message);
+  }
   if (release.schemaVersion !== 2 || release.status !== 'draft') errors.push('draft architecture release must use schemaVersion 2 and status draft');
   if (release.sourceRepository !== 'agentic-delivery-lab/agentic-delivery-architecture') errors.push('architecture release sourceRepository must identify Architecture Authority');
   if (!/^[0-9a-f]{40}$/.test(release.sourceCommit)) errors.push('architecture release sourceCommit must be immutable');
@@ -95,7 +101,12 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
     errors.push('principle template must define the AP family heading and shared sections');
   }
   const knownOwners = { architecture: 'agentic-delivery-lab/agentic-delivery-architecture' };
-  const expectedPrincipleGoals = { 'AP-001': ['G-01'], 'AP-002': ['G-02', 'G-04'], 'AP-003': ['G-01', 'G-02', 'G-04'] };
+  const expectedPrincipleGoals = {
+    'AP-001': ['G-01'],
+    'AP-002': ['G-02', 'G-04'],
+    'AP-003': ['G-01', 'G-02', 'G-04'],
+    'AP-004': ['G-01', 'G-02', 'G-04'],
+  };
   const principles = principleIndex.principles ?? [];
   if (principleIndex.schemaVersion !== 2 || principles.length !== Object.keys(expectedPrincipleGoals).length) errors.push('principle index must contain the registered principles at schemaVersion 2');
   if (new Set(principles.map((principle) => principle.id)).size !== principles.length) errors.push('principle identifiers must be unique');
@@ -136,12 +147,13 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
     'architecture/contracts/primitive-reference.schema.json',
     'architecture/contracts/conformance-request.schema.json',
     'architecture/contracts/conformance-result.schema.json',
+    'architecture/contracts/organizational-strategy.schema.json',
   ]) {
     const schema = await json(file);
     if (schema.$schema !== 'https://json-schema.org/draft/2020-12/schema') errors.push(`${file} must use JSON Schema 2020-12`);
   }
   if (errors.length > 0) throw new Error(`architecture contract check failed:\n${errors.join('\n')}`);
-  return { schemas: 6, aliases: aliasValues.length };
+  return { schemas: 7, aliases: aliasValues.length };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -17,8 +17,11 @@ canonical owners in [`decisions/README.md`](../../decisions/README.md).
 
 ## Consequences
 
-- GitHub Issues and organization issue-field values are the canonical work
-  state; Projects fields are a separate projection and do not replace it.
+- GitHub Projects is the required portfolio planning and coordination
+  surface, while GitHub Issues and organization issue-field values remain the
+  canonical work and lifecycle state. Project fields may own distinct
+  portfolio facts but do not replace Issue intent, Priority, lifecycle, or
+  authorization.
 - Architecture owns organization decision text, principles, terminology,
   models, and conformance. The Control Plane owns runtime lifecycle and
   authorized writes; Primitives
@@ -41,9 +44,8 @@ operational fact.
 
 Goal G-01 is described in [arc42 chapter 1](../arc42/01-introduction-and-goals.md).
 The [system evidence snapshot](../references/system-evidence.yml) pins all six
-repository sources, participant release pins, and the observed draft/shadow
-state. It does not prove active end-to-end execution or current live settings
-after 2026-09-24. The architecture release source commit and digest pin local
-Architecture records. The decision inventory records original repository
+repository sources and dated live observations. It does not prove active
+end-to-end execution or settings after each observation date. The architecture
+release source commit and digest pin local Architecture records. The decision inventory records original repository
 identity, commit, path, and SHA-256 for imported records and differing source
 variants; the release digest pins the canonical text.

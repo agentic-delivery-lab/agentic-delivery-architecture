@@ -15,6 +15,9 @@
 | Important | Live hosting evidence is scoped to the repository actually checked and unknown settings remain unknown. | Maintainer, security reviewer | QR-007 |
 | Important | Semantic review is routed to every affected context steward and remains distinct from implementation authorship. | Repository writer, context stewards, independent Validator | QR-008, QR-011 |
 | Essential | Workspace cleanup preserves retained and active work and disposes owned task artifacts. | Repository owner, execution-profile owner | QR-012 |
+| Essential | A Project item cannot bypass the authorized source-Issue boundary. | Organization operator, repository owner | QR-013, QR-014 |
+| Essential | Evaluation results are reproducible, attributable, and return to human-prioritized Issues. | Maintainer, capability consumer, independent reviewer | QR-015, QR-016 |
+| Important | Product outcome evidence reflects user or operator results rather than activity counts. | Product user, product owner, delivery team | Strategy measures SM-003, SM-004, and SM-007 |
 
 ## 10.2 Quality scenarios
 
@@ -23,15 +26,17 @@ state the stimulus, response, and measurable result. They are derived from the
 recovery brief, ADR outcomes, and pinned sources; they are desired acceptance
 criteria, not proof that a current live system has passed them.
 
-At the 2026-09-24 snapshot, QR-001/QR-002 have code and contract evidence but
+At the 2026-10-09 snapshot, QR-001/QR-002 have code and contract evidence but
 no end-to-end run. QR-003's local decision-set and Primitive-resolution checks
 are introduced by this proposal; Primitive impact review automation remains
 open. QR-011's repository routing is validated, but independent human steward
 approval is blocked by the one-member/CODEOWNERS gate. Issue-field pinning is unverified. The recovery intake runs failed before
-dependency installation. Participants remain in shadow mode. Project
-integration and inventory are outside this phase's acceptance scope and do not
-affect the issue-field contract. These are unresolved
-evidence gaps, not satisfied quality goals.
+dependency installation. Participants remain in shadow mode. Projects are
+required for planning, but current Project inventory and membership are unknown
+because read:project is unavailable; the six organization Issue Fields are
+member-only. QR-013–QR-016 define target fixtures and evidence boundaries;
+they do not report implemented Control Plane tests or live integration.
+These are unresolved evidence gaps, not satisfied quality goals.
 
 **Evidence:** source revisions and runtime checks are linked by identifier in
 [`system-evidence.yml`](../references/system-evidence.yml).

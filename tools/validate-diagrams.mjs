@@ -21,10 +21,19 @@ export async function validateDiagrams(root = repositoryRoot) {
     const relative = `architecture/diagrams/mermaid/${file}`;
     const source = await readFile(path.join(mermaidDirectory, file), 'utf8');
     if (!/^(flowchart|sequenceDiagram|classDiagram|stateDiagram)/m.test(source)) errors.push(`${relative} must start with a supported Mermaid diagram declaration`);
-    const markers = file.includes('context')
-      ? ['Architecture Authority', 'Agentic Delivery Control Plane']
-      : ['Agentic Delivery Control Plane'];
+    const markers = file === 'context-map.mmd'
+      ? ['Architecture Authority', 'Agentic Delivery Control Plane', 'primary portfolio planning']
+      : file === 'strategy-value-streams.mmd'
+        ? ['Factory Evolution', 'Software Product Delivery', 'Agentic Delivery Control Plane', 'does not authorize']
+        : file === 'project-issue-lifecycle.mmd'
+          ? ['Project-only card', 'planning input only', 'never an execution trigger', 'Agentic Delivery Control Plane']
+          : file === 'trust-boundaries.mmd'
+            ? ['Human authority boundary', 'planning context only', 'deterministic gates pass', 'Independent Validator']
+            : ['Agentic Delivery Control Plane'];
     requireIncludes(source, relative, markers, errors);
+    if (file === 'issue-delivery-sequence.mmd') {
+      requireIncludes(source, relative, ['Webhook delivery replay', 'Codex session continuation', 'Evaluation replay'], errors);
+    }
   }
 
   const plantumlDirectory = path.join(root, 'architecture/diagrams/plantuml');

@@ -4,7 +4,7 @@
   "architecture": "urn:agentic-delivery:architecture:authority",
   "decisionInventory": {
     "path": "architecture/references/decision-inventory.yml",
-    "sha256": "5454d10e0fdbe7c0196060bd34fb511345f5ef0ab42fb0349b5075614717c9c5",
+    "sha256": "c81e30053b52acd29d20cdb9564ccbf033ccd52e3d0818728869a1c7784ea013",
     "schemaVersion": 1
   },
   "primitiveRelease": {
@@ -67,7 +67,10 @@
       "id": "ADR-0004",
       "file": "decisions/0004-use-trunk-based-delivery.md",
       "domains": [
-        "agentic-delivery-governance"
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
       ],
       "requiredEnforcement": [
         "deterministic",
@@ -113,7 +116,8 @@
       "id": "ADR-0007",
       "file": "decisions/0007-use-issue-linked-conventional-branch-names.md",
       "domains": [
-        "agentic-delivery-governance"
+        "agentic-delivery-governance",
+        "developer-distribution"
       ],
       "requiredEnforcement": [
         "deterministic"

@@ -37,3 +37,18 @@ principles:
       - references/system-evidence.yml#organization-issue-fields
       - references/system-evidence.yml#participant-modes-and-release-pins
       - references/decision-inventory.yml
+  - id: AP-003
+    name: Managed workspace lifecycle
+    statement: Each workspace and task artifact has an owner, purpose and final disposition; cleanup proves that no retained or active work is lost.
+    source: principles/AP-003-managed-workspace-lifecycle.md
+    goalIds: [G-01, G-02, G-04]
+    decisions:
+      - {id: ADR-0004, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0007, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+    consequences:
+      - Use managed sibling worktrees for isolation and preserve unknown, dirty, unmerged or active work.
+      - Artifact producers register teardown; cleanup verifies exact-tip integration and concurrent-use safety.
+    evidence:
+      - decisions/0004-use-trunk-based-delivery.md
+      - decisions/0007-use-issue-linked-conventional-branch-names.md
+      - quality/quality-scenarios.yml#QR-012

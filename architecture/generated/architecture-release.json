@@ -2,14 +2,15 @@
   "$schema": "../contracts/architecture-release.schema.json",
   "schemaVersion": 2,
   "architectureId": "urn:agentic-delivery:architecture:authority",
-  "version": "0.1.0-draft.18",
+  "version": "0.1.0-draft.19",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
   "sourceCommit": "4d089b17e8c7ef9b2e6f61151a3beaad3c98c16d",
   "contentSha256": "5352c13fd6c3da425f427c8ac3ddc3deb9c52bdbac2837563ac580b4da4b71fb",
   "status": "draft",
   "principleIds": [
     "AP-001",
-    "AP-002"
+    "AP-002",
+    "AP-003"
   ],
   "adrIds": [
     "urn:agentic-delivery:adr:architecture:0001",

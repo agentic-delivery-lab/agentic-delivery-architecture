@@ -90,3 +90,12 @@ scenarios:
     measure: Every inventory domain resolves to exactly one stewarding repository and evidence path pinned in the audit snapshot; a cross-context record routes to every affected context; a repository mapping alone is never reported as human approval.
     evidence: [ADR-0020, architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories]
     status: Repository routing is structurally validated; independent human steward approval is blocked by the current one-member/CODEOWNERS gate
+  - id: QR-012
+    name: safe workspace and artifact disposal
+    stakeholder: repository-owner, execution-profile-owner
+    concern: completed work must not accumulate disposable state or erase retained or active work
+    stimulus: A task starts, completes after approved integration, fails during artifact initialization, is cancelled, or requests cleanup while another session or remote update is active.
+    response: Discover ownership and every registered worktree; preserve dirty, unknown, unmerged and active work; prove exact-tip ancestry against the fetched remote default branch; reject changed remote tips; execute registered producer teardown and report retained blockers.
+    measure: Zero retained or active work is deleted; a concurrent tip change blocks deletion; no owned completed disposable artifact remains without an explicit retention reason; each supported profile identifies its installed policy pin and cleanup record.
+    evidence: [ADR-0004, ADR-0007, AP-003, "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/7"]
+    status: target; reusable deterministic implementation and supported-profile rollout require reviewed owner changes and run evidence

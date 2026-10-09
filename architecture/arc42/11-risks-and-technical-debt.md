@@ -22,3 +22,7 @@ operator evidence appropriate to the claim.
 **Evidence:** observations are dated in
 [`system-evidence.yml`](../references/system-evidence.yml); external
 source anomalies and their current owners remain in the registers.
+
+TD-006 tracks the gap between the AP-003 workspace lifecycle and proven
+implementation across supported execution profiles. Leaking fixture producers
+need immediate teardown; periodic sweeping alone does not close that debt.

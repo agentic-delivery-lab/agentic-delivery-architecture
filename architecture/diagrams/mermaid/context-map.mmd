@@ -1,5 +1,5 @@
 flowchart LR
-  STATUS["Source snapshot 2026-10-09<br/>Control Plane code pins the Vercel and Neon integration; live production operation is not proved.<br/>No distinct product repository was identified."]
+  STATUS["Source snapshot 2026-10-09<br/>Vercel reports a READY production deployment on Control Plane main; webhook delivery and Neon runtime state are unverified.<br/>No distinct product repository was identified."]
   subgraph DOMAIN["Domain contexts"]
     GOV["Agentic Delivery Governance"]
     CP["Agentic Delivery Control Plane"]
@@ -22,7 +22,7 @@ flowchart LR
   VALUES["Per-issue field values API<br/>repository-scoped values"]
   PROJECTS["GitHub Projects<br/>primary portfolio planning and coordination<br/>not an execution authority"]
   ENROLL["Control Plane participant contract<br/>selected repositories and pins"]
-  VERCEL["Vercel webhook ingress and scheduled reconciler<br/>signed App event; repository_dispatch; production status unverified"]
+  VERCEL["Vercel webhook ingress and scheduled reconciler<br/>production deployment READY; event delivery and runtime health unverified"]
   NEON["Neon PostgreSQL replay store<br/>delivery claims, controller receipts, and scan checkpoints"]
   ACTIONS["GitHub Actions<br/>trusted intake, bounded runner, validation, and finalizer"]
   CODEX["Codex CLI<br/>pinned agent runtime inside the bounded runner"]

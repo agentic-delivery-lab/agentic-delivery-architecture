@@ -1439,3 +1439,56 @@ observations:
       and merge-state labels do not establish merge, release adoption, App
       runtime permissions, Project integration, or live delivery. Draft tags
       were not queried.
+  - id: architecture-pr14-validation-20261009-1943
+    observedAt: '2026-10-09T19:43:24Z'
+    source: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/37982096806
+    request: >-
+      Read the exact-head architecture-quality workflow result and current
+      pull request state for Architecture #14. No PR or repository state was
+      changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: 2b25b3be2f670a6df9e6d1ccbd57204f0c07accd
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/37982096806
+    result: >-
+      Exact-head run 37982096806 completed successfully on commit
+      `2b25b3be2f670a6df9e6d1ccbd57204f0c07accd`. Architecture #14 remains
+      open and `BLOCKED`, with no recorded human review decision. The refreshed
+      strategy draft records eight organizational goals and thirteen measures.
+    limitation: >-
+      A passing exact-head workflow is automated validation, not independent
+      semantic review, approval, merge, release, or runtime adoption.
+  - id: vercel-deployment-inventory-20261009-1945
+    observedAt: '2026-10-09T19:45:32Z'
+    source: https://openapi.vercel.sh/
+    request: >-
+      Read the authenticated Vercel team project, latest project deployment,
+      latest production deployment, and details for both deployments using
+      their observed project and deployment IDs. No project, deployment,
+      domain, protection, credential, or runtime state was changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+    result: >-
+      The visible Vercel team `sjefsharps-projects` has one project,
+      `agentic-delivery` (`prj_pMRZLeDcqIzWGwLU5yeLGgLY7vss`), with Node.js
+      `24.x`, no reported framework, `live=false`, and three Vercel project
+      domains. The latest production deployment (`dpl_9Tke4sjmrQ4EkRXrrtbinouhQo9v`)
+      is `READY`, target `production`, created at 2026-10-09 04:02:34 UTC and
+      ready at 04:03:08 UTC. Its Git metadata identifies Control Plane `main`
+      commit `67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf`; its aliases include
+      the project domains. The latest overall deployment
+      (`dpl_9rMPgDBMrMriGJigj23oSEZEB2zn`) is `READY` with no production
+      target, created at 15:38:24 UTC from branch
+      `feat/issue-103-evaluation-finding-routing`, commit
+      `2cf258d5a48a75524514d67f440d0f5bb16fb85a` (Control Plane PR #104); it
+      has only a branch-specific preview alias.
+    limitation: >-
+      The project `live` value is recorded without assigning it an operational
+      meaning. Deployment metadata does not test an HTTP route, webhook
+      signature handling, GitHub App credential binding, event delivery,
+      Neon connectivity or migration state, reconciliation, or successful
+      Issue processing. No Neon-specific account connector was available in
+      this audit; repository source and deployment metadata do not establish
+      deployed database state.

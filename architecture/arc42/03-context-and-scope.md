@@ -40,9 +40,10 @@ because they have separate repositories. The machine-readable context map is
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.
 - **Vercel webhook ingress:** the pinned Control Plane source contains a
-  Vercel function for signed webhook intake and scheduled reconciliation. Its
-  production deployment and delivery success are not established by source
-  inspection.
+  Vercel function for signed webhook intake and scheduled reconciliation. A
+  READY production deployment on the observed Control Plane `main` commit is
+  confirmed by Vercel metadata; route health, webhook delivery, and successful
+  reconciliation remain untested.
 - **Neon replay store:** the pinned Control Plane source contains a PostgreSQL
   adapter and migrations for webhook replay claims, controller receipts, and
   scan checkpoints. A live database's schema and state are not established by

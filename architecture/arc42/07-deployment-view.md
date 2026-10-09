@@ -29,12 +29,12 @@ participant is active or that each hosting rule has been enabled.
 | --- | --- | --- |
 | Repository sources | Six factory repositories and adapters have current main commit pins in system evidence. | Pins identify the observed default-branch commits; they do not prove release compatibility or active deployment. |
 | GitHub App, Actions, and repo protection | At 10:44 UTC, organization Actions settings reported all repositories enabled, all Actions allowed, and full-SHA pinning not required. Active workflow/ruleset counts were Control Plane 13/1, public adapter 2/1, Architecture 1/2, Primitives 1/1, Distribution 1/1, and private adapter 1/unavailable. Nine organization Issue Types were readable. | The private ruleset request returned 403 under the reported plan; App installation lookup returned 401 for the OAuth request. Org policy does not prove each repo's effective settings or actual workflow pins. |
-| GitHub Projects | At 10:57 UTC, the authenticated CLI and complete organization, personal, and six repository GraphQL inventories returned zero Projects. All 19 open Issues returned zero Project associations. The organization REST response reported `plan=free`, `has_organization_projects=true`, and `has_repository_projects=true`; a separate membership read confirmed `sjefsharp` has active organization role `admin`. | Projects are available as organization/repository features, but no Project is configured or visible within the queried owner scopes. Membership, fields, views, and visibility could not be inspected; App access and Projects owned outside the organization/user scopes remain unknown. |
+| GitHub Projects | At 11:51 UTC, the authenticated CLI and complete organization, personal, and six repository GraphQL inventories returned zero Projects. All 19 open Issues returned zero Project associations. The organization REST response reported `plan=free`, `has_organization_projects=true`, and `has_repository_projects=true`; the membership endpoint returned `state=active`, `role=admin` for `sjefsharp`. | Projects are available as organization/repository features, but no Project is configured or visible within the queried owner scopes. Membership, fields, views, and visibility could not be inspected; App access and Projects owned outside the organization/user scopes remain unknown. |
 | Organization Issue Fields | Six fields were read; Priority, dates, effort, Lifecycle Stage, and Delivery Readiness are all organization-members-only. | Current Project visibility fit and Issue Field pinning remain unverified. |
-| Per-issue field values | Documented API reads for Architecture #11 and Control Plane #59, #60, and #62 returned 404. | The response does not establish that any issue has or lacks field values. |
+| Per-issue field values | At 11:52 UTC, the documented `/issue-field-values` endpoint returned an empty array for each of the 19 open Issues in the six visible repositories. | The read is limited to open Issues at that time. It does not establish Issue Type pinning or future Project visibility. The earlier request path was not captured and its 404 is inconclusive. |
 | Control Plane execution | All six participants remain in shadow mode; latest run succeeded at authorization, classification, and finalization while delivery was skipped. | No completed delivery, central #62 canary, receipt completion, or independent field read-back is proven. |
 | Control Plane release candidate | PR #86 for Codex CLI 0.160.0 remains open without reviews; current main uses a prior pin. | Passing checks do not constitute review, merge, smoke evidence, or activation. |
-| Open work and releases | The 11:10 UTC snapshot records 19 open Issues and three open PRs: Architecture #14 at `ec2a9bd` (BLOCKED), Control Plane #102 at `c98b24e` (CLEAN), and #86 at `3c21e2a` (DIRTY); none has a human review decision. Architecture #14's exact-head hosted quality run passed. No Architecture GitHub Release was listed. | Exact open Issues, PR heads, check runs, and release status are recorded in system evidence. Passing checks do not equal review; draft pins do not prove activation. |
+| Open work and releases | The 11:53 UTC snapshot records 19 open Issues and four open PRs: Architecture #14 at `d3fd429` (BLOCKED), Control Plane #102 at `c98b24e` (CLEAN) and #86 at `3c21e2a` (DIRTY), and Primitives #4 at `b5f0050` (BLOCKED). None has an approved human review decision. Architecture #14's exact-head validation passed. No Architecture GitHub Release was listed. | Exact open Issues, PR heads, checks, and release state are recorded in system evidence. Passing checks do not equal review; draft pins do not prove activation. |
 
 The current default-branch commits and observations are recorded in
 [system evidence](../references/system-evidence.yml). The Projects inventory
@@ -48,7 +48,7 @@ access or replace the separate human decision on Project topology.
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
 | Organization issue fields | `Lifecycle Stage` ID 46888816 and `Delivery Readiness` ID 46888965; both visible to organization members. No `Delivery State` field found. | REST read confirmed definitions, not UI pinning to native Issue Types or issues without type. |
-| Issue-field values | Separate issue-field API; the newly created #59 and #60 returned no values after their intake runs failed. | No claim about other issues. |
+| Issue-field values | The historical read for #59 used `/issues/59/fields`, which is not the documented Issue Field values route; the recorded conclusion for #59 and #60 is inconclusive. | See the corrected 2026-10-09 read of `/issue-field-values`; it does not reconstruct historical values. |
 | CLI scopes | `gist`, `read:org`, `repo`, `workflow`; no `read:project` or `admin:org`. | Projects were not inventoried. Routine work did not request organization-admin scope. |
 | Invoker App installation | `agentic-delivery-lab-invoker-7f3a`, installation 163255060, All repositories, events `issue_comment`, `pull_request_review`, and `pull_request_review_comment`. | Repository list and binding to Control Plane credentials were not verified. |
 | Control Plane participants | All six listed participants use shadow mode. Controller pin is `0.2.0-draft.37`; Architecture and Primitive pins are draft releases. | No active participant or end-to-end write-back was observed. |
@@ -89,8 +89,9 @@ queried. The private adapter's ruleset API returned a plan-related 403, which
 does not prove the ruleset is absent.
 
 **Evidence:** see observations `organization-issue-fields`,
-`project-inventory-20261009-1057`,
-`current-open-work-and-pull-requests-20261009-1110`,
+`project-inventory-20261009-1153`,
+`issue-field-values-20261009-1152`,
+`current-open-work-and-pull-requests-20261009-1153`,
 `current-organization-capability-inventory-20261009-1044`,
 `organization-issue-field-values`, `cli-oauth-scopes`,
 `invoker-installation`, `participant-modes-and-release-pins`,

@@ -84,13 +84,18 @@ observations:
       no Projects inventory was read.
   - id: organization-issue-field-values
     observedAt: '2026-09-24'
-    source: https://docs.github.com/en/rest/issues/issue-field-values
+    source: https://docs.github.com/en/rest/issues/issue-field-values?apiVersion=2026-03-10
     request: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery/issues/59/fields
     result: >-
-      Newly created recovery issues #59 and #60 had no issue-field values while
-      issue-intake failed. This is not evidence that existing issues have no
-      values.
-    limitation: Issue field definitions and issue field values use separate APIs.
+      The captured request used `/issues/59/fields`, not the documented
+      `/issues/{issue_number}/issue-field-values` route. The prior claim that
+      recovery issues #59 and #60 had no values is withdrawn: the captured
+      request does not establish their issue-field values, and the path/status
+      for #60 was not recorded.
+    limitation: >-
+      This historical request is inconclusive. See
+      `issue-field-values-20261009-1152` for the corrected current endpoint
+      read; it does not reconstruct historical values for #59 or #60.
   - id: recovery-issue-intake-runs
     observedAt: '2026-09-24'
     sourceRepositories: [control-plane]
@@ -342,6 +347,43 @@ observations:
       Project-only draft cards could be enumerated because no Project nodes
       were returned. The six organization Issue Fields are separately
       recorded as organization_members_only.
+  - id: project-inventory-20261009-1153
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/graphql/reference/projects
+    request: >-
+      Read-only inventory completed at 11:53 UTC as `sjefsharp`; `gh auth status` reported the
+      `project`, `admin:org`, and `repo` scopes. `gh project list` queried
+      organization `agentic-delivery-lab` and user `sjefsharp`. GraphQL queried
+      organization.projectsV2, viewer.projectsV2, all six visible
+      organization repository.projectsV2 connections, all open Issues in
+      those repositories, and each Issue's `projectItems` connection. The
+      organization REST response and membership endpoint were also read.
+    projectInventoryComplete: true
+    projectIds: []
+    result: >-
+      CLI organization and user inventories each returned `projects=[]` and
+      `totalCount=0`. GraphQL organization, user, and all six repository
+      Project connections each returned `totalCount=0` and
+      `hasNextPage=false`; all six repositories were returned with no next
+      page. The 19 open Issues—Control Plane #59, #60, #62, #66, #85, #101,
+      and #103; Architecture #7, #11, #12, #13, and #15; Primitives #2 and
+      #3; Distribution #2 and #3; public `.github` #10 and #11; and private
+      `.github-private` #2—each had zero Project items and no next page. The
+      organization response reported plan `free`,
+      `has_organization_projects=true`, and `has_repository_projects=true`;
+      membership returned `state=active`, `role=admin` for `sjefsharp`. No
+      Project data or settings were changed.
+    limitation: >-
+      The empty inventory is complete for Projects visible through the
+      authenticated organization, user, and six repository connections at
+      this observation. It does not inventory Projects owned by other
+      accounts or establish GitHub App installation access. The capability
+      flags and organization role do not establish a configured Project,
+      effective mutation authority for an App, or approval to create or change
+      Project configuration. Project fields, membership, views, and
+      visibility could not be inspected because no Project was returned. The
+      six organization Issue Fields remain separately recorded as
+      `organization_members_only`.
   - id: organization-identity-role-20261009-1058
     observedAt: '2026-10-09T10:58:37Z'
     source: https://docs.github.com/en/rest/orgs/members#get-organization-membership-for-a-user
@@ -356,15 +398,37 @@ observations:
       a Project, field, or repository change. No Project mutation was attempted.
   - id: current-issue-field-value-read
     observedAt: '2026-10-09'
-    source: https://docs.github.com/en/rest/issues/issue-field-values
-    request: GET issue field values for Architecture #11 and Control Plane #59, #60, and #62 using API version 2026-03-10
+    source: https://docs.github.com/en/rest/issues/issue-field-values?apiVersion=2026-03-10
+    request: >-
+      Earlier recorded reads for Architecture #11 and Control Plane #59, #60,
+      and #62 using API version 2026-03-10; the request path was not captured.
     result: >-
-      Each documented issue field values request returned HTTP 404. No
-      conclusion about the presence or absence of values on those issues is
-      supported by this response.
+      The earlier notes report HTTP 404, but without the request path the
+      response is inconclusive. It is superseded for current state by
+      `issue-field-values-20261009-1152`, which uses the documented endpoint.
     limitation: >-
-      Field definitions and per-issue values use distinct API operations; the
-      endpoint response prevented a current per-issue value inventory.
+      The original request cannot be reproduced from the recorded evidence.
+      A 404 does not establish that an issue has no field values.
+  - id: issue-field-values-20261009-1152
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/rest/issues/issue-field-values?apiVersion=2026-03-10
+    request: >-
+      Read-only requests completed at 11:52 UTC to
+      `GET /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values`
+      for each of the 19 open Issues across the six visible organization
+      repositories, using API version 2026-03-10. All requests returned HTTP
+      200 and were parsed as JSON arrays.
+    result: >-
+      Each of the 19 responses was an empty array; no issue-field values were
+      returned for the currently open Issues. The observed Issues are listed
+      in `project-inventory-20261009-1153`.
+    limitation: >-
+      This is a point-in-time read of open Issues only. An empty value array
+      does not establish whether organization Issue Fields are pinned to
+      native Issue Types or whether a future Project can expose them. It does
+      not explain why values are absent, establish historical values, or
+      imply any mutation. Field definitions remain separately recorded as
+      `organization_members_only`.
   - id: current-architecture-draft-release
     observedAt: '2026-10-09'
     sourceRepositories: [architecture]
@@ -535,6 +599,33 @@ observations:
       release, participant activation, or runtime adoption. It does not prove
       Project association or prioritization; see the adjacent Project
       inventory observations.
+  - id: current-open-work-and-pull-requests-20261009-1153
+    observedAt: '2026-10-09T11:53:26Z'
+    request: >-
+      Read-only `gh issue list --state open` and `gh pr list --state open`
+      inventories across all six visible organization repositories;
+      `gh pr checks` inspected Architecture PR #14's exact head; Architecture
+      GitHub Releases were listed.
+    result: >-
+      Nineteen Issues remained open: Control Plane #59, #60, #62, #66, #85,
+      #101, and #103; Architecture #7, #11, #12, #13, and #15; Primitives #2
+      and #3; Distribution #2 and #3; public `.github` #10 and #11; and
+      private `.github-private` #2. Four PRs were open. Architecture #14 was
+      at `d3fd429b357e3290dfeea7703771fae7c96eca52` (BLOCKED, no review
+      decision); its exact-head validation run 37923465950 passed. Control
+      Plane #102 was at `c98b24e57159037f74af4d234300cdc21483bfe5` (CLEAN,
+      no review decision), and #86 at
+      `3c21e2aa4200f51171f88db226260baf97314661` (DIRTY, no review decision).
+      Primitives #4 was at `b5f0050547f5e8e7fea94f1aa3fd6da666aa74ff`
+      (BLOCKED, `REVIEW_REQUIRED`). No PR had an approved human review
+      decision. The other three repositories had no open PRs. No Architecture
+      GitHub Release was listed; the generated release remains draft.
+    limitation: >-
+      This is a point-in-time repository-visible snapshot. Merge-state labels
+      and passing checks do not replace human review or establish integration,
+      publication, participant activation, or runtime adoption. Project
+      association and prioritization are recorded separately in
+      `project-inventory-20261009-1153`.
   - id: current-release-and-tag-inventory
     observedAt: '2026-10-09'
     request: Read-only GitHub release and tag inventory across the six visible repositories

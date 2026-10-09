@@ -372,19 +372,17 @@ projectPlanning:
   primarySurface: GitHub Projects
   proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-09 inventory returned no Project while the organization REST API reported both organization and repository Projects available, so creation and configuration still require the separate human decision tracked in Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: project-inventory-20261009-1057
+  projectInventoryEvidenceId: project-inventory-20261009-1153
   inventoryEvidence:
     observedAt: '2026-10-09'
     projectIds: []
     scopeSummary: >-
-      Authenticated organization, personal, and six repository Project
-      inventories were complete with no Projects returned; all nineteen open
-      Issues in the six visible organization repositories returned zero
-      Project associations. The identity had project, admin:org, and repo
-      OAuth scopes. A separate membership read confirmed the identity has an
-      active organization admin role. The organization REST API reported
-      plan=free and both has_organization_projects=true and
-      has_repository_projects=true.
+      At 11:53 UTC, the authenticated CLI and complete GraphQL organization, personal, and
+      six repository Project inventories returned no Projects; all nineteen
+      open Issues returned zero Project associations. The identity had
+      project, admin:org, and repo OAuth scopes and an active organization
+      admin role. The organization REST API reported plan=free and both
+      has_organization_projects=true and has_repository_projects=true.
   planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the approved Project view can expose it. Project-owned fields may express distinct cross-Issue grouping, sequencing, or planned dependencies; do not duplicate Issue Priority or lifecycle values.
   executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation never authorizes or blocks execution or authorizes a model call, repository write, issue-field write, pull request, release, or activation.
   issueFieldConstraint: The six audited organization Issue Fields, including Priority and lifecycle and delivery fields, are organization-members-only. GitHub documents that organization-only fields do not appear in public or internal Projects. No Project was returned and no visibility model has been selected, so availability in the future portfolio remains unverified and must be checked before view design.

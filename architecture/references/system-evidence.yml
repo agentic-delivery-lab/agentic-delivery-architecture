@@ -1580,3 +1580,43 @@ observations:
       proposal, not an approved decision. The App contract is not deployed
       permission evidence, product repository and steward remain unknown, and
       Issue #15 remains open for an accountable human decision.
+  - id: organization-product-repository-inventory-20261009-2042
+    observedAt: '2026-10-09T20:42:52Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    request: >-
+      Enumerate the organization repository connection with stable numeric
+      repository IDs, GraphQL node IDs, URLs, visibility, and complete-page
+      state. Update Architecture #13 with dated findings and the unresolved
+      product-ownership request. No product repository, telemetry, Project,
+      or participant was created or changed.
+    result: >-
+      At 2026-10-09 20:42:33 UTC, GraphQL returned totalCount=6 and
+      hasNextPage=false. The repositories were agentic-delivery-lab/.github
+      (1368850419, R_kgDOUZb_8w, public, public GitHub adapter),
+      agentic-delivery-lab/.github-private (1380894756, R_kgDOUk7IJA,
+      private, member-facing adapter), agentic-delivery-lab/agentic-delivery
+      (1358455028, R_kgDOUPhg9A, public, Delivery Control Plane),
+      agentic-delivery-lab/agentic-delivery-architecture (1380894616,
+      R_kgDOUk7HmA, public, Architecture Authority),
+      agentic-delivery-lab/agentic-delivery-distribution (1380894705,
+      R_kgDOUk7H8Q, public, Developer Distribution), and
+      agentic-delivery-lab/agentic-delivery-primitives (1380894656,
+      R_kgDOUk7HwA, public, Agentic Primitives). None is identified as a
+      product repository. Architecture #13 was updated at 20:42:52 UTC with
+      these stable identifiers and a request for an existing product
+      repository, accepting steward, and authorized outcome-evidence path,
+      or explicit confirmation that none is in scope. Distribution #3 remains
+      conditional on that discovery.
+    limitation: >-
+      This is an organization-scoped repository inventory. It does not rule
+      out a product repository outside the organization or establish a product
+      steward, customer/user evidence, feedback authorization, telemetry
+      policy, product outcomes, or baseline. No external party was contacted
+      and no personal data was collected.

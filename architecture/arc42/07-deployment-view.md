@@ -150,6 +150,8 @@ does not prove the ruleset is absent.
 `control-plane-budget-recovery-issue-created-20261009-1717`,
 `github-app-installation-permissions-20261009-1725`,
 `portfolio-issue-project-inventory-20261009-1839`,
+`pull-request-release-inventory-20261009-1924`,
+`primitives-offline-evaluation-refresh-20261009-1924`,
 `control-plane-strategy-context-issue-created-20261009-1749`,
 `issue-field-values-20261009-1152`,
 `current-open-work-and-pull-requests-20261009-1153`,

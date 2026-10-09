@@ -290,8 +290,16 @@ observations:
       Open Issues are Control Plane #59, #60, #62, #66, #85, and #101;
       Architecture #7, #11, #12, and #13; Primitives #2 and #3; Distribution
       #2 and #3; public .github #10 and #11; and private .github-private #2.
-      The only open pull request found across the six repositories is Control
-      Plane PR #86, which has passing recorded checks but no reviews. Older
+      Three pull requests are open: Control Plane #86 and #102, and
+      Architecture #14; no pull requests were found in the other four
+      repositories. Control Plane #86 has passing validation, quality,
+      three-platform portability, recovery-SQL, automated-review, PR-body,
+      and Vercel checks, but no recorded review decision and a DIRTY merge
+      state. On head e29c51b, Control Plane #102 has passing validation,
+      quality, recovery-SQL, Ubuntu/macOS/Windows portability, PR-body, and
+      Vercel checks; its automated architecture review was still running at
+      the latest read-only check. Architecture #14 validation passes, but it
+      has no recorded review decision and a BLOCKED merge state. Older
       recovery status in #59 predates merged PR #61; #59 remains open context
       and is not expanded by this task.
     limitation: >-

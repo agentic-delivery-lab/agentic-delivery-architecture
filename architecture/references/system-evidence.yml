@@ -952,3 +952,31 @@ observations:
       Project access, runtime enforcement, or proof that the Control Plane
       prevents model invocation or protected side effects. Control Plane #101
       does not itself authorize live integration or multi-candidate selection.
+  - id: control-plane-multiple-project-context-issue-created-20261009-1817
+    observedAt: '2026-10-09T18:21:44Z'
+    source: https://cli.github.com/manual/gh_issue_create
+    request: >-
+      Searched all Control Plane Issues for an existing multiple-Project
+      selection task; none was found. Created Control Plane #107 as native
+      Issue Type Task, linked it as a cross-repository sub-issue of
+      Architecture #11, then read back its type, parent, state, Project items,
+      and URL. Refreshed the six-repository open-Issue listing. No Project,
+      field, permission, release, participant, or runtime setting was changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: b13772e1d036cd4906423bce34a34bb92a4db1fd
+    result: >-
+      Control Plane #107 was created as an open native Task at
+      https://github.com/agentic-delivery-lab/agentic-delivery/issues/107 and
+      read back with Architecture #11 as its parent and projectItems=[].
+      Architecture #11 now has two Control Plane child Issues, #106 and #107.
+      The subsequent six-repository open-Issue listing returned 22 Issues:
+      Control Plane 10, Architecture 5, Primitives 2, Distribution 2, public
+      adapter 2, and private adapter 1.
+    limitation: >-
+      Issue #107 is a planning task for a future, gated selection contract; it
+      does not select among live Projects or authorize implementation. The
+      Project topology decision in Architecture #15 remains open. The latest
+      complete inventory at 17:37–17:39 returned no Projects in the queried
+      owners; this Issue readback confirmed no Project association.

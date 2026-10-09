@@ -382,6 +382,7 @@ strategicGoals:
       capabilityRefs: []
       capabilityGaps:
         - No organization Project exists; the Control Plane planning contract remains provisional pending maintainer review.
+        - The single-item normalizer does not select among multiple Project links; Control Plane #107 owns the deferred selection policy and offline fixtures.
       contractRefs:
         - architecture/contracts/organizational-strategy.schema.json
         - architecture/contracts/quality-scenarios.schema.json
@@ -389,10 +390,12 @@ strategicGoals:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/107
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/107
       evaluationEvidenceRefs:
         - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12, status: pending}
     reviewTriggers:

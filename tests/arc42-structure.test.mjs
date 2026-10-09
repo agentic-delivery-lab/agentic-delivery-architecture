@@ -204,7 +204,7 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
 
   const projectCanAuthorize = structuredClone(strategy);
   projectCanAuthorize.projectPlanning.executionAuthorizationRule = 'Project status authorizes execution.';
-  assert.ok(validateOrganizationalStrategyValue(projectCanAuthorize).some((error) => /never authorize execution/.test(error)));
+  assert.ok(validateOrganizationalStrategyValue(projectCanAuthorize).some((error) => /never authorize or block execution/.test(error)));
 
   const inventedTarget = structuredClone(strategy);
   inventedTarget.successMeasures[0].targetStatus = 95;

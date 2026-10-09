@@ -116,9 +116,10 @@ or App configuration change.
 - Architecture checks validate stable strategy goal and measure IDs, source
   references, the Project-only-card invariant, and the exact decision set.
 - The Control Plane phase adds deterministic fixture coverage proving that a
-  Project-only card, wrong repository identity, missing Issue permission, or
-  unreadable Project state cannot start a write; valid work still originates
-  from the authorized Issue.
+  Project-only card, Project dependency alone, wrong repository identity,
+  missing Issue permission, or unreadable Project state cannot authorize,
+  block, or start execution; valid work still originates from the authorized
+  Issue.
 - An operator read-only inventory confirms Project identity, membership,
   field configuration, visibility, and entitlement before any board
   configuration or write integration is proposed.

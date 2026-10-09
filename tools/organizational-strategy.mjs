@@ -136,8 +136,8 @@ export function validateOrganizationalStrategyValue(strategy, {
   if (strategy.projectPlanning?.currentInventoryStatus === 'inventoried' && !strategy.projectPlanning.inventoryEvidence) {
     errors.push('an inventoried Project status requires dated live inventory evidence');
   }
-  if (!/never authorizes/i.test(strategy.projectPlanning?.executionAuthorizationRule ?? '')) {
-    errors.push('Project state must never authorize execution');
+  if (!/dependency fields, or automation never authorizes or blocks execution/i.test(strategy.projectPlanning?.executionAuthorizationRule ?? '')) {
+    errors.push('Project state or dependencies must never authorize or block execution');
   }
   if (!/planning input/i.test(strategy.projectPlanning?.projectOnlyCardRule ?? '')
     || !/authorized source Issue/i.test(strategy.projectPlanning?.projectOnlyCardRule ?? '')) {

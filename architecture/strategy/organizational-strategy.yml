@@ -235,7 +235,7 @@ successMeasures:
     targetStatus: set-after-baseline
   - id: SM-007
     name: Post-release product regression rate
-    definition: Rate of accepted product changes that cause a user-visible defect or rollback during the agreed post-release observation window.
+    definition: Rate of released product changes that cause a user-visible defect or rollback during the agreed post-release observation window.
     computation: Count released changes with an attributed defect or rollback in a completed observation window divided by released changes with that same completed observation window; report incomplete windows separately.
     dataSources: [product Issues, release incidents, approved telemetry, rollback records]
     stewardRole: owning-product-repository-steward
@@ -266,7 +266,7 @@ projectPlanning:
   currentInventoryStatus: unknown-no-read-project-scope
   projectInventoryEvidenceId: project-inventory-access
   planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the approved Project view can expose it. Project-owned fields may express distinct cross-Issue grouping, sequencing, or planned dependencies; do not duplicate Issue Priority or lifecycle values.
-  executionAuthorizationRule: Project membership, status, priority, or automation never authorizes a model call, repository write, issue-field write, pull request, release, or activation.
+  executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation never authorizes or blocks execution or authorizes a model call, repository write, issue-field write, pull request, release, or activation.
   issueFieldConstraint: The audited organization Issue Fields, including Priority and the lifecycle and delivery fields, are organization-members-only; field visibility and suitability for the selected Project must be verified before view design.
   projectOnlyCardRule: A Project-only card is planning input. Before agent execution it must be converted to or linked with an authorized source Issue in its owning repository and pass the normal deterministic gates.
 sourceOfTruth:

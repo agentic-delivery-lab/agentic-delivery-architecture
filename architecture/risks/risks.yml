@@ -31,11 +31,11 @@ risks:
     evidence: system-evidence.yml#primitive-and-distribution-drafts
     mitigation: Correct Primitive release provenance and validate the source commit and digest before the next Architecture/Distribution pin.
   - id: R-006
-    title: Private adapter enforcement and publication entitlement are unknown
+    title: Private adapter ruleset access is plan-limited and publication eligibility remains unknown
     status: open
     owner: organization-operator
-    evidence: system-evidence.yml#public-and-private-adapters
-    mitigation: Confirm plan entitlement, live ruleset state, profile rendering, and an approved agent projection with an operator; do not infer absence from the 403 response.
+    evidence: [system-evidence.yml#current-organization-capability-inventory-20261009-1044, system-evidence.yml#public-and-private-adapters]
+    mitigation: Confirm entitlement and live ruleset state with an authorized operator; do not infer ruleset absence from the plan-related 403 or change publication settings without separate authorization.
   - id: R-007
     title: Repository-scoped required checks may be mistaken for organization-wide protection
     status: open
@@ -69,3 +69,9 @@ risks:
     relatedQualityScenario: QR-013
     evidence: [system-evidence.yml#project-inventory-20261009-1033, system-evidence.yml#organization-issue-fields]
     mitigation: Use the complete empty inventory to support the human topology decision; verify the accountable Project owner, entitlement, App access, and field visibility before any configuration or write integration.
+  - id: R-013
+    title: Organization Actions policy does not require immutable action pins and App access is unverified
+    status: open
+    owner: organization-operator
+    evidence: system-evidence.yml#current-organization-capability-inventory-20261009-1044
+    mitigation: Inspect repository-level Actions policy and every workflow reference before claiming pinning; verify the App installation through an App-authenticated read path before relying on its permissions.

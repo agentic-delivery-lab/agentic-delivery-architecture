@@ -349,6 +349,46 @@ observations:
       This inventory is scoped to repositories visible to the authenticated
       identity. No repository was created, and no external market or customer
       evidence was inferred from the repository list.
+  - id: current-organization-capability-inventory-20261009-1044
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/rest/actions/permissions
+    request: >-
+      `pnpm organization:inventory` completed at 2026-10-09T10:44:35.614Z with
+      evidenceClass=live-read-only and readOnly=true, using authenticated
+      account sjefsharp. The collector read organization Actions permissions,
+      variables, secrets, App installation, Copilot billing, custom-property
+      schema, Issue Types, Projects v2, classic Projects, repository metadata,
+      active workflows, and repository rulesets. Related references:
+      https://docs.github.com/en/rest/orgs/issue-types,
+      https://docs.github.com/en/rest/apps/installations, and
+      https://docs.github.com/en/rest/repos/rulesets.
+    result: >-
+      The organization endpoint reported plan=free. Six repositories were
+      visible on main. Active workflow and ruleset counts were Control Plane
+      13/1, public .github 2/1, Architecture 1/2, Primitives 1/1, Distribution
+      1/1, and private .github-private 1/unavailable. The five successful
+      ruleset endpoints reported active rulesets; the private adapter ruleset
+      request returned HTTP 403 with the response “Upgrade to GitHub Pro or
+      make this repository public to enable this feature.” The organization
+      Actions policy reported enabled_repositories=all, allowed_actions=all,
+      and sha_pinning_required=false. Organization-level Actions variable and
+      secret endpoints each returned total_count=0. The Issue Types endpoint
+      returned nine types: Task, Bug, Feature, Idea, Research, Requirements,
+      Architecture Decision, Implementation, and Validation. The organization
+      custom-property schema was empty and the Projects v2 endpoint returned
+      zero nodes. The App installation endpoint returned HTTP 401 with “A JSON
+      web token could not be decoded.” The classic Projects endpoint returned
+      HTTP 404. No settings, permissions, or repository state were changed.
+    limitation: >-
+      This inventory reflects endpoints visible to the authenticated OAuth
+      identity. The App installation response does not establish whether an
+      App is installed because this request was not made with an App JWT. The
+      private ruleset endpoint is unavailable under the reported plan; it does
+      not show whether a ruleset exists. Organization-level Actions policy
+      does not establish each repository's policy or prove whether individual
+      workflow references are pinned. Organization-level variable and secret
+      counts do not inventory repository-level values. A 404 from the classic
+      Projects endpoint is recorded as unavailable, not as an empty inventory.
   - id: current-open-work-and-pull-requests
     observedAt: '2026-10-09'
     request: Read-only GitHub issue and pull-request inventory across the six visible repositories
@@ -401,6 +441,25 @@ observations:
       prioritization, approval, or live runtime behavior. See the adjacent
       project-inventory-20261009-1033 observation for current Project
       associations.
+  - id: current-open-work-and-pull-requests-20261009-1047
+    observedAt: '2026-10-09T10:47:57Z'
+    request: >-
+      Read-only `gh issue list --state open` and `gh pr list --state open`
+      inventory across all six visible organization repositories; `gh run view`
+      checked Architecture PR #14 exact-head quality run.
+    result: >-
+      The same 19 Issues remained open across the six repositories. The three
+      open pull requests were Control Plane #86 at
+      3c21e2aa4200f51171f88db226260baf97314661 (DIRTY), Control Plane #102 at
+      c98b24e57159037f74af4d234300cdc21483bfe5 (CLEAN), and Architecture #14
+      at 37637ebdf8020a8d1f8a7401c842b1d1ffe61ce2 (BLOCKED). None had a
+      recorded human review decision. The other four repositories had no open
+      pull requests. Architecture #14 exact-head hosted quality run 37919240327
+      completed successfully.
+    limitation: >-
+      This is a point-in-time repository-visible snapshot. Merge-state labels
+      are GitHub summaries and do not replace the required human review. See
+      project-inventory-20261009-1033 for current Project associations.
   - id: current-release-and-tag-inventory
     observedAt: '2026-10-09'
     request: Read-only GitHub release and tag inventory across the six visible repositories

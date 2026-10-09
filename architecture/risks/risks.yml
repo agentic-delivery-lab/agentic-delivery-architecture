@@ -81,3 +81,24 @@ risks:
     owner: agentic-primitives-context-steward
     evidence: architecture/references/strategy-research-register.md
     mitigation: Keep the versioned evaluation case and result contracts portable, retain local deterministic replay, and recheck provider lifecycle before any external evaluation integration.
+  - id: R-015
+    title: Per-run resource limits and usage receipts are not proven end to end
+    status: open
+    owner: control-plane-maintainer
+    relatedQualityScenario: QR-017
+    evidence: [architecture/quality/quality-scenarios.yml, "https://github.com/agentic-delivery-lab/agentic-delivery/issues/105"]
+    mitigation: Define pinned duration, turn/invocation, retry, and recursion caps in the Control Plane contract; capture admission and terminal usage receipts, test hard-stop behavior, and keep unavailable runtime quota or spend evidence explicitly unknown.
+  - id: R-016
+    title: Comparative evaluation can be biased by grader drift or case selection
+    status: open
+    owner: agentic-primitives-context-steward
+    relatedQualityScenario: QR-019
+    evidence: [architecture/contracts/evaluation-report.schema.json, architecture/evaluation/README.md, "https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3"]
+    mitigation: Pin dataset partition, pre-run selection and integrity assessments, require full case coverage and calibration for exact evaluator versions, and keep comparative claims inconclusive without uncontaminated cases, independent graders, and review.
+  - id: R-017
+    title: Recovery receipts do not yet prove safe behavior across all replay paths
+    status: open
+    owner: control-plane-maintainer
+    relatedQualityScenario: QR-018
+    evidence: [architecture/quality/quality-scenarios.yml, system-evidence.yml#participant-modes-and-release-pins, "https://github.com/agentic-delivery-lab/agentic-delivery/issues/105"]
+    mitigation: Test webhook delivery replay, Codex session continuation, and evaluation replay as separate mechanisms; require durable operation identity and recovered-or-held disposition with duplicate-write checks.

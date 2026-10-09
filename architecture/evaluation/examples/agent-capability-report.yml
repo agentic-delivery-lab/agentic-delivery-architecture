@@ -1,6 +1,7 @@
 $schema: ../../contracts/evaluation-report.schema.json
 contractVersion: 2.0.0
 reportId: synthetic:agent-capability:example-v1
+runStartedAt: '2026-10-09T08:59:00Z'
 generatedAt: '2026-10-09T09:00:00Z'
 classification: synthetic
 evaluationMode: offline
@@ -22,6 +23,23 @@ dataset:
     commit: 1123456789abcdef0123456789abcdef01234567
     path: evaluations/datasets/synthetic-review-cases.yml
     sha256: 1123456789abcdef0123456789abcdef1123456789abcdef0123456789abcdef
+  partition: synthetic
+  selection:
+    policyPin:
+      repository: agentic-delivery-lab/agentic-delivery-primitives
+      commit: 7123456789abcdef0123456789abcdef01234567
+      path: evaluations/plans/synthetic-review-cases-selection.yml
+      sha256: 7123456789abcdef0123456789abcdef7123456789abcdef0123456789abcdef
+    registeredAt: '2026-10-09T08:50:00Z'
+    sampling: census
+    eligiblePopulation: The single illustrative case in the synthetic contract fixture.
+    inclusionCriteria: [Include the complete synthetic fixture case set.]
+    exclusions: []
+  integrity:
+    contaminationStatus: unknown
+    assessedAt: '2026-10-09T08:45:00Z'
+    provenanceBasis: Synthetic example only; no empirical contamination assessment was performed.
+    evidenceRefs: [synthetic-example:integrity-not-assessed]
   caseIds: [synthetic-safe-change-001]
 cases:
   - caseId: synthetic-safe-change-001
@@ -53,10 +71,13 @@ graders:
       commit: 3123456789abcdef0123456789abcdef01234567
       path: evaluations/graders/deterministic.yml
       sha256: 3123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
-    evaluator: {id: synthetic-schema-validator, kind: deterministic-tool}
+    evaluator: {id: synthetic-schema-validator, kind: deterministic-tool, version: placeholder-1.0.0}
     independence:
       relation: unknown
       basis: The evaluator definition is a format-only placeholder and was not executed against a candidate artifact.
+    calibration:
+      status: not-applicable
+      rationale: Synthetic example only; no grader or candidate was executed.
   semantic:
     id: example-semantic-review-rubric
     version: 1.0.0
@@ -65,10 +86,13 @@ graders:
       commit: 4123456789abcdef0123456789abcdef01234567
       path: evaluations/graders/semantic-review.yml
       sha256: 4123456789abcdef0123456789abcdef4123456789abcdef0123456789abcdef
-    evaluator: {id: synthetic-reviewer-placeholder, kind: model}
+    evaluator: {id: synthetic-reviewer-placeholder, kind: model, version: placeholder-1.0.0}
     independence:
       relation: unknown
       basis: No reviewer or model execution occurred, so independence cannot be established.
+    calibration:
+      status: not-applicable
+      rationale: Synthetic example only; no semantic evaluator or candidate was executed.
 results:
   deterministicChecks:
     - checkId: synthetic-contract-shape

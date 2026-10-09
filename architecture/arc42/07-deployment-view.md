@@ -33,11 +33,12 @@ participant is active or that each hosting rule has been enabled.
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
 | Repository sources | Six factory repositories and adapters have current main commit pins in system evidence. | Pins identify the observed default-branch commits; they do not prove release compatibility or active deployment. |
-| GitHub App, Actions, and repo protection | At 10:44 UTC, organization Actions settings reported all repositories enabled, all Actions allowed, and full-SHA pinning not required. Active workflow/ruleset counts were Control Plane 13/1, public adapter 2/1, Architecture 1/2, Primitives 1/1, Distribution 1/1, and private adapter 1/unavailable. Nine organization Issue Types were readable. | The private ruleset request returned 403 under the reported plan; App installation lookup returned 401 for the OAuth request. Org policy does not prove each repo's effective settings or actual workflow pins. |
+| GitHub App, Actions, and repo protection | At 10:44 UTC, organization Actions settings reported all repositories enabled, all Actions allowed, and full-SHA pinning not required. Active workflow/ruleset counts were Control Plane 13/1, public adapter 2/1, Architecture 1/2, Primitives 1/1, Distribution 1/1, and private adapter 1/unavailable. At 17:25 UTC, an OAuth read listed three App installations; the selected-repository invoker declares Issues, contents, and pull-request writes and Issue Field/Type reads. | Its returned permission map contains no organization- or repository-Projects permission. The invoker's selected repository membership and binding to deployed credentials remain unverified; no App token or runtime write was tested. The private ruleset request returned 403; org policy does not prove each repo's effective settings or actual workflow pins. |
 | Vercel ingress and Neon replay store | The exact Control Plane main source contains the webhook function, scheduled reconciler, Neon adapter, and migrations; its runtime uses a pooled Neon connection. | Source presence does not prove deployment, secret configuration, migration state, webhook activation, successful reconciliation, or production data. |
+| Run budgets and failure recovery | QR-017/QR-018 define per-run hard limits and durable recovery evidence across webhook, Actions/Codex, and evaluation replay. | No accepted end-to-end receipt proves all budget limits, hard-stop behavior, or safe recovery; available quota/spend values remain unknown when the approved runtime does not expose them. |
 | Codex runtime | The exact Control Plane main source installs CLI 0.159.3; static review and an isolated package fixture verified instruction discovery and separate controller/task workspaces. | No Actions-run observation confirms the current runner binary, runtime CWD, or end-to-end issue delivery. |
 | Product delivery | The strategy specifies an owning product repository and steward boundary. | The read-only six-repository inventory found no distinct product repository or accountable steward; no product bootstrap or outcome baseline is claimed. |
-| GitHub Projects | At 11:51 UTC, the authenticated CLI and complete organization, personal, and six repository GraphQL inventories returned zero Projects. All 19 open Issues returned zero Project associations. The organization REST response reported `plan=free`, `has_organization_projects=true`, and `has_repository_projects=true`; the membership endpoint returned `state=active`, `role=admin` for `sjefsharp`. | Projects are available as organization/repository features, but no Project is configured or visible within the queried owner scopes. Membership, fields, views, and visibility could not be inspected; App access and Projects owned outside the organization/user scopes remain unknown. |
+| GitHub Projects | The authenticated CLI's 17:11 complete organization, personal, and six repository GraphQL inventories returned zero Projects. Issue #105 was created later without a Project item. The organization REST response reported both Project capability flags as true; the account has the active `admin` role. | No Project is configured in the queried owner scopes. Membership, fields, views, and visibility could not be inspected. The selected-repository invoker declares no Projects permission; its exact repository membership and Projects owned outside the queried scopes remain unknown. |
 | Organization Issue Fields | Six fields were read; Priority, dates, effort, Lifecycle Stage, and Delivery Readiness are all organization-members-only. | Current Project visibility fit and Issue Field pinning remain unverified. |
 | Per-issue field values | At 11:52 UTC, the documented `/issue-field-values` endpoint returned an empty array for each of the 19 open Issues in the six visible repositories. | The read is limited to open Issues at that time. It does not establish Issue Type pinning or future Project visibility. The earlier request path was not captured and its 404 is inconclusive. |
 | Control Plane execution | All six participants remain in shadow mode; latest run succeeded at authorization, classification, and finalization while delivery was skipped. | No completed delivery, central #62 canary, receipt completion, or independent field read-back is proven. |
@@ -48,8 +49,20 @@ The current default-branch commits and observations are recorded in
 [system evidence](../references/system-evidence.yml). The Projects inventory
 found no organization, personal, or repository Project visible within the
 queried owner scopes. The positive organization/repository capability flags
-and active organization admin role do not provide GitHub App installation
-access or replace the separate human decision on Project topology.
+and active organization admin role do not grant Projects permission to the
+selected-repository invoker App or replace the separate human decision on
+Project topology.
+
+At 17:02 UTC, a fresh GraphQL query with the expanded OAuth identity again
+returned zero Project v2 nodes for the organization, authenticated user, and
+all six repositories; 17:11 CLI queries including closed organization and user
+Projects were also empty. The same identity could read the nine native Issue
+Types and six member-only Issue Fields. No Project exists in these owner scopes
+to inspect field options, views, or membership.
+
+At 17:17 UTC, Control Plane Issue [#105](https://github.com/agentic-delivery-lab/agentic-delivery/issues/105)
+was created as a native Task for run-budget and recovery work; its read-back
+shows no Project item. The six visible repositories now have 20 open Issues.
 
 ## 7.3 Historical deployment snapshot (2026-09-24)
 
@@ -81,23 +94,36 @@ Project associations. The organization REST response reported Projects
 available for organization and repository use under its Free plan, and a
 separate membership read confirmed the authenticated user has the active
 organization role `admin`. No scope change was requested and no Project
-mutation was performed. The org role does not establish GitHub App
-installation access, and no Project topology or configuration approval was
-given. Persistent `admin:org` is not a routine requirement. Any organization
+mutation was performed. The org role does not provide Project permission to
+the runtime App, and no Project topology or configuration approval was given.
+Persistent `admin:org` is not a routine requirement. Any organization
 field-definition change would require a separate, temporary, reviewed
 operator action and is outside this Architecture change.
 
+The 17:02–17:11 recheck observed the authenticated `sjefsharp` account with
+additional organization, hook, repository, deletion, package, user, and
+workflow scopes as well as `project`. These scopes enabled the current Project,
+Issue Type, Issue Field, and App-installation metadata reads; they remain human
+OAuth authority and do not authorize writes through or expand the App.
+
 The 10:44 UTC organization inventory also reported `allowed_actions=all` and
 `sha_pinning_required=false`; this is organization policy, not an audit of each
-repository's Actions settings or workflow references. The App installation
-lookup failed because the OAuth request did not supply a decodable App JWT, so
-installation identity and permissions remain unknown. Organization-level
+repository's Actions settings or workflow references. At 17:25 UTC, the
+organization installations endpoint returned the invoker App's permission
+map without `organization_projects` or `repository_projects`. The endpoint
+does not reveal the selected repository list to this identity; its membership
+read returned 403, and no App token or runtime operation was tested. The
+earlier App-JWT request failure remains historical, not the current
+installation-permission result. Organization-level
 Actions secrets and variables returned zero; repository-level values were not
 queried. The private adapter's ruleset API returned a plan-related 403, which
 does not prove the ruleset is absent.
 
 **Evidence:** see observations `organization-issue-fields`,
 `project-inventory-20261009-1153`,
+`expanded-gh-auth-project-and-issue-inventory-20261009-1711`,
+`control-plane-budget-recovery-issue-created-20261009-1717`,
+`github-app-installation-permissions-20261009-1725`,
 `issue-field-values-20261009-1152`,
 `current-open-work-and-pull-requests-20261009-1153`,
 `current-organization-capability-inventory-20261009-1044`,

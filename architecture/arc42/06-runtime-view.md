@@ -13,7 +13,8 @@
    pattern.
 4. Deterministic checks validate issue identity, actor permission, type,
    fields/options, dependencies, policy, and transition.
-5. One authorized writer performs bounded work on an issue-linked branch.
+5. One authorized writer performs work on an issue-linked branch within the
+   pinned time, invocation, retry, and recursion budget recorded at admission.
 6. Tests, a versioned evaluation, and an independent Validator report evidence;
    the writer publishes a review pull request.
 7. A human reviewer decides whether to merge. The source Issue remains open
@@ -53,17 +54,23 @@ finding routing. No live evaluation loop, measured baseline, or improvement
 claim is evidenced here.
 
 The target offline evaluation uses a versioned representative dataset, named
-task cases with stimulus and expected outcomes, pinned deterministic and
-semantic graders, a declared evaluator identity and independence basis, a
-pinned comparator, candidate source pin, measured baseline, and attributable
-report. Failures receive an explicit class. A comparative improvement claim
-also needs a testable hypothesis and baseline/candidate measurements with the
-same metric, unit, and observation window. Deterministic checks produce
-repeatable pass/fail results; semantic judgments record reviewer identity,
-independence, rationale, and uncertainty separately. Evaluation replay repeats
-that case set and graders against a named candidate. It is distinct from
-webhook-delivery replay, which retries event handling, and Codex-session
-continuation, which restores one bounded runner operation.
+task cases with stimulus and expected outcomes, a case-selection policy and
+dataset-integrity assessment recorded before the run, and a declared
+development, calibration, validation, or holdout partition. Reports pin
+deterministic and semantic grader definitions and evaluator versions,
+calibration datasets and results for those exact versions, candidate source,
+and baseline. Failures receive an explicit class. A comparative claim uses
+validation or holdout cases whose pre-run integrity assessment found no known
+contamination, exact case coverage, independent calibrated graders, and an
+independent review; evaluator drift, suspected contamination, unknown
+independence, or unexplained exclusions make the result inconclusive. The
+claim also needs a testable hypothesis and baseline/candidate measurements
+with the same metric, unit, and observation window. Deterministic
+checks produce repeatable pass/fail results; semantic judgments record reviewer
+identity, independence, rationale, and uncertainty separately. Evaluation replay
+repeats that case set and graders against a named candidate. It is
+distinct from webhook-delivery replay, which retries event handling, and
+Codex-session continuation, which restores one bounded runner operation.
 
 Under this target, an evaluation miss, operational anomaly, unmet product outcome, or agent
 improvement suggestion is recorded as a new or updated Issue in its owning
@@ -75,9 +82,10 @@ an unbounded follow-up run.
 
 | Observation | Evidence | Limit |
 | --- | --- | --- |
-| Projects are the required portfolio planning surface in the proposed model, but the 11:53 UTC authenticated inventory returned no organization, personal, or repository Project and no association for the 19 open Issues across the six visible repositories. The organization API reports organization and repository Project capability flags as true under its Free plan. | `project-inventory-20261009-1153` and `organization-issue-fields` observations. | No Project-specific fields, visibility, or membership could be inspected; owners outside the queried scopes and App installation access remain unknown. The one-Project/two-view proposal awaits human decision in Architecture #15; all six organization Issue Fields are member-only. |
+| Projects are the required portfolio planning surface in the proposed model, but the 17:02 UTC authenticated inventory returned no organization, personal, or repository Project. At 17:17, new Control Plane Issue #105 was created for run budgets and recovery and has no Project item; the six-repository open-Issue total is now 20. | `project-inventory-20261009-1153`, `expanded-gh-auth-project-and-issue-inventory-20261009-1711`, `control-plane-budget-recovery-issue-created-20261009-1717`, and `github-app-installation-permissions-20261009-1725`. | No Project-specific fields, visibility, or membership could be inspected; the invoker installation declares no organization- or repository-Projects permission, and its selected repository membership and deployed credential binding remain unverified. The one-Project/two-view proposal awaits human decision in Architecture #15; all six organization Issue Fields are member-only. |
 | The documented `/issue-field-values` endpoint returned an empty array for each of the 19 currently open Issues. | `issue-field-values-20261009-1152`. | This is a point-in-time values read, not evidence about Issue Type pinning or future Project visibility; the earlier `/fields` request was inconclusive. |
-| Evaluation report contract 2.0.0 is proposed with pinned task cases, evaluator identity/independence, failure classes, and comparable measurements; offline replay and finding-routing implementations have owners. | Architecture PR #14; Primitives #3; Control Plane #103; QR-015 and QR-016. | The schema is not an evaluator. No replay run, measured baseline, independent outcome review, live report, or automatic follow-up exists. |
+| Evaluation report contract 2.0.0 is proposed with a pre-registered selection pin, exact case coverage, dataset partition, grader/evaluator versions, calibration evidence, independence, failure classes, and comparable measurements; offline replay and finding-routing implementations have owners. | Architecture PR #14; Primitives #3; Control Plane #103; QR-015, QR-016, and QR-019. | The schema is not an evaluator. No representative validation/holdout dataset, calibration run, measured baseline, independent outcome review, live report, or automatic follow-up exists. |
+| Per-run budget enforcement and operational recovery evidence remain target scenarios. The architecture records hard limits for duration, turns/invocations, retries, and recursion, with available quota/spend and recovery receipts. | QR-017, QR-018; ADR-0009 and ADR-0015. | Existing actor and bot-hop gates do not prove complete per-run budget receipts, zero calls after limit exhaustion, or end-to-end safe recovery. Unknown quota/spend remains unknown. |
 | Exact Control Plane main source pins Codex CLI 0.159.3 and separates controller instructions from the task workspace; an isolated 0.159.3 fixture confirmed root/CWD AGENTS discovery. | `control-plane-codex-instruction-context-20261009-1622` in system evidence. | Source inspection and local fixture are not an Actions-run observation and do not prove customization propagation, prompt-injection resistance, or successful live delivery. |
 | The latest issue run completed authorization, classification, and finalization while delivery was skipped. | current-delivery-and-release-state observation. | A skipped delivery does not prove a completed issue-to-PR flow or independent field-value read-back. |
 | Participant registry lists all six repositories in shadow mode with exact controller and Architecture/Primitive pins. | `participant-modes-and-release-pins` in system evidence. | Shadow configuration does not prove delivery, API identity, or write-back. |

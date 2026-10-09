@@ -17,6 +17,14 @@ that did not resolve in the live repository, although the digest reproduced
 at the valid commit pinned by Architecture. Each item has an owner and source
 in the register.
 
+Evaluation integrity and bounded operation are additional open risks: no
+representative holdout corpus, grader calibration evidence, or independent
+comparative review is recorded, and no accepted per-run receipt proves hard
+time/invocation limits, observable quota usage, or safe recovery across the
+webhook, Actions/Codex, and replay boundaries. QR-017–QR-019 remain target
+scenarios until their owning contexts supply implementation and runtime
+evidence.
+
 This chapter separates observed risks from target controls. A validated source
 manifest or passing unit test does not close a live entitlement or execution
 risk. Risk closure requires an immutable run, API result, review record, or

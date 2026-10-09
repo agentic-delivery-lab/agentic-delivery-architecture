@@ -43,9 +43,11 @@ all 19 open Issues in the six visible organization repositories also had no
 Project associations. The organization REST response reports both organization
 and repository Projects available under the Free plan, and the authenticated
 user's active organization role is `admin`. No Project field, membership, or
-visibility could be inspected; GitHub App access and owners outside the
-queried scopes remain unknown. The proposed one-Project/two-view topology
-awaits a human decision in Architecture #15. All six organization Issue Fields
+visibility could be inspected. The selected-repository invoker installation
+declares no organization- or repository-Projects permission; its exact
+repository membership remains unverified. Projects owned outside the queried
+scopes also remain unknown. The proposed one-Project/two-view topology awaits
+a human decision in Architecture #15. All six organization Issue Fields
 have `organization_members_only` visibility, which remains a view-design
 constraint for any future Project.
 
@@ -113,10 +115,15 @@ baseline, and dependency pins; deterministic checks; semantic judgments;
 uncertainty; independent-review status; regression severity; and recommended
 owner-Issue follow-up. Each case states the task, stimulus, expected outcome,
 acceptance criteria, observed outcome, and failure class when needed. Each
-grader names its evaluator and independence basis. A comparative improvement
-claim requires a measured pinned baseline, a comparable candidate measurement
-for the same metric, unit, and observation window, and a testable improvement
-hypothesis.
+report pins its pre-run case-selection policy, dataset-integrity assessment,
+and partition; each grader names its evaluator version, independence basis,
+and calibration evidence for that exact version. A comparative claim is
+limited to uncontaminated validation or holdout cases with complete case
+coverage, independent calibrated graders, independent review, a
+measured pinned baseline, a comparable candidate measurement for the same
+metric, unit, and observation window, and a testable improvement hypothesis.
+Unknown independence, version drift without recalibration, or suspected or
+unknown dataset contamination leaves a result inconclusive.
 
 The report is evidence only. It cannot create or prioritize work, authorize
 execution, change policy, write Project state, activate participants, merge,

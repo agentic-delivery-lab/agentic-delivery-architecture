@@ -50,8 +50,9 @@ decisions. They do not claim that current production operation satisfies
 them; section 7 and the evidence snapshot record observed gaps.
 
 The proposed organizational goals SG-01–SG-07 refine these architecture goals
-into user, portfolio, evaluation, and adoption outcomes. Their measures are
-proposals with unmeasured baselines and deferred targets; see the canonical
+into user, portfolio, evaluation, adoption, security, operational reliability,
+observability, bounded-resource, and accountability outcomes. Their measures
+are proposals with unmeasured baselines and deferred targets; see the canonical
 [strategy source](../strategy/organizational-strategy.yml).
 
 ## 1.3 Quality goals
@@ -62,7 +63,7 @@ proposals with unmeasured baselines and deferred targets; see the canonical
 | 2 | Safe state change | A model proposal cannot change lifecycle metadata until deterministic identity, permission, schema, option, and transition checks pass. |
 | 3 | Recoverable release rollout | A participant can return to its previous exact source pins without introducing a second authoritative copy. |
 | 4 | Reviewable architecture | A reviewer can follow source commits, file digests, and runtime observations without treating a passing structural check as live proof. |
-| 5 | Comparable evaluation evidence | Each result names its task, stimulus, expected outcome, evaluator identity and independence; comparisons use the same metric, unit, and observation window. |
+| 5 | Comparable evaluation evidence | Each result names its task, stimulus, expected outcome, pre-registered case selection and dataset-integrity assessment, dataset partition, evaluator version and matching calibration; comparisons use assessed validation or holdout cases, independent graders and review, and the same metric, unit, and observation window. |
 
 ## 1.4 Stakeholders, concerns, viewpoints, and views
 

@@ -725,3 +725,110 @@ observations:
       constitute approval to change Projects, organization settings, or other
       live resources. PR merge-state labels and empty review decisions do not
       establish human approval, merge, release, or operational adoption.
+  - id: expanded-gh-auth-project-and-issue-inventory-20261009-1711
+    observedAt: '2026-10-09T17:11:35Z'
+    source: https://cli.github.com/manual/gh_auth_status
+    request: >-
+      Read-only `gh auth status`, `gh project list --closed --owner` for the
+      organization and authenticated user, one GraphQL query for organization,
+      user, and all six visible repository `projectsV2` connections, native
+      organization Issue Type and Issue Field reads, and open-Issue counts.
+      The `sjefsharp` account reports `admin:org`, `project`, `repo`, `workflow`,
+      and other administrative scopes; the token value was not recorded.
+    projectInventoryComplete: true
+    projectIds: []
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 1e832a9927ac554e2d0a88f2cf91ddca02e95b63
+    result: >-
+      Organization, authenticated-user, and each of the six repository
+      `projectsV2` connections returned `totalCount=0`; organization and user
+      CLI listings including closed Projects returned empty lists. The six
+      open-Issue listings still total 19 (7 Control Plane, 5 Architecture,
+      2 Primitives, 2 Distribution, 2 public adapter, 1 private adapter).
+      `GET /orgs/agentic-delivery-lab/issue-types` returned the same nine
+      native types recorded in prior evidence. `GET /orgs/agentic-delivery-lab/issue-fields`
+      returned six fields: Priority (46797139), Start date (46797140), Target
+      date (46797141), Effort (46797142), Lifecycle Stage (46888816), and
+      Delivery Readiness (46888965); all are `organization_members_only`.
+      No Project exists in these queried owner scopes to inspect its fields,
+      views, items, or membership. No live resource was changed.
+    limitation: >-
+      This observes only the authenticated user, organization, and six visible
+      repositories. OAuth scopes describe the human CLI identity, not the
+      runtime GitHub App's installation permissions, and do not authorize a
+      Project or organization mutation. Projects owned by other users or
+      organizations are outside this inventory. Issue Field definitions do
+      not establish Project field visibility or values on newly opened Issues.
+  - id: control-plane-budget-recovery-issue-created-20261009-1717
+    observedAt: '2026-10-09T17:18:28Z'
+    source: https://cli.github.com/manual/gh_issue_create
+    request: >-
+      Created and then read back Control Plane Issue #105 using `gh issue
+      create --type Task`, followed by `gh issue view --json issueType,
+      projectItems,state`. Refreshed the open-Issue count in all six visible
+      organization repositories.
+    projectInventoryComplete: true
+    projectIds: []
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 1e832a9927ac554e2d0a88f2cf91ddca02e95b63
+    result: >-
+      Control Plane #105 was created at 17:17 UTC as native Issue Type `Task`,
+      URL https://github.com/agentic-delivery-lab/agentic-delivery/issues/105.
+      It is open and `projectItems=[]`; no Project exists in the queried owner
+      scopes. Its requested outcome and acceptance criteria cover pinned
+      per-run limits, admission/terminal usage receipts, hard-stop behavior,
+      separate webhook replay/Codex continuation/evaluation replay boundaries,
+      safe recovered-or-held disposition, and preserved authorization gates.
+      It explicitly waits for Architecture #14 review/merge and Architecture
+      #15's Project topology decision. The six open-Issue counts now total 20
+      (8 Control Plane, 5 Architecture, 2 Primitives, 2 Distribution, 2 public
+      adapter, 1 private adapter). No other live resource was changed.
+    limitation: >-
+      Issue #105 has no Project association while Architecture #15 awaits a
+      human decision and no Project exists. The Issue is a planning record,
+      not authorization to execute or to change Projects, App permissions,
+      runner settings, participant mode, or production operation.
+  - id: github-app-installation-permissions-20261009-1725
+    observedAt: '2026-10-09T17:25:08Z'
+    source: https://docs.github.com/en/rest/orgs/orgs#list-app-installations-for-an-organization
+    request: >-
+      Read-only `gh api orgs/agentic-delivery-lab/installations` using the
+      expanded human OAuth identity, followed by inspection of each returned
+      App installation's declared `permissions` and `repository_selection`.
+      No App token was minted and no permission or installation changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 1e832a9927ac554e2d0a88f2cf91ddca02e95b63
+    result: >-
+      The visible installations were Vercel (app 8329, installation 163160932,
+      all repositories), `agentic-delivery-lab-invoker-7f3a` (app 5011055,
+      installation 163255060, selected repositories), and
+      `chatgpt-codex-connector` (app 1144995, installation 164559129, all
+      repositories). The selected-repository invoker declared contents,
+      issues, and pull-request write permissions plus Issue Field and Issue
+      Type read permissions. Its returned permission map declared neither
+      `organization_projects` nor `repository_projects` access. The OAuth
+      identity's broad user scopes do not change these App declarations.
+    limitation: >-
+      This lists installation metadata visible to the authenticated user; the
+      separate selected-repository membership endpoint returned 403, so the
+      invoker's exact repository set and its binding to deployed credentials
+      were not verified. The result is not an App-token canary and proves no
+      live runtime request or write behavior.

@@ -135,3 +135,30 @@ scenarios:
     measure: Every actionable finding has a source evidence link and owner Issue; zero findings directly mutate agent policy, activate a participant, merge, release, or trigger another implementation without human prioritization and authorization.
     evidence: [ADR-0023, AP-004, strategy/organizational-strategy.yml#guardrails, "https://github.com/agentic-delivery-lab/agentic-delivery/issues/103", "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15"]
     status: target; offline finding routing is owned by Control Plane #103; the portfolio Project awaits the human decision in Architecture #15, and recursive-run fixture coverage remains open
+  - id: QR-017
+    name: bound each authorized agentic operation by an inspectable resource budget
+    stakeholder: maintainer, organization-operator, capability-consumer
+    concern: repeated turns, tools, retries, child invocations, and runtime quotas must not create unbounded duration or cost
+    stimulus: The Control Plane admits an authorized Issue operation that invokes Codex, tools, retries, or another bounded operation.
+    response: A versioned admission policy fixes the available wall-time, turn/invocation, retry, and recursion limits before execution; runtime quota or spend limits are recorded when the approved runtime exposes them. Reaching a limit stops further privileged work and records measured usage and the stop reason.
+    measure: Every admitted operation has a pinned budget and terminal usage/limit receipt; zero privileged invocations occur after a hard limit; unavailable quota or spend data remains explicitly unknown.
+    evidence: [ADR-0009, ADR-0015, strategy/organizational-strategy.yml#successMeasures/SM-010, "https://github.com/agentic-delivery-lab/agentic-delivery/issues/105"]
+    status: target; existing issue and bot-hop gates do not yet provide accepted per-run budget and usage evidence across the pinned runner path
+  - id: QR-018
+    name: make runtime failures observable and safely recoverable
+    stakeholder: organization-operator, repository-owner, maintainer
+    concern: failure recovery must preserve source identity and distinguish delivery replay, execution continuation, and evaluation replay
+    stimulus: A webhook delivery, Action/Codex operation, or recovery attempt is interrupted, duplicated, or fails.
+    response: The owning controller records source repository and Issue identity, immutable controller/runner pins, event and operation IDs, failure class, and terminal disposition. Webhook delivery replay, resumable Codex continuation, and evaluation replay use distinct evidence and idempotency boundaries; work is recovered or held for a named human action without duplicate protected writes.
+    measure: Every observed interruption has a durable receipt and recovered-or-held disposition; repeated delivery produces zero duplicate protected writes; each recovery path identifies its own mechanism and evidence.
+    evidence: [ADR-0015, ADR-0022, architecture/references/system-evidence.yml#participant-modes-and-release-pins, "https://github.com/agentic-delivery-lab/agentic-delivery/issues/105"]
+    status: target; current source and unit evidence do not establish end-to-end live interruption, recovery, or replay behavior
+  - id: QR-019
+    name: protect comparative evaluations from drift, contamination, selection, and self-grading
+    stakeholder: independent-reviewer, capability-consumer, maintainer
+    concern: favorable evaluation claims must remain tied to a representative, pre-registered case set and graders whose behavior and independence can be reviewed
+    stimulus: A candidate capability, controller, model, or product change is compared with a baseline using deterministic or semantic graders.
+    response: The report pins the dataset partition, eligible population, case-selection policy and dataset-integrity assessment before the run, complete selected case set, grader and evaluator versions, and calibration evidence for each exact evaluator version. Comparative claims use validation or holdout cases whose pre-run integrity assessment found no known contamination, with independent graders and review; an evaluator version change requires fresh calibration, while unknown independence, drift, suspected contamination, or unreviewed exclusions make the result inconclusive.
+    measure: Every comparative claim has exact case coverage, pre-run selection and integrity records, validation or holdout provenance with no known contamination, pinned evaluator versions with matching verified calibration, and independent review; any missing condition blocks an improvement, regression, or no-change claim.
+    evidence: [architecture/contracts/evaluation-report.schema.json, architecture/evaluation/README.md, strategy/organizational-strategy.yml#successMeasures/SM-012]
+    status: target; the report contract validates the evidence envelope, but no representative dataset, calibration run, independent result review, or live claim is evidenced

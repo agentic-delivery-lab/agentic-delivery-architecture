@@ -213,6 +213,7 @@ strategicGoals:
       implementationIssueRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/60
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/105
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
@@ -255,16 +256,16 @@ strategicGoals:
       - A product outcome is missed, regresses, or lacks usable instrumentation.
     status: proposed
   - id: SG-03
-    title: Keep autonomy bounded by explicit trust and review boundaries
-    outcome: Agents execute only authorized bounded work; policy changes, approvals, merges, releases, and activation remain under designated human control.
-    rationale: Reasoning can propose an action, while deterministic checks and human roles decide whether it is allowed.
+    title: Operate securely, reliably, observably, and within explicit resource bounds
+    outcome: Agent execution is authorized, observable, reliable, and bounded by approved time, invocation, retry, recursion, and available quota controls; policy changes, approvals, merges, releases, and activation remain under accountable human control.
+    rationale: Safe autonomy needs deterministic authorization and hard run limits, durable recovery evidence, and human ownership of policy and acceptance.
     stakeholders: [maintainers, delivery-teams, independent-reviewers]
     stewardRoles: [architecture-authority, control-plane-context-steward, context-stewards]
     contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
     architectureGoalIds: [G-02, G-04]
-    measureIds: [SM-002, SM-005]
+    measureIds: [SM-001, SM-002, SM-010, SM-011]
     traceability:
-      qualityScenarioIds: [QR-001, QR-008, QR-014]
+      qualityScenarioIds: [QR-001, QR-008, QR-014, QR-017, QR-018]
       principleIds: [AP-002, AP-004]
       decisionIds: [ADR-0009, ADR-0012, ADR-0017, ADR-0023]
       capabilityRefs:
@@ -272,10 +273,13 @@ strategicGoals:
           repository: agentic-delivery-lab/agentic-delivery
           sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
           path: .github/workflows/issue-intake.yml
-      capabilityGaps: []
+      capabilityGaps:
+        - The pinned controller and runner evidence does not yet prove a per-run budget for duration, turns or invocations, retries, recursion, and exposed runtime quota or spend, with a terminal limit receipt.
+        - End-to-end receipts do not yet demonstrate safe interruption recovery across webhook replay, Codex continuation, and operation reconciliation.
       contractRefs:
         - architecture/contracts/conformance-policy.schema.json
         - architecture/contracts/conformance-request.schema.json
+        - architecture/contracts/quality-scenarios.schema.json
       implementationIssueRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/60
@@ -404,14 +408,15 @@ strategicGoals:
     stewardRoles: [architecture-authority, control-plane-context-steward, agentic-primitives-context-steward]
     contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
     architectureGoalIds: [G-03, G-04]
-    measureIds: [SM-005, SM-009]
+    measureIds: [SM-005, SM-009, SM-012]
     traceability:
-      qualityScenarioIds: [QR-015, QR-016]
+      qualityScenarioIds: [QR-015, QR-016, QR-019]
       principleIds: [AP-002, AP-004]
       decisionIds: [ADR-0011, ADR-0023]
       capabilityRefs: []
       capabilityGaps:
         - The pinned runtime does not yet provide an accepted offline evaluation and bounded finding-routing capability.
+        - No representative validation/holdout corpus, pre-registered case-selection plan, evaluator calibration run, or independent comparison baseline is evidenced.
       contractRefs:
         - architecture/contracts/evaluation-report.schema.json
         - architecture/contracts/conformance-result.schema.json
@@ -512,6 +517,33 @@ successMeasures:
     reviewCadence: quarterly after Project visibility and evidence links are operational
     baselineStatus: unmeasured
     targetStatus: set-after-baseline
+  - id: SM-010
+    name: Per-run resource budget enforcement coverage
+    definition: Share of authorized agentic operations admitted with a pinned hard limit for wall time, turns or invocations, retries, and recursion, then closed with a receipt for observed usage and limit outcomes; record runtime quota or spend limits when the approved runtime exposes them.
+    computation: Count authorized operations with complete admission-budget and terminal usage/limit receipts divided by all authorized operations started in the reporting window; publish limit stops and unavailable quota or spend evidence separately.
+    dataSources: [Control Plane admission and operation receipts, Actions job results and durations, Codex usage or turn counters when available, controller policy pins]
+    stewardRole: control-plane-context-steward
+    reviewCadence: quarterly after per-run receipt coverage is implemented and after any runner or budget-policy change
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-011
+    name: Safe operational failure recovery coverage
+    definition: Share of observed webhook, runner, or controller interruption events with a durable receipt and an explicit recovered or human-held terminal disposition that preserves repository and Issue identity.
+    computation: Count observed interruption events with complete receipt and safe terminal disposition divided by all observed interruption events in the same reporting window; publish event-inventory coverage separately to expose unobserved failures.
+    dataSources: [webhook delivery and replay receipts, Actions/Codex operation records, Neon replay state, source Issue history, recovery dispositions]
+    stewardRole: control-plane-context-steward
+    reviewCadence: quarterly after cross-path recovery evidence is operational and after a material runtime recovery change
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
+  - id: SM-012
+    name: Evaluation integrity coverage
+    definition: Share of comparative evaluation claims backed by a pre-registered case-selection policy and dataset-integrity assessment, a validation or holdout partition with no known contamination, complete case coverage, pinned grader/evaluator versions with matching verified calibration, and independent review.
+    computation: Count comparative claims meeting every declared integrity condition divided by all comparative claims in the reporting window; reports missing a condition remain inconclusive and are excluded from the numerator.
+    dataSources: [evaluation reports, dataset manifests, selection-policy pins, grader/evaluator version pins, calibration results, independent review records]
+    stewardRole: agentic-primitives-context-steward
+    reviewCadence: every comparative evaluation and quarterly dataset/grader calibration review
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
   proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-09 inventory returned no Project while the organization REST API reported both organization and repository Projects available, so creation and configuration still require the separate human decision tracked in Architecture #15.
@@ -558,13 +590,13 @@ sourceOfTruth:
     rule: Issue or Project state, evaluation results, and agent output cannot impersonate reviewer approval or authorize merge, release, or activation.
   - fact: runner, session, webhook, and controller operation state
     owner: Agentic Delivery Control Plane
-    rule: Keep webhook delivery replay, resumable Codex session state, and evaluation replay as separate mechanisms.
+    rule: The controller owns admission budgets and operation/recovery receipts; keep webhook delivery replay, resumable Codex session state, and evaluation replay as separate mechanisms.
   - fact: reusable agent capabilities and their source versions
     owner: Agentic Primitives
     rule: Consumers use pinned sources, explicit contracts, and evaluation provenance.
   - fact: reusable evaluation datasets, cases, graders, and replay tooling
     owner: Agentic Primitives
-    rule: Pin task, stimulus, expected outcome, grader identity, independence, and source; Architecture owns only the shared report contract.
+    rule: Pin task, stimulus, expected outcome, dataset partition and pre-run selection, grader/evaluator versions, calibration, independence, and source; Architecture owns only the shared report contract.
   - fact: observed evaluation report values and evidence references
     owner: The repository that owns the evaluated capability, factory operation, or product outcome
     rule: Reports use the Architecture evidence contract, keep synthetic, hosted, and live observations separate, and cannot authorize or prioritize work.
@@ -580,6 +612,7 @@ sourceOfTruth:
 guardrails:
   - People retain direction, policy ownership, independent review, merge authority, and release or activation approval.
   - Agents may implement only bounded work authorized by an Issue in its origin repository and deterministic contract checks.
+  - Every agentic operation uses a pinned time, turn/invocation, retry, and recursion budget; unavailable quota or spend observations remain explicitly unknown, and hitting a hard limit stops further privileged work.
   - Evaluation findings and agent-generated improvement ideas become Issues; people prioritize them in Projects before new execution.
   - No agent may edit its own policy, select itself for activation, approve or merge its own changes, or trigger an unbounded recursive run.
   - Offline fixtures, hosted CI, and live production observations are reported as separate evidence classes.

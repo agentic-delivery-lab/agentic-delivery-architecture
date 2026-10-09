@@ -2,10 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/evaluation-report.schema.json",
   "title": "Evaluation evidence report contract 2.0.0",
-  "description": "Proposed evidence-only report for agent capability, delivery factory, or product outcome evaluation. Cases preserve task, stimulus, and expected outcome; pinned graders declare identity and independence. A report never authorizes work or writes lifecycle state.",
+  "description": "Proposed evidence-only report for agent capability, delivery factory, or product outcome evaluation. Reports pin pre-registered dataset selection, evaluator versions, calibration, and independence; a report never authorizes work or writes lifecycle state.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "contractVersion", "reportId", "generatedAt", "classification", "evaluationMode", "layer", "subject", "dataset", "cases", "dependencies", "graders", "results", "baseline", "comparison", "improvementHypothesis", "uncertainty", "review", "regressionAssessment", "evidence", "recommendation", "limitations"],
+  "required": ["$schema", "contractVersion", "reportId", "runStartedAt", "generatedAt", "classification", "evaluationMode", "layer", "subject", "dataset", "cases", "dependencies", "graders", "results", "baseline", "comparison", "improvementHypothesis", "uncertainty", "review", "regressionAssessment", "evidence", "recommendation", "limitations"],
   "properties": {
     "$schema": {
       "oneOf": [
@@ -18,6 +18,7 @@
     },
     "contractVersion": { "const": "2.0.0" },
     "reportId": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$" },
+    "runStartedAt": { "type": "string", "format": "date-time" },
     "generatedAt": { "type": "string", "format": "date-time" },
     "classification": { "enum": ["synthetic", "observed"] },
     "evaluationMode": { "enum": ["offline", "live"] },
@@ -34,11 +35,44 @@
     },
     "dataset": {
       "type": "object", "additionalProperties": false,
-      "required": ["id", "version", "sourcePin", "caseIds"],
+      "required": ["id", "version", "sourcePin", "partition", "selection", "integrity", "caseIds"],
       "properties": {
         "id": { "$ref": "#/$defs/nonEmptyString" },
         "version": { "$ref": "#/$defs/nonEmptyString" },
         "sourcePin": { "$ref": "#/$defs/sourcePin" },
+        "partition": { "enum": ["development", "calibration", "validation", "holdout", "synthetic"] },
+        "selection": {
+          "type": "object", "additionalProperties": false,
+          "required": ["policyPin", "registeredAt", "sampling", "eligiblePopulation", "inclusionCriteria", "exclusions"],
+          "properties": {
+            "policyPin": { "$ref": "#/$defs/sourcePin" },
+            "registeredAt": { "type": "string", "format": "date-time" },
+            "sampling": { "enum": ["census", "random", "stratified", "manual-pre-registered"] },
+            "eligiblePopulation": { "$ref": "#/$defs/nonEmptyString" },
+            "inclusionCriteria": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonEmptyString" } },
+            "exclusions": {
+              "type": "array",
+              "items": {
+                "type": "object", "additionalProperties": false,
+                "required": ["caseId", "rationale"],
+                "properties": {
+                  "caseId": { "$ref": "#/$defs/nonEmptyString" },
+                  "rationale": { "$ref": "#/$defs/nonEmptyString" }
+                }
+              }
+            }
+          }
+        },
+        "integrity": {
+          "type": "object", "additionalProperties": false,
+          "required": ["contaminationStatus", "assessedAt", "provenanceBasis", "evidenceRefs"],
+          "properties": {
+            "contaminationStatus": { "enum": ["assessed-no-known-contamination", "suspected", "unknown"] },
+            "assessedAt": { "type": "string", "format": "date-time" },
+            "provenanceBasis": { "$ref": "#/$defs/nonEmptyString" },
+            "evidenceRefs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonEmptyString" } }
+          }
+        },
         "caseIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } }
       }
     },
@@ -323,17 +357,18 @@
     },
     "pinnedDefinition": {
       "type": "object", "additionalProperties": false,
-      "required": ["id", "version", "sourcePin", "evaluator", "independence"],
+      "required": ["id", "version", "sourcePin", "evaluator", "independence", "calibration"],
       "properties": {
         "id": { "$ref": "#/$defs/nonEmptyString" },
         "version": { "$ref": "#/$defs/nonEmptyString" },
         "sourcePin": { "$ref": "#/$defs/sourcePin" },
         "evaluator": {
           "type": "object", "additionalProperties": false,
-          "required": ["id", "kind"],
+          "required": ["id", "kind", "version"],
           "properties": {
             "id": { "$ref": "#/$defs/nonEmptyString" },
-            "kind": { "enum": ["deterministic-tool", "human", "agent", "model", "service"] }
+            "kind": { "enum": ["deterministic-tool", "human", "agent", "model", "service"] },
+            "version": { "$ref": "#/$defs/nonEmptyString" }
           }
         },
         "independence": {
@@ -343,6 +378,23 @@
             "relation": { "enum": ["independent", "not-independent", "unknown"] },
             "basis": { "$ref": "#/$defs/nonEmptyString" }
           }
+        },
+        "calibration": {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "rationale"],
+          "properties": {
+            "status": { "enum": ["verified", "inconclusive", "not-applicable"] },
+            "evaluatorVersion": { "$ref": "#/$defs/nonEmptyString" },
+            "datasetPin": { "$ref": "#/$defs/sourcePin" },
+            "resultRef": { "type": "string", "minLength": 1, "format": "uri-reference" },
+            "rationale": { "$ref": "#/$defs/nonEmptyString" }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "status": { "const": "verified" } }, "required": ["status"] },
+              "then": { "required": ["evaluatorVersion", "datasetPin", "resultRef"] }
+            }
+          ]
         }
       }
     },

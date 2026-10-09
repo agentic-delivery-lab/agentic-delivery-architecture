@@ -105,7 +105,39 @@ function validateCrossFieldConstraints(schemaName, relativePath, value) {
     throw new Error(`${relativePath} cases must cover exactly the pinned dataset case IDs`);
   }
 
+  const registeredAt = Date.parse(value.dataset?.selection?.registeredAt ?? '');
+  const integrityAssessedAt = Date.parse(value.dataset?.integrity?.assessedAt ?? '');
+  const runStartedAt = Date.parse(value.runStartedAt ?? '');
+  const generatedAt = Date.parse(value.generatedAt ?? '');
+  if (registeredAt >= runStartedAt || integrityAssessedAt >= runStartedAt || runStartedAt >= generatedAt) {
+    throw new Error(`${relativePath} selection policy and dataset-integrity assessment must be recorded before the candidate run starts, and the report must be generated after it starts`);
+  }
+
   if (!['improvement', 'regression', 'no-change'].includes(value.comparison?.claim)) return;
+
+  if (!['validation', 'holdout'].includes(value.dataset?.partition)) {
+    throw new Error(`${relativePath} comparative claims require a validation or holdout dataset partition`);
+  }
+
+  if (value.dataset?.integrity?.contaminationStatus !== 'assessed-no-known-contamination') {
+    throw new Error(`${relativePath} comparative claims require a dataset assessed with no known contamination`);
+  }
+
+  const gradersAreIndependentAndCalibrated = Object.values(value.graders ?? {}).every((grader) => (
+    grader.independence?.relation === 'independent'
+    && grader.calibration?.status === 'verified'
+  ));
+  if (!gradersAreIndependentAndCalibrated || value.review?.status !== 'independent') {
+    throw new Error(`${relativePath} comparative claims require independent, calibrated graders and an independent review`);
+  }
+
+  const calibrationMatchesPinnedEvaluator = Object.values(value.graders ?? {}).every((grader) => (
+    grader.calibration?.evaluatorVersion === grader.evaluator?.version
+  ));
+  if (!calibrationMatchesPinnedEvaluator) {
+    throw new Error(`${relativePath} comparative claims require calibration evidence for each pinned evaluator version`);
+  }
+
   const baseline = value.baseline?.measurement;
   const candidate = value.comparison?.candidateMeasurement;
   const mismatches = ['metricId', 'unit', 'observationWindow']

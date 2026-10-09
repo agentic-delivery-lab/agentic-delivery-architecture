@@ -91,6 +91,12 @@ test('evaluation report contract distinguishes layers, pins, baselines, and evid
   const reportPath = 'architecture/evaluation/examples/agent-capability-report.yml';
   const report = parseRepositoryYaml(await readFile(path.join(root, reportPath), 'utf8'), reportPath);
   await validateStructuredValue(root, reportPath, report);
+  assert.ok(Date.parse(report.dataset.selection.registeredAt) < Date.parse(report.runStartedAt));
+  assert.equal(report.dataset.partition, 'synthetic');
+  assert.ok(report.dataset.selection.policyPin.sha256);
+  assert.equal(report.dataset.integrity.contaminationStatus, 'unknown');
+  assert.ok(Date.parse(report.dataset.integrity.assessedAt) < Date.parse(report.runStartedAt));
+  assert.equal(report.graders.semantic.calibration.status, 'not-applicable');
   const missingCaseDefinition = structuredClone(report);
   delete missingCaseDefinition.cases;
   await assert.rejects(
@@ -101,6 +107,7 @@ test('evaluation report contract distinguishes layers, pins, baselines, and evid
   assert.ok(report.cases[0].task && report.cases[0].stimulus && report.cases[0].expectedOutcome.acceptanceCriteria.length > 0);
   assert.ok(report.graders.deterministic.evaluator.id);
   assert.equal(report.graders.deterministic.evaluator.kind, 'deterministic-tool');
+  assert.ok(report.graders.deterministic.evaluator.version);
   assert.ok(report.graders.deterministic.independence.relation && report.graders.deterministic.independence.basis);
 
   const missingExpectedOutcome = structuredClone(report);
@@ -110,6 +117,26 @@ test('evaluation report contract distinguishes layers, pins, baselines, and evid
   const missingEvaluatorIdentity = structuredClone(report);
   delete missingEvaluatorIdentity.graders.deterministic.evaluator.id;
   await assert.rejects(validateStructuredValue(root, reportPath, missingEvaluatorIdentity), /must have required property 'id'/);
+
+  const missingEvaluatorVersion = structuredClone(report);
+  delete missingEvaluatorVersion.graders.semantic.evaluator.version;
+  await assert.rejects(validateStructuredValue(root, reportPath, missingEvaluatorVersion), /must have required property 'version'/);
+
+  const unregisteredSelection = structuredClone(report);
+  unregisteredSelection.dataset.selection.registeredAt = '2026-10-09T09:01:00Z';
+  await assert.rejects(validateStructuredValue(root, reportPath, unregisteredSelection), /selection policy and dataset-integrity assessment must be recorded before the candidate run starts/);
+
+  const concurrentlyRegisteredSelection = structuredClone(report);
+  concurrentlyRegisteredSelection.dataset.selection.registeredAt = concurrentlyRegisteredSelection.runStartedAt;
+  await assert.rejects(validateStructuredValue(root, reportPath, concurrentlyRegisteredSelection), /selection policy and dataset-integrity assessment must be recorded before the candidate run starts/);
+
+  const postRunIntegrityAssessment = structuredClone(report);
+  postRunIntegrityAssessment.dataset.integrity.assessedAt = postRunIntegrityAssessment.runStartedAt;
+  await assert.rejects(validateStructuredValue(root, reportPath, postRunIntegrityAssessment), /dataset-integrity assessment must be recorded before the candidate run starts/);
+
+  const reportGeneratedAtRunStart = structuredClone(report);
+  reportGeneratedAtRunStart.generatedAt = reportGeneratedAtRunStart.runStartedAt;
+  await assert.rejects(validateStructuredValue(root, reportPath, reportGeneratedAtRunStart), /report must be generated after it starts/);
 
   const unclassifiedFailure = structuredClone(report);
   unclassifiedFailure.cases[0].outcome = 'fail';
@@ -182,7 +209,52 @@ test('evaluation report contract distinguishes layers, pins, baselines, and evid
     metricId: 'task-success',
     expectedDirection: 'higher-is-better',
   };
+  comparableImprovement.dataset.partition = 'validation';
+  comparableImprovement.dataset.integrity = {
+    contaminationStatus: 'assessed-no-known-contamination',
+    assessedAt: comparableImprovement.dataset.integrity.assessedAt,
+    provenanceBasis: 'The pre-registered validation cases were checked against candidate-development artifacts and author access records.',
+    evidenceRefs: ['https://github.com/agentic-delivery-lab/agentic-delivery-primitives/blob/0123456789abcdef0123456789abcdef01234567/evaluations/validation/integrity-review.yml'],
+  };
+  comparableImprovement.graders.deterministic.independence.relation = 'independent';
+  comparableImprovement.graders.semantic.independence.relation = 'independent';
+  for (const grader of Object.values(comparableImprovement.graders)) {
+    grader.calibration = {
+      status: 'verified',
+      evaluatorVersion: grader.evaluator.version,
+      datasetPin: structuredClone(comparableImprovement.dataset.sourcePin),
+      resultRef: 'https://github.com/agentic-delivery-lab/agentic-delivery-primitives/blob/0123456789abcdef0123456789abcdef01234567/evaluations/calibration/result.yml',
+      rationale: 'A pinned calibration set was replayed against this exact grader version.',
+    };
+  }
+  comparableImprovement.review.status = 'independent';
+  comparableImprovement.review.reviewerId = 'independent-validator';
+  comparableImprovement.review.rationale = 'A reviewer outside the candidate authorship reviewed the result.';
   await validateStructuredValue(root, reportPath, comparableImprovement);
+
+  const selfGradedComparison = structuredClone(comparableImprovement);
+  selfGradedComparison.graders.semantic.independence.relation = 'not-independent';
+  await assert.rejects(validateStructuredValue(root, reportPath, selfGradedComparison), /comparative claims require independent, calibrated graders and an independent review/);
+
+  const uncalibratedComparison = structuredClone(comparableImprovement);
+  uncalibratedComparison.graders.semantic.calibration.status = 'inconclusive';
+  await assert.rejects(validateStructuredValue(root, reportPath, uncalibratedComparison), /comparative claims require independent, calibrated graders and an independent review/);
+
+  const staleCalibration = structuredClone(comparableImprovement);
+  staleCalibration.graders.semantic.calibration.evaluatorVersion = 'older-evaluator-version';
+  await assert.rejects(validateStructuredValue(root, reportPath, staleCalibration), /require calibration evidence for each pinned evaluator version/);
+
+  const selectedDevelopmentSet = structuredClone(comparableImprovement);
+  selectedDevelopmentSet.dataset.partition = 'development';
+  await assert.rejects(validateStructuredValue(root, reportPath, selectedDevelopmentSet), /comparative claims require a validation or holdout dataset partition/);
+
+  const contaminatedComparison = structuredClone(comparableImprovement);
+  contaminatedComparison.dataset.integrity.contaminationStatus = 'suspected';
+  await assert.rejects(validateStructuredValue(root, reportPath, contaminatedComparison), /comparative claims require a dataset assessed with no known contamination/);
+
+  const unknownIntegrityComparison = structuredClone(comparableImprovement);
+  unknownIntegrityComparison.dataset.integrity.contaminationStatus = 'unknown';
+  await assert.rejects(validateStructuredValue(root, reportPath, unknownIntegrityComparison), /comparative claims require a dataset assessed with no known contamination/);
 
   const incomparableImprovement = structuredClone(comparableImprovement);
   incomparableImprovement.comparison.candidateMeasurement.observationWindow = '2026-Q4';
@@ -302,7 +374,7 @@ test('diagram sources remain model-first and structurally valid', async () => {
 test('organizational strategy has stable goals, measurable evidence, and fail-closed Project boundaries', async () => {
   const result = await validateOrganizationalStrategy(root);
   assert.equal(result.goals, 7);
-  assert.equal(result.measures, 9);
+  assert.equal(result.measures, 12);
   assert.equal(result.valueStreams, 2);
   assert.ok(result.traceabilityLinks >= 100);
 
@@ -325,6 +397,11 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
     const row = strategy.sourceOfTruth.find(({ fact }) => factPattern.test(fact));
     assert.ok(row && ownerPattern.test(row.owner), `source-of-truth map must cover ${factPattern}`);
   }
+  const operationalGoal = strategy.strategicGoals.find(({ id }) => id === 'SG-03');
+  assert.ok(['SM-002', 'SM-010', 'SM-011'].every((id) => operationalGoal.measureIds.includes(id)));
+  assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-010' && /budget/i.test(name)));
+  assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-011' && /recovery/i.test(name)));
+  assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-012' && /evaluation integrity/i.test(name)));
   const unresolvedResearchSource = structuredClone(strategy);
   unresolvedResearchSource.researchBasis[0].source = 'https://example.com/unlisted-research';
   assert.ok(validateOrganizationalStrategyValue(unresolvedResearchSource)

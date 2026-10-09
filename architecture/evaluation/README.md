@@ -25,12 +25,16 @@ measures and interpretation.
 
 ## Required evidence
 
-Every report identifies its layer and matching subject, evaluation mode,
-generation time, and immutable source pins for the subject, dataset, each
-grader, comparator, baseline definition, and dependencies. Dataset identity
-includes the evaluated case IDs. Every report repeats each case's task,
+Every report identifies its layer and matching subject, evaluation mode, run
+start and report time, and immutable source pins for the subject, dataset,
+case-selection policy, each grader, comparator, baseline definition, and
+dependencies. The dataset declares whether cases are for development,
+calibration, validation, holdout, or a synthetic example. Its pre-registered
+selection record states the eligible population, sampling method, inclusion
+criteria, and exclusions. Every report repeats each selected case's task,
 stimulus, expected outcome and acceptance criteria, observed outcome, and
-evidence; its case set must exactly match the pinned dataset. Pins carry
+evidence; its case set must exactly match the pinned dataset. A selection
+policy must be registered before the candidate run starts. Pins carry
 repository, commit, path, and content digest so the evidence can be retrieved
 and checked again.
 
@@ -41,16 +45,30 @@ branch or tag is not a valid report-contract reference. Consumers should pin
 the report-schema dependency in their own release context as well.
 
 Deterministic checks record their stable check IDs, outcomes, failure class
-when they fail, and evidence references. Each pinned grader names its evaluator
-and states whether it is independent of the subject and author, not independent,
-or unknown, with a basis for that statement. A deterministic grader identifies
-the deterministic tool that ran it. Semantic judgments are a separate
-collection and identify the reviewer, relationship to the author, judgment,
-rationale, and uncertainty. Failed cases and unacceptable judgments carry an
-explicit failure class.
+when they fail, and evidence references. Each pinned grader names its evaluator,
+kind, and version, and states whether it is independent of the subject and
+author, not independent, or unknown, with a basis for that statement. It also
+records calibration status and, when verified, pins the calibration dataset
+and result. A deterministic grader identifies the deterministic tool that ran
+it. Semantic judgments are a separate collection and identify the reviewer,
+relationship to the author, judgment, rationale, and uncertainty. Failed cases
+and unacceptable judgments carry an explicit failure class.
 The report also records whether independent review is complete, the regression
 severity assessment, and any recommended next step with an owner Issue link
 when known.
+
+Comparative claims use only a validation or holdout partition whose dataset
+integrity is assessed with no known contamination, and require independent,
+calibrated graders and an independent review. The report records the
+assessment time, basis, and evidence references before the candidate run;
+`suspected` or `unknown` status keeps a comparison inconclusive. Calibration
+evidence names the exact pinned evaluator version; changing that version
+requires new calibration evidence before results can support a comparison.
+Unknown independence, stale or missing calibration, contamination, or
+unexplained case exclusions keep the result inconclusive.
+The pinned selection policy and exact case coverage make the population and
+sampling decision reviewable before any result is interpreted; a favorable
+subset cannot silently stand in for the declared eligible population.
 
 An unmeasured baseline must be represented explicitly. A report may not claim
 improvement unless it includes a measured, pinned baseline, a comparable
@@ -58,6 +76,13 @@ candidate measurement for the same metric, unit, and observation window under
 the pinned comparator, and a testable improvement hypothesis for that metric.
 Missing, incomparable, or uncertain evidence must remain visible as such; it
 cannot be filled with activity counts or inferred from a passing build.
+
+The schema verifies pins, declared partitions, selection timing, exact case
+coverage, calibration references, and the evidence gates for comparative
+claims. It cannot by itself prove that a population is representative, a
+calibration set is uncontaminated, or a reviewer is truly independent. Those
+claims require source inspection and accountable human review; the contract
+records their evidence and fails closed when the relationship is unknown.
 
 ## Authority and ownership
 

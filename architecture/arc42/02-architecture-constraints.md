@@ -39,6 +39,13 @@ origin repository and issue, actor authorization, schema, native type,
 field/option identity, allowed transition, and orchestration policy before a
 write. Human review and merge authority remain with repository maintainers.
 
+Each authorized agentic operation needs a pinned upper bound for wall time,
+turns or invocations, retries, and recursion. The controller must stop
+privileged work at a hard limit and record usage and disposition; runtime
+quota or spend values remain unknown when the approved runtime does not expose
+them. Evaluation must not require chargeable external infrastructure without
+explicit authorization.
+
 ## 2.3 Interface and release constraints
 
 - Architecture and Primitive interfaces identify immutable source commits and

@@ -25,6 +25,10 @@ product-repository creation, merges, releases, or participant activation.
 - Every report distinguishes deterministic checks from semantic judgments and
   pins its subject, dataset/case, grader, comparator, baseline, and dependencies
   by immutable source identity and digest.
+- Reports also pin a pre-run case-selection policy and dataset partition,
+  evaluator versions, calibration evidence, and reviewer independence.
+  Comparative claims use only validation or holdout cases and fail closed when
+  grading or review independence is unknown.
 - An unmeasured baseline forbids improvement claims. An evaluation result
   cannot itself create or prioritize work, authorize execution, alter policy,
   or approve a release. A separately authorized source Issue may request a
@@ -48,7 +52,10 @@ owns product discovery; [Control Plane #101](https://github.com/agentic-delivery
 owns the provisional Project-planning contract; and [Distribution #3](https://github.com/agentic-delivery-lab/agentic-delivery-distribution/issues/3)
 owns conditional consumer onboarding. Architecture [#15](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15)
 owns the human portfolio-topology decision; Control Plane [#103](https://github.com/agentic-delivery-lab/agentic-delivery/issues/103)
-owns bounded evaluation-finding routing.
+owns bounded evaluation-finding routing. Control Plane [#105](https://github.com/agentic-delivery-lab/agentic-delivery/issues/105)
+owns per-run resource budgets and safe recovery receipts. It has no Project
+association yet; Architecture #15 owns the human topology decision needed to
+choose the Factory Evolution view.
 
 ### Phase 1: Specify evidence boundaries
 
@@ -125,8 +132,11 @@ owns bounded evaluation-finding routing.
   improvement hypotheses.
   - Acceptance: Case IDs exactly match the pinned dataset; comparisons require
     the same metric, unit, and observation window; improvement claims require
-    a measured pinned baseline and a testable hypothesis. The example remains
-    explicitly synthetic and no run is fabricated.
+    a measured pinned baseline and a testable hypothesis. Comparative claims
+    also require a pre-run selection policy and dataset-integrity assessment,
+    validation/holdout partition with no known contamination, independently
+    calibrated grader/evaluator versions, and independent review.
+    The example remains synthetic and no run is fabricated.
   - Verification: Focused contract tests, `pnpm architecture:check`,
     `pnpm migration:check`, and `pnpm test`.
   - Dependencies: Tasks 1–3.
@@ -163,12 +173,31 @@ owns bounded evaluation-finding routing.
     its schema, runtime/quality arc42 sections, and strategy trace references.
   - Estimated scope: Small.
 
+### Phase 8: Cover bounded operations and evaluation integrity
+
+- [x] Task 8: Trace the missing security/reliability/observability/resource-
+  budget/human-accountability themes into quality scenarios, unmeasured
+  measures, evaluation-contract checks, and the architecture risk register.
+  - Acceptance: QR-017/QR-018 specify hard run limits and safe recovery;
+    QR-019 specifies drift, contamination, case selection, and self-grading
+    protections. SM-010–SM-012 define inspectable measures without inventing
+    baselines or claiming runtime adoption.
+  - Verification: Focused evaluation and strategy tests; `pnpm
+    architecture:check`, `pnpm migration:check`, and `pnpm test`.
+  - Dependencies: Architecture #11 review; owner-specific runtime/evaluation
+    implementation remains gated on the accepted Architecture contract.
+  - Files touched: evaluation schema/fixture/validator, strategy, quality
+    scenarios, arc42, risk register, evidence, and tests.
+  - Estimated scope: Medium.
+
 ## Risks and Mitigations
 
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
 | The schema is mistaken for an implemented evaluator. | High | Label it proposed; keep the example synthetic; distinguish it from Primitives #3 and any runtime execution. |
 | A favorable result is claimed without a comparable baseline. | High | Require a measured pinned baseline for improvement claims and carry uncertainty in every report. |
+| Grader drift, benchmark contamination, favorable-case selection, or self-grading invalidates comparisons. | High | Pin evaluator versions and calibration; pre-register case selection; use validation/holdout partitions and independent review; keep unknown results inconclusive. |
+| Agent turns, retries, recursion, or unavailable quota accounting exceed bounded resources. | High | Require deterministic per-run caps and terminal usage receipts; report unknown quota/spend honestly and stop at hard limits. |
 | Product fields over-standardize product outcomes. | Medium | Keep the report envelope generic and let product owners define domain-specific measures. |
 | A complete Project inventory is mistaken for proof about unrelated owners or future field visibility. | High | Record the authenticated owners and page completion; keep any future Project's field visibility and entitlement unverified. |
 
@@ -182,6 +211,9 @@ owns bounded evaluation-finding routing.
   as unknown pending discovery.
 - Which dataset, deterministic graders, replay runner, and independent
   reviewer are available? Primitives #3 owns that implementation discovery.
+- Which run limits are available in the approved Codex runner, and which quota
+  or spend counters does it expose? Control Plane #105 owns the design and
+  evidence; Project association remains pending Architecture #15.
 
 ## Continuation Plan for Architecture Issue #11
 
@@ -260,13 +292,23 @@ complete GraphQL Project inventory. OAuth scopes describe this user's API
 access; they neither grant Projects access to the runtime App nor authorize a
 Project or organization-settings change.
 
+At 17:02 UTC, a fresh GraphQL recheck with the expanded OAuth identity
+returned zero Project v2 nodes for the organization, authenticated user, and
+all six visible repositories. At 17:11 UTC, organization and user
+`gh project list --closed` queries were also empty; Issue metadata reads
+returned nine native types and six member-only organization fields. At
+17:17 UTC, Control Plane #105 was created as a native `Task` for per-run
+budgets and safe recovery receipts. At 17:18, all six repository open-Issue
+counts totaled 20; #105 had no Project item. Architecture #15 remains the
+human topology gate, and no live Project or runtime setting changed.
+
 The pre-continuation Architecture review identified three proposal gaps:
 strategy traceability stopped before quality goals, principles, ADRs,
 capabilities/contracts, owner Issues/Project planning, and evaluation evidence;
 several required system and trust-boundary views were absent; and the initial
 evaluation contract lacked case stimulus/expected-outcome details, deterministic
 evaluator identity/independence, failure classification, improvement hypothesis,
-and portable comparability checks for units and observation windows. Phases 4–7
+and portable comparability checks for units and observation windows. Phases 4–8
 below address those local Architecture gaps. Structural validation still does
 not establish semantic adoption, independent approval, runtime operation, or
 measured outcomes.
@@ -296,6 +338,9 @@ measured outcomes.
   untrusted and deterministic authorization remains separate.
 - Existing open PRs remain provisional until independent review. This plan
   grants no live GitHub configuration or merge authority.
+- Authorized execution remains time-, invocation-, retry-, and recursion-
+  bounded. Control Plane #105 is the owner task; the proposed architecture
+  contract does not claim those runtime receipts are already implemented.
 
 ### Ordered owner work and dependency map
 
@@ -321,6 +366,7 @@ that Issue or associate it with a Project.
 | 6 | Control Plane #101 / PR #102 | Keep Project context as planning input. Offline fixtures cover Project-only cards, foreign repository identities, same-number Issues in different repositories, multiple candidate links, missing Project/Issue read permissions, inaccessible or mismatched Projects, unsupported/stale fields, and dependency-only cards. Closed or transferred source Issues remain canonical Issue-state cases for the runtime gate, not decisions made by this normalizer. The positive fixture re-fetches the origin repository and Issue and checks the actor gate; it does not replace lifecycle, readiness, or plan authorization. | Depends on AP-004 and ADR-0023. Run focused planning-contract tests and the Control Plane quality, migration, portability, and hosted checks. Prove normalization cannot turn Project membership into authorization. No live Project integration is implied. | Planning-context module, schema, tests; M. |
 | 7 | New Control Plane child Issue under Architecture #11 | Add a compact trusted strategy context to eligible Codex runs, pinned to an approved Architecture release and digest, selecting only relevant goals, principles, ADRs, contexts, and quality/evaluation criteria. Bind it to the exact authorized source Issue and repository identity, applicable role/capabilities, enforcement policy, and required validation; Project facts remain optional read-only context. Keep Issue and Project text untrusted and unable to alter deterministic authorization. | Depends on Architecture #14 review/merge and an approved release pin, Control Plane #60/#66 metadata contracts, and #101's planning boundary. Static review at exact `main` commit `67e5941` confirms the app-server starts at `controllerRoot`, each thread starts/resumes at the isolated Issue workspace, `.agents/codex-delivery.md` is passed as developer instructions, and plugins/apps are disabled; the exact `0.159.3` CLI's root-to-cwd discovery and project-root boundary passed an isolated prompt-input test. Existing tests do not assert the thread `cwd` payload. Add that assertion and test the real Actions runner workspace, distributed customizations that remain supported with plugins disabled, missing/incompatible pins, injection attempts, and no moving-branch strategy fallback. Create the child Issue before code; no Project permission is inferred for the App. | Strategy-context selector/envelope, runtime instructions, tests; M. |
 | 8 | Control Plane #103 / PR #104 | Route only validated, pinned findings with an unambiguous canonical owner to a reviewable Issue proposal or a bounded create/update operation authorized by a separate source Issue. The proposed Issue must carry the observed problem/evidence, affected goals and capability, cause hypothesis, alternatives, risk, acceptance/eval criteria, baseline, authorization needs, and rollback. The finding cannot set priority or initiate execution. | Depends on the revised report contract and verified owner-routing evidence; end-to-end replay also depends on Primitives #3. Test owner ambiguity, self-targets, malformed/unpinned evidence, recursion depth, invocation/time budget, actor limits, idempotency, and event provenance; run focused routing tests and full Control Plane checks. | Evaluation router, owner map contract, retained result evidence/tests; M. |
+| 8a | Control Plane #105 | Enforce pinned per-run duration, turn/invocation, retry, and recursion limits; record admission and terminal usage/stop receipts; distinguish webhook delivery replay, Codex continuation, and evaluation replay; preserve safe recovered-or-held dispositions and zero duplicate protected writes. | Depends on Architecture #14 review/merge. Associate with the approved Factory Evolution Project only after Architecture #15 and Project provisioning; currently #105 has no Project item. Keep all participants in existing modes until separate review/authorization. | Control Plane admission/receipt/recovery path and fixtures; M. |
 | 9 | Control Plane #60 | Complete the canonical Issue Field and lifecycle contract using stable field identities, supported values, and the legacy Delivery Readiness compatibility rule. Keep native Issue Type separate from lifecycle, delivery readiness, runner, and PR states. | Coordinate with the existing active #60 worktree and inspect its dirty files before resuming; #62 is its canary. Run migration, field-contract, issue-intake, and scoped live evidence only as already authorized there. | `config/issue-metadata.yml`, issue-field API/tests, audit docs; M. |
 | 10 | Architecture #15 | Record the accountable human's decision on the one-Project/two-view proposal, including owner, visibility, membership, and field semantics. If approved in principle, track actual configuration separately with explicit authorization; if rejected, record the alternative. | Human decision gate. Do not create or configure a Project, change field visibility, or add/move Issue items in this task. | Issue decision record only; XS. |
 | 11 | Architecture #13 | Identify a real product repository, accountable steward, users/operators, approved evidence path, outcome signals, and observation windows. Keep product metrics and baselines unknown until evidence exists. | Requires human/product-owner input. Do not create a product repository or infer one from the six factory repositories. | Issue decision record only; XS. |

@@ -268,6 +268,13 @@ export function validateOrganizationalStrategyValue(strategy, {
   if (!/dependency fields, or automation never authorizes or blocks execution/i.test(strategy.projectPlanning?.executionAuthorizationRule ?? '')) {
     errors.push('Project state or dependencies must never authorize or block execution');
   }
+  const projectReadFailureRule = strategy.projectPlanning?.projectReadFailureRule ?? '';
+  if (!/reported as a planning gap and holds only operations that require that Project context/i.test(projectReadFailureRule)) {
+    errors.push('Project read failure must hold only operations that require Project context');
+  }
+  if (!/otherwise authorized Issue-first security or recovery operation may proceed without Project access/i.test(projectReadFailureRule)) {
+    errors.push('Project read failure must preserve an otherwise authorized Issue-first security or recovery operation');
+  }
   if (!/planning input/i.test(strategy.projectPlanning?.projectOnlyCardRule ?? '')
     || !/authorized source Issue/i.test(strategy.projectPlanning?.projectOnlyCardRule ?? '')) {
     errors.push('a Project-only card must remain planning input until linked to an authorized source Issue');

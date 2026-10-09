@@ -5,7 +5,7 @@
 ## 2.1 Organization and repository constraints
 
 - The system spans six repositories with distinct owners. The source commits
-  observed on 2026-09-24 are listed in
+  observed in the complete inventory on 2026-10-09 are listed in
   [system evidence](../references/system-evidence.yml).
 - Architecture Authority owns principles, terminology, architecture
   descriptions, and organization-wide decision text, including context-local

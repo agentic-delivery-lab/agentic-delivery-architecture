@@ -415,6 +415,18 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
   projectCanAuthorize.projectPlanning.executionAuthorizationRule = 'Project status authorizes execution.';
   assert.ok(validateOrganizationalStrategyValue(projectCanAuthorize).some((error) => /never authorize or block execution/.test(error)));
 
+  const projectReadFailureBlocksRecovery = structuredClone(strategy);
+  projectReadFailureBlocksRecovery.projectPlanning.projectReadFailureRule =
+    'Unavailable Project data is reported as a planning gap and holds only operations that require that Project context. It never authorizes or redirects execution. A security or recovery operation must wait for Project access.';
+  assert.ok(validateOrganizationalStrategyValue(projectReadFailureBlocksRecovery)
+    .some((error) => /preserve an otherwise authorized Issue-first security or recovery operation/.test(error)));
+  const missingProjectReadFailureRule = structuredClone(strategy);
+  delete missingProjectReadFailureRule.projectPlanning.projectReadFailureRule;
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', missingProjectReadFailureRule),
+    /projectReadFailureRule/,
+  );
+
   const inventedTarget = structuredClone(strategy);
   inventedTarget.successMeasures[0].targetStatus = 95;
   assert.ok(validateOrganizationalStrategyValue(inventedTarget).some((error) => /invalid target status/.test(error)));
@@ -471,6 +483,23 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
 
   const productRegressionMeasure = strategy.successMeasures.find((measure) => measure.id === 'SM-007');
   assert.match(productRegressionMeasure.computation, /same completed observation window/i);
+  const productOutcomeGoal = strategy.strategicGoals.find(({ id }) => id === 'SG-02');
+  const adoptionGoal = strategy.strategicGoals.find(({ id }) => id === 'SG-05');
+  assert.ok(productOutcomeGoal.measureIds.includes('SM-007'));
+  assert.ok(!adoptionGoal.measureIds.includes('SM-007'));
+
+  const qualityScenarios = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/quality/quality-scenarios.yml'), 'utf8'),
+    'quality-scenario strategy fixture',
+  );
+  const projectAccessScenario = qualityScenarios.scenarios.find(({ id }) => id === 'QR-014');
+  assert.match(projectAccessScenario.response, /hold only operations that require Project context/i);
+  assert.match(projectAccessScenario.response, /otherwise authorized Issue-first security or recovery operation may proceed without Project access/i);
+  const riskRegister = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/risks/risks.yml'), 'utf8'),
+    'risk strategy fixture',
+  );
+  assert.equal(riskRegister.risks.find(({ id }) => id === 'R-012').relatedQualityScenario, 'QR-014');
   const zeroDenominator = structuredClone(measured);
   zeroDenominator.successMeasures[0].baseline.denominator = 0;
   assert.ok(validateOrganizationalStrategyValue(zeroDenominator).some((error) => /zero denominator and numerator as undefined/.test(error)));

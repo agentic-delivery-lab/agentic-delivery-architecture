@@ -52,8 +52,11 @@ unknown.
   and evaluation semantics.
 - Represent both value streams in one reviewable portfolio and distinguish
   factory improvements from software delivered to users.
-- Fail closed when Project identity, Issue identity, access, field meaning, or
-  the source authorization is unknown.
+- Fail closed for Issue execution when origin identity, actor permission, or
+  required policy is unknown. Hold only Project-dependent operations when
+  Project identity, access, or field meaning cannot be verified; report the
+  planning gap and preserve otherwise authorized Issue-first security or
+  recovery work without requiring Project access.
 - Avoid an unreviewed Project mutation, permission expansion, or duplicated
   Issue field; retain the separate Architecture #15 human decision before
   creating or configuring a Project.
@@ -126,10 +129,11 @@ or App configuration change.
 - Architecture checks validate stable strategy goal and measure IDs, source
   references, the Project-only-card invariant, and the exact decision set.
 - The Control Plane phase adds deterministic fixture coverage proving that a
-  Project-only card, Project dependency alone, wrong repository identity,
-  missing Issue permission, or unreadable Project state cannot authorize,
-  block, or start execution; valid work still originates from the authorized
-  Issue.
+  Project-only card or Project dependency cannot authorize execution, and that
+  wrong Issue identity or missing Issue permission cannot start a run. Missing
+  Project context holds only Project-dependent operations; an otherwise
+  authorized Issue-first security or recovery path remains available without
+  Project access.
 - An operator read-only inventory confirms Project identity, membership,
   field configuration, and visibility before any board configuration or write
   integration is proposed. Current evidence reports Project features
@@ -156,8 +160,8 @@ or App configuration change.
 
 - Good, because portfolio visibility and Issue-based execution authority
   coexist with explicit field ownership.
-- Good, because Project-only planning and missing access can fail closed
-  without losing the plan.
+- Good, because Project-only planning and Project-dependent actions hold safely
+  without losing the source Issue or blocking independent Issue-first recovery.
 - Bad, because the future integration needs Project access, visible fields,
   reconciliation, permission-failure handling, and owner-specific tests.
 

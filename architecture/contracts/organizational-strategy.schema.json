@@ -306,25 +306,26 @@
       "additionalProperties": false,
       "required": [
         "primarySurface", "proposedTopology", "currentInventoryStatus", "projectInventoryEvidenceId", "planningFieldRule",
-        "executionAuthorizationRule", "issueFieldConstraint", "projectOnlyCardRule"
+        "executionAuthorizationRule", "projectReadFailureRule", "issueFieldConstraint", "projectOnlyCardRule"
       ],
       "properties": {
         "primarySurface": { "const": "GitHub Projects" },
         "proposedTopology": { "type": "string", "minLength": 1 },
         "currentInventoryStatus": { "enum": ["unknown-no-read-project-scope", "inventoried"] },
-        "projectInventoryEvidenceId": { "type": "string", "pattern": "^project-inventory-[a-z0-9-]+$" },
+        "projectInventoryEvidenceId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
         "inventoryEvidence": {
           "type": "object",
           "additionalProperties": false,
           "required": ["observedAt", "projectIds", "scopeSummary"],
           "properties": {
-            "observedAt": { "type": "string", "format": "date" },
+            "observedAt": { "type": "string", "format": "date-time" },
             "projectIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
             "scopeSummary": { "type": "string", "minLength": 1 }
           }
         },
         "planningFieldRule": { "type": "string", "minLength": 1 },
         "executionAuthorizationRule": { "type": "string", "minLength": 1 },
+        "projectReadFailureRule": { "type": "string", "minLength": 1 },
         "issueFieldConstraint": { "type": "string", "minLength": 1 },
         "projectOnlyCardRule": { "type": "string", "minLength": 1 }
       },

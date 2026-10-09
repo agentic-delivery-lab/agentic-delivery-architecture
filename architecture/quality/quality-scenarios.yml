@@ -109,13 +109,13 @@ scenarios:
     evidence: [ADR-0012, ADR-0023, AP-004, strategy/organizational-strategy.yml#projectPlanning]
     status: target; Control Plane fixture and live Project integration evidence remain open
   - id: QR-014
-    name: Project access and identity failures fail closed
+    name: Project access and identity failures cannot authorize work
     stakeholder: organization-operator, security-reviewer
     concern: missing or ambiguous Project data must not authorize or redirect work
     stimulus: Project identity, membership, fields, visibility, repository identity, or permission is missing, unreadable, or inconsistent.
-    response: The planning view reports the gap; execution re-fetches the origin Issue and stops before mutation when identity, access, or authorization cannot be verified.
-    measure: Offline fixtures cover missing read scope, inaccessible Project, foreign repository ID, and missing Issue permission; each leaves Issue and repository state unchanged.
-    evidence: [ADR-0023, AP-002, system-evidence.yml#project-inventory-20261009-1153]
+    response: The planning view reports missing or ambiguous Project context and never treats it as authorization. The Control Plane re-fetches the origin Issue and independently checks its identity, actor permission, participant, policy, type, and transition. Hold only operations that require Project context; an otherwise authorized Issue-first security or recovery operation may proceed without Project access.
+    measure: Offline fixtures prove that missing Project access or mismatched Project identity never authorizes Project-dependent work, and that an otherwise authorized Issue-first security or recovery route remains available without a Project read. Missing origin-Issue permission or identity leaves Issue and repository state unchanged.
+    evidence: [ADR-0023, AP-002, system-evidence.yml#portfolio-issue-project-inventory-20261009-1839, system-evidence.yml#github-app-installation-inventory-20261009-1845]
     status: target; current organization, user, and repository Project inventory under an active organization admin identity returned no Projects; feature capability flags are true, while Project field visibility, App access, and live integration remain unknown
   - id: QR-015
     name: evaluation replay reproduces an attributable result

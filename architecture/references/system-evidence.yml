@@ -1037,3 +1037,149 @@ observations:
       state labels do not establish merge, release adoption, App runtime
       permissions, Project integration, or live delivery. Draft tags were not
       queried in this refresh.
+  - id: portfolio-issue-project-inventory-20261009-1839
+    observedAt: '2026-10-09T18:44:44Z'
+    source: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
+    request: >-
+      From 18:38:15 to 18:44:44 UTC, read organization, authenticated-user, and
+      six repository Project v2 connections and closed-inclusive CLI Project
+      lists; read all open Issues and their Project-item connections; read
+      organization Issue Types, Issue Fields, and Project capability flags;
+      read per-Issue field values using API version 2026-03-10; refresh open PRs,
+      main commits, and Releases in the six repositories. No live state was
+      changed.
+    projectInventoryComplete: true
+    projectIds: []
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: e835cb7439e4ad785f85b9e8e4b4c89fb8a47f3e
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/37974200878
+    result: >-
+      `gh auth status` confirmed the human `sjefsharp` CLI identity has
+      `project`, `admin:org`, `repo`, and `workflow` scopes among its scopes.
+      GraphQL `organization.projectsV2`, `viewer.projectsV2`, and
+      `repository.projectsV2` for each of the six repositories all returned
+      `totalCount=0`, no nodes, and `hasNextPage=false`; organization and user
+      `gh project list --closed` also returned no projects. The organization
+      REST response at 18:38:50 returned
+      `has_organization_projects=true` and `has_repository_projects=true`.
+      This capability response does not establish a configured Project.
+
+      GraphQL read all open Issues and each `projectItems` connection. The
+      complete result had 22 open Issues and zero Project items: Control Plane
+      #59, #60, #62, #66, #85, #101, #103, #105, #106, #107; Architecture #7,
+      #11, #12, #13, #15; Primitives #2 and #3; Distribution #2 and #3; public
+      adapter #10 and #11; private adapter #2. Issue and Project-item
+      connections had no additional pages. The six-repository counts were 10,
+      5, 2, 2, 2, and 1 respectively. All 22 requests to
+      `/repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` returned
+      HTTP 200 with an empty array using API version 2026-03-10.
+
+      `GET /orgs/agentic-delivery-lab/issue-types` returned nine enabled native
+      Issue Types: Task (866469117), Bug (866469118), Feature (866469119), Idea
+      (868968825), Research (868969150), Requirements (868969391), Architecture
+      Decision (868969683), Implementation (868969915), and Validation
+      (868970249). `GET /orgs/agentic-delivery-lab/issue-fields` returned six
+      organization-members-only fields: Priority (46797139, single-select:
+      Urgent, High, Medium, Low), Start date (46797140, date), Target date
+      (46797141, date), Effort (46797142, single-select: High, Medium, Low),
+      Lifecycle Stage (46888816, single-select: Intake, Discovery, Definition,
+      Decision, Planning, Execution, Validation, Acceptance, Done, Parked), and
+      Delivery Readiness (46888965, single-select: Not ready, Needs information,
+      Ready, Working, Waiting, Awaiting human, Blocked). Delivery Readiness
+      remains the live field name for the Delivery State concept. Both REST
+      endpoints returned HTTP 200; their accepted-scope headers included
+      `admin:org`, `read:org`, and `write:org`. No scope was changed.
+
+      The six `main` commit IDs were Control Plane
+      `67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf`, Architecture
+      `4ae924966280706c28cb602ea0b3d338e8e4a875`, Primitives
+      `e4933566fbf5b0f593830f8933f18fbd21024fa7`, Distribution
+      `b69c5710928b47efc4d3ab12ec4d5b596c80720c`, public adapter
+      `af52c92e49616e78f8d6647cf5cf538a7e571d78`, and private adapter
+      `f9e6589b65c71da9e7b35d8e026f3d4a91dab78f`. Five PRs were open: current
+      Architecture #14 at `e835cb7439e4ad785f85b9e8e4b4c89fb8a47f3e`
+      (`BLOCKED`, no review decision); Control Plane #102 at
+      `c98b24e57159037f74af4d234300cdc21483bfe5` and #104 at
+      `2cf258d5a48a75524514d67f440d0f5bb16fb85a` (both `CLEAN`, no review
+      decision); Control Plane #86 at `3c21e2aa4200f51171f88db226260baf97314661`
+      (`DIRTY`, no review decision); and draft Primitives #4 at
+      `b5f0050547f5e8e7fea94f1aa3fd6da666aa74ff` (`BLOCKED`, `REVIEW_REQUIRED`).
+      Distribution and both adapters had no open PRs. The six Release listings
+      were empty. Architecture #14's exact-head validation run 37974200878
+      passed.
+    limitation: >-
+      This point-in-time inventory covers Projects owned by the organization
+      and authenticated user, the six visible repository-owned Project
+      connections, and Project items accessible through the 22 open Issues.
+      Projects owned outside those scopes, inaccessible Issue associations,
+      and Project-only cards in inaccessible Projects remain unknown. No
+      Project exists in the queried scopes to inspect its fields, views,
+      membership, or visibility. Organization-level Issue Fields are not
+      Project custom fields; no mapping, Project visibility, or per-Project
+      access was observed. The positive capability flags do not prove
+      configured Projects or grant Project permissions to the runtime App.
+      The PR check snapshot for PRs other than #14 is the separate 18:30:42
+      observation; this refresh reread their PR state. No draft-tag query was
+      made.
+  - id: github-app-installation-inventory-20261009-1845
+    observedAt: '2026-10-09T18:45:59Z'
+    source: https://docs.github.com/en/rest/orgs/orgs#list-app-installations-for-an-organization
+    request: >-
+      Read `GET /orgs/agentic-delivery-lab/installations` as the authenticated
+      `sjefsharp` user. Then attempted the documented
+      `GET /user/installations/163255060/repositories` with the same human
+      `gh` OAuth identity to inspect the selected-repository installation's
+      repository set. No installation or permission setting was changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: e835cb7439e4ad785f85b9e8e4b4c89fb8a47f3e
+    result: >-
+      The organization returned three App installations. The selected-repository
+      `agentic-delivery-lab-invoker-7f3a` (App 5011055, installation 163255060)
+      subscribes to `issues`, `issue_comment`, `pull_request`,
+      `pull_request_review`, and `pull_request_review_comment`. Its permissions
+      are contents write, Issue Fields read, Issue Types read, Issues write,
+      metadata read, and pull requests write; it declares no Project permission.
+      The installation reports `repository_selection=selected`.
+
+      Vercel (App 8329, installation 163160932) reports all-repository access,
+      events `branch_protection_rule`, `check_run`, `delete`, `deployment`,
+      `issue_comment`, `membership`, `pull_request`, `pull_request_review`,
+      `pull_request_review_comment`, `pull_request_review_thread`, `push`,
+      `repository`, `status`, and `team`; permissions are Actions read,
+      administration write, checks write, contents write, deployments write,
+      Issues write, members read, metadata read, pull requests write,
+      repository hooks write, statuses write, and workflows write.
+
+      ChatGPT Codex connector (App 1144995, installation 164559129) reports
+      all-repository access, events `check_run`, `check_suite`, `commit_comment`,
+      `issues`, `issue_comment`, `pull_request`, `pull_request_review`,
+      `pull_request_review_comment`, `pull_request_review_thread`, `repository`,
+      `status`, and `sub_issues`; permissions are Actions write, checks read,
+      contents write, Issues write, metadata read, pull requests write, statuses
+      read, and workflows write.
+
+      The selected-installation repository-list request returned HTTP 403:
+      `You must authenticate with an access token authorized to a GitHub App,
+      a personal access token, or basic auth in order to list repositories for
+      an installation.` The user OAuth scopes remain broad, but this request
+      did not reveal the selected repository list.
+    limitation: >-
+      The organization installation endpoint exposes declared permissions and
+      subscribed events, not the selected installation's repository membership
+      or the credential bound to the deployed Control Plane. A 403 is an access
+      limitation, not evidence that the selection is empty. No App token,
+      runtime write, webhook, or deployed credential was inspected or tested;
+      no permission or installation changed.

@@ -369,6 +369,25 @@ part of this refresh. Exact commits, checks, and limitations are in
 [`strategy-foundation-gap-matrix.md`](../architecture/references/strategy-foundation-gap-matrix.md)
 and observation `pull-request-release-inventory-20261009-1830`.
 
+Between 18:38:15 and 18:44:44 UTC, a fresh read-only inventory confirmed zero
+Projects in the organization, viewer, and six repository owners; all 22 open
+Issues have zero Project items. Per-Issue field-value reads returned HTTP 200
+with empty arrays for all 22 Issues. Organization REST reads returned nine
+enabled Issue Types and six member-only Issue Fields with their stable
+IDs/options; organization and repository Project capability flags are true.
+The six `main` commits and open-Issue counts are unchanged. Five PRs remain
+open, including Architecture #14 at `e835cb7`; all six Release queries were
+empty. Exact IDs, options, commit pins, PR heads, and limits are recorded in
+[`system-evidence.yml`](../architecture/references/system-evidence.yml#portfolio-issue-project-inventory-20261009-1839).
+No Project or permission was changed.
+
+At 18:45:29 UTC, the organization installation API returned three Apps. The
+selected-repository Control Plane invoker declares no Project permission; the
+human OAuth token could read the permission/event map but received 403 when
+requesting its selected repository list. Its deployed credential binding and
+repository membership remain unverified. See
+`github-app-installation-inventory-20261009-1845`; no App state was changed.
+
 The pre-continuation Architecture review identified three proposal gaps:
 strategy traceability stopped before quality goals, principles, ADRs,
 capabilities/contracts, owner Issues/Project planning, and evaluation evidence;

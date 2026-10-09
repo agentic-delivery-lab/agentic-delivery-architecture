@@ -334,6 +334,16 @@ select among multiple candidate Project links; that broader #11 acceptance
 case remains unverified for any future selection path. See
 `control-plane-project-planning-test-audit-20261009-1801`.
 
+At 18:11 UTC, source-backed Codex CLI research for continuation item 3a was
+added to `strategy-research-register.md`. The official upstream loader source
+documents root-to-current-working-directory `AGENTS.md` discovery; the upstream
+`codex exec` source documents its non-interactive option surface. Context7's
+versioned catalog only reached `rust-v0.155.1`, while the audited runner pin is
+`0.159.3`; the exact-version local fixture remains the separate evidence in
+`system-evidence.yml#control-plane-codex-instruction-context-20261009-1622`.
+The Control Plane uses app-server rather than `codex exec`, and no Actions or
+production behavior is inferred from these documentation/source checks.
+
 The pre-continuation Architecture review identified three proposal gaps:
 strategy traceability stopped before quality goals, principles, ADRs,
 capabilities/contracts, owner Issues/Project planning, and evaluation evidence;

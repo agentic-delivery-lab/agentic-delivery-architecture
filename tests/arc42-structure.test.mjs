@@ -90,6 +90,14 @@ test('evaluation report contract distinguishes layers, pins, baselines, and evid
   const reportPath = 'architecture/evaluation/examples/agent-capability-report.yml';
   const report = parseRepositoryYaml(await readFile(path.join(root, reportPath), 'utf8'), reportPath);
   await validateStructuredValue(root, reportPath, report);
+  const externallyPinnedContract = structuredClone(report);
+  externallyPinnedContract.$schema = 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/0123456789abcdef0123456789abcdef01234567/architecture/contracts/evaluation-report.schema.json';
+  await validateStructuredValue(root, reportPath, externallyPinnedContract);
+
+  const movingContractReference = structuredClone(report);
+  movingContractReference.$schema = 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/evaluation-report.schema.json';
+  await assert.rejects(validateStructuredValue(root, reportPath, movingContractReference), /violates evaluation-report\.schema\.json/);
+
   assert.deepEqual(report.results.deterministicChecks.map((check) => check.checkId), ['synthetic-contract-shape']);
   assert.deepEqual(report.results.semanticJudgments, []);
   assert.equal(report.baseline.status, 'unmeasured');

@@ -7,7 +7,15 @@
   "additionalProperties": false,
   "required": ["$schema", "contractVersion", "reportId", "generatedAt", "classification", "evaluationMode", "layer", "subject", "dataset", "dependencies", "graders", "results", "baseline", "comparison", "uncertainty", "review", "regressionAssessment", "evidence", "recommendation", "limitations"],
   "properties": {
-    "$schema": { "const": "../../contracts/evaluation-report.schema.json" },
+    "$schema": {
+      "oneOf": [
+        { "const": "../../contracts/evaluation-report.schema.json" },
+        {
+          "type": "string",
+          "pattern": "^https://github\\.com/agentic-delivery-lab/agentic-delivery-architecture/blob/[0-9a-f]{40}/architecture/contracts/evaluation-report\\.schema\\.json$"
+        }
+      ]
+    },
     "contractVersion": { "const": "1.0.0" },
     "reportId": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$" },
     "generatedAt": { "type": "string", "format": "date-time" },

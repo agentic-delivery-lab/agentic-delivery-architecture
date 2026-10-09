@@ -31,6 +31,12 @@ grader, comparator, baseline definition, and dependencies. Dataset identity
 includes the evaluated case IDs. Pins carry repository, commit, path, and
 content digest so the evidence can be retrieved and checked again.
 
+An example stored in this repository may use the relative `$schema` path to
+the local contract. A report produced by another repository must use the
+GitHub URL form with an immutable 40-character Architecture commit; a moving
+branch or tag is not a valid report-contract reference. Consumers should pin
+the report-schema dependency in their own release context as well.
+
 Deterministic checks record their stable check IDs, outcomes, and evidence
 references. Semantic judgments are a separate collection and identify the
 reviewer, relationship to the author, judgment, rationale, and uncertainty.

@@ -34,7 +34,7 @@ participant is active or that each hosting rule has been enabled.
 | Per-issue field values | Documented API reads for Architecture #11 and Control Plane #59, #60, and #62 returned 404. | The response does not establish that any issue has or lacks field values. |
 | Control Plane execution | All six participants remain in shadow mode; latest run succeeded at authorization, classification, and finalization while delivery was skipped. | No completed delivery, central #62 canary, receipt completion, or independent field read-back is proven. |
 | Control Plane release candidate | PR #86 for Codex CLI 0.160.0 remains open without reviews; current main uses a prior pin. | Passing checks do not constitute review, merge, smoke evidence, or activation. |
-| Open work and releases | The 10:47 UTC snapshot records 19 open Issues and three open PRs: Architecture #14 at 37637eb (BLOCKED), Control Plane #102 (CLEAN), and #86 (DIRTY), all without a recorded review decision. Architecture #14's exact-head hosted quality run passed. No published GitHub Release was returned. | Exact open Issues and PR heads are recorded in system evidence. Passing checks do not equal review; draft pins do not prove activation. |
+| Open work and releases | The 11:10 UTC snapshot records 19 open Issues and three open PRs: Architecture #14 at `ec2a9bd` (BLOCKED), Control Plane #102 at `c98b24e` (CLEAN), and #86 at `3c21e2a` (DIRTY); none has a human review decision. Architecture #14's exact-head hosted quality run passed. No Architecture GitHub Release was listed. | Exact open Issues, PR heads, check runs, and release status are recorded in system evidence. Passing checks do not equal review; draft pins do not prove activation. |
 
 The current default-branch commits and observations are recorded in
 [system evidence](../references/system-evidence.yml). The Projects inventory
@@ -90,6 +90,7 @@ does not prove the ruleset is absent.
 
 **Evidence:** see observations `organization-issue-fields`,
 `project-inventory-20261009-1057`,
+`current-open-work-and-pull-requests-20261009-1110`,
 `current-organization-capability-inventory-20261009-1044`,
 `organization-issue-field-values`, `cli-oauth-scopes`,
 `invoker-installation`, `participant-modes-and-release-pins`,

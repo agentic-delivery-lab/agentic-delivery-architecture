@@ -505,6 +505,36 @@ observations:
       This is a point-in-time repository-visible snapshot. Merge-state labels
       are GitHub summaries and do not replace the required human review. See
       project-inventory-20261009-1033 for current Project associations.
+  - id: current-open-work-and-pull-requests-20261009-1110
+    observedAt: '2026-10-09T11:10:57Z'
+    request: >-
+      Read-only `gh issue list --state open` across all six visible
+      organization repositories; `gh pr view`, `gh pr checks`, and exact-head
+      hosted-run inspection for each open pull request; Architecture release
+      inventory.
+    result: >-
+      Nineteen Issues were open: Control Plane #59, #60, #62, #66, #85, #101,
+      and #103; Architecture #7, #11, #12, #13, and #15; Primitives #2 and #3;
+      Distribution #2 and #3; public .github #10 and #11; and private
+      .github-private #2. Three pull requests were open. Architecture #14 was
+      at exact head ec2a9bdb8bbffa5aa7ac2a27ce68bb0cd25a2a16 (BLOCKED, no
+      review decision); hosted quality run 37921999978 passed on that head.
+      Control Plane #102 was at c98b24e57159037f74af4d234300cdc21483bfe5
+      (CLEAN, no review decision); delivery-quality run 37916206653, ADR run
+      37916206682, automated review run 37916737931, PR-body run 37916738642,
+      three-platform portability, and Vercel deployment status passed on the
+      exact head. Control Plane #86 was at
+      3c21e2aa4200f51171f88db226260baf97314661 (DIRTY, no review decision); its
+      listed validation, quality, portability, recovery-SQL, automated-review,
+      PR-body, and Vercel checks had passed. The other four repositories had
+      no open pull requests. No Architecture GitHub Release was listed; its
+      generated 0.1.0-draft.20 manifest remained draft.
+    limitation: >-
+      This is a point-in-time repository-visible snapshot. Merge-state labels
+      do not replace human review; passing checks do not establish integration,
+      release, participant activation, or runtime adoption. It does not prove
+      Project association or prioritization; see the adjacent Project
+      inventory observations.
   - id: current-release-and-tag-inventory
     observedAt: '2026-10-09'
     request: Read-only GitHub release and tag inventory across the six visible repositories

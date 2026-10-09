@@ -30,13 +30,17 @@ At the 2026-10-09 snapshot, QR-001/QR-002 have code and contract evidence but
 no end-to-end run. QR-003's local decision-set and Primitive-resolution checks
 are introduced by this proposal; Primitive impact review automation remains
 open. QR-011's repository routing is validated, but independent human steward
-approval is blocked by the one-member/CODEOWNERS gate. Issue-field pinning is unverified. The recovery intake runs failed before
-dependency installation. Participants remain in shadow mode. Projects are
-required for planning, but current Project inventory and membership are unknown
-because read:project is unavailable; the six organization Issue Fields are
-member-only. QR-013–QR-016 define target fixtures and evidence boundaries;
-they do not report implemented Control Plane tests or live integration.
-These are unresolved evidence gaps, not satisfied quality goals.
+approval is blocked by the one-member/CODEOWNERS gate. Issue-field pinning is
+unverified. The recovery intake runs failed before dependency installation.
+Participants remain in shadow mode. The authorized Projects inventory returned
+no organization or personal Project and no Project membership for the ten
+queried deliverable Issues; the six organization Issue Fields are member-only.
+Architecture PR #14 proposes the QR-015 evaluation-report schema and synthetic
+fixture, while Primitives #3 owns dataset/grader/replay implementation and
+Control Plane #103 owns finding routing. There is no measured baseline or live
+evaluation. QR-013–QR-016 remain target scenarios; they do not report complete
+runtime integration or achieved outcomes. These are unresolved evidence gaps,
+not satisfied quality goals.
 
 **Evidence:** source revisions and runtime checks are linked by identifier in
 [`system-evidence.yml`](../references/system-evidence.yml).

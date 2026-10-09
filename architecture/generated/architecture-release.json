@@ -5,7 +5,7 @@
   "version": "0.1.0-draft.20",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
   "sourceCommit": "3c0a36a9cd90e8b6d206e71644503863b92c2b7e",
-  "contentSha256": "07bfbe4dab39ff343d4c4646ea4549245fa033045a08280cd35f1d3872751005",
+  "contentSha256": "7aad4ddf91925114290b8de593c1eb5ae47830d04fd2f7e6ad45cecd7a51f335",
   "status": "draft",
   "principleIds": [
     "AP-001",
@@ -80,6 +80,7 @@
     "conformance": "1.0.0",
     "adrPrimitiveIndex": "3.0.0",
     "decisionInventory": "1.0.0",
-    "architectureArtifacts": "1.0.0"
+    "architectureArtifacts": "1.0.0",
+    "evaluationReport": "1.0.0"
   }
 }

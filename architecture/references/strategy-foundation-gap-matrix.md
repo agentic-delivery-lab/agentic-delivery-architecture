@@ -1,0 +1,38 @@
+# Strategy foundation and operational gap matrix
+
+**Observed:** 2026-10-09 UTC. This is a repository-visible snapshot, not a
+claim that live settings or external systems have remained unchanged since
+observation. Unknown means evidence was unavailable; it does not mean absent.
+
+| Area | Evidence and current state | Gap / risk | Owner and next step |
+| --- | --- | --- | --- |
+| Strategy | [`organizational-strategy.yml`](../strategy/organizational-strategy.yml) records a proposed mission, two value streams, seven goals, nine measures, and explicit unmeasured baselines. ADR-0023 and the strategy remain in a draft Architecture release. | The strategy has not been adopted through an approved Architecture release; success targets are not evidence of achieved outcomes. | Architecture [#11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11): review and adopt through the normal Architecture decision and release path. |
+| Projects access and topology | The earlier scope failure remains recorded in [`system-evidence.yml`](system-evidence.yml) (`project-inventory-access`). At 2026-10-09 09:51 UTC, the authenticated `sjefsharp` CLI had `project` and `admin:org` scopes; complete organization and personal GraphQL inventories returned zero Projects with no next page. The twelve deliverable Issue associations queried in [`system-evidence.yml`](system-evidence.yml) (`project-inventory-readable`) each returned zero Project items. Six organization Issue Fields remain member-only. | No organization portfolio Project or deliverable-Issue membership was returned. Project field visibility cannot be assessed against a Project; the proposed one-Project/two-view topology is not configured. | Architecture [#12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12) records the read-only inventory. [Architecture #15](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15) asks for the separate human topology decision; no Project is created or changed here. |
+| Issue-owned execution boundary | Architecture [AP-004](../principles/AP-004-projects-plan-issues-authorize.md) and [QR-013/QR-014](../quality/quality-scenarios.yml) make the source Issue the execution authority. Control Plane [#101](https://github.com/agentic-delivery-lab/agentic-delivery/issues/101) adds an offline planning-context fixture; it re-fetches origin repo/Issue and tests actor permission only. | The fixture does not exercise lifecycle, readiness, planning completeness, or downstream authorization gates. Project runtime integration and end-to-end live evidence remain unimplemented. A Project card cannot be treated as authorization. | Control Plane [#101](https://github.com/agentic-delivery-lab/agentic-delivery/issues/101): keep the fixture scoped; any runtime consumer must run all canonical source-Issue gates before execution. Distribution [#3](https://github.com/agentic-delivery-lab/agentic-delivery-distribution/issues/3) owns conditional consumer onboarding. |
+| Strategy context in runtime | ADR-0023 proposes strategy as read-only context; no strategy injection into the Codex runtime or production consumer has been implemented. | A proposal or pinned draft does not prove runtime behavior. Early injection could blur Issue authorization, live Project configuration, and advisory planning context. | Architecture [#11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11): keep runtime adoption gated on reviewed/merged ADR-0023, approved pins, source-Issue authorization, and an explicit consumer change. |
+| Evaluation report contract | This PR adds a proposed version 1.0.0 schema and synthetic fixture. [QR-015/QR-016](../quality/quality-scenarios.yml) define replay and human-prioritized follow-up targets. | The report schema is not an evaluator. There are no adopted evaluation datasets, graders, replay runs, measured baselines, or independent outcome review evidenced here. No measured improvement or regression rate can be claimed. | Agentic Primitives [#3](https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3): discover and implement versioned offline datasets, deterministic graders, and replay. Architecture #11 owns review of the shared contract. |
+| Recursive finding-to-Issue flow | [QR-016](../quality/quality-scenarios.yml) specifies that validated findings return to an owner Issue and human prioritization before execution. | No end-to-end evaluation-to-Issue-to-Project replay fixture or live operating loop is evidenced. A report recommendation must never directly create or start work. | Control Plane [#103](https://github.com/agentic-delivery-lab/agentic-delivery/issues/103) owns offline report routing and bounded Issue follow-up; live Project integration depends on the human decision in Architecture #15. |
+| Product repository and steward | Strategy measure SM-003/SM-004 and goal SG-02 require user or operator outcomes; Architecture [#13](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13) records product discovery as unresolved. | No distinct product repository, accountable product steward, user evidence source, or approved feedback path has been established in this audit. Product outcomes and baselines are unknown. | Architecture [#13](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13): identify a real product repository, accountable steward, users, outcome signals, observation windows, and evidence access. |
+| Release, review, and activation | The proposed changes are carried in open Architecture PR #14 and the generated release remains `draft`. [`system-evidence.yml#current-open-work-and-pull-requests`](system-evidence.yml) is an as-of-09:13 UTC snapshot; [`system-evidence.yml#current-delivery-and-release-state`](system-evidence.yml) records the latest pinned participant snapshot, in which all six participants remain in shadow mode. | A passing structural check is not independent semantic approval, merge, publication, runtime pin adoption, participant activation, or deployment. | Architecture [#11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11) and [#7](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/7): satisfy normal independent review, release, and workspace lifecycle gates before claiming operational adoption. |
+
+## Sequencing and tradeoffs
+
+1. Complete the authorized read-only discoveries in Issues #12 and #13. They
+   determine whether Project and product-outcome designs can be grounded in
+   actual identities, fields, stewards, and evidence sources.
+2. Review the shared evaluation envelope here, then implement reusable
+   datasets, graders, and offline replay in Primitives #3. A schema first gives
+   consumers a stable evidence boundary; it does not substitute for replay or
+   independent review.
+3. Extend the Control Plane and Distribution only through their owner Issues,
+   with source-Issue authorization preserved and Project fields remaining
+   planning inputs. Keep strategy-context runtime injection gated on reviewed
+   decisions and approved immutable pins.
+4. Establish product outcome measures only with a real product steward and
+   user evidence. Until then, keep product baselines unmeasured and make no
+   improvement claims.
+
+These steps favor attributable evidence and reversible proposals over early
+runtime coupling. The tradeoff is that reporting and automation remain
+incomplete until access, ownership, replay tooling, independent review, and
+explicit consumer approvals are in place.

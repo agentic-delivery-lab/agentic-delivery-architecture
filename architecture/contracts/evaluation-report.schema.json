@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/evaluation-report.schema.json",
+  "title": "Evaluation evidence report contract 1.0.0",
+  "description": "Proposed evidence-only report for agent capability, delivery factory, or product outcome evaluation. A report never authorizes work or writes lifecycle state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "contractVersion", "reportId", "generatedAt", "classification", "evaluationMode", "layer", "subject", "dataset", "dependencies", "graders", "results", "baseline", "comparison", "uncertainty", "review", "regressionAssessment", "evidence", "recommendation", "limitations"],
+  "properties": {
+    "$schema": { "const": "../../contracts/evaluation-report.schema.json" },
+    "contractVersion": { "const": "1.0.0" },
+    "reportId": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "classification": { "enum": ["synthetic", "observed"] },
+    "evaluationMode": { "enum": ["offline", "live"] },
+    "layer": { "enum": ["agent-capability", "factory", "product-outcome"] },
+    "subject": {
+      "type": "object", "additionalProperties": false,
+      "required": ["layer", "id", "version", "sourcePin"],
+      "properties": {
+        "layer": { "enum": ["agent-capability", "factory", "product-outcome"] },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" },
+        "sourcePin": { "$ref": "#/$defs/sourcePin" }
+      }
+    },
+    "dataset": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "sourcePin", "caseIds"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" },
+        "sourcePin": { "$ref": "#/$defs/sourcePin" },
+        "caseIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } }
+      }
+    },
+    "dependencies": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "version", "sourcePin"],
+        "properties": {
+          "id": { "$ref": "#/$defs/nonEmptyString" },
+          "version": { "$ref": "#/$defs/nonEmptyString" },
+          "sourcePin": { "$ref": "#/$defs/sourcePin" }
+        }
+      }
+    },
+    "graders": {
+      "type": "object", "additionalProperties": false,
+      "required": ["deterministic", "semantic"],
+      "properties": {
+        "deterministic": { "$ref": "#/$defs/pinnedDefinition" },
+        "semantic": { "$ref": "#/$defs/pinnedDefinition" }
+      }
+    },
+    "results": {
+      "type": "object", "additionalProperties": false,
+      "required": ["deterministicChecks", "semanticJudgments"],
+      "properties": {
+        "deterministicChecks": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["checkId", "outcome", "evidenceRefs"],
+            "properties": {
+              "checkId": { "$ref": "#/$defs/nonEmptyString" },
+              "outcome": { "enum": ["pass", "fail", "skip", "inconclusive"] },
+              "details": { "type": "string" },
+              "evidenceRefs": { "$ref": "#/$defs/evidenceRefs" }
+            }
+          }
+        },
+        "semanticJudgments": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["criterionId", "outcome", "reviewer", "confidence", "rationale", "evidenceRefs"],
+            "properties": {
+              "criterionId": { "$ref": "#/$defs/nonEmptyString" },
+              "outcome": { "enum": ["acceptable", "unacceptable", "mixed", "inconclusive"] },
+              "reviewer": {
+                "type": "object", "additionalProperties": false,
+                "required": ["id", "kind", "relationshipToAuthor"],
+                "properties": {
+                  "id": { "$ref": "#/$defs/nonEmptyString" },
+                  "kind": { "enum": ["human", "agent"] },
+                  "relationshipToAuthor": { "enum": ["independent", "author", "unknown"] }
+                }
+              },
+              "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+              "rationale": { "$ref": "#/$defs/nonEmptyString" },
+              "evidenceRefs": { "$ref": "#/$defs/evidenceRefs" }
+            }
+          }
+        }
+      }
+    },
+    "baseline": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "definitionPin"],
+      "properties": {
+        "status": { "enum": ["measured", "unmeasured"] },
+        "definitionPin": { "$ref": "#/$defs/sourcePin" },
+        "measurement": { "$ref": "#/$defs/measurement" },
+        "reasonUnmeasured": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "allOf": [
+        {
+          "if": { "type": "object", "properties": { "status": { "const": "measured" } }, "required": ["status"] },
+          "then": { "required": ["measurement"], "not": { "required": ["reasonUnmeasured"] } },
+          "else": { "required": ["reasonUnmeasured"], "not": { "required": ["measurement"] } }
+        }
+      ]
+    },
+    "comparison": {
+      "type": "object", "additionalProperties": false,
+      "required": ["claim", "comparator"],
+      "properties": {
+        "claim": { "enum": ["improvement", "regression", "no-change", "inconclusive", "not-compared"] },
+        "comparator": { "$ref": "#/$defs/pinnedComparator" },
+        "candidateMeasurement": { "$ref": "#/$defs/measurement" }
+      }
+    },
+    "uncertainty": {
+      "type": "object", "additionalProperties": false,
+      "required": ["level", "summary", "factors"],
+      "properties": {
+        "level": { "enum": ["low", "medium", "high", "unknown"] },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "factors": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonEmptyString" } }
+      }
+    },
+    "review": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "reviewerId", "rationale"],
+      "properties": {
+        "status": { "enum": ["independent", "not-independent", "pending", "not-applicable"] },
+        "reviewerId": { "type": ["string", "null"] },
+        "rationale": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "regressionAssessment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["severity", "rationale"],
+      "properties": {
+        "severity": { "enum": ["none", "low", "moderate", "high", "critical", "unknown"] },
+        "rationale": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "evidence": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["kind", "ref"],
+        "properties": {
+          "kind": { "enum": ["source", "dataset", "result", "baseline", "review", "runtime", "other"] },
+          "ref": { "type": "string", "minLength": 1, "format": "uri-reference" }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["action", "rationale"],
+      "properties": {
+        "action": { "enum": ["no-action", "human-review", "owner-issue"] },
+        "ownerIssue": { "type": "string", "format": "uri" },
+        "rationale": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "allOf": [
+        {
+          "if": { "type": "object", "properties": { "action": { "const": "owner-issue" } }, "required": ["action"] },
+          "then": { "required": ["ownerIssue"] }
+        }
+      ]
+    },
+    "limitations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonEmptyString" } }
+  },
+  "allOf": [
+    {
+      "if": { "type": "object", "properties": { "layer": { "const": "agent-capability" } }, "required": ["layer"] },
+      "then": { "type": "object", "properties": { "subject": { "type": "object", "properties": { "layer": { "const": "agent-capability" } } } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "layer": { "const": "factory" } }, "required": ["layer"] },
+      "then": { "type": "object", "properties": { "subject": { "type": "object", "properties": { "layer": { "const": "factory" } } } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "layer": { "const": "product-outcome" } }, "required": ["layer"] },
+      "then": { "type": "object", "properties": { "subject": { "type": "object", "properties": { "layer": { "const": "product-outcome" } } } } }
+    },
+    {
+      "if": { "type": "object", "properties": { "classification": { "const": "synthetic" } }, "required": ["classification"] },
+      "then": { "type": "object", "properties": { "evaluationMode": { "const": "offline" } } }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "comparison": { "type": "object", "properties": { "claim": { "enum": ["improvement", "regression", "no-change"] } }, "required": ["claim"] }
+        },
+        "required": ["comparison"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "baseline": { "type": "object", "properties": { "status": { "const": "measured" } }, "required": ["status", "measurement"] },
+          "comparison": { "type": "object", "required": ["candidateMeasurement"] }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "sourcePin": {
+      "type": "object", "additionalProperties": false,
+      "required": ["repository", "commit", "path", "sha256"],
+      "properties": {
+        "repository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\s]+$" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "pinnedDefinition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "sourcePin"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" },
+        "sourcePin": { "$ref": "#/$defs/sourcePin" }
+      }
+    },
+    "pinnedComparator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "version", "sourcePin", "method", "direction"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" },
+        "sourcePin": { "$ref": "#/$defs/sourcePin" },
+        "method": { "enum": ["absolute-difference", "relative-change", "threshold"] },
+        "direction": { "enum": ["higher-is-better", "lower-is-better", "target-range"] }
+      }
+    },
+    "measurement": {
+      "type": "object", "additionalProperties": false,
+      "required": ["metricId", "value", "unit", "observationWindow", "observedAt", "evidenceRefs"],
+      "properties": {
+        "metricId": { "$ref": "#/$defs/nonEmptyString" },
+        "value": { "type": "number" },
+        "unit": { "$ref": "#/$defs/nonEmptyString" },
+        "observationWindow": { "$ref": "#/$defs/nonEmptyString" },
+        "observedAt": { "type": "string", "format": "date-time" },
+        "evidenceRefs": { "$ref": "#/$defs/evidenceRefs" }
+      }
+    },
+    "evidenceRefs": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "string", "minLength": 1, "format": "uri-reference" }
+    }
+  }
+}

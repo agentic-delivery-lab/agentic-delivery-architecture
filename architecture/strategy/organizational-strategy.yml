@@ -291,12 +291,19 @@ successMeasures:
     targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views; reuse a suitable existing Project if inventory confirms fit, otherwise propose any creation separately.
-  currentInventoryStatus: unknown-no-read-project-scope
-  projectInventoryEvidenceId: project-inventory-access
+  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-09 inventory returned no Project, so any creation requires a separate human decision tracked in Architecture #15.
+  currentInventoryStatus: inventoried
+  projectInventoryEvidenceId: project-inventory-readable
+  inventoryEvidence:
+    observedAt: '2026-10-09'
+    projectIds: []
+    scopeSummary: >-
+      Authenticated organization and personal Project inventories were complete
+      with no Projects returned; twelve deliverable Issue associations also
+      returned zero items. Relevant CLI scopes were project and admin:org.
   planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the approved Project view can expose it. Project-owned fields may express distinct cross-Issue grouping, sequencing, or planned dependencies; do not duplicate Issue Priority or lifecycle values.
   executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation never authorizes or blocks execution or authorizes a model call, repository write, issue-field write, pull request, release, or activation.
-  issueFieldConstraint: The audited organization Issue Fields, including Priority and the lifecycle and delivery fields, are organization-members-only; field visibility and suitability for the selected Project must be verified before view design.
+  issueFieldConstraint: The six audited organization Issue Fields, including Priority and lifecycle and delivery fields, are organization-members-only. No Project was returned by the complete 2026-10-09 inventory, so Project-specific field visibility remains unverified and must be checked before any future view design.
   projectOnlyCardRule: A Project-only card is planning input. Before agent execution it must be converted to or linked with an authorized source Issue in its owning repository and pass the normal deterministic gates.
 sourceOfTruth:
   - fact: organizational purpose, mission, vision, strategy, and review triggers

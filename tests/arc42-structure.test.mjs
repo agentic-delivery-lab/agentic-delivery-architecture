@@ -53,7 +53,7 @@ test('architecture contracts and aliases are deterministic', async () => {
 });
 
 test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
-  assert.deepEqual(await validateStructuredData(root), { files: 18, schemas: 21 });
+  assert.deepEqual(await validateStructuredData(root), { files: 19, schemas: 22 });
 
   const principleIndex = parseRepositoryYaml(
     await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),
@@ -84,6 +84,66 @@ test('all authoritative structured data uses closed Draft 2020-12 contracts', as
     validateStructuredValue(root, 'architecture/domain/context-map.yml', contextMap),
     /must be equal to one of the allowed values/,
   );
+});
+
+test('evaluation report contract distinguishes layers, pins, baselines, and evidence-only recommendations', async () => {
+  const reportPath = 'architecture/evaluation/examples/agent-capability-report.yml';
+  const report = parseRepositoryYaml(await readFile(path.join(root, reportPath), 'utf8'), reportPath);
+  await validateStructuredValue(root, reportPath, report);
+  assert.deepEqual(report.results.deterministicChecks.map((check) => check.checkId), ['synthetic-contract-shape']);
+  assert.deepEqual(report.results.semanticJudgments, []);
+  assert.equal(report.baseline.status, 'unmeasured');
+  assert.equal(report.comparison.claim, 'not-compared');
+
+  for (const layer of ['factory', 'product-outcome']) {
+    const matchingLayer = structuredClone(report);
+    matchingLayer.layer = layer;
+    matchingLayer.subject.layer = layer;
+    await validateStructuredValue(root, reportPath, matchingLayer);
+  }
+
+  const mismatchedLayer = structuredClone(report);
+  mismatchedLayer.layer = 'factory';
+  await assert.rejects(validateStructuredValue(root, reportPath, mismatchedLayer), /violates evaluation-report\.schema\.json/);
+
+  const missingImmutablePin = structuredClone(report);
+  delete missingImmutablePin.dataset.sourcePin.commit;
+  await assert.rejects(validateStructuredValue(root, reportPath, missingImmutablePin), /must have required property 'commit'/);
+
+  const unsupportedProperty = structuredClone(report);
+  unsupportedProperty.authorizesExecution = true;
+  await assert.rejects(validateStructuredValue(root, reportPath, unsupportedProperty), /must NOT have additional properties/);
+
+  const unsupportedNestedProperty = structuredClone(report);
+  unsupportedNestedProperty.subject.sourcePin.branch = 'main';
+  await assert.rejects(validateStructuredValue(root, reportPath, unsupportedNestedProperty), /must NOT have additional properties/);
+
+  const unmeasuredImprovement = structuredClone(report);
+  unmeasuredImprovement.comparison.claim = 'improvement';
+  await assert.rejects(validateStructuredValue(root, reportPath, unmeasuredImprovement), /must be equal to constant/);
+
+  const incompleteMeasuredBaseline = structuredClone(report);
+  incompleteMeasuredBaseline.baseline.status = 'measured';
+  delete incompleteMeasuredBaseline.baseline.reasonUnmeasured;
+  await assert.rejects(validateStructuredValue(root, reportPath, incompleteMeasuredBaseline), /must have required property 'measurement'/);
+
+  const comparableImprovement = structuredClone(report);
+  comparableImprovement.baseline.status = 'measured';
+  delete comparableImprovement.baseline.reasonUnmeasured;
+  comparableImprovement.baseline.measurement = {
+    metricId: 'task-success', value: 0.5, unit: 'ratio', observationWindow: '2026-Q3',
+    observedAt: '2026-10-01T00:00:00Z', evidenceRefs: ['baseline.json'],
+  };
+  comparableImprovement.comparison.claim = 'improvement';
+  comparableImprovement.comparison.candidateMeasurement = {
+    metricId: 'task-success', value: 0.75, unit: 'ratio', observationWindow: '2026-Q3',
+    observedAt: '2026-10-08T00:00:00Z', evidenceRefs: ['candidate.json'],
+  };
+  await validateStructuredValue(root, reportPath, comparableImprovement);
+
+  const incomparableImprovement = structuredClone(comparableImprovement);
+  incomparableImprovement.comparison.candidateMeasurement.observationWindow = '2026-Q4';
+  await assert.rejects(validateStructuredValue(root, reportPath, incomparableImprovement), /must use the same observationWindow/);
 });
 
 test('structured-data check rejects an invalid schema definition', async () => {
@@ -291,12 +351,17 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
   );
   assert.deepEqual(validateProjectInventoryEvidence(strategy, evidence), []);
   const unsupportedInventory = structuredClone(strategy);
-  unsupportedInventory.projectPlanning.currentInventoryStatus = 'inventoried';
+  unsupportedInventory.projectPlanning.projectInventoryEvidenceId = 'project-inventory-access';
+  delete unsupportedInventory.projectPlanning.inventoryEvidence;
   assert.ok(validateProjectInventoryEvidence(unsupportedInventory, evidence).some((error) => /completed dated inventory/.test(error)));
   await assert.rejects(
     validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', unsupportedInventory),
-    /inventoryEvidence/,
+    /must NOT have additional properties|must have required property 'inventoryEvidence'/,
   );
+
+  const projectIdsDoNotMatch = structuredClone(strategy);
+  projectIdsDoNotMatch.projectPlanning.inventoryEvidence.projectIds = ['PVT_example'];
+  assert.ok(validateProjectInventoryEvidence(projectIdsDoNotMatch, evidence).some((error) => /completed dated inventory/.test(error)));
 
   const duplicateFact = structuredClone(strategy);
   duplicateFact.sourceOfTruth.push(structuredClone(duplicateFact.sourceOfTruth[0]));
@@ -310,6 +375,7 @@ test('architecture release identifies the target authority', async () => {
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
+  assert.equal(release.contractVersions.evaluationReport, '1.0.0');
   assert.equal(release.contractVersions.architectureRelease, '4.0.0');
   assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '4.0.0');
   assert.match(releaseSchema.description, /consumers to dispatch by version/);

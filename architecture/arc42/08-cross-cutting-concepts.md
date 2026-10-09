@@ -36,11 +36,14 @@ the platform supports in-place change, compare old/new projections in shadow,
 and preserve rollback. The current architecture change does not mutate a
 field.
 
-The selected Project, its members, field IDs, visibility, and entitlement were
-not observable in the 2026-10-09 session because read:project was unavailable.
-All six organization Issue Fields were readable and have organization-members-
-only visibility. This constrains which Projects can expose them and remains a
-view-design input.
+The initial 2026-10-09 read failed because `read:project` was unavailable. A
+later complete query under the authenticated `project` and `admin:org` scopes
+returned no organization or personal Projects and no next page; twelve queried
+deliverable Issues also had no Project associations. No Project field,
+membership, visibility, or entitlement could be inspected. The proposed
+one-Project/two-view topology awaits a human decision in Architecture #15.
+All six organization Issue Fields have `organization_members_only` visibility,
+which remains a view-design constraint for any future Project.
 
 ## 8.3 Semantic proposals and deterministic authorization
 
@@ -96,3 +99,20 @@ Primitives owns reusable guards; Distribution owns pinned profile installation;
 the Control Plane applies those contracts to execution and artifact producers.
 QR-012 is a target scenario. Architecture issue #7 tracks implementation and
 rollout; this text does not demonstrate universal installation or enforcement.
+
+## 8.8 Evaluation evidence and recursive improvement
+
+Architecture owns the proposed version 1.0.0 evaluation-report envelope and
+its evidence semantics. It separates agent-capability, factory, and
+product-outcome evaluations; immutable subject, dataset, grader, comparator,
+baseline, and dependency pins; deterministic checks; semantic judgments;
+uncertainty; independent-review status; regression severity; and recommended
+owner-Issue follow-up. A comparative improvement claim requires a measured
+pinned baseline and a comparable candidate measurement.
+
+The report is evidence only. It cannot create or prioritize work, authorize
+execution, change policy, write Project state, activate participants, merge,
+or release. Primitives #3 owns reusable datasets, graders, and replay;
+Control Plane #103 owns bounded finding routing; product owners retain their
+domain outcomes. The schema and synthetic fixture are proposed in Architecture
+PR #14; none of these artifacts is a live evaluation result.

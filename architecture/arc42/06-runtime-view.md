@@ -46,15 +46,18 @@ for human prioritization in Projects before any subsequent execution.
 
 ## 6.4 Target: evaluation and recursive improvement
 
-This is a target contract. Versioned evaluation datasets, graders, and report
-implementation remain unassigned to an owner Issue; no live evaluation loop is
-claimed here.
+This is a target contract. Architecture PR #14 proposes a versioned evidence
+report schema and synthetic fixture. Agentic Primitives #3 owns reusable
+datasets, deterministic graders, and replay; Control Plane #103 owns offline
+finding routing. No live evaluation loop, measured baseline, or improvement
+claim is evidenced here.
 
-The target offline evaluation uses a versioned representative dataset, grader definition,
-candidate source pin, baseline, and attributable report. Deterministic checks
-produce repeatable pass/fail results; semantic graders are identified
-separately as advisory, approved, or inconclusive. Evaluation replay repeats
-that dataset and grader against a named candidate. It is distinct from
+The target offline evaluation uses a versioned representative dataset, pinned
+deterministic and semantic graders, a pinned comparator, candidate source pin,
+measured baseline, and attributable report. Deterministic checks produce
+repeatable pass/fail results; semantic judgments record reviewer identity,
+independence, rationale, and uncertainty separately. Evaluation replay repeats
+that dataset and graders against a named candidate. It is distinct from
 webhook-delivery replay, which retries event handling, and Codex-session
 continuation, which restores one bounded runner operation.
 
@@ -68,7 +71,8 @@ an unbounded follow-up run.
 
 | Observation | Evidence | Limit |
 | --- | --- | --- |
-| Projects are the required portfolio planning surface in the proposed model. | project-inventory-access and current-organization-issue-fields observations. | Inventory and membership are unknown because read:project is unavailable; all six organization Issue Fields are member-only and Project visibility fit is unverified. |
+| Projects are the required portfolio planning surface in the proposed model, but the authenticated read-only inventory returned no organization or personal Project and no association for the twelve queried deliverable Issues. | `project-inventory-readable` and `organization-issue-fields` observations. | No Project-specific fields, visibility, membership, or entitlement could be inspected. The one-Project/two-view proposal awaits human decision in Architecture #15; all six organization Issue Fields are member-only. |
+| The versioned evaluation evidence envelope is proposed; the offline dataset/grader/replay and finding-routing implementations have owners. | Architecture PR #14; Primitives #3; Control Plane #103; QR-015 and QR-016. | The schema is not an evaluator. No replay run, measured baseline, independent outcome review, live report, or automatic follow-up exists. |
 | The latest issue run completed authorization, classification, and finalization while delivery was skipped. | current-delivery-and-release-state observation. | A skipped delivery does not prove a completed issue-to-PR flow or independent field-value read-back. |
 | Participant registry lists all six repositories in shadow mode with exact controller and Architecture/Primitive pins. | `participant-modes-and-release-pins` in system evidence. | Shadow configuration does not prove delivery, API identity, or write-back. |
 | Issue-intake runs for recovery issues #59 and #60 failed before dependencies could install because the classify checkout path did not match its working directory. | [Run 36050051251](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/36050051251), [run 36049717167](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/36049717167), workflow at pinned Control Plane commit. | This identifies a workflow defect; it does not establish that field gate code is absent. |

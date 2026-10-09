@@ -243,6 +243,39 @@ observations:
       This session did not request a scope change or perform Project
       configuration. The source Issue's Project association could not be
       verified.
+  - id: project-inventory-readable
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
+    request: >-
+      Read-only inventory completed at 2026-10-09T09:51:11Z, authenticated as
+      sjefsharp. `gh auth status` listed the `project` and
+      `admin:org` scopes. Read-only `gh project list --owner
+      agentic-delivery-lab --limit 100 --format json` and GraphQL
+      `organization.projectsV2(first: 100)` plus `user.projectsV2(first: 100)`
+      inventories requested totalCount, nodes, and pageInfo. GraphQL
+      `Issue.projectItems(first: 100)` was queried for Architecture #11, #12,
+      and #13 and #15; Control Plane #101 and #103; Primitives #2 and #3;
+      Distribution #2 and #3; public .github #10; and private
+      .github-private #2.
+    projectInventoryComplete: true
+    projectIds: []
+    result: >-
+      The CLI returned projects=[] and totalCount=0. Organization and personal
+      GraphQL inventories each returned totalCount=0, nodes=[], and
+      hasNextPage=false. All twelve queried deliverable Issues returned
+      projectItems.totalCount=0, nodes=[], and hasNextPage=false. No Project
+      IDs, names, URLs, owners beyond the queried organization/user, visibility,
+      membership, items, or Project-specific fields were returned. The
+      authenticated operations were queries only; no Project data or settings
+      were changed.
+    limitation: >-
+      The complete query result shows no organization or personal Project
+      visible under the authenticated identity at this observation. It does
+      not assess Project owners outside the organization and user queried,
+      establish organization entitlement from Project configuration, or prove
+      that organization Issue Fields can be exposed in a future Project.
+      The six organization Issue Fields are separately recorded as
+      organization_members_only in organization-issue-fields.
   - id: current-issue-field-value-read
     observedAt: '2026-10-09'
     source: https://docs.github.com/en/rest/issues/issue-field-values

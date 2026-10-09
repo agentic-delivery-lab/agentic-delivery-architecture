@@ -124,8 +124,8 @@ scenarios:
     stimulus: A candidate capability, controller, grader, or model version is evaluated.
     response: A versioned offline dataset, grader definition, candidate source pin, baseline, and result are recorded; semantic judgments remain separately labeled.
     measure: Replaying the same fixture and deterministic graders from the same pins reproduces the same pass/fail result; every candidate report identifies dataset, grader, source commit, digest, and reviewer.
-    evidence: [strategy/organizational-strategy.yml#SG-04, strategy/organizational-strategy.yml#SG-07, "https://developers.openai.com/api/docs/guides/evals", "https://developers.openai.com/api/docs/guides/graders"]
-    status: target; Architecture specifies the evaluation boundary; owner implementation remains unassigned
+    evidence: [strategy/organizational-strategy.yml#SG-04, strategy/organizational-strategy.yml#SG-07, evaluation/README.md, contracts/evaluation-report.schema.json, evaluation/examples/agent-capability-report.yml, "https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3"]
+    status: target; Architecture proposes the versioned report schema and synthetic fixture in PR #14; Primitives #3 owns datasets, deterministic graders, and replay; measured baselines, independent review, and runtime integration remain open
   - id: QR-016
     name: recursive improvement returns to human-prioritized work
     stakeholder: maintainer, independent-reviewer
@@ -133,5 +133,5 @@ scenarios:
     stimulus: Evaluation, incident, user feedback, or product observation identifies a possible factory or product improvement.
     response: The finding links to a new or updated Issue in the owning repository, enters the portfolio Project for human prioritization, and starts only from that authorized Issue.
     measure: Every actionable finding has a source evidence link and owner Issue; zero findings directly mutate agent policy, activate a participant, merge, release, or trigger another implementation without human prioritization and authorization.
-    evidence: [ADR-0023, AP-004, strategy/organizational-strategy.yml#guardrails]
-    status: target; issue-to-project evaluation and recursive-run fixture coverage remain open
+    evidence: [ADR-0023, AP-004, strategy/organizational-strategy.yml#guardrails, "https://github.com/agentic-delivery-lab/agentic-delivery/issues/103", "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15"]
+    status: target; offline finding routing is owned by Control Plane #103; the portfolio Project awaits the human decision in Architecture #15, and recursive-run fixture coverage remains open

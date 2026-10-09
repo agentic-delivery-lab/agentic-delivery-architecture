@@ -153,6 +153,10 @@
         },
         "architectureArtifacts": {
           "const": "1.0.0"
+        },
+        "evaluationReport": {
+          "const": "1.0.0",
+          "description": "Proposed evidence-only evaluation report contract; pinning does not imply adoption or runtime support."
         }
       },
       "minProperties": 1,

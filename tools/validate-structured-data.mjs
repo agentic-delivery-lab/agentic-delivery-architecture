@@ -15,6 +15,7 @@ export const architectureDataContracts = Object.freeze({
   'architecture/domain/context-map.yml': 'domain-context-map.schema.json',
   'architecture/domain/ubiquitous-language.yml': 'domain-language.schema.json',
   'architecture/strategy/organizational-strategy.yml': 'organizational-strategy.schema.json',
+  'architecture/evaluation/examples/agent-capability-report.yml': 'evaluation-report.schema.json',
   'architecture/principles/index.yml': 'principle-index.schema.json',
   'architecture/quality/quality-scenarios.yml': 'quality-scenarios.schema.json',
   'architecture/risks/risks.yml': 'risk-register.schema.json',
@@ -93,6 +94,18 @@ async function discoverArchitectureData(root, directory = 'architecture', result
   return results.sort();
 }
 
+function validateCrossFieldConstraints(relativePath, value) {
+  if (relativePath !== 'architecture/evaluation/examples/agent-capability-report.yml') return;
+  if (!['improvement', 'regression', 'no-change'].includes(value.comparison?.claim)) return;
+  const baseline = value.baseline?.measurement;
+  const candidate = value.comparison?.candidateMeasurement;
+  const mismatches = ['metricId', 'unit', 'observationWindow']
+    .filter((field) => baseline?.[field] !== candidate?.[field]);
+  if (mismatches.length) {
+    throw new Error(`${relativePath} comparison baseline and candidate must use the same ${mismatches.join(', ')}`);
+  }
+}
+
 export async function validateStructuredValue(root, relativePath, value) {
   const schemaName = architectureDataContracts[relativePath];
   if (!schemaName) throw new Error(`${relativePath} has no architecture data contract`);
@@ -102,6 +115,7 @@ export async function validateStructuredValue(root, relativePath, value) {
   if (!validate(value)) {
     throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
   }
+  validateCrossFieldConstraints(relativePath, value);
   return true;
 }
 
@@ -121,6 +135,7 @@ export async function validateStructuredData(root = repositoryRoot) {
     if (!validate(value)) {
       throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
     }
+    validateCrossFieldConstraints(relativePath, value);
   }
   return { files: Object.keys(architectureDataContracts).length, schemas: schemaFiles.length };
 }

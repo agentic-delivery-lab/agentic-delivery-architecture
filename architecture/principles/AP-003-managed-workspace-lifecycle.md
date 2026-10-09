@@ -25,6 +25,9 @@ source is [Architecture issue #7](https://github.com/agentic-delivery-lab/agenti
   remote updates before deleting completed clean work.
 - Inventory stale remote-tracking refs before pruning and preserve refs that
   uniquely retain work until safe disposition is established.
+- Coordinate session use and cleanup through ownership leases; hold an exclusive
+  cleanup lease across final checks and removal, blocking new consumers. Keep
+  active Git worktree locks owner-identified and preserve unknown owners.
 - Preserve dirty, unmerged, unknown or active work. Age and pull-request closure
   are insufficient evidence. Record retention reasons and removal conditions.
 - Scratch/test producers register teardown immediately, including initialization

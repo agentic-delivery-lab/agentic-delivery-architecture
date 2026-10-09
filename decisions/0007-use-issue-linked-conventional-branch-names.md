@@ -17,7 +17,7 @@ required-enforcement:
 
 Issue [#11](https://github.com/agentic-delivery-lab/agentic-delivery/issues/11) asks the repository to improve branch naming based on trunk-based delivery and Conventional Commits. A branch name should show the kind of change and make its source issue immediately traceable. The repository also needs an early, repeatable way to reject work that starts from a closed issue.
 
-The affected bounded context is `agentic-delivery-governance`. The relevant terms are `short-lived feature branch`, `source issue`, `issue-linked branch name`, `trunk` and `conventional commit`.
+The affected bounded contexts are `agentic-delivery-governance`, which owns branch identity and source-issue rules, and `developer-distribution`, which installs the managed local workspace projection. Distribution must preserve the branch grammar and issue authorization; it does not own a second branch identity. The relevant terms are `short-lived feature branch`, `source issue`, `issue-linked branch name`, `managed worktree`, `trunk` and `conventional commit`.
 
 ## Decision Drivers
 

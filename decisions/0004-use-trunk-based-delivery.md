@@ -78,14 +78,22 @@ the blocked prune; do not delete the affected work.
    default-branch commit in the sibling topology below. Preserve primary local
    history and dirty files. Do not duplicate a workspace to evade unexplained
    dirty state or silently use it for another issue.
-3. **Active:** retain one checked-out worktree per task branch, record the owning
+3. **Active:** require each session to acquire a workspace-use lease before
+   entering a task worktree and retain it until the session leaves. Active linked
+   worktrees also carry an owner-identified Git worktree lock, so ordinary Git
+   removal is blocked. Retain one checked-out worktree per task branch, record the owning
    task/session and retention reason, and keep the existing two-calendar-day
    branch target. At stage handoffs, account for every pending change rather
    than claiming a clean workspace while changes remain.
 4. **Complete:** after an approved merge, capture the actual merge commit, fetch
    and prune again, and prove that the exact feature tip is an ancestor of the
-   current remote default branch. Recheck all worktrees, dirty/untracked files,
-   active consumers, open pull requests and runs. Remove a completed clean linked
+   current remote default branch. Acquire an exclusive cleanup lease before the
+   final checks and retain it through worktree and ref removal. The same
+   ownership protocol must block new workspace-use leases while cleanup holds
+   this lease. Recheck all worktrees, dirty/untracked files, active consumers,
+   open pull requests and runs under it. The owner may release its own Git
+   worktree lock only after all use leases end and while holding the cleanup
+   lease; never unlock another session's worktree or bypass a lock. Remove a completed clean linked
    worktree with normal `git worktree remove`, then its integrated local branch
    with normal `git branch -d`. Recheck the exact tip immediately before deleting
    any remote head; use an expected-tip guard so a concurrent update blocks
@@ -129,6 +137,15 @@ reason, and an exit condition. Preserve audit manifests, recovery records and
 rollback inputs until that condition is satisfied. Do not touch another
 account's files or an active process's artifacts. Ordinary scratch storage is
 not an incident archive.
+
+An active-process snapshot alone cannot prevent a new session from entering a
+clean worktree between the check and removal. The reusable ownership protocol
+must coordinate task start/resume and cleanup, with an exclusive lease covering
+that interval. A Git worktree lock protects against ordinary removal but is not
+itself a shared session-admission protocol. Unknown owners, conflicting leases
+or uncoordinated consumers block cleanup of the affected workspace. Crash
+recovery must establish that an owner is no longer active before releasing its
+lease or lock; age alone is insufficient.
 
 ### Implementation ownership and rollout
 

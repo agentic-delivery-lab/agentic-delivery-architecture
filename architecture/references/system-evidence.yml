@@ -309,6 +309,51 @@ observations:
       OAuth scopes do not establish GitHub App installation access. The six
       organization Issue Fields remain separately recorded as
       organization_members_only.
+  - id: project-inventory-20261009-1057
+    observedAt: '2026-10-09'
+    source: https://docs.github.com/en/graphql/reference/projects
+    request: >-
+      Read-only inventory completed at 2026-10-09 10:57 UTC as authenticated
+      account sjefsharp. `gh auth status` reported the `project`, `admin:org`,
+      and `repo` scopes. `gh project list` queried organization
+      agentic-delivery-lab and user sjefsharp. GraphQL queried organization,
+      viewer, and Projects v2 on each of the six visible repositories, plus all
+      open Issues and each Issue's Project items. The organization REST
+      response was read for plan and Projects capability flags.
+    projectInventoryComplete: true
+    projectIds: []
+    result: >-
+      Organization and user CLI inventories both returned zero Projects.
+      GraphQL organization.projectsV2, viewer.projectsV2, and all six
+      repository.projectsV2 connections each returned totalCount=0 and
+      hasNextPage=false. The organization REST response reported plan=free,
+      has_organization_projects=true, and has_repository_projects=true. The
+      six repositories had nineteen open Issues in total; every Issue's
+      projectItems connection returned totalCount=0 and hasNextPage=false.
+      No Project data or settings were changed.
+    limitation: >-
+      The empty inventory is complete for organization, user, and repository
+      connections visible to this authenticated identity at observation time;
+      it does not inventory Projects owned by other accounts or establish
+      GitHub App access. The REST capability flags indicate organization and
+      repository Projects are available as a feature, but do not grant this
+      identity Project ownership or prove mutation authority. No Project was
+      available to inspect membership, views, fields, or visibility. No
+      Project-only draft cards could be enumerated because no Project nodes
+      were returned. The six organization Issue Fields are separately
+      recorded as organization_members_only.
+  - id: organization-identity-role-20261009-1058
+    observedAt: '2026-10-09T10:58:37Z'
+    source: https://docs.github.com/en/rest/orgs/members#get-organization-membership-for-a-user
+    request: >-
+      Read-only `GET /orgs/agentic-delivery-lab/memberships/sjefsharp` using
+      the authenticated GitHub CLI identity after `gh auth status` confirmed
+      the `admin:org` OAuth scope.
+    result: The organization membership API returned state=active and role=admin for sjefsharp.
+    limitation: >-
+      This establishes the authenticated user's current organization role; it
+      does not establish GitHub App installation access or create approval for
+      a Project, field, or repository change. No Project mutation was attempted.
   - id: current-issue-field-value-read
     observedAt: '2026-10-09'
     source: https://docs.github.com/en/rest/issues/issue-field-values

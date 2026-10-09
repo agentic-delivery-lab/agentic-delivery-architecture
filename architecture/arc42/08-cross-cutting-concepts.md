@@ -36,16 +36,18 @@ the platform supports in-place change, compare old/new projections in shadow,
 and preserve rollback. The current architecture change does not mutate a
 field.
 
-The initial 2026-10-09 read failed because Project access was unavailable. A
-refreshed complete query under the authenticated `project` and `admin:org`
-scopes returned no organization or personal Projects and no next page; all 19
-open Issues in the six visible organization repositories also had no Project
-associations. No Project field, membership, or visibility could be inspected;
-App installation access and owners outside the queried scopes remain unknown.
-The proposed one-Project/two-view topology awaits a human decision in
-Architecture #15. All six organization Issue Fields have
-`organization_members_only` visibility, which remains a view-design constraint
-for any future Project.
+The initial 2026-10-09 read failed because Project access was unavailable. The
+refreshed complete query under `project`, `admin:org`, and `repo` scopes
+returned no organization, personal, or repository Projects and no next page;
+all 19 open Issues in the six visible organization repositories also had no
+Project associations. The organization REST response reports both organization
+and repository Projects available under the Free plan, and the authenticated
+user's active organization role is `admin`. No Project field, membership, or
+visibility could be inspected; GitHub App access and owners outside the
+queried scopes remain unknown. The proposed one-Project/two-view topology
+awaits a human decision in Architecture #15. All six organization Issue Fields
+have `organization_members_only` visibility, which remains a view-design
+constraint for any future Project.
 
 ## 8.3 Semantic proposals and deterministic authorization
 

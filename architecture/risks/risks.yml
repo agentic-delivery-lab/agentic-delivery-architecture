@@ -63,15 +63,21 @@ risks:
     evidence: [architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories, "recovery issue #59"]
     mitigation: Keep repository mapping as review routing only; an authorized maintainer must resolve the one-member/CODEOWNERS limitation and verify actual human reviews before claiming enforcement.
   - id: R-012
-    title: No Project is visible; future field visibility and integration remain unverified
+    title: No Project is visible despite reported organization Projects capability
     status: open
     owner: organization-operator
     relatedQualityScenario: QR-013
-    evidence: [system-evidence.yml#project-inventory-20261009-1033, system-evidence.yml#organization-issue-fields]
-    mitigation: Use the complete empty inventory to support the human topology decision; verify the accountable Project owner, entitlement, App access, and field visibility before any configuration or write integration.
+    evidence: [system-evidence.yml#project-inventory-20261009-1057, system-evidence.yml#organization-issue-fields]
+    mitigation: Use the complete empty inventory and positive feature-capability flags to support the human topology decision; verify Project ownership, access, and field visibility before configuration. Keep App access separately unverified before any write integration.
   - id: R-013
     title: Organization Actions policy does not require immutable action pins and App access is unverified
     status: open
     owner: organization-operator
     evidence: system-evidence.yml#current-organization-capability-inventory-20261009-1044
     mitigation: Inspect repository-level Actions policy and every workflow reference before claiming pinning; verify the App installation through an App-authenticated read path before relying on its permissions.
+  - id: R-014
+    title: Future evaluation tooling could depend on vendor products scheduled for retirement
+    status: open
+    owner: agentic-primitives-context-steward
+    evidence: architecture/references/strategy-research-register.md
+    mitigation: Keep the versioned evaluation case and result contracts portable, retain local deterministic replay, and recheck provider lifecycle before any external evaluation integration.

@@ -29,12 +29,19 @@ A Project item is not an authorization record. Allowing a Project-only card to
 trigger agent execution would bypass the originating repository's Issue
 identity, actor permission, Issue Type, lifecycle, policy, and transition
 checks. Copying Issue-owned fields into separately editable Project fields
-would create conflicting state. The read-only audit on 2026-10-09 could not
-inventory Projects because the authenticated CLI did not have read:project.
-It also found the current organization Issue Fields, including Priority and
-the lifecycle and delivery fields, have organization-members-only visibility.
-Project existence, membership, field configuration, visibility fit, and
-entitlements therefore remain unknown.
+would create conflicting state. The initial read-only audit could not
+inventory Projects because the authenticated CLI did not have `read:project`.
+The later complete inventory (2026-10-09 10:57 UTC) ran with `project`,
+`admin:org`, and `repo` OAuth scopes and an active organization admin role.
+Organization, personal, and all six repository Projects v2 connections
+returned no Project nodes; all 19 open Issues returned zero Project items.
+The organization REST response reports plan `free` and
+`has_organization_projects=true` plus `has_repository_projects=true`, so no
+Projects feature-entitlement blocker was observed. The six organization Issue
+Fields, including Priority and lifecycle/delivery fields, remain
+organization-members-only. No Project exists in the queried owner scopes to
+inspect membership, views, fields, or visibility. GitHub App access remains
+unknown.
 
 ## Decision Drivers
 
@@ -48,7 +55,8 @@ entitlements therefore remain unknown.
 - Fail closed when Project identity, Issue identity, access, field meaning, or
   the source authorization is unknown.
 - Avoid an unreviewed Project mutation, permission expansion, or duplicated
-  Issue field while Project state and visibility are not inventoried.
+  Issue field; retain the separate Architecture #15 human decision before
+  creating or configuring a Project.
 
 ## Considered Options
 
@@ -97,19 +105,21 @@ or App configuration change.
   review, runner/session, webhook replay, and evaluation state. Webhook
   delivery replay, resumable Codex session state, and evaluation replay stay
   distinct.
-- Project field visibility and API entitlements are a design input. The
-  audited organization Issue Fields are member-only; public and internal
-  Project views may not expose them. A view cannot claim that those values
-  are available until a live access and visibility check succeeds.
+- Organization Project capability is reported available under the current
+  Free plan. The audited organization Issue Fields are organization-members-
+  only; public and internal Project views may not expose them. Because no
+  Project exists in the queried owner scopes, a future view still requires a
+  live field-visibility and access check.
 - Architecture owns strategy and this decision. The Control Plane owns
   project event handling and authorization implementation; Primitives owns
   reusable planning/evaluation capabilities; Distribution owns any
   versioned consumer workflow. Each owner implements its part in an
   issue-linked reviewed pull request.
-- GitHub's documented Projects API uses read:project for queries and project
-  permission for mutations. A future Project write path requires a separately
-  reviewed permission contract; this decision does not expand current
-  identity scopes.
+- GitHub's documented Projects API separates read access from Project
+  mutations. The current user has `project` and `admin:org` OAuth scopes and
+  an active organization admin role, but a future Project write path still
+  requires a separately reviewed permission contract. This decision does not
+  expand current identity scopes or authorize any live change.
 
 ### Confirmation
 
@@ -121,8 +131,10 @@ or App configuration change.
   block, or start execution; valid work still originates from the authorized
   Issue.
 - An operator read-only inventory confirms Project identity, membership,
-  field configuration, visibility, and entitlement before any board
-  configuration or write integration is proposed.
+  field configuration, and visibility before any board configuration or write
+  integration is proposed. Current evidence reports Project features
+  available but no Project to configure; Architecture #15 remains the human
+  topology decision.
 - Offline fixtures, hosted CI, and live operation are reported as separate
   evidence. No successful live Project integration is claimed by this record.
 
@@ -172,6 +184,10 @@ or App configuration change.
   [Issue Fields and visibility](https://docs.github.com/en/issues/planning-and-tracking-with-projects/understanding-fields/about-issue-fields),
   and [Projects API permissions](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects)
   describe Projects capabilities, synchronization, visibility, and API access.
+- The complete current empty Project inventory, organization capability flags,
+  and identity caveats are in the
+  [strategy gap matrix](../architecture/references/strategy-foundation-gap-matrix.md)
+  and [system evidence](../architecture/references/system-evidence.yml).
 - This record is proposed on the issue-linked branch. Context stewards and
   human reviewers must review it before it becomes the Architecture
   repository's accepted decision on main.

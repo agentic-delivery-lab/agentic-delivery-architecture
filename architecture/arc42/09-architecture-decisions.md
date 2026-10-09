@@ -24,9 +24,12 @@ a scheduled GitHub App failed-delivery reconciler, and idempotent controller
 handling; runtime provisioning and activation remain separate work.
 Proposed ADR-0023 makes GitHub Projects the required portfolio planning,
 prioritization, coordination, and progress-visibility surface while preserving
-origin Issues as the sole work and execution-authorization records. Project
-inventory, membership, field visibility, and API entitlement remain unknown;
-this proposed decision authorizes no live configuration.
+origin Issues as the sole work and execution-authorization records. The
+current inventory found no Project in organization, user, or repository
+connections, while the organization API reports organization and repository
+Project capability under its Free plan. Project membership, views, field
+visibility, and GitHub App access remain unknown; this proposed decision
+authorizes no live configuration.
 
 Bounded-context scope remains on each record. The context registry maps each
 scope to the repository where semantic review is routed: governance and

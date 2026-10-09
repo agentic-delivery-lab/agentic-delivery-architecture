@@ -30,9 +30,12 @@ because they have separate repositories. The machine-readable context map is
 - **GitHub Projects:** required primary planning, prioritization,
   coordination, and progress-visibility surface for Factory Evolution and
   Software Product Delivery. Origin repository Issues remain canonical work
-  records and the only source of execution authorization. Project inventory,
-  membership, field visibility, and entitlement remain unknown; no live
-  configuration or lifecycle binding is claimed.
+  records and the only source of execution authorization. The 2026-10-09
+  inventory found no organization, user, or repository Project, while the
+  organization API reports Project capability under its Free plan. The
+  authenticated user has an active organization admin role, but Project views,
+  fields, per-Project access, GitHub App access, and live lifecycle integration
+  remain unverified. No live configuration is claimed.
 - **GitHub App:** installation access, permissions, and subscribed event
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.

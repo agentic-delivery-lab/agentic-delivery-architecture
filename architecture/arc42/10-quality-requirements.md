@@ -33,9 +33,12 @@ open. QR-011's repository routing is validated, but independent human steward
 approval is blocked by the one-member/CODEOWNERS gate. Issue-field pinning is
 unverified. The recovery intake runs failed before dependency installation.
 Participants remain in shadow mode. The refreshed authorized Projects
-inventory returned no organization or personal Project visible to the queried
-identity and no Project membership for the 19 open Issues in the six visible
-repositories; the six organization Issue Fields are member-only.
+inventory returned no organization, personal, or repository Project visible
+to the queried identity, and all 19 open Issues in the six visible
+repositories had zero Project item associations. The organization REST response reports
+organization and repository Projects available under the Free plan, and the
+identity has an active organization admin role. The six organization Issue
+Fields are organization-members-only.
 Architecture PR #14 proposes the QR-015 evaluation-report schema and synthetic
 fixture, while Primitives #3 owns dataset/grader/replay implementation and
 Control Plane #103 owns finding routing. There is no measured baseline or live

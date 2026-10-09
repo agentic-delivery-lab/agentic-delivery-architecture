@@ -23,10 +23,13 @@ The current owner and provenance inventory is in
 GitHub Projects is the primary portfolio surface for both value streams. The
 proposed minimum topology is one organization portfolio Project with separate
 Factory Evolution and Software Product Delivery views, reusing a suitable
-existing Project if an authorized inventory confirms fit. Project membership,
-fields, visibility, and entitlement must be inventoried before a specific
-Project is selected or configured. A Project-only card can be discussed and
-prioritized but cannot authorize execution.
+existing Project if an authorized inventory confirms fit. The 2026-10-09
+inventory found no Project within the queried organization, user, or
+repository scopes; the organization REST API reports Project capability
+available under its Free plan. Project-specific ownership, fields, views, and
+visibility must be reviewed before selecting or configuring a Project. A
+Project-only card can be discussed and prioritized but cannot authorize
+execution.
 
 Every executable unit of work has a source Issue in its owning repository.
 The Project links that Issue and may own distinct portfolio planning facts.

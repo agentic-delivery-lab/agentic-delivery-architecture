@@ -30,9 +30,11 @@ Factory Evolution and Software Product Delivery.
   dependency gates remain owned by the source Issue and Control Plane
   contract.
 - One organization portfolio Project with separate views for the two value
-  streams is the proposed minimum topology. Existing Project inventory,
-  visibility, membership, and API entitlement must be verified before a
-  specific Project is selected or configured.
+  streams is the proposed minimum topology. The current inventory found no
+  Project, while the organization API reports organization and repository
+  Project capability. Project ownership, field visibility, and any required
+  access configuration must be reviewed before a specific Project is selected
+  or configured.
 - Evaluation findings and factory-improvement suggestions become Issues.
   People prioritize those Issues in Projects before any new execution begins.
 - Project automation, App permissions, and Project configuration require
@@ -43,10 +45,11 @@ Factory Evolution and Software Product Delivery.
 
 The organizational strategy is a proposal linked to Architecture Issue #11.
 The initial 2026-10-09 live audit lacked Project access. A later complete
-read-only inventory under an identity reporting `project` and `admin:org`
-returned no organization or personal Project and no associations for the 19
-open Issues in the six visible repositories. This does not cover owners outside
-those scopes or GitHub App access. The organization Issue Field catalog reports
-member-only visibility, and suitability for a future Project has not been
-verified. The principle does not claim an implemented or passing live
-integration.
+read-only inventory under an active organization admin identity reporting
+`project`, `admin:org`, and `repo` returned no organization, personal, or
+repository Project and no associations for the 19 open Issues in the six
+visible repositories. The organization REST response reports Project features
+available. This does not cover Projects owned outside those scopes or GitHub
+App access. The organization Issue Field catalog reports member-only
+visibility, and suitability for a future Project has not been verified. The
+principle does not claim an implemented or passing live integration.

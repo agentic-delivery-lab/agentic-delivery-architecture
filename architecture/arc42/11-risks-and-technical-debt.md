@@ -7,7 +7,8 @@ technical debt and exit conditions are in
 [`../risks/technical-debt.yml`](../risks/technical-debt.yml).
 
 The highest current risks include no Project visible in the authenticated
-organization and user inventories, unverified Project field visibility and
+organization, user, or repository inventories despite positive organization
+and repository capability flags, unverified Project field visibility and
 organization field pinning, mismatch between the App
 installation and the Control Plane contract, lack of completed end-to-end
 delivery evidence, and repository-by-repository gaps in live protection

@@ -33,7 +33,8 @@ with estimates sensitive to operationalization. This proposal therefore
 remains subject to maintainer review; the strategy links its claims to
 measurable goals and evidence instead of treating the wording itself as an
 outcome. The research basis and exact sources are recorded in the
-[canonical strategy](../strategy/organizational-strategy.yml).
+[canonical strategy](../strategy/organizational-strategy.yml) and its
+[strategy foundation research register](../references/strategy-research-register.md).
 
 ## 1.2 Goals
 

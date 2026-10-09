@@ -214,6 +214,7 @@ strategicGoals:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/60
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/105
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/108
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
@@ -391,11 +392,13 @@ strategicGoals:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/107
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/108
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/107
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/108
       evaluationEvidenceRefs:
         - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12, status: pending}
     reviewTriggers:
@@ -426,9 +429,11 @@ strategicGoals:
       implementationIssueRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/103
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/108
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/103
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/108
       evaluationEvidenceRefs:
         - {reference: architecture/evaluation/examples/agent-capability-report.yml, status: synthetic}
         - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3, status: pending}

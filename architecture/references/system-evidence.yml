@@ -1513,3 +1513,25 @@ observations:
     limitation: >-
       A passing exact-head workflow is automated validation, not independent
       semantic review, approval, merge, release, or runtime adoption.
+  - id: control-plane-issue-108-fixture-plan-20261009-2002
+    observedAt: '2026-10-09T20:02:51Z'
+    source: https://cli.github.com/manual/gh_issue_create
+    request: >-
+      Create a native Task in the Control Plane for the four missing
+      cross-stream offline acceptance fixtures, then read back its Issue Type,
+      body, assignee, state, and Project items. No Project, App permission,
+      repository, participant, or runtime configuration was changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+    result: >-
+      Created open Control Plane Issue #108, “Task: Add cross-stream offline
+      Project and Issue acceptance fixtures,” with native Issue Type Task and
+      no assignee. Its body links Architecture #11 and the owner/dependency
+      Issues #101, #103, #107, #13, and #15, defines the four synthetic offline
+      scenarios and safety assertions, and prohibits live Project changes or
+      product creation. The read-back returned an empty Project-item list.
+    limitation: >-
+      Issue #108 is a planning record, not evidence that any fixture is
+      implemented or executed. No live Project exists in the queried scopes
+      for association; Project topology and product stewardship remain open.

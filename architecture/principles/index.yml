@@ -49,6 +49,6 @@ principles:
       - Use managed sibling worktrees for isolation and preserve unknown, dirty, unmerged or active work.
       - Artifact producers register teardown; cleanup verifies exact-tip integration and concurrent-use safety.
     evidence:
-      - decisions/0004-use-trunk-based-delivery.md
-      - decisions/0007-use-issue-linked-conventional-branch-names.md
+      - ../decisions/0004-use-trunk-based-delivery.md
+      - ../decisions/0007-use-issue-linked-conventional-branch-names.md
       - quality/quality-scenarios.yml#QR-012

@@ -59,11 +59,18 @@ checks authorize cleanup. A repository setting or scheduled janitor alone does
 not implement the lifecycle.
 
 1. **Discover:** inspect the common Git directory, every registered worktree,
-   checked-out branches, status including untracked files, stashes, remote
-   default branch, open pull requests, active workflow runs, and sessions using
+   checked-out branches, local and remote-tracking refs with unique commits,
+   status including untracked files, stashes, remote default branch, open pull
+   requests, active workflow runs, and sessions using
    those paths or refs. Discovery is read-only. Unknown ownership blocks
    mutation of the affected item; report the evidence and its resolution gate.
-2. **Start or resume:** fetch/prune, confirm the source issue and branch identity,
+Before any pruning pass, inventory remote-tracking refs that no longer exist on
+the server. A stale ref may be the only reference preserving unique work. Prove
+its commits are integrated or retained by an identified owned ref before pruning
+it. If ownership or reachability is unknown, fetch without pruning and report
+the blocked prune; do not delete the affected work.
+
+2. **Start or resume:** fetch/prune under that preservation guard, confirm the source issue and branch identity,
    and select a clean base synchronized with the current remote default branch.
    Prefer a clean primary checkout for sequential work. Resume an existing task
    workspace when appropriate. When identified existing work requires isolation

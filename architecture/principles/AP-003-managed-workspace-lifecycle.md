@@ -23,6 +23,8 @@ source is [Architecture issue #7](https://github.com/agentic-delivery-lab/agenti
 - Prove exact-tip integration against the freshly fetched remote default branch,
   check every registered worktree and active consumer, and guard concurrent
   remote updates before deleting completed clean work.
+- Inventory stale remote-tracking refs before pruning and preserve refs that
+  uniquely retain work until safe disposition is established.
 - Preserve dirty, unmerged, unknown or active work. Age and pull-request closure
   are insufficient evidence. Record retention reasons and removal conditions.
 - Scratch/test producers register teardown immediately, including initialization

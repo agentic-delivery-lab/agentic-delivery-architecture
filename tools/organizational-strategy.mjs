@@ -29,9 +29,16 @@ export function validateOrganizationalStrategyValue(strategy, {
   const measures = strategy.successMeasures ?? [];
   const measureIds = measures.map(({ id }) => id);
   const streams = (strategy.valueStreams ?? []).map(({ id }) => id);
+  const research = strategy.researchBasis ?? [];
+  const researchSources = research.map(({ source }) => source);
+  const referenceUrls = new Set((strategy.references ?? []).map(({ url }) => url));
 
   if (strategy.sourceIssue !== 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11') {
     errors.push('organizational strategy must link to Architecture source Issue #11');
+  }
+  if (duplicates(researchSources).length) errors.push('organizational strategy research sources must be unique');
+  for (const source of researchSources) {
+    if (!referenceUrls.has(source)) errors.push('organizational strategy research source must resolve to a cited reference: ' + source);
   }
   if (strategy.status === 'adopted' && !strategy.adoptionEvidence?.record) {
     errors.push('an adopted strategy requires a reviewed adoption record');

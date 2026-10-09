@@ -198,6 +198,11 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
     await readFile(path.join(root, 'architecture/strategy/organizational-strategy.yml'), 'utf8'),
     'organizational strategy test fixture',
   );
+  const unresolvedResearchSource = structuredClone(strategy);
+  unresolvedResearchSource.researchBasis[0].source = 'https://example.com/unlisted-research';
+  assert.ok(validateOrganizationalStrategyValue(unresolvedResearchSource)
+    .some((error) => /research source must resolve to a cited reference/.test(error)));
+
   const duplicated = structuredClone(strategy);
   duplicated.strategicGoals[1].id = duplicated.strategicGoals[0].id;
   assert.ok(validateOrganizationalStrategyValue(duplicated).some((error) => /identifiers must be unique/.test(error)));

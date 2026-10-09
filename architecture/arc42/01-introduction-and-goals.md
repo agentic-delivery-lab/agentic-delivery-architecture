@@ -21,6 +21,20 @@ streams, measures, and review triggers are maintained in the
 responsibility language in an AGENTS.md file remains local operating guidance
 and is not a second organizational mission statement.
 
+The proposal separates purpose, mission, and vision because a [construct
+review](https://link.springer.com/article/10.1007/s11573-023-01137-9) reports
+no universal definitions and distinguishes why the organization exists, the
+value it provides now, and the future state it seeks. A [mission-statement
+review](https://doi.org/10.5172/jmo.2012.18.4.430) identifies the rationale,
+development and implementation process, content and form, and member attitudes
+as conditions related to mission effectiveness. A [meta-analysis](https://doi.org/10.1108/00251741111120806)
+finds only a small positive relationship with financial-performance measures,
+with estimates sensitive to operationalization. This proposal therefore
+remains subject to maintainer review; the strategy links its claims to
+measurable goals and evidence instead of treating the wording itself as an
+outcome. The research basis and exact sources are recorded in the
+[canonical strategy](../strategy/organizational-strategy.yml).
+
 ## 1.2 Goals
 
 | ID | Goal | Evidence or decision |

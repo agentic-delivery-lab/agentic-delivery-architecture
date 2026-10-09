@@ -13,6 +13,7 @@
     "purpose",
     "mission",
     "vision",
+    "researchBasis",
     "marketAndProductContext",
     "audiences",
     "valuePropositions",
@@ -43,6 +44,20 @@
     "purpose": { "type": "string", "minLength": 1 },
     "mission": { "type": "string", "minLength": 1 },
     "vision": { "type": "string", "minLength": 1 },
+    "researchBasis": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "finding", "designImplication"],
+        "properties": {
+          "source": { "type": "string", "format": "uri" },
+          "finding": { "type": "string", "minLength": 1 },
+          "designImplication": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
     "marketAndProductContext": {
       "type": "object",
       "additionalProperties": false,

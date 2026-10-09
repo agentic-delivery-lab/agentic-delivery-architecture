@@ -13,6 +13,35 @@ vision: >-
   direction and authority. Every change traces to intent, is checked against
   explicit rules, is independently reviewed, and contributes evidence that
   informs the next prioritized improvement.
+researchBasis:
+  - source: https://link.springer.com/article/10.1007/s11573-023-01137-9
+    finding: >-
+      Academic research has no universally agreed definitions for purpose,
+      mission, and vision. This review distinguishes an enduring reason for
+      being, present organizational activity and value, and an aspirational
+      future state.
+    designImplication: >-
+      Keep these as separate statements with explicit local meanings: purpose
+      names why the factory exists, mission says what it does and for whom,
+      and vision describes the future operating condition people seek.
+  - source: https://doi.org/10.5172/jmo.2012.18.4.430
+    finding: >-
+      A review of mission-statement research identifies the rationale,
+      development and implementation process, content and form, and member
+      attitudes as conditions related to mission effectiveness.
+    designImplication: >-
+      Keep this strategy proposed until maintainer review and govern changes
+      through named stewards, review triggers, outcome measures, and human
+      approval rather than treating the statement as self-executing policy.
+  - source: https://doi.org/10.1108/00251741111120806
+    finding: >-
+      A meta-analysis finds a small positive relationship between mission
+      statements and financial performance measures, with estimates sensitive
+      to differences in how studies operationalize both.
+    designImplication: >-
+      Do not treat mission wording as evidence of factory or product outcomes;
+      connect strategic goals to explicit measures, observed baselines,
+      reporting windows, and independently checked evidence.
 marketAndProductContext:
   currentEvidence:
     - The six inventoried repositories are the software-factory architecture, controller, capability, distribution, and GitHub-adapter surfaces.
@@ -308,6 +337,20 @@ nonGoals:
   - Replace source Issues, native Issue Types, organization Issue Fields, pull requests, or context-owned runtime and release artifacts with strategy fields.
   - Let strategy prose, a Project card, an evaluation result, or an agent decide whether its own implementation is authorized.
 references:
+  - title: >-
+      Brosch, N. (2023). Corporate purpose: from a ‘Tower of Babel’ phenomenon
+      towards construct clarity. Journal of Business Economics, 93, 567–595.
+    url: https://link.springer.com/article/10.1007/s11573-023-01137-9
+  - title: >-
+      Braun, S., Wesche, J. S., Frey, D., Weisweiler, S., and Peus, C. (2012).
+      Effectiveness of mission statements in organizations – A review.
+      Journal of Management & Organization, 18(4), 430–444.
+    url: https://doi.org/10.5172/jmo.2012.18.4.430
+  - title: >-
+      Desmidt, S., Prinzie, A., and Decramer, A. (2011). Looking for the value
+      of mission statements: a meta-analysis of 20 years of research.
+      Management Decision, 49(3), 468–483.
+    url: https://doi.org/10.1108/00251741111120806
   - title: GitHub Projects overview and planning capabilities
     url: https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects
   - title: GitHub organization Issue Fields, visibility, and Project behavior

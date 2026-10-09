@@ -735,15 +735,9 @@ observations:
       organization Issue Type and Issue Field reads, and open-Issue counts.
       The `sjefsharp` account reports `admin:org`, `project`, `repo`, `workflow`,
       and other administrative scopes; the token value was not recorded.
-    projectInventoryComplete: true
-    projectIds: []
     sourceRepositories:
       - agentic-delivery-lab/agentic-delivery
       - agentic-delivery-lab/agentic-delivery-architecture
-      - agentic-delivery-lab/agentic-delivery-primitives
-      - agentic-delivery-lab/agentic-delivery-distribution
-      - agentic-delivery-lab/.github
-      - agentic-delivery-lab/.github-private
     sourceCommit: 1e832a9927ac554e2d0a88f2cf91ddca02e95b63
     result: >-
       Organization, authenticated-user, and each of the six repository
@@ -892,3 +886,38 @@ observations:
       checks and clean merge-state labels do not prove human review, merge,
       release adoption, App runtime permissions, Project integration, or live
       delivery. Controller draft tags are not published Releases.
+  - id: control-plane-strategy-context-issue-created-20261009-1749
+    observedAt: '2026-10-09T17:49:20Z'
+    source: https://cli.github.com/manual/gh_issue_create
+    request: >-
+      Created Control Plane #106 with native Issue Type `Task`, linked it as a
+      cross-repository sub-issue of Architecture #11, then read back its type,
+      parent, state, Project items, and URL. Refreshed the Control Plane open
+      Issue listing. No Project, field, permission, release, participant, or
+      runtime setting was changed.
+    projectInventoryComplete: true
+    projectIds: []
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 6f9a2f1f4a0d78add5722c3a65fd66e883d13398
+    result: >-
+      Control Plane #106 was created as an open native `Task` at
+      https://github.com/agentic-delivery-lab/agentic-delivery/issues/106 and
+      read back with Architecture #11 as its parent and `projectItems=[]`.
+      The Issue defines pinned strategy context for authorized Codex runs and
+      explicitly blocks implementation until Architecture PR #14 is reviewed,
+      merged, and released, with Control Plane #60/#66/#101 contracts in place.
+      The six visible repositories now have 21 open Issues: Control Plane 9,
+      Architecture 5, Primitives 2, Distribution 2, public adapter 2, and
+      private adapter 1. No other live resource was changed.
+    limitation: >-
+      Issue #106 is a planning task, not authorization for implementation,
+      Project association, runtime access, permission changes, deployment, or
+      participant activation. Its parent association does not resolve the
+      Project topology or product ownership decisions in Architecture #15 and
+      #13.

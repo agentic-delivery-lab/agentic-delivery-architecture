@@ -38,7 +38,7 @@ participant is active or that each hosting rule has been enabled.
 | Run budgets and failure recovery | QR-017/QR-018 define per-run hard limits and durable recovery evidence across webhook, Actions/Codex, and evaluation replay. | No accepted end-to-end receipt proves all budget limits, hard-stop behavior, or safe recovery; available quota/spend values remain unknown when the approved runtime does not expose them. |
 | Codex runtime | The exact Control Plane main source installs CLI 0.159.3; static review and an isolated package fixture verified instruction discovery and separate controller/task workspaces. | No Actions-run observation confirms the current runner binary, runtime CWD, or end-to-end issue delivery. |
 | Product delivery | The strategy specifies an owning product repository and steward boundary. | The read-only six-repository inventory found no distinct product repository or accountable steward; no product bootstrap or outcome baseline is claimed. |
-| GitHub Projects | At 17:37, the authenticated identity's complete organization, user, and six repository GraphQL inventories returned zero Projects. Organization and user `gh project list --closed` calls were also empty at 17:39. The six repositories have 20 open Issues; #105 has no Project item. The identity has broad OAuth scopes including `project`, `admin:org`, `repo`, and `workflow`. | No Project is configured in the queried owner scopes. Membership, fields, views, and visibility could not be inspected. The selected-repository invoker declares no Projects permission; its exact repository membership and deployed credential binding remain unknown. |
+| GitHub Projects | At 17:37, the authenticated identity's complete organization, user, and six repository GraphQL inventories returned zero Projects. Organization and user `gh project list --closed` calls were also empty at 17:39. That snapshot had 20 open Issues; #105 had no Project item. Control Plane #106 was added at 17:49 and also has no Project item; the count is now 21. The identity has broad OAuth scopes including `project`, `admin:org`, `repo`, and `workflow`. | No Project is configured in the queried owner scopes. Membership, fields, views, and visibility could not be inspected. The selected-repository invoker declares no Projects permission; its exact repository membership and deployed credential binding remain unknown. |
 | Organization Issue Fields | Six fields were read; Priority, dates, effort, Lifecycle Stage, and Delivery Readiness are all organization-members-only. | Current Project visibility fit and Issue Field pinning remain unverified. |
 | Per-issue field values | At 11:52 UTC, the documented `/issue-field-values` endpoint returned an empty array for each of the 19 then-open Issues in the six visible repositories. | The read is limited to open Issues at that time. It does not establish Issue Type pinning or future Project visibility. The earlier request path was not captured and its 404 is inconclusive. |
 | Control Plane execution | All six participants remain in shadow mode; latest run succeeded at authorization, classification, and finalization while delivery was skipped. | No completed delivery, central #62 canary, receipt completion, or independent field read-back is proven. |
@@ -68,6 +68,11 @@ Projects; 17:39 CLI listings including closed Projects were also empty. The
 same snapshot recorded five open PRs, no published Releases, and 31
 Control-Plane-only draft tags; exact heads and checks are in the cited system
 evidence.
+At 17:49 UTC, Control Plane #106 was created as a native Task under
+Architecture #11 for pinned strategy context; it has no Project item. The
+six-repository open-Issue count is now 21. The Issue is blocked on the normal
+Architecture review/release and Control Plane contract dependencies; no
+runtime deployment or Project configuration followed.
 
 ## 7.3 Historical deployment snapshot (2026-09-24)
 
@@ -131,6 +136,7 @@ does not prove the ruleset is absent.
 `control-plane-budget-recovery-issue-created-20261009-1717`,
 `github-app-installation-permissions-20261009-1725`,
 `project-inventory-20261009-1737`,
+`control-plane-strategy-context-issue-created-20261009-1749`,
 `issue-field-values-20261009-1152`,
 `current-open-work-and-pull-requests-20261009-1153`,
 `current-organization-capability-inventory-20261009-1044`,

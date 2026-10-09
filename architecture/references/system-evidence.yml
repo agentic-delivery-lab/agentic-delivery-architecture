@@ -1535,3 +1535,48 @@ observations:
       Issue #108 is a planning record, not evidence that any fixture is
       implemented or executed. No live Project exists in the queried scopes
       for association; Project topology and product stewardship remain open.
+  - id: organization-project-topology-proposal-20261009-2036
+    observedAt: '2026-10-09T20:36:39Z'
+    source: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+    sourcePath: config/github-app-contract.json
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Recheck organization and authenticated-user Project inventories, inspect
+      the current main-branch Control Plane GitHub App permission contract, and
+      verify current official GitHub documentation before updating Architecture
+      Issue #15 with a concrete topology decision proposal. No Project, item,
+      field, view, App permission, or production setting was changed.
+    result: >-
+      At 2026-10-09 20:26:19 UTC, GraphQL organization and authenticated-user
+      Projects v2 connections returned zero Projects with complete first pages.
+      The complete six-repository inventory at 19:34–19:35 UTC returned zero
+      Projects and zero Project items for all 22 then-open Issues. The current
+      human OAuth identity has project, admin:org, repo, and workflow scopes.
+      Control Plane main at commit 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+      declares selected-repository access and no Projects permission; this
+      contract does not establish deployed installation permissions. Exact-head
+      Architecture #14 workflow run 37985098041 passed on
+      f846e88d1b88d3be112399416cf50429f4993f70 at 20:10:08 UTC.
+      GitHub documentation confirms that Projects support table, board, and
+      roadmap views and project-specific fields; organization-only Issue
+      Fields are hidden from public and internal Projects; viewers of private
+      repository items need both Project and repository access; and App
+      automation of organization Projects requires separate Project
+      read/write permission. Issue #15 was updated at 20:36:39 UTC with a
+      recommendation for one organization-owned Project tentatively named
+      Agentic Delivery Portfolio, two value-stream views, private visibility,
+      minimal fields, options and tradeoffs, and a separate-authorization
+      boundary. Official references are linked in Issue #15 and the strategy
+      research register.
+    limitation: >-
+      No Project exists in the queried organization or user scopes, so actual
+      Project visibility, Issue Field availability, membership, and automation
+      cannot be tested. The private-visibility recommendation is a local
+      proposal, not an approved decision. The App contract is not deployed
+      permission evidence, product repository and steward remain unknown, and
+      Issue #15 remains open for an accountable human decision.

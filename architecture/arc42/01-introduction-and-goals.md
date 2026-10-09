@@ -49,10 +49,11 @@ These are architecture goals supported by the recovery brief and existing
 decisions. They do not claim that current production operation satisfies
 them; section 7 and the evidence snapshot record observed gaps.
 
-The proposed organizational goals SG-01–SG-07 refine these architecture goals
-into user, portfolio, evaluation, adoption, security, operational reliability,
-observability, bounded-resource, and accountability outcomes. Their measures
-are proposals with unmeasured baselines and deferred targets; see the canonical
+The proposed organizational goals SG-01–SG-08 refine these architecture goals
+into authorized delivery, product outcomes, factory operations, capability
+reuse, adoption, portfolio planning, evidence-based improvement, and
+bounded-context/decision traceability. Their measures are proposals with
+unmeasured baselines and deferred targets; see the canonical
 [strategy source](../strategy/organizational-strategy.yml).
 
 ## 1.3 Quality goals

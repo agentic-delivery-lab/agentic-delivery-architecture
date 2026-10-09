@@ -1286,3 +1286,156 @@ observations:
       before adoption. Four synthetic fixtures do not establish representative
       agent, factory, or product outcomes. No independent semantic review,
       Project integration, or live Issue mutation was observed.
+  - id: portfolio-issue-project-inventory-20261009-1935
+    observedAt: '2026-10-09T19:35:52Z'
+    source: https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
+    request: >-
+      From 19:34 to 19:35 UTC, re-read organization, authenticated-user, and
+      all six repository Project v2 connections; closed-inclusive organization
+      and user CLI lists; each open Issue and its Project items; organization
+      Issue Types and Fields; per-Issue field values using API version
+      2026-03-10; organization capability flags; authenticated identity scopes;
+      and organization membership. No live state was changed.
+    projectInventoryComplete: true
+    projectIds: []
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: a0e1e0ef00963c073c195db12b23a65ffc5c4eef
+    result: >-
+      The active human `sjefsharp` `gh` identity has `admin:org`, `project`,
+      `repo`, and `workflow` scopes and an active organization `admin` role.
+      GraphQL `organization.projectsV2`, `viewer.projectsV2`, and
+      `repository.projectsV2` for each of the six repositories returned no
+      Project nodes and no additional pages; both closed-inclusive `gh project
+      list` queries also returned zero. `GET /orgs/agentic-delivery-lab` reports
+      plan `free`, `has_organization_projects=true`, and
+      `has_repository_projects=true`.
+
+      The six repositories have 22 open Issues in total (10, 5, 2, 2, 2, and
+      1). Every Issue `projectItems` connection was complete and empty. Each
+      repository Issue connection was complete. All 22 documented
+      `/issue-field-values` reads returned HTTP 200 with empty arrays.
+
+      `GET /orgs/agentic-delivery-lab/issue-types` returned nine enabled native
+      Issue Types: Task (866469117), Bug (866469118), Feature (866469119), Idea
+      (868968825), Research (868969150), Requirements (868969391), Architecture
+      Decision (868969683), Implementation (868969915), and Validation
+      (868970249). `GET /orgs/agentic-delivery-lab/issue-fields` returned six
+      `organization_members_only` fields: Priority (46797139; Urgent 81916476,
+      High 81916477, Medium 81916478, Low 81916479), Start date (46797140,
+      date), Target date (46797141, date), Effort (46797142; High 81916480,
+      Medium 81916481, Low 81916482), Lifecycle Stage (46888816; Intake
+      82077367, Discovery 82077368, Definition 82077369, Decision 82077370,
+      Planning 82077371, Execution 82077372, Validation 82077373, Acceptance
+      82077374, Done 82077375, Parked 82077376), and Delivery Readiness
+      (46888965; Not ready 82077636, Needs information 82077637, Ready 82077638,
+      Working 82077639, Waiting 82077640, Awaiting human 82077641, Blocked
+      82077642). Both catalog endpoints returned HTTP 200 using the active
+      organization's authorized scopes.
+    limitation: >-
+      This point-in-time read covers Projects owned by the organization and
+      authenticated user, the six visible repository owners, and the 22 open
+      Issues' accessible Project-item connections. Projects owned outside those
+      scopes or inaccessible Issue associations remain unknown. No Project
+      exists in the queried scopes to inspect fields, views, items without
+      Issues, membership, or visibility. Organization Issue Fields are distinct
+      from Project custom fields; no future Project visibility or mapping was
+      verified. Human OAuth scopes do not grant Projects access to the runtime
+      App and do not constitute approval to configure a Project.
+  - id: github-app-installation-inventory-20261009-1935
+    observedAt: '2026-10-09T19:35:52Z'
+    source: https://docs.github.com/en/rest/orgs/orgs#list-app-installations-for-an-organization
+    request: >-
+      Re-read `GET /orgs/agentic-delivery-lab/installations` and the selected
+      invoker's documented repository-list endpoint with the active human
+      `sjefsharp` `gh` OAuth identity. No installation, permission, or
+      credential was changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: a0e1e0ef00963c073c195db12b23a65ffc5c4eef
+    result: >-
+      The organization reports three installations. The selected
+      `agentic-delivery-lab-invoker-7f3a` (App 5011055, installation 163255060)
+      subscribes to Issues, issue comments, pull requests, review, and review
+      comment events. It declares contents write, Issues write, pull requests
+      write, metadata read, Issue Types read, and Issue Fields read, with no
+      Projects permission. Vercel (App 8329, installation 163160932) and the
+      ChatGPT Codex connector (App 1144995, installation 164559129) both report
+      all-repository selection; their declared permissions and event sets match
+      the prior 18:45 inventory. The selected installation's repository-list
+      request again returned HTTP 403: the human OAuth token is not authorized
+      for that App installation endpoint.
+    limitation: >-
+      Declared installation permissions and repository-selection mode do not
+      reveal the selected repository membership or which credential is bound
+      to a deployed Control Plane. The 403 is an access limitation, not
+      evidence of an empty repository selection. No App token, deployed
+      credential, runtime write, webhook, or permission change was inspected or
+      tested.
+  - id: pull-request-release-inventory-20261009-1935
+    observedAt: '2026-10-09T19:35:52Z'
+    source: https://cli.github.com/manual/gh_pr_list
+    request: >-
+      Re-read main commits, open pull requests, their exact heads, review and
+      merge states, listed checks, workflow activity, and GitHub Releases for
+      all six organization repositories. No repository or GitHub state was
+      changed.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: a0e1e0ef00963c073c195db12b23a65ffc5c4eef
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/37980586715
+      - https://github.com/agentic-delivery-lab/agentic-delivery-primitives/actions/runs/37979821675
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37916206653
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37916206682
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37916737931
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37916738642
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37953235259
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37953235296
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37953716379
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37953717239
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37339049466
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37339049543
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/37339049560
+    result: >-
+      The six observed `main` commits are Control Plane
+      `67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf`, Architecture
+      `4ae924966280706c28cb602ea0b3d338e8e4a875`, Primitives
+      `e4933566fbf5b0f593830f8933f18fbd21024fa7`, Distribution
+      `b69c5710928b47efc4d3ab12ec4d5b596c80720c`, public adapter
+      `af52c92e49616e78f8d6647cf5cf538a7e571d78`, and private adapter
+      `f9e6589b65c71da9e7b35d8e026f3d4a91dab78f`. Five PRs are open. Control
+      Plane #102 (`c98b24e57159037f74af4d234300cdc21483bfe`) and #104
+      (`2cf258d5a48a75524514d67f440d0f5bb16fb85a`) are `CLEAN`, without human
+      review decisions; their listed checks pass, with the classification
+      updater skipped. Control Plane #86 (`3c21e2aa4200f51171f88db226260baf97314661`)
+      is `DIRTY`, without a human review decision; its listed checks pass.
+      Architecture #14 (`a0e1e0ef00963c073c195db12b23a65ffc5c4eef`) is
+      `BLOCKED` with no review decision; exact-head run 37980586715 passes.
+      Draft Primitives #4 (`0b75ed7e424a58e7852f2a4f8aae3d887f396a2c`) is
+      `BLOCKED` and `REVIEW_REQUIRED`; exact-head run 37979821675 passes.
+      Distribution and both adapters have no open PRs. All six GitHub Release
+      listings are empty, and no workflow is currently in progress in the six
+      repositories.
+    limitation: >-
+      This is a point-in-time repository/PR/check/Release read. Blank
+      review-decision fields do not establish independent approval, and a
+      workflow check named `review` is not a human PR review. Passing checks
+      and merge-state labels do not establish merge, release adoption, App
+      runtime permissions, Project integration, or live delivery. Draft tags
+      were not queried.

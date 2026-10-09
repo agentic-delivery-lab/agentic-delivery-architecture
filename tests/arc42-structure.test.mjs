@@ -373,8 +373,8 @@ test('diagram sources remain model-first and structurally valid', async () => {
 
 test('organizational strategy has stable goals, measurable evidence, and fail-closed Project boundaries', async () => {
   const result = await validateOrganizationalStrategy(root);
-  assert.equal(result.goals, 7);
-  assert.equal(result.measures, 12);
+  assert.equal(result.goals, 8);
+  assert.equal(result.measures, 13);
   assert.equal(result.valueStreams, 2);
   assert.ok(result.traceabilityLinks >= 100);
 
@@ -402,6 +402,11 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
   assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-010' && /budget/i.test(name)));
   assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-011' && /recovery/i.test(name)));
   assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-012' && /evaluation integrity/i.test(name)));
+  const domainIntegrityGoal = strategy.strategicGoals.find(({ id }) => id === 'SG-08');
+  assert.match(domainIntegrityGoal.title, /bounded-context.*decision traceability/i);
+  assert.ok(domainIntegrityGoal.measureIds.includes('SM-013'));
+  assert.deepEqual(domainIntegrityGoal.traceability.qualityScenarioIds, ['QR-003', 'QR-011']);
+  assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-013' && /bounded-context/i.test(name)));
   const unresolvedResearchSource = structuredClone(strategy);
   unresolvedResearchSource.researchBasis[0].source = 'https://example.com/unlisted-research';
   assert.ok(validateOrganizationalStrategyValue(unresolvedResearchSource)

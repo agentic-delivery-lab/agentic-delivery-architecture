@@ -438,6 +438,36 @@ strategicGoals:
       - A failed, inconclusive, or newly discovered live observation has no owner Issue.
       - An improvement proposal can trigger itself or bypass Project prioritization and human authorization.
     status: proposed
+  - id: SG-08
+    title: Preserve bounded-context integrity and decision traceability
+    outcome: Changes use context-owned domain language, respect established bounded-context boundaries, and trace affected goals, quality expectations, principles, decisions, capabilities, contracts, source Issues, and evidence to their canonical owners.
+    rationale: A shared organizational strategy must preserve each context's model and steward while making cross-context changes reviewable; repository ownership alone is not proof of semantic alignment.
+    stakeholders: [maintainers, delivery-teams, capability-consumers, independent-reviewers]
+    stewardRoles: [architecture-authority, control-plane-context-steward, agentic-primitives-context-steward, developer-distribution-context-steward]
+    contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
+    architectureGoalIds: [G-01, G-04]
+    measureIds: [SM-001, SM-013]
+    traceability:
+      qualityScenarioIds: [QR-003, QR-011]
+      principleIds: [AP-001]
+      decisionIds: [ADR-0011, ADR-0013, ADR-0020, ADR-0021]
+      capabilityRefs: []
+      capabilityGaps:
+        - Cross-context decision routing is structurally inventoried, but independent steward review is not evidenced for this proposal and is not a substitute for human approval.
+      contractRefs:
+        - architecture/contracts/quality-scenarios.schema.json
+        - architecture/contracts/conformance-request.schema.json
+      implementationIssueRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
+      projectPlanningRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+      evaluationEvidenceRefs:
+        - {reference: architecture/references/strategy-foundation-gap-matrix.md, status: pending}
+    reviewTriggers:
+      - A changed domain term or model element has no canonical bounded-context owner.
+      - A cross-context change omits a relevant decision or required context-steward review.
+      - A decision, context boundary, or artifact owner changes without updating the traceability graph.
+    status: proposed
 successMeasures:
   - id: SM-001
     name: Traceable agent-assisted delivery coverage
@@ -547,23 +577,33 @@ successMeasures:
     reviewCadence: every comparative evaluation and quarterly dataset/grader calibration review
     baselineStatus: unmeasured
     targetStatus: set-after-baseline
+  - id: SM-013
+    name: Bounded-context and decision traceability coverage
+    definition: Share of in-scope cross-context changes that identify each affected context and canonical owner, resolve applicable architecture and quality references, and record required steward review before merge.
+    computation: Count of in-scope merged cross-context changes meeting every declared traceability and review condition divided by all in-scope merged cross-context changes; report unknown ownership and missing review separately.
+    dataSources: [pull requests, source Issues, bounded-context map, decision inventory, quality scenarios, review records]
+    stewardRole: architecture-authority
+    reviewCadence: quarterly and after a bounded-context boundary or decision-governance change
+    baselineStatus: unmeasured
+    targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-09 inventory returned no Project while the organization REST API reported both organization and repository Projects available, so creation and configuration still require the separate human decision tracked in Architecture #15.
+  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-09 19:35 inventory returned no Project while the organization REST API reported both organization and repository Projects available, so creation and configuration still require the separate human decision tracked in Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: portfolio-issue-project-inventory-20261009-1839
+  projectInventoryEvidenceId: portfolio-issue-project-inventory-20261009-1935
   inventoryEvidence:
-    observedAt: '2026-10-09T18:44:44Z'
+    observedAt: '2026-10-09T19:35:52Z'
     projectIds: []
     scopeSummary: >-
-      Between 18:38:15 and 18:44:44 UTC, complete GraphQL organization,
+      Between 19:34 and 19:35 UTC, complete GraphQL organization,
       authenticated-user, and six repository Project inventories returned no
       Projects or additional pages; organization and user CLI listings
       including closed Projects were empty. All 22 open Issues had no Project
       items, and all per-Issue field-value reads returned empty arrays. The
-      authenticated identity had project, admin:org, repo, and workflow scopes.
-      The organization REST response reported plan=free and both
-      has_organization_projects=true and has_repository_projects=true.
+      active identity had project, admin:org, repo, and workflow scopes and
+      organization admin role. The organization REST response reported
+      plan=free and both has_organization_projects=true and
+      has_repository_projects=true.
   planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the approved Project view can expose it. Project-owned fields may express distinct cross-Issue grouping, sequencing, or planned dependencies; do not duplicate Issue Priority or lifecycle values.
   executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation never authorizes or blocks execution or authorizes a model call, repository write, issue-field write, pull request, release, or activation.
   projectReadFailureRule: >-

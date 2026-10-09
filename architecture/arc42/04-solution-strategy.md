@@ -45,7 +45,9 @@ deterministic authorization → bounded implementation → pull request →
 independent validation and evaluation → human review and merge → outcome
 evidence → improvement Issue → Project prioritization. The diagrams under
 [architecture diagrams](../diagrams/README.md) show the value streams,
-portfolio lifecycle, and trust boundaries.
+strategic alignment, portfolio lifecycle, factory evolution, product delivery,
+and trust boundaries. Project planning remains a proposed integration because
+the dated read-only inventory found no Project.
 
 ## 4.3 Proposal and enforcement
 
@@ -77,11 +79,14 @@ observed Control Plane baseline.
 
 ## 4.5 Three delivery paths
 
-1. **Product delivery loop:** a user or operator need becomes an Issue in the
-   owning product repository, is prioritized in Projects, and is interpreted;
+1. **Product delivery loop:** a user or operator need becomes requirements and
+   an Issue in an identified, authorized product repository, is prioritized in
+   Projects, and is interpreted;
    deterministic gates authorize one bounded writer; a Validator checks the
    change; a pull request is independently reviewed and merged by a human.
-   Product evidence after delivery informs the next Issue.
+   Product evidence after delivery informs the next Issue. Repository creation,
+   product stewardship, and bootstrap remain approval-gated and no product
+   repository is currently identified.
 2. **Factory evolution loop:** a factory defect, capability gap, or measured
    improvement becomes an Issue in its owning factory repository, is
    prioritized in Projects, and follows the same authorized delivery and

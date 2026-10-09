@@ -46,6 +46,14 @@ evaluation. QR-013–QR-016 remain target scenarios; they do not report complete
 runtime integration or achieved outcomes. These are unresolved evidence gaps,
 not satisfied quality goals.
 
+The proposed report contract 2.0.0 requires each case to state its task,
+stimulus, expected outcome, and acceptance criteria; the case set must match
+the pinned dataset. It records deterministic evaluator identity and
+independence, explicit failure classes, and a testable improvement hypothesis.
+The validator rejects comparisons whose metric, unit, or observation window
+differs. These checks establish report structure and comparability only; they
+do not establish task quality, evaluator independence, or an observed baseline.
+
 **Evidence:** source revisions and runtime checks are linked by identifier in
 [`system-evidence.yml`](../references/system-evidence.yml).
 

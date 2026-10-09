@@ -94,8 +94,17 @@ async function discoverArchitectureData(root, directory = 'architecture', result
   return results.sort();
 }
 
-function validateCrossFieldConstraints(relativePath, value) {
-  if (relativePath !== 'architecture/evaluation/examples/agent-capability-report.yml') return;
+function validateCrossFieldConstraints(schemaName, relativePath, value) {
+  if (schemaName !== 'evaluation-report.schema.json') return;
+
+  const datasetCaseIds = value.dataset?.caseIds ?? [];
+  const resultCaseIds = (value.cases ?? []).map(({ caseId }) => caseId);
+  if (new Set(resultCaseIds).size !== resultCaseIds.length
+    || datasetCaseIds.length !== resultCaseIds.length
+    || datasetCaseIds.some((caseId) => !resultCaseIds.includes(caseId))) {
+    throw new Error(`${relativePath} cases must cover exactly the pinned dataset case IDs`);
+  }
+
   if (!['improvement', 'regression', 'no-change'].includes(value.comparison?.claim)) return;
   const baseline = value.baseline?.measurement;
   const candidate = value.comparison?.candidateMeasurement;
@@ -115,7 +124,7 @@ export async function validateStructuredValue(root, relativePath, value) {
   if (!validate(value)) {
     throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
   }
-  validateCrossFieldConstraints(relativePath, value);
+  validateCrossFieldConstraints(schemaName, relativePath, value);
   return true;
 }
 
@@ -135,7 +144,7 @@ export async function validateStructuredData(root = repositoryRoot) {
     if (!validate(value)) {
       throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
     }
-    validateCrossFieldConstraints(relativePath, value);
+    validateCrossFieldConstraints(schemaName, relativePath, value);
   }
   return { files: Object.keys(architectureDataContracts).length, schemas: schemaFiles.length };
 }

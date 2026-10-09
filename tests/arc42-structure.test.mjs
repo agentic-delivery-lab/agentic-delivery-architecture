@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { cp, mkdtemp, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdtemp, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
@@ -15,6 +15,7 @@ import { validateStructuredData, validateStructuredValue } from '../tools/valida
 import { parseRepositoryYaml } from '../tools/lib/yaml.mjs';
 import {
   validateOrganizationalStrategy,
+  validateOrganizationalStrategyTraceabilityValue,
   validateOrganizationalStrategyValue,
   validateProjectInventoryEvidence,
 } from '../tools/organizational-strategy.mjs';
@@ -90,6 +91,33 @@ test('evaluation report contract distinguishes layers, pins, baselines, and evid
   const reportPath = 'architecture/evaluation/examples/agent-capability-report.yml';
   const report = parseRepositoryYaml(await readFile(path.join(root, reportPath), 'utf8'), reportPath);
   await validateStructuredValue(root, reportPath, report);
+  const missingCaseDefinition = structuredClone(report);
+  delete missingCaseDefinition.cases;
+  await assert.rejects(
+    validateStructuredValue(root, reportPath, missingCaseDefinition),
+    /must have required property 'cases'/,
+  );
+  assert.equal(report.cases[0].caseId, report.dataset.caseIds[0]);
+  assert.ok(report.cases[0].task && report.cases[0].stimulus && report.cases[0].expectedOutcome.acceptanceCriteria.length > 0);
+  assert.ok(report.graders.deterministic.evaluator.id);
+  assert.equal(report.graders.deterministic.evaluator.kind, 'deterministic-tool');
+  assert.ok(report.graders.deterministic.independence.relation && report.graders.deterministic.independence.basis);
+
+  const missingExpectedOutcome = structuredClone(report);
+  delete missingExpectedOutcome.cases[0].expectedOutcome;
+  await assert.rejects(validateStructuredValue(root, reportPath, missingExpectedOutcome), /must have required property 'expectedOutcome'/);
+
+  const missingEvaluatorIdentity = structuredClone(report);
+  delete missingEvaluatorIdentity.graders.deterministic.evaluator.id;
+  await assert.rejects(validateStructuredValue(root, reportPath, missingEvaluatorIdentity), /must have required property 'id'/);
+
+  const unclassifiedFailure = structuredClone(report);
+  unclassifiedFailure.cases[0].outcome = 'fail';
+  await assert.rejects(validateStructuredValue(root, reportPath, unclassifiedFailure), /must have required property 'failureClass'/);
+
+  const mismatchedCaseSet = structuredClone(report);
+  mismatchedCaseSet.cases[0].caseId = 'case-not-in-pinned-dataset';
+  await assert.rejects(validateStructuredValue(root, reportPath, mismatchedCaseSet), /must cover exactly the pinned dataset case IDs/);
   const externallyPinnedContract = structuredClone(report);
   externallyPinnedContract.$schema = 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/0123456789abcdef0123456789abcdef01234567/architecture/contracts/evaluation-report.schema.json';
   await validateStructuredValue(root, reportPath, externallyPinnedContract);
@@ -147,11 +175,26 @@ test('evaluation report contract distinguishes layers, pins, baselines, and evid
     metricId: 'task-success', value: 0.75, unit: 'ratio', observationWindow: '2026-Q3',
     observedAt: '2026-10-08T00:00:00Z', evidenceRefs: ['candidate.json'],
   };
+  comparableImprovement.improvementHypothesis = {
+    status: 'proposed',
+    rationale: 'A measured candidate change is expected to improve the pinned task-success measure.',
+    statement: 'The candidate improves task success under the same case set and observation window.',
+    metricId: 'task-success',
+    expectedDirection: 'higher-is-better',
+  };
   await validateStructuredValue(root, reportPath, comparableImprovement);
 
   const incomparableImprovement = structuredClone(comparableImprovement);
   incomparableImprovement.comparison.candidateMeasurement.observationWindow = '2026-Q4';
   await assert.rejects(validateStructuredValue(root, reportPath, incomparableImprovement), /must use the same observationWindow/);
+
+  const incomparableUnit = structuredClone(comparableImprovement);
+  incomparableUnit.comparison.candidateMeasurement.unit = 'percent';
+  await assert.rejects(validateStructuredValue(root, reportPath, incomparableUnit), /must use the same unit/);
+
+  const ungroundedHypothesis = structuredClone(comparableImprovement);
+  ungroundedHypothesis.improvementHypothesis.status = 'not-proposed';
+  await assert.rejects(validateStructuredValue(root, reportPath, ungroundedHypothesis), /must be equal to constant/);
 });
 
 test('structured-data check rejects an invalid schema definition', async () => {
@@ -253,7 +296,7 @@ test('canonical inventory has exact record coverage and rejects projections and 
 });
 
 test('diagram sources remain model-first and structurally valid', async () => {
-  assert.deepEqual(await validateDiagrams(root), { structurizr: 1, mermaid: 5, plantuml: 1 });
+  assert.deepEqual(await validateDiagrams(root), { structurizr: 1, mermaid: 8, requiredMermaid: 6, plantuml: 1 });
 });
 
 test('organizational strategy has stable goals, measurable evidence, and fail-closed Project boundaries', async () => {
@@ -261,11 +304,27 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
   assert.equal(result.goals, 7);
   assert.equal(result.measures, 9);
   assert.equal(result.valueStreams, 2);
+  assert.ok(result.traceabilityLinks >= 100);
 
   const strategy = parseRepositoryYaml(
     await readFile(path.join(root, 'architecture/strategy/organizational-strategy.yml'), 'utf8'),
     'organizational strategy test fixture',
   );
+  const sourceOfTruthRequirements = [
+    [/strategic goals, principles, ADRs, quality scenarios, and measure definitions/i, /Architecture Authority/],
+    [/native Issue Type definitions/i, /Organization Issue Types/],
+    [/organization Issue Field definitions/i, /Organization Issue Field/],
+    [/Issue-native type value.*labels/i, /Origin repository Issue/],
+    [/portfolio sequencing/i, /Approved organization portfolio Project/],
+    [/pull request review.*release decisions/i, /human maintainer/],
+    [/evaluation datasets, cases, graders/i, /Agentic Primitives/],
+    [/observed evaluation report values/i, /repository that owns the evaluated/],
+    [/released capability, controller, and consumer artifact pins/i, /repository that publishes/],
+  ];
+  for (const [factPattern, ownerPattern] of sourceOfTruthRequirements) {
+    const row = strategy.sourceOfTruth.find(({ fact }) => factPattern.test(fact));
+    assert.ok(row && ownerPattern.test(row.owner), `source-of-truth map must cover ${factPattern}`);
+  }
   const unresolvedResearchSource = structuredClone(strategy);
   unresolvedResearchSource.researchBasis[0].source = 'https://example.com/unlisted-research';
   assert.ok(validateOrganizationalStrategyValue(unresolvedResearchSource)
@@ -376,6 +435,79 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
   assert.ok(validateOrganizationalStrategyValue(duplicateFact).some((error) => /exactly one canonical row/.test(error)));
 });
 
+test('every strategic goal declares traceability across governance, delivery, planning, and evaluation', async () => {
+  const strategy = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/strategy/organizational-strategy.yml'), 'utf8'),
+    'organizational strategy traceability fixture',
+  );
+  const untracedGoal = structuredClone(strategy);
+  delete untracedGoal.strategicGoals[0].traceability;
+
+  await assert.rejects(
+    validateStructuredValue(root, 'architecture/strategy/organizational-strategy.yml', untracedGoal),
+    /traceability/,
+  );
+
+  const [qualityScenarios, principleIndex, decisionInventory, systemEvidence] = await Promise.all([
+    readFile(path.join(root, 'architecture/quality/quality-scenarios.yml'), 'utf8')
+      .then((value) => parseRepositoryYaml(value, 'quality-scenario traceability fixture')),
+    readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8')
+      .then((value) => parseRepositoryYaml(value, 'principle traceability fixture')),
+    readFile(path.join(root, 'architecture/references/decision-inventory.yml'), 'utf8')
+      .then((value) => parseRepositoryYaml(value, 'decision traceability fixture')),
+    readFile(path.join(root, 'architecture/references/system-evidence.yml'), 'utf8')
+      .then((value) => parseRepositoryYaml(value, 'system-evidence traceability fixture')),
+  ]);
+  const contractPaths = (await readdir(path.join(root, 'architecture/contracts')))
+    .filter((name) => name.endsWith('.schema.json'))
+    .map((name) => 'architecture/contracts/' + name);
+  const traceabilityCatalogs = {
+    qualityScenarioIds: qualityScenarios.scenarios.map(({ id }) => id),
+    principleIds: principleIndex.principles.map(({ id }) => id),
+    decisionIds: decisionInventory.records.map(({ id }) => id),
+    contractPaths,
+    repositories: systemEvidence.repositories,
+    localEvidencePaths: [
+      'architecture/references/strategy-foundation-gap-matrix.md',
+      'architecture/references/system-evidence.yml',
+      'architecture/evaluation/examples/agent-capability-report.yml',
+    ],
+    observationIds: systemEvidence.observations.map(({ id }) => id),
+  };
+  const strategyWithTraceability = structuredClone(strategy);
+  assert.deepEqual(validateOrganizationalStrategyTraceabilityValue(strategyWithTraceability, traceabilityCatalogs), []);
+
+  const unresolvedScenario = structuredClone(strategyWithTraceability);
+  unresolvedScenario.strategicGoals[0].traceability.qualityScenarioIds = ['QR-999'];
+  assert.ok(validateOrganizationalStrategyTraceabilityValue(unresolvedScenario, traceabilityCatalogs)
+    .some((error) => /unknown quality scenario QR-999/.test(error)));
+
+  const wrongCapabilityPin = structuredClone(strategyWithTraceability);
+  wrongCapabilityPin.strategicGoals[0].traceability.capabilityRefs[0].sourceCommit = '0'.repeat(40);
+  assert.ok(validateOrganizationalStrategyTraceabilityValue(wrongCapabilityPin, traceabilityCatalogs)
+    .some((error) => /capability pin does not match the inventoried main revision/.test(error)));
+
+  const missingContract = structuredClone(strategyWithTraceability);
+  missingContract.strategicGoals[0].traceability.contractRefs = ['architecture/contracts/missing.schema.json'];
+  assert.ok(validateOrganizationalStrategyTraceabilityValue(missingContract, traceabilityCatalogs)
+    .some((error) => /unknown contract architecture\/contracts\/missing\.schema\.json/.test(error)));
+
+  const fabricatedRepository = structuredClone(strategyWithTraceability);
+  fabricatedRepository.strategicGoals[0].traceability.implementationIssueRefs = [
+    'https://github.com/agentic-delivery-lab/unknown-repository/issues/1',
+  ];
+  assert.ok(validateOrganizationalStrategyTraceabilityValue(fabricatedRepository, traceabilityCatalogs)
+    .some((error) => /invalid or out-of-inventory implementationIssueRefs/.test(error)));
+
+  const falseObservation = structuredClone(strategyWithTraceability);
+  falseObservation.strategicGoals[0].traceability.evaluationEvidenceRefs = [{
+    reference: 'architecture/references/system-evidence.yml#invented-evaluation',
+    status: 'observed',
+  }];
+  assert.ok(validateOrganizationalStrategyTraceabilityValue(falseObservation, traceabilityCatalogs)
+    .some((error) => /observed evaluation evidence must resolve to a system-evidence observation/.test(error)));
+});
+
 test('architecture release identifies the target authority', async () => {
   const result = await validateArchitectureRelease(root);
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
@@ -383,7 +515,7 @@ test('architecture release identifies the target authority', async () => {
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
-  assert.equal(release.contractVersions.evaluationReport, '1.0.0');
+  assert.equal(release.contractVersions.evaluationReport, '2.0.0');
   assert.equal(release.contractVersions.architectureRelease, '4.0.0');
   assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '4.0.0');
   assert.match(releaseSchema.description, /consumers to dispatch by version/);

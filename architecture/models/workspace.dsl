@@ -26,11 +26,20 @@ workspace "Agentic Delivery" "Organization-wide issue-based delivery architectur
     softwareSystem publicAdapter "Public .github repository adapter" "Public community-health, issue-form, and pull-request-template defaults."
     softwareSystem privateAdapter "Private .github-private repository adapter" "Private member-profile and approved agent-publication boundary."
     softwareSystem consumers "Consumer repositories" "Repositories that receive pinned bootstrap and workflow projections."
+    softwareSystem vercel "Vercel webhook ingress" "Hosts the Control Plane webhook function and scheduled delivery reconciler; source code is present, production operation is not established by this model."
+    softwareSystem neon "Neon replay store" "PostgreSQL-backed delivery claims, controller receipts, and webhook scan checkpoints; deployed database state is not established by this model."
+    softwareSystem codex "Codex CLI" "Pinned agent runtime started inside a bounded GitHub Actions runner workspace."
+    softwareSystem productRepositories "Product repositories (unidentified)" "Expected product-owner boundary; the current six-repository inventory identifies no distinct product repository or accountable product steward."
 
     maintainer -> issues "creates and reviews origin work"
     maintainer -> projects "prioritizes linked Issues and tracks portfolio progress"
     projects -> issues "references canonical origin work; cannot authorize execution"
-    app -> controller "delivers subscribed event with repository identity"
+    app -> vercel "delivers signed subscribed webhook"
+    vercel -> neon "claims delivery IDs and persists scan/replay state"
+    vercel -> github "dispatches the bounded controller workflow after validation"
+    actions -> neon "claims and finalizes controller receipts"
+    actions -> controller "runs pinned intake and bounded delivery workflow"
+    controller -> codex "starts the pinned CLI in the issue workspace"
     controller -> participants "checks enrollment and exact participant pins"
     controller -> issues "re-fetches and mutates only origin work after gates pass"
     controller -> issueTypes "reads native issue classification"
@@ -47,11 +56,18 @@ workspace "Agentic Delivery" "Organization-wide issue-based delivery architectur
     primitives -> distribution "supplies versioned capability packages"
     control -> distribution "supplies the pinned workflow-bundle source"
     distribution -> consumers "installs versioned bootstrap and consumer projections"
+    distribution -> productRepositories "target: bootstrap a product repository after owner discovery and explicit approval"
+    productRepositories -> issues "target: own product requirements, source Issues, and pull requests"
+    productRepositories -> projects "target: link product work for human portfolio planning"
     publicAdapter -> issues "supplies default templates; live form/type binding is unverified"
   }
 
   views {
     systemContext control "system-context" {
+      include *
+      autolayout lr
+    }
+    systemContext control "organization-context" {
       include *
       autolayout lr
     }

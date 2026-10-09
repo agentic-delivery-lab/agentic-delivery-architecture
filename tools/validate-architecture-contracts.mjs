@@ -33,6 +33,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   if (release.contractVersions?.architectureRelease !== '4.0.0') errors.push('architecture release must pin contract 4.0.0 for digest, exact decision inventory, and artifact-family semantics');
   if (release.contractVersions?.decisionInventory !== '1.0.0') errors.push('architecture release must pin decision inventory contract 1.0.0');
   if (release.contractVersions?.architectureArtifacts !== '1.0.0') errors.push('architecture release must pin architecture artifact contract 1.0.0');
+  if (release.contractVersions?.evaluationReport !== '2.0.0') errors.push('architecture release must pin evaluation report contract 2.0.0');
   for (const name of ['conformancePolicy', 'toolingLock']) {
     const reference = release[name];
     if (!reference || typeof reference.path !== 'string' || !/^[0-9a-f]{64}$/.test(reference.sha256 ?? '')) errors.push(`architecture release ${name} integrity reference is required`);
@@ -54,6 +55,10 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   if (releaseSchema.properties?.contractVersions?.properties?.architectureRelease?.const !== '4.0.0') errors.push('Architecture release schema must require contract version 4.0.0');
   if (releaseSchema.properties?.contractVersions?.properties?.decisionInventory?.const !== '1.0.0') errors.push('Architecture release schema must require decision inventory contract 1.0.0');
   if (releaseSchema.properties?.contractVersions?.properties?.architectureArtifacts?.const !== '1.0.0') errors.push('Architecture release schema must require artifact-family contract 1.0.0');
+  if (releaseSchema.properties?.contractVersions?.properties?.evaluationReport?.const !== '2.0.0'
+    || !releaseSchema.properties?.contractVersions?.required?.includes('evaluationReport')) {
+    errors.push('Architecture release schema must require evaluation report contract 2.0.0');
+  }
   if (tooling.schemaVersion !== 1 || tooling.status !== 'draft') errors.push('tooling lock must be schemaVersion 1 draft');
   if (tooling.arc42?.version !== '9.0') errors.push('arc42 tooling lock must pin the tested official version');
   if (tooling.structuredData?.yaml?.package !== 'yaml' || tooling.structuredData.yaml.version !== '2.9.0'

@@ -197,6 +197,27 @@ strategicGoals:
     contextIds: [agentic-delivery-governance, agentic-delivery-control-plane]
     architectureGoalIds: [G-01, G-02, G-04]
     measureIds: [SM-001, SM-002]
+    traceability:
+      qualityScenarioIds: [QR-001, QR-003, QR-013]
+      principleIds: [AP-001, AP-004]
+      decisionIds: [ADR-0009, ADR-0012, ADR-0019, ADR-0023]
+      capabilityRefs:
+        - capability: Issue-originated delivery dispatch
+          repository: agentic-delivery-lab/agentic-delivery
+          sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+          path: .github/workflows/issue-intake.yml
+      capabilityGaps: []
+      contractRefs:
+        - architecture/contracts/conformance-request.schema.json
+        - architecture/contracts/source-provenance.schema.json
+      implementationIssueRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/60
+      projectPlanningRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
+      evaluationEvidenceRefs:
+        - {reference: architecture/references/strategy-foundation-gap-matrix.md, status: pending}
     reviewTriggers:
       - A work path can start from a Project item without an authorized source Issue.
       - A merged agent-assisted change cannot be traced to its source Issue or validation evidence.
@@ -211,6 +232,23 @@ strategicGoals:
     contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
     architectureGoalIds: [G-04]
     measureIds: [SM-003, SM-004]
+    traceability:
+      qualityScenarioIds: [QR-008, QR-016]
+      principleIds: [AP-001, AP-002]
+      decisionIds: [ADR-0011, ADR-0012]
+      capabilityRefs: []
+      capabilityGaps:
+        - No product repository, accountable product owner, or approved user-feedback capability is identified.
+      contractRefs:
+        - architecture/contracts/evaluation-report.schema.json
+        - architecture/contracts/quality-scenarios.schema.json
+      implementationIssueRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13
+      projectPlanningRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+      evaluationEvidenceRefs:
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13, status: pending}
     reviewTriggers:
       - A product repository or accountable product owner is identified.
       - A delivered change has no observable outcome or user-feedback path.
@@ -225,6 +263,27 @@ strategicGoals:
     contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
     architectureGoalIds: [G-02, G-04]
     measureIds: [SM-002, SM-005]
+    traceability:
+      qualityScenarioIds: [QR-001, QR-008, QR-014]
+      principleIds: [AP-002, AP-004]
+      decisionIds: [ADR-0009, ADR-0012, ADR-0017, ADR-0023]
+      capabilityRefs:
+        - capability: Issue-originated delivery dispatch
+          repository: agentic-delivery-lab/agentic-delivery
+          sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+          path: .github/workflows/issue-intake.yml
+      capabilityGaps: []
+      contractRefs:
+        - architecture/contracts/conformance-policy.schema.json
+        - architecture/contracts/conformance-request.schema.json
+      implementationIssueRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/60
+      projectPlanningRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
+      evaluationEvidenceRefs:
+        - {reference: architecture/references/strategy-foundation-gap-matrix.md, status: pending}
     reviewTriggers:
       - An agent can change its own policy, activate itself, approve or merge its change, or create unbounded follow-up execution.
       - An identity, permission, repository boundary, or human review gate changes.
@@ -239,6 +298,27 @@ strategicGoals:
     contextIds: [agentic-primitives, agentic-delivery-control-plane]
     architectureGoalIds: [G-03, G-04]
     measureIds: [SM-005, SM-006]
+    traceability:
+      qualityScenarioIds: [QR-003, QR-015]
+      principleIds: [AP-002, AP-003]
+      decisionIds: [ADR-0011, ADR-0013, ADP-0001]
+      capabilityRefs:
+        - capability: Versioned reusable primitive catalog
+          repository: agentic-delivery-lab/agentic-delivery-primitives
+          sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
+          path: manifests/primitive-catalog.yml
+      capabilityGaps: []
+      contractRefs:
+        - architecture/contracts/evaluation-report.schema.json
+        - architecture/contracts/primitive-reference.schema.json
+      implementationIssueRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/2
+        - https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3
+      projectPlanningRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+      evaluationEvidenceRefs:
+        - {reference: architecture/evaluation/examples/agent-capability-report.yml, status: synthetic}
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3, status: pending}
     reviewTriggers:
       - A capability release changes its source, contract, model setting, or supported use.
       - Representative evaluation shows a regression or insufficient task coverage.
@@ -253,6 +333,30 @@ strategicGoals:
     contextIds: [agentic-primitives, developer-distribution]
     architectureGoalIds: [G-03, G-04]
     measureIds: [SM-006, SM-007]
+    traceability:
+      qualityScenarioIds: [QR-002, QR-005, QR-010]
+      principleIds: [AP-001, AP-003]
+      decisionIds: [ADR-0018, ADP-0001, ADD-0001]
+      capabilityRefs:
+        - capability: Versioned reusable primitive catalog
+          repository: agentic-delivery-lab/agentic-delivery-primitives
+          sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
+          path: manifests/primitive-catalog.yml
+        - capability: Pinned consumer workflow bundle
+          repository: agentic-delivery-lab/agentic-delivery-distribution
+          sourceCommit: b69c5710928b47efc4d3ab12ec4d5b596c80720c
+          path: manifests/workflow-bundle.json
+      capabilityGaps: []
+      contractRefs:
+        - architecture/contracts/primitive-reference.schema.json
+        - architecture/contracts/source-provenance.schema.json
+      implementationIssueRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-distribution/issues/2
+        - https://github.com/agentic-delivery-lab/agentic-delivery-distribution/issues/3
+      projectPlanningRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+      evaluationEvidenceRefs:
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-distribution/issues/3, status: pending}
     reviewTriggers:
       - A supported consumer surface or distribution channel changes.
       - A rollout cannot be reproduced from exact source pins or restored to its previous state.
@@ -267,6 +371,26 @@ strategicGoals:
     contextIds: [agentic-delivery-governance, agentic-delivery-control-plane]
     architectureGoalIds: [G-01, G-02, G-04]
     measureIds: [SM-001, SM-008]
+    traceability:
+      qualityScenarioIds: [QR-013, QR-014]
+      principleIds: [AP-001, AP-004]
+      decisionIds: [ADR-0012, ADR-0019, ADR-0023]
+      capabilityRefs: []
+      capabilityGaps:
+        - No organization Project exists; the Control Plane planning contract remains provisional pending maintainer review.
+      contractRefs:
+        - architecture/contracts/organizational-strategy.schema.json
+        - architecture/contracts/quality-scenarios.schema.json
+      implementationIssueRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
+      projectPlanningRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/101
+      evaluationEvidenceRefs:
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12, status: pending}
     reviewTriggers:
       - A Project item is missing a canonical source Issue or has ambiguous ownership.
       - Project access, field visibility, organization entitlement, or portfolio topology changes.
@@ -281,6 +405,26 @@ strategicGoals:
     contextIds: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
     architectureGoalIds: [G-03, G-04]
     measureIds: [SM-005, SM-009]
+    traceability:
+      qualityScenarioIds: [QR-015, QR-016]
+      principleIds: [AP-002, AP-004]
+      decisionIds: [ADR-0011, ADR-0023]
+      capabilityRefs: []
+      capabilityGaps:
+        - The pinned runtime does not yet provide an accepted offline evaluation and bounded finding-routing capability.
+      contractRefs:
+        - architecture/contracts/evaluation-report.schema.json
+        - architecture/contracts/conformance-result.schema.json
+      implementationIssueRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/103
+      projectPlanningRefs:
+        - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
+        - https://github.com/agentic-delivery-lab/agentic-delivery/issues/103
+      evaluationEvidenceRefs:
+        - {reference: architecture/evaluation/examples/agent-capability-report.yml, status: synthetic}
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3, status: pending}
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery/issues/103, status: pending}
     reviewTriggers:
       - An evaluation dataset, grader, model, capability, or policy changes.
       - A failed, inconclusive, or newly discovered live observation has no owner Issue.
@@ -391,24 +535,45 @@ sourceOfTruth:
   - fact: organizational purpose, mission, vision, strategy, and review triggers
     owner: Architecture Authority
     rule: One canonical editable source in this repository; other repositories link to the reviewed Architecture release.
+  - fact: strategic goals, principles, ADRs, quality scenarios, and measure definitions
+    owner: Architecture Authority
+    rule: Stable IDs link these canonical records many-to-many; accepted, proposed, and retired decisions remain distinct, and data sources remain owned by their contexts.
   - fact: work intent, scope, lineage, and execution authorization
     owner: Origin repository Issue
     rule: A Project item may reference an Issue but cannot replace it or authorize execution.
-  - fact: native Issue Type, Lifecycle Stage, Delivery State, and other Issue-owned field values
-    owner: Origin repository Issue and organization Issue Field contracts
-    rule: Preserve existing identities and semantics; do not create duplicate lifecycle state in a Project.
+  - fact: native Issue Type definitions and supported classifications
+    owner: Organization Issue Types catalog, governed by Architecture and Control Plane contracts
+    rule: The definition and the type selected on an individual Issue are separate facts; labels do not replace the native type.
+  - fact: organization Issue Field definitions, option IDs, and visibility
+    owner: Organization Issue Field catalog
+    rule: The organization owns definitions and option identities; membership-only visibility is preserved, and Project custom fields are a separate surface.
+  - fact: Issue-native type value, Lifecycle Stage, Delivery State, Priority, labels, and other per-Issue values
+    owner: Origin repository Issue
+    rule: Keep values with the source Issue; labels are annotations and governance markers, not a substitute for native type, lifecycle, delivery readiness, authorization, or Project planning facts.
   - fact: portfolio sequencing, planned dependency, and cross-stream visibility
     owner: Approved organization portfolio Project, after inventory and field-ownership review
-    rule: Issue Priority remains the canonical per-Issue priority value when assigned; Project fields may own distinct portfolio sequencing, grouping, and planning dependencies only. Execution dependency gates remain owned by the source Issue and Control Plane contract.
+    rule: Project fields, views, and iterations may own distinct portfolio sequencing, grouping, and planning dependencies only. Issue Priority remains the canonical per-Issue priority wherever exposed. Execution dependency gates remain owned by the source Issue and Control Plane contract, and no Project is currently inventoried.
+  - fact: pull request review, approval, merge, and repository release decisions
+    owner: Origin repository pull request and named human maintainer
+    rule: Issue or Project state, evaluation results, and agent output cannot impersonate reviewer approval or authorize merge, release, or activation.
   - fact: runner, session, webhook, and controller operation state
     owner: Agentic Delivery Control Plane
     rule: Keep webhook delivery replay, resumable Codex session state, and evaluation replay as separate mechanisms.
   - fact: reusable agent capabilities and their source versions
     owner: Agentic Primitives
     rule: Consumers use pinned sources, explicit contracts, and evaluation provenance.
+  - fact: reusable evaluation datasets, cases, graders, and replay tooling
+    owner: Agentic Primitives
+    rule: Pin task, stimulus, expected outcome, grader identity, independence, and source; Architecture owns only the shared report contract.
+  - fact: observed evaluation report values and evidence references
+    owner: The repository that owns the evaluated capability, factory operation, or product outcome
+    rule: Reports use the Architecture evidence contract, keep synthetic, hosted, and live observations separate, and cannot authorize or prioritize work.
   - fact: bootstrap and consumer workflow projections
     owner: Developer Distribution
     rule: Apply through conflict-aware, versioned integration with a recorded rollback.
+  - fact: released capability, controller, and consumer artifact pins
+    owner: The repository that publishes each artifact family
+    rule: Consumers reference immutable source commits and digests; Architecture records shared contracts but does not publish another context's runtime artifact.
   - fact: product behavior and user outcome evidence
     owner: Owning product repository and its designated product steward
     rule: No product repository or accountable product owner is asserted as confirmed by the current six-repository inventory.

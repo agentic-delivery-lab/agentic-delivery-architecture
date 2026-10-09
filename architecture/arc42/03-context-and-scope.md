@@ -39,10 +39,22 @@ because they have separate repositories. The machine-readable context map is
 - **GitHub App:** installation access, permissions, and subscribed event
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.
+- **Vercel webhook ingress:** the pinned Control Plane source contains a
+  Vercel function for signed webhook intake and scheduled reconciliation. Its
+  production deployment and delivery success are not established by source
+  inspection.
+- **Neon replay store:** the pinned Control Plane source contains a PostgreSQL
+  adapter and migrations for webhook replay claims, controller receipts, and
+  scan checkpoints. A live database's schema and state are not established by
+  source inspection.
 - **GitHub Actions and self-hosted runner:** deterministic workflows and
-  bounded execution. Current run evidence is called out in section 6.
+  bounded execution; a pinned Codex CLI runs inside the authorized workspace.
+  Current source and run evidence are called out in section 6.
 - **Consumer repositories:** receive thin, version-pinned integration from
   Distribution and reviewed Primitive projections from their canonical source.
+- **Product repositories:** the expected owner boundary for product Issues and
+  product outcome evidence; no distinct product repository or steward was
+  identified in the six-repository inventory.
 
 ## 3.3 Scope exclusions
 
@@ -54,9 +66,11 @@ authorize an App, field, ruleset, release, or participant-mode mutation.
 
 ## 3.4 Context view
 
-See [context map](../diagrams/mermaid/context-map.mmd). It separates the four
-domain contexts, Architecture Authority, GitHub adapters, organization
-metadata, Project fields, App access/events, and Distribution bootstrap.
+See [context map](../diagrams/mermaid/context-map.mmd) and the canonical
+[Structurizr/C4 model](../models/workspace.dsl). They separate the four domain
+contexts, Architecture Authority, GitHub adapters, organization metadata,
+Project fields, App access/events, Vercel ingress, Neon replay state, Actions,
+Codex, and the unconfirmed product-repository boundary.
 
 **Evidence:** pinned contracts are the Architecture context model,
 Control Plane domain register, ADP-0001 and the Primitive catalog, and

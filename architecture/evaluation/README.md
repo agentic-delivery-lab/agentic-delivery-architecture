@@ -1,6 +1,6 @@
 # Evaluation evidence contract proposal
 
-**Status: proposed, not adopted. Contract version: 1.0.0.** The JSON Schema
+**Status: proposed, not adopted. Contract version: 2.0.0.** The JSON Schema
 under `contracts/` and the example in this directory define an evidence format
 for review. They do not implement an evaluator, establish a baseline, or prove
 any live result.
@@ -28,8 +28,11 @@ measures and interpretation.
 Every report identifies its layer and matching subject, evaluation mode,
 generation time, and immutable source pins for the subject, dataset, each
 grader, comparator, baseline definition, and dependencies. Dataset identity
-includes the evaluated case IDs. Pins carry repository, commit, path, and
-content digest so the evidence can be retrieved and checked again.
+includes the evaluated case IDs. Every report repeats each case's task,
+stimulus, expected outcome and acceptance criteria, observed outcome, and
+evidence; its case set must exactly match the pinned dataset. Pins carry
+repository, commit, path, and content digest so the evidence can be retrieved
+and checked again.
 
 An example stored in this repository may use the relative `$schema` path to
 the local contract. A report produced by another repository must use the
@@ -37,19 +40,24 @@ GitHub URL form with an immutable 40-character Architecture commit; a moving
 branch or tag is not a valid report-contract reference. Consumers should pin
 the report-schema dependency in their own release context as well.
 
-Deterministic checks record their stable check IDs, outcomes, and evidence
-references. Semantic judgments are a separate collection and identify the
-reviewer, relationship to the author, judgment, rationale, and uncertainty.
+Deterministic checks record their stable check IDs, outcomes, failure class
+when they fail, and evidence references. Each pinned grader names its evaluator
+and states whether it is independent of the subject and author, not independent,
+or unknown, with a basis for that statement. A deterministic grader identifies
+the deterministic tool that ran it. Semantic judgments are a separate
+collection and identify the reviewer, relationship to the author, judgment,
+rationale, and uncertainty. Failed cases and unacceptable judgments carry an
+explicit failure class.
 The report also records whether independent review is complete, the regression
 severity assessment, and any recommended next step with an owner Issue link
 when known.
 
 An unmeasured baseline must be represented explicitly. A report may not claim
-improvement unless it includes a measured, pinned baseline and a comparable
+improvement unless it includes a measured, pinned baseline, a comparable
 candidate measurement for the same metric, unit, and observation window under
-the pinned comparator. Missing,
-incomparable, or uncertain evidence must remain visible as such; it cannot be
-filled with activity counts or inferred from a passing build.
+the pinned comparator, and a testable improvement hypothesis for that metric.
+Missing, incomparable, or uncertain evidence must remain visible as such; it
+cannot be filled with activity counts or inferred from a passing build.
 
 ## Authority and ownership
 

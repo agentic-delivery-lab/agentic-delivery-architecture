@@ -133,6 +133,30 @@ observations:
       Organization issue-field definitions were readable with read:org. Routine
       work did not request admin:org. Projects inventory was not read; no
       project mutation was performed.
+  - id: control-plane-codex-instruction-context-20261009-1622
+    observedAt: '2026-10-09T16:22:00Z'
+    sourceRepositories: [control-plane]
+    sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+    sourcePath: >-
+      .github/workflows/issue-intake.yml; .github/workflows/codex-delivery.yml;
+      scripts/codex-delivery.mjs; scripts/lib/codex-client.mjs;
+      scripts/setup-runner-codex.mjs; .agents/codex-delivery.md
+    result: >-
+      Static source review found that the issue-delivery workflow and app-server
+      start from the controller checkout, while Codex threads start or resume
+      in a per-repository/per-Issue workspace containing the source repository's
+      main checkout. The controller reads .agents/codex-delivery.md from its
+      own checkout and supplies it as developer instructions; Issue text is
+      marked untrusted. The pinned client disables plugins and apps. The exact
+      main pin installs Codex CLI 0.159.3. An isolated fixture using that CLI
+      loaded root and current-directory AGENTS.md instructions, excluded a
+      nested AGENTS.md when run at the project root, and excluded instructions
+      above the .git project root.
+    limitation: >-
+      This combines static source inspection with a local isolated CLI fixture;
+      it is not an Actions-run observation, a production Vercel request, proof
+      that every customization is propagated, a prompt-injection resistance
+      test, or evidence of successful live issue delivery.
   - id: participant-modes-and-release-pins
     observedAt: '2026-09-24'
     sourceRepositories: [control-plane]
@@ -658,3 +682,46 @@ observations:
       A skipped delivery job is not a completed delivery. Draft manifests,
       successful observation runs, and passing offline checks do not prove
       end-to-end production operation.
+  - id: organization-readonly-auth-project-pr-recheck-20261009-1643
+    observedAt: '2026-10-09T16:43:41Z'
+    source: https://cli.github.com/manual/gh_auth_status
+    request: >-
+      Read-only `gh auth status`, `gh project list --owner
+      agentic-delivery-lab`, `gh issue list --state open`, `gh pr list --state
+      open`, and `gh api repos/{owner}/{repo}/commits/main` checks across the
+      six visible organization repositories. The authenticated `sjefsharp`
+      account reported broad OAuth scopes including `admin:org`, `project`,
+      `repo`, and `workflow`.
+    projectInventoryComplete: false
+    projectIds: []
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 4ae924966280706c28cb602ea0b3d338e8e4a875
+    result: >-
+      `gh project list` returned `projects=[]` and `totalCount=0` for the
+      organization. The six open-Issue listings still totaled 19. Current
+      `main` commits matched the pins already recorded at the top of this
+      evidence file. Control Plane PRs #102 and #104 were at
+      `c98b24e57159037f74af4d234300cdc21483bfe5` and
+      `2cf258d5a48a75524514d67f440d0f5bb16fb85a` (both CLEAN, no recorded
+      review decision); Control Plane #86 was DIRTY with no review decision.
+      Architecture PR #14 remained at
+      `06e8f6e3daf4e1c5de99dd2342b9e775b9fb13ed` (BLOCKED, no review decision).
+      Primitives PR #4 remained draft at
+      `b5f0050547f5e8e7fea94f1aa3fd6da666aa74ff` (BLOCKED,
+      REVIEW_REQUIRED). No open PRs were listed in the other three
+      repositories. No live resource was changed.
+    limitation: >-
+      This is a read-only CLI recheck, not a complete GraphQL Project inventory
+      and not a query of Project-item associations; the complete owner-scope
+      inventory and Issue associations remain recorded at
+      `project-inventory-20261009-1153`. OAuth scopes describe the authenticated
+      user, not the runtime GitHub App's installation permissions, and do not
+      constitute approval to change Projects, organization settings, or other
+      live resources. PR merge-state labels and empty review decisions do not
+      establish human approval, merge, release, or operational adoption.

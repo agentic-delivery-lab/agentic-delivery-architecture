@@ -176,6 +176,14 @@ or App configuration change.
   values; it does not prohibit distinct Project-owned portfolio facts such as
   cross-Issue sequencing. ADR-0023 clarifies that these constraints coexist
   with Projects as the required planning surface.
+- Impact assessment against the strategy requirement: retain ADR-0012's
+  source-Issue lifecycle and authorization boundary, ADR-0018's central
+  Control Plane and unreviewed Project-event restrictions, and ADR-0019's
+  prohibition on a second lifecycle authority. None makes Project planning
+  optional. Read with this decision and AP-004, they establish Projects as the
+  primary portfolio planning and coordination surface while Issues remain the
+  canonical lifecycle and execution-authority records; no amendment to those
+  three decisions is needed to express the requirement.
 - The canonical strategy is the
   [organizational strategy source](../architecture/strategy/organizational-strategy.yml);
   dated live observations are in

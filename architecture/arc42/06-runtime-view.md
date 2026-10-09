@@ -52,12 +52,16 @@ datasets, deterministic graders, and replay; Control Plane #103 owns offline
 finding routing. No live evaluation loop, measured baseline, or improvement
 claim is evidenced here.
 
-The target offline evaluation uses a versioned representative dataset, pinned
-deterministic and semantic graders, a pinned comparator, candidate source pin,
-measured baseline, and attributable report. Deterministic checks produce
+The target offline evaluation uses a versioned representative dataset, named
+task cases with stimulus and expected outcomes, pinned deterministic and
+semantic graders, a declared evaluator identity and independence basis, a
+pinned comparator, candidate source pin, measured baseline, and attributable
+report. Failures receive an explicit class. A comparative improvement claim
+also needs a testable hypothesis and baseline/candidate measurements with the
+same metric, unit, and observation window. Deterministic checks produce
 repeatable pass/fail results; semantic judgments record reviewer identity,
 independence, rationale, and uncertainty separately. Evaluation replay repeats
-that dataset and graders against a named candidate. It is distinct from
+that case set and graders against a named candidate. It is distinct from
 webhook-delivery replay, which retries event handling, and Codex-session
 continuation, which restores one bounded runner operation.
 
@@ -73,7 +77,8 @@ an unbounded follow-up run.
 | --- | --- | --- |
 | Projects are the required portfolio planning surface in the proposed model, but the 11:53 UTC authenticated inventory returned no organization, personal, or repository Project and no association for the 19 open Issues across the six visible repositories. The organization API reports organization and repository Project capability flags as true under its Free plan. | `project-inventory-20261009-1153` and `organization-issue-fields` observations. | No Project-specific fields, visibility, or membership could be inspected; owners outside the queried scopes and App installation access remain unknown. The one-Project/two-view proposal awaits human decision in Architecture #15; all six organization Issue Fields are member-only. |
 | The documented `/issue-field-values` endpoint returned an empty array for each of the 19 currently open Issues. | `issue-field-values-20261009-1152`. | This is a point-in-time values read, not evidence about Issue Type pinning or future Project visibility; the earlier `/fields` request was inconclusive. |
-| The versioned evaluation evidence envelope is proposed; the offline dataset/grader/replay and finding-routing implementations have owners. | Architecture PR #14; Primitives #3; Control Plane #103; QR-015 and QR-016. | The schema is not an evaluator. No replay run, measured baseline, independent outcome review, live report, or automatic follow-up exists. |
+| Evaluation report contract 2.0.0 is proposed with pinned task cases, evaluator identity/independence, failure classes, and comparable measurements; offline replay and finding-routing implementations have owners. | Architecture PR #14; Primitives #3; Control Plane #103; QR-015 and QR-016. | The schema is not an evaluator. No replay run, measured baseline, independent outcome review, live report, or automatic follow-up exists. |
+| Exact Control Plane main source pins Codex CLI 0.159.3 and separates controller instructions from the task workspace; an isolated 0.159.3 fixture confirmed root/CWD AGENTS discovery. | `control-plane-codex-instruction-context-20261009-1622` in system evidence. | Source inspection and local fixture are not an Actions-run observation and do not prove customization propagation, prompt-injection resistance, or successful live delivery. |
 | The latest issue run completed authorization, classification, and finalization while delivery was skipped. | current-delivery-and-release-state observation. | A skipped delivery does not prove a completed issue-to-PR flow or independent field-value read-back. |
 | Participant registry lists all six repositories in shadow mode with exact controller and Architecture/Primitive pins. | `participant-modes-and-release-pins` in system evidence. | Shadow configuration does not prove delivery, API identity, or write-back. |
 | Issue-intake runs for recovery issues #59 and #60 failed before dependencies could install because the classify checkout path did not match its working directory. | [Run 36050051251](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/36050051251), [run 36049717167](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/36049717167), workflow at pinned Control Plane commit. | This identifies a workflow defect; it does not establish that field gate code is absent. |
@@ -81,8 +86,10 @@ an unbounded follow-up run.
 | The observed App installation has All repositories access and comment/review subscriptions, while the Control Plane contract expects selected repositories and broader events. | `invoker-installation` observation and `config/github-app-contract.json` at CP commit. | The installation could not be bound to the credential used by the controller. No setting was changed. |
 | Field definitions exist for Lifecycle Stage and Delivery Readiness; user-visible pinning remains unverified. | `organization-issue-fields` observation. | The definitions API does not report pinning; Projects are a separate surface outside this issue-field observation. |
 
-The [issue-delivery sequence](../diagrams/mermaid/issue-delivery-sequence.mmd)
-and [Project-Issue lifecycle](../diagrams/mermaid/project-issue-lifecycle.mmd)
+The [issue-delivery sequence](../diagrams/mermaid/issue-delivery-sequence.mmd),
+[Project-Issue lifecycle](../diagrams/mermaid/project-issue-lifecycle.mmd),
+[factory-evolution sequence](../diagrams/mermaid/factory-evolution-sequence.mmd),
+and [product-delivery sequence](../diagrams/mermaid/product-delivery-sequence.mmd)
 show the intended processing order. They are contract views, not evidence
 that the current runtime completed the path.
 

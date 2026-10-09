@@ -106,13 +106,17 @@ rollout; this text does not demonstrate universal installation or enforcement.
 
 ## 8.8 Evaluation evidence and recursive improvement
 
-Architecture owns the proposed version 1.0.0 evaluation-report envelope and
+Architecture owns the proposed version 2.0.0 evaluation-report envelope and
 its evidence semantics. It separates agent-capability, factory, and
 product-outcome evaluations; immutable subject, dataset, grader, comparator,
 baseline, and dependency pins; deterministic checks; semantic judgments;
 uncertainty; independent-review status; regression severity; and recommended
-owner-Issue follow-up. A comparative improvement claim requires a measured
-pinned baseline and a comparable candidate measurement.
+owner-Issue follow-up. Each case states the task, stimulus, expected outcome,
+acceptance criteria, observed outcome, and failure class when needed. Each
+grader names its evaluator and independence basis. A comparative improvement
+claim requires a measured pinned baseline, a comparable candidate measurement
+for the same metric, unit, and observation window, and a testable improvement
+hypothesis.
 
 The report is evidence only. It cannot create or prioritize work, authorize
 execution, change policy, write Project state, activate participants, merge,

@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -17,9 +17,122 @@ function duplicates(values) {
   return values.filter((value, index) => values.indexOf(value) !== index);
 }
 
+function isOrganizationIssueReference(reference, repositorySlugs) {
+  if (typeof reference !== 'string') return false;
+  const match = /^https:\/\/github\.com\/([^/]+\/[^/]+)\/issues\/([1-9][0-9]*)$/.exec(reference);
+  return Boolean(match && repositorySlugs.has(match[1]));
+}
+
+function asSet(values) {
+  return values instanceof Set ? values : new Set(values ?? []);
+}
+
+export function validateOrganizationalStrategyTraceabilityValue(strategy, {
+  qualityScenarioIds,
+  principleIds,
+  decisionIds,
+  contractPaths,
+  repositories,
+  localEvidencePaths,
+  observationIds,
+} = {}) {
+  const errors = [];
+  const qualityScenarioIdSet = qualityScenarioIds ? asSet(qualityScenarioIds) : null;
+  const principleIdSet = principleIds ? asSet(principleIds) : null;
+  const decisionIdSet = decisionIds ? asSet(decisionIds) : null;
+  const contractPathSet = contractPaths ? asSet(contractPaths) : null;
+  const localEvidencePathSet = localEvidencePaths ? asSet(localEvidencePaths) : null;
+  const observationIdSet = observationIds ? asSet(observationIds) : null;
+  const repositoryBySlug = new Map((repositories ?? []).map((repository) => [repository.slug, repository]));
+  const repositorySlugs = new Set(repositoryBySlug.keys());
+  const validateRepositoryReferences = repositories !== undefined;
+
+  for (const goal of strategy.strategicGoals ?? []) {
+    const location = 'strategic goal ' + goal.id + ' traceability';
+    const traceability = goal.traceability ?? {};
+    const links = [
+      ['qualityScenarioIds', traceability.qualityScenarioIds ?? [], qualityScenarioIdSet, 'quality scenario'],
+      ['principleIds', traceability.principleIds ?? [], principleIdSet, 'principle'],
+      ['decisionIds', traceability.decisionIds ?? [], decisionIdSet, 'decision'],
+      ['contractRefs', traceability.contractRefs ?? [], contractPathSet, 'contract'],
+    ];
+
+    if (!(traceability.capabilityRefs?.length) && !(traceability.capabilityGaps?.length)) {
+      errors.push(location + ' must identify a pinned capability or state its capability gap');
+    }
+    for (const [field, values, registry, label] of links) {
+      if (duplicates(values).length) errors.push(location + ' has duplicate ' + field);
+      if (registry) {
+        for (const value of values) {
+          if (!registry.has(value)) errors.push(location + ' references unknown ' + label + ' ' + value);
+        }
+      }
+    }
+
+    if (validateRepositoryReferences) {
+      for (const capability of traceability.capabilityRefs ?? []) {
+        const repository = repositoryBySlug.get(capability.repository);
+        if (!repository) {
+          errors.push(location + ' references an unregistered capability repository ' + capability.repository);
+        } else {
+          if (capability.sourceCommit !== repository.mainCommit) {
+            errors.push(location + ' capability pin does not match the inventoried main revision for ' + capability.repository);
+          }
+          if (!(repository.evidencePaths ?? []).includes(capability.path)) {
+            errors.push(location + ' capability path is outside the audited source inventory: ' + capability.path);
+          }
+        }
+      }
+    }
+
+    if (validateRepositoryReferences) {
+      for (const field of ['implementationIssueRefs', 'projectPlanningRefs']) {
+        for (const reference of traceability[field] ?? []) {
+          if (!isOrganizationIssueReference(reference, repositorySlugs)) {
+            errors.push(location + ' has an invalid or out-of-inventory ' + field + ' reference: ' + reference);
+          }
+        }
+      }
+    }
+
+    for (const evidence of traceability.evaluationEvidenceRefs ?? []) {
+      const reference = evidence.reference ?? '';
+      if (reference.startsWith('https://github.com/')) {
+        if (validateRepositoryReferences && !isOrganizationIssueReference(reference, repositorySlugs)) {
+          errors.push(location + ' has an invalid pending evaluation Issue reference: ' + reference);
+        } else if (evidence.status === 'synthetic' || evidence.status === 'observed') {
+          errors.push(location + ' cannot classify an Issue reference as synthetic or observed evidence');
+        }
+        continue;
+      }
+      const [sourcePath, fragment] = reference.split('#', 2);
+      if (localEvidencePathSet && !localEvidencePathSet.has(sourcePath)) {
+        errors.push(location + ' references missing local evaluation evidence: ' + sourcePath);
+      }
+      if (evidence.status === 'observed'
+        && (sourcePath !== 'architecture/references/system-evidence.yml'
+          || !fragment || (observationIdSet && !observationIdSet.has(fragment)))) {
+        errors.push(location + ' observed evaluation evidence must resolve to a system-evidence observation');
+      }
+      if (evidence.status === 'synthetic' && !sourcePath.startsWith('architecture/evaluation/examples/')) {
+        errors.push(location + ' synthetic evaluation evidence must reference a synthetic evaluation fixture');
+      }
+    }
+  }
+
+  return errors;
+}
+
 export function validateOrganizationalStrategyValue(strategy, {
   contextIds = CONTEXT_IDS,
   architectureGoalIds = ARCHITECTURE_GOAL_IDS,
+  qualityScenarioIds,
+  principleIds,
+  decisionIds,
+  contractPaths,
+  repositories,
+  localEvidencePaths,
+  observationIds,
 } = {}) {
   const errors = [];
   const audiences = strategy.audiences ?? [];
@@ -87,6 +200,15 @@ export function validateOrganizationalStrategyValue(strategy, {
       if (!measureIdSet.has(measureId)) errors.push('strategic goal ' + goal.id + ' references missing measure ' + measureId);
     }
   }
+  errors.push(...validateOrganizationalStrategyTraceabilityValue(strategy, {
+    qualityScenarioIds,
+    principleIds,
+    decisionIds,
+    contractPaths,
+    repositories,
+    localEvidencePaths,
+    observationIds,
+  }));
   if ([...new Set(goalIds)].some((id) => !/^SG-\d{2}$/.test(id))) {
     errors.push('strategic goals must use unique stable SG-NN identifiers');
   }
@@ -213,11 +335,42 @@ export async function validateOrganizationalStrategy(root = repositoryRoot) {
     await readFile(path.join(root, 'architecture/references/system-evidence.yml'), 'utf8'),
     'system evidence',
   );
+  const qualityScenarios = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/quality/quality-scenarios.yml'), 'utf8'),
+    'quality-scenario register',
+  );
+  const principleIndex = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),
+    'principle index',
+  );
+  const decisionInventory = parseRepositoryYaml(
+    await readFile(path.join(root, 'architecture/references/decision-inventory.yml'), 'utf8'),
+    'decision inventory',
+  );
+  const contractFiles = await readdir(path.join(root, 'architecture/contracts'));
+  const evaluationExamples = await readdir(path.join(root, 'architecture/evaluation/examples'));
+  const localEvidencePaths = [
+    'architecture/references/strategy-foundation-gap-matrix.md',
+    ...evaluationExamples.map((name) => 'architecture/evaluation/examples/' + name),
+    'architecture/references/system-evidence.yml',
+  ];
   const goalsText = await readFile(path.join(root, 'architecture/arc42/01-introduction-and-goals.md'), 'utf8');
   const goalIds = [...goalsText.matchAll(/^\| (G-\d{2}) \|/gm)].map((match) => match[1]);
   const contextIds = (contextModel.contexts ?? []).map((context) => context.id);
   const errors = [
-    ...validateOrganizationalStrategyValue(strategy, { contextIds, architectureGoalIds: goalIds }),
+    ...validateOrganizationalStrategyValue(strategy, {
+      contextIds,
+      architectureGoalIds: goalIds,
+      qualityScenarioIds: (qualityScenarios.scenarios ?? []).map(({ id }) => id),
+      principleIds: (principleIndex.principles ?? []).map(({ id }) => id),
+      decisionIds: (decisionInventory.records ?? []).map(({ id }) => id),
+      contractPaths: contractFiles
+        .filter((name) => name.endsWith('.schema.json'))
+        .map((name) => 'architecture/contracts/' + name),
+      repositories: systemEvidence.repositories ?? [],
+      localEvidencePaths,
+      observationIds: (systemEvidence.observations ?? []).map(({ id }) => id),
+    }),
     ...validateProjectInventoryEvidence(strategy, systemEvidence),
   ];
   if (errors.length > 0) throw new Error('organizational strategy validation failed:\n' + errors.join('\n'));
@@ -226,6 +379,12 @@ export async function validateOrganizationalStrategy(root = repositoryRoot) {
     goals: strategy.strategicGoals.length,
     measures: strategy.successMeasures.length,
     valueStreams: strategy.valueStreams.length,
+    traceabilityLinks: strategy.strategicGoals.reduce((count, goal) => {
+      const traceability = goal.traceability ?? {};
+      return count + ['qualityScenarioIds', 'principleIds', 'decisionIds', 'capabilityRefs', 'contractRefs',
+        'implementationIssueRefs', 'projectPlanningRefs', 'evaluationEvidenceRefs']
+        .reduce((links, field) => links + (traceability[field]?.length ?? 0), 0);
+    }, 0),
   };
 }
 

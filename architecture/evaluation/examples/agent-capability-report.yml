@@ -1,5 +1,5 @@
 $schema: ../../contracts/evaluation-report.schema.json
-contractVersion: 1.0.0
+contractVersion: 2.0.0
 reportId: synthetic:agent-capability:example-v1
 generatedAt: '2026-10-09T09:00:00Z'
 classification: synthetic
@@ -23,6 +23,19 @@ dataset:
     path: evaluations/datasets/synthetic-review-cases.yml
     sha256: 1123456789abcdef0123456789abcdef1123456789abcdef0123456789abcdef
   caseIds: [synthetic-safe-change-001]
+cases:
+  - caseId: synthetic-safe-change-001
+    task: Review a bounded source change and report whether it preserves the declared repository contract.
+    stimulus: A small proposed change includes its source Issue, exact repository pin, and deterministic validation output.
+    expectedOutcome:
+      description: The reviewer identifies the declared contract boundary and does not infer execution authority from planning metadata.
+      acceptanceCriteria:
+        - Source Issue identity remains explicit.
+        - Project state is treated as planning input only.
+        - Missing or conflicting evidence is reported as inconclusive.
+    observedOutcome: The synthetic fixture was not executed as a task; no candidate behavior was observed.
+    outcome: inconclusive
+    evidenceRefs: [architecture/evaluation/examples/agent-capability-report.yml]
 dependencies:
   - id: example-evaluation-runner
     version: 1.0.0
@@ -40,6 +53,10 @@ graders:
       commit: 3123456789abcdef0123456789abcdef01234567
       path: evaluations/graders/deterministic.yml
       sha256: 3123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    evaluator: {id: synthetic-schema-validator, kind: deterministic-tool}
+    independence:
+      relation: unknown
+      basis: The evaluator definition is a format-only placeholder and was not executed against a candidate artifact.
   semantic:
     id: example-semantic-review-rubric
     version: 1.0.0
@@ -48,6 +65,10 @@ graders:
       commit: 4123456789abcdef0123456789abcdef01234567
       path: evaluations/graders/semantic-review.yml
       sha256: 4123456789abcdef0123456789abcdef4123456789abcdef0123456789abcdef
+    evaluator: {id: synthetic-reviewer-placeholder, kind: model}
+    independence:
+      relation: unknown
+      basis: No reviewer or model execution occurred, so independence cannot be established.
 results:
   deterministicChecks:
     - checkId: synthetic-contract-shape
@@ -75,6 +96,9 @@ comparison:
       sha256: 6123456789abcdef0123456789abcdef6123456789abcdef0123456789abcdef
     method: absolute-difference
     direction: higher-is-better
+improvementHypothesis:
+  status: not-proposed
+  rationale: No measured baseline or candidate result exists from which to state a testable improvement hypothesis.
 uncertainty:
   level: high
   summary: Synthetic structure validation says nothing about real capability performance.

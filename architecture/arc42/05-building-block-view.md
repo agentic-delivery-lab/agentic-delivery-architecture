@@ -14,9 +14,13 @@
 | Public GitHub adapter | `.github` | Public profile and repository community/template artifacts | Repository content and individual live consumer checks |
 | Private GitHub adapter | `.github-private` | Private member profile and reviewed agent publication | Surface contract, projection lock, entitlement evidence |
 | GitHub organization metadata | GitHub organization | Native Issue Types and organization-level field definitions and options | Read API and separate per-type pinning evidence |
-| GitHub Projects | GitHub Projects service | Primary portfolio planning, prioritization, coordination, and progress views for both value streams | The 10:57 UTC read-only inventory returned no organization, user, or repository Project and no association for the 19 open Issues; organization REST flags report both organization and repository Projects available under the Free plan; proposed one-Project/two-view topology awaits human decision in Architecture #15; field visibility remains unverified |
+| GitHub Projects | GitHub Projects service | Primary portfolio planning, prioritization, coordination, and progress views for both value streams | The complete 11:53 UTC read-only inventory returned no organization, user, or repository Project and no association for the 19 open Issues; a 16:43 UTC CLI recheck again returned no organization Project. Organization REST flags report organization and repository Projects available under the Free plan; proposed one-Project/two-view topology awaits human decision in Architecture #15; field visibility remains unverified |
 | GitHub App | GitHub App installation | Repository access, permissions, and subscribed event delivery | Installation manifest and live App evidence |
+| Vercel ingress | Control Plane deployment surface | Signed webhook intake, bounded controller dispatch, and scheduled delivery reconciliation | Control Plane source pin; production operation remains unverified |
+| Neon replay store | Control Plane persistence adapter | Durable webhook claims, controller receipts, and scan checkpoints | Source adapter and migrations; deployed schema and data state remain unverified |
+| Actions and Codex runtime | GitHub Actions plus pinned Codex CLI | Trusted authorization, isolated per-Issue workspace, bounded agent task, and finalization | Workflow and controller source pins; no completed live delivery is claimed |
 | Consumer repository | Each enrolled repository | Origin work records and pinned local integration | Repository ID, controller/contract/architecture/primitive pins |
+| Product repository boundary | Product owner, when identified | Product requirements, source Issues, and domain-specific outcome evidence | No distinct product repository or accountable steward is currently identified |
 
 A repository and a bounded context are not interchangeable. Architecture
 Authority and both adapters are shown as owners or infrastructure surfaces,
@@ -39,6 +43,13 @@ not domain contexts.
   this path does not represent the Distribution bootstrap mechanism.
 - GitHub App → Control Plane: access and subscribed events; App
   installation is not participant enrollment.
+- GitHub App → Vercel → Control Plane Actions: signed webhook, replay claim,
+  and bounded `repository_dispatch`; Vercel/Neon source integration does not
+  prove production deployment or successful live delivery.
+- Actions and Vercel → Neon: shared delivery claims, controller receipts, and
+  scan checkpoints; Codex session state remains a separate runner-owned fact.
+- Distribution → product repository: target bootstrap only after an identified
+  owner and explicit repository-creation approval.
 
 The interface names are versioned contracts or observed surface roles. Where a
 live binding or consumer inheritance is not verified, the link is a target

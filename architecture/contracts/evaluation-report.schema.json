@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/evaluation-report.schema.json",
-  "title": "Evaluation evidence report contract 1.0.0",
-  "description": "Proposed evidence-only report for agent capability, delivery factory, or product outcome evaluation. A report never authorizes work or writes lifecycle state.",
+  "title": "Evaluation evidence report contract 2.0.0",
+  "description": "Proposed evidence-only report for agent capability, delivery factory, or product outcome evaluation. Cases preserve task, stimulus, and expected outcome; pinned graders declare identity and independence. A report never authorizes work or writes lifecycle state.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "contractVersion", "reportId", "generatedAt", "classification", "evaluationMode", "layer", "subject", "dataset", "dependencies", "graders", "results", "baseline", "comparison", "uncertainty", "review", "regressionAssessment", "evidence", "recommendation", "limitations"],
+  "required": ["$schema", "contractVersion", "reportId", "generatedAt", "classification", "evaluationMode", "layer", "subject", "dataset", "cases", "dependencies", "graders", "results", "baseline", "comparison", "improvementHypothesis", "uncertainty", "review", "regressionAssessment", "evidence", "recommendation", "limitations"],
   "properties": {
     "$schema": {
       "oneOf": [
@@ -16,7 +16,7 @@
         }
       ]
     },
-    "contractVersion": { "const": "1.0.0" },
+    "contractVersion": { "const": "2.0.0" },
     "reportId": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$" },
     "generatedAt": { "type": "string", "format": "date-time" },
     "classification": { "enum": ["synthetic", "observed"] },
@@ -42,6 +42,36 @@
         "caseIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmptyString" } }
       }
     },
+    "cases": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["caseId", "task", "stimulus", "expectedOutcome", "observedOutcome", "outcome", "evidenceRefs"],
+        "properties": {
+          "caseId": { "$ref": "#/$defs/nonEmptyString" },
+          "task": { "$ref": "#/$defs/nonEmptyString" },
+          "stimulus": { "$ref": "#/$defs/nonEmptyString" },
+          "expectedOutcome": {
+            "type": "object", "additionalProperties": false,
+            "required": ["description", "acceptanceCriteria"],
+            "properties": {
+              "description": { "$ref": "#/$defs/nonEmptyString" },
+              "acceptanceCriteria": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonEmptyString" } }
+            }
+          },
+          "observedOutcome": { "$ref": "#/$defs/nonEmptyString" },
+          "outcome": { "enum": ["pass", "fail", "skip", "inconclusive"] },
+          "failureClass": { "$ref": "#/$defs/failureClass" },
+          "evidenceRefs": { "$ref": "#/$defs/evidenceRefs" }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "outcome": { "const": "fail" } }, "required": ["outcome"] },
+            "then": { "required": ["failureClass"] }
+          }
+        ]
+      }
+    },
     "dependencies": {
       "type": "array", "minItems": 1,
       "items": {
@@ -58,7 +88,18 @@
       "type": "object", "additionalProperties": false,
       "required": ["deterministic", "semantic"],
       "properties": {
-        "deterministic": { "$ref": "#/$defs/pinnedDefinition" },
+        "deterministic": {
+          "$ref": "#/$defs/pinnedDefinition",
+          "allOf": [{
+            "type": "object",
+            "properties": {
+              "evaluator": {
+                "type": "object",
+                "properties": { "kind": { "const": "deterministic-tool" } }
+              }
+            }
+          }]
+        },
         "semantic": { "$ref": "#/$defs/pinnedDefinition" }
       }
     },
@@ -75,8 +116,15 @@
               "checkId": { "$ref": "#/$defs/nonEmptyString" },
               "outcome": { "enum": ["pass", "fail", "skip", "inconclusive"] },
               "details": { "type": "string" },
+              "failureClass": { "$ref": "#/$defs/failureClass" },
               "evidenceRefs": { "$ref": "#/$defs/evidenceRefs" }
-            }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "outcome": { "const": "fail" } }, "required": ["outcome"] },
+                "then": { "required": ["failureClass"] }
+              }
+            ]
           }
         },
         "semanticJudgments": {
@@ -87,6 +135,7 @@
             "properties": {
               "criterionId": { "$ref": "#/$defs/nonEmptyString" },
               "outcome": { "enum": ["acceptable", "unacceptable", "mixed", "inconclusive"] },
+              "failureClass": { "$ref": "#/$defs/failureClass" },
               "reviewer": {
                 "type": "object", "additionalProperties": false,
                 "required": ["id", "kind", "relationshipToAuthor"],
@@ -99,7 +148,13 @@
               "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
               "rationale": { "$ref": "#/$defs/nonEmptyString" },
               "evidenceRefs": { "$ref": "#/$defs/evidenceRefs" }
-            }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "outcome": { "const": "unacceptable" } }, "required": ["outcome"] },
+                "then": { "required": ["failureClass"] }
+              }
+            ]
           }
         }
       }
@@ -129,6 +184,23 @@
         "comparator": { "$ref": "#/$defs/pinnedComparator" },
         "candidateMeasurement": { "$ref": "#/$defs/measurement" }
       }
+    },
+    "improvementHypothesis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "rationale"],
+      "properties": {
+        "status": { "enum": ["not-proposed", "proposed"] },
+        "rationale": { "$ref": "#/$defs/nonEmptyString" },
+        "statement": { "$ref": "#/$defs/nonEmptyString" },
+        "metricId": { "$ref": "#/$defs/nonEmptyString" },
+        "expectedDirection": { "enum": ["higher-is-better", "lower-is-better", "target-range"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "proposed" } }, "required": ["status"] },
+          "then": { "required": ["statement", "metricId", "expectedDirection"] }
+        }
+      ]
     },
     "uncertainty": {
       "type": "object", "additionalProperties": false,
@@ -216,6 +288,25 @@
           "comparison": { "type": "object", "required": ["candidateMeasurement"] }
         }
       }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "comparison": { "type": "object", "properties": { "claim": { "const": "improvement" } }, "required": ["claim"] }
+        },
+        "required": ["comparison"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "improvementHypothesis": {
+            "type": "object",
+            "properties": { "status": { "const": "proposed" } },
+            "required": ["status"]
+          }
+        }
+      }
     }
   ],
   "$defs": {
@@ -232,11 +323,27 @@
     },
     "pinnedDefinition": {
       "type": "object", "additionalProperties": false,
-      "required": ["id", "version", "sourcePin"],
+      "required": ["id", "version", "sourcePin", "evaluator", "independence"],
       "properties": {
         "id": { "$ref": "#/$defs/nonEmptyString" },
         "version": { "$ref": "#/$defs/nonEmptyString" },
-        "sourcePin": { "$ref": "#/$defs/sourcePin" }
+        "sourcePin": { "$ref": "#/$defs/sourcePin" },
+        "evaluator": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "kind"],
+          "properties": {
+            "id": { "$ref": "#/$defs/nonEmptyString" },
+            "kind": { "enum": ["deterministic-tool", "human", "agent", "model", "service"] }
+          }
+        },
+        "independence": {
+          "type": "object", "additionalProperties": false,
+          "required": ["relation", "basis"],
+          "properties": {
+            "relation": { "enum": ["independent", "not-independent", "unknown"] },
+            "basis": { "$ref": "#/$defs/nonEmptyString" }
+          }
+        }
       }
     },
     "pinnedComparator": {
@@ -265,6 +372,9 @@
     "evidenceRefs": {
       "type": "array", "minItems": 1,
       "items": { "type": "string", "minLength": 1, "format": "uri-reference" }
+    },
+    "failureClass": {
+      "enum": ["authorization-violation", "safety-violation", "correctness-regression", "quality-regression", "reliability-failure", "infrastructure-failure", "evaluator-error", "other"]
     }
   }
 }

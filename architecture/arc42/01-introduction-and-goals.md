@@ -62,6 +62,7 @@ proposals with unmeasured baselines and deferred targets; see the canonical
 | 2 | Safe state change | A model proposal cannot change lifecycle metadata until deterministic identity, permission, schema, option, and transition checks pass. |
 | 3 | Recoverable release rollout | A participant can return to its previous exact source pins without introducing a second authoritative copy. |
 | 4 | Reviewable architecture | A reviewer can follow source commits, file digests, and runtime observations without treating a passing structural check as live proof. |
+| 5 | Comparable evaluation evidence | Each result names its task, stimulus, expected outcome, evaluator identity and independence; comparisons use the same metric, unit, and observation window. |
 
 ## 1.4 Stakeholders, concerns, viewpoints, and views
 
@@ -70,13 +71,13 @@ uses ISO/IEC/IEEE 42010:2022 terminology; it does not reproduce the standard.
 
 | Stakeholder | Concern | Viewpoint | View(s) |
 | --- | --- | --- | --- |
-| Organization maintainer | Ownership, issue lifecycle, review authority, and safe rollout | Governance and ownership | Sections 3, 8, 9; context map and canonical decision inventory |
-| Organization operator | App access, field definitions and pinning, Projects access, rulesets, rollback | Runtime and deployment | Sections 6–7; issue-delivery sequence and live-evidence table |
+| Organization maintainer | Ownership, issue lifecycle, review authority, and safe rollout | Governance and ownership | Sections 3, 8, 9; strategic alignment, context map, and canonical decision inventory |
+| Organization operator | App access, field definitions and pinning, Projects access, rulesets, rollback | Runtime and deployment | Sections 6–7; Project-Issue lifecycle, issue-delivery sequence, and live-evidence table |
 | Repository writer | Clear source issue, allowed route, feedback, and human review | Delivery process | Section 6; three runtime paths |
 | Architecture reviewer and context stewards | Decision meaning, bounded-context language, quality evidence, and provenance | Architecture conformance | Sections 3–5, 8–11; context map, decision inventory, quality scenarios |
 | Primitive maintainer | Catalog impact, release identity, and consumer projections | Capability release | Sections 5, 8–9; generated ADR-to-Primitive index |
 | Distribution maintainer and consumer owner | Exact pins, safe bootstrap, conflict handling, and rollback | Distribution and deployment | Sections 5–7; bundle and deployment view |
-| Product user or operator | A real problem is solved and the change behaves as intended after delivery | Product outcome | Product Issue and its post-delivery evidence; no product repository is confirmed in the six-repository factory inventory |
+| Product user or operator | A real problem is solved and the change behaves as intended after delivery | Product outcome | Product-delivery sequence and post-delivery evidence; no product repository is confirmed in the six-repository factory inventory |
 | Independent Validator | Separate authorship, test evidence, semantic review, and source pins | Validation | Sections 9–11; ADR map and quality scenarios |
 
 ## 1.5 Scope

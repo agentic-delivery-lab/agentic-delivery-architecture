@@ -9,10 +9,15 @@
   GitHub Projects. Issues remain the canonical work and execution-authorization
   records.
 - A GitHub App installation grants repository access and emits subscribed
-  events to the Control Plane. Installation access and the participant
-  registry are separate gates.
+  events to the Vercel webhook ingress. Vercel verifies and bounds dispatch to
+  the controller repository; installation access and the participant
+  registry remain separate gates.
+- Vercel and the Control Plane Actions workflows use a shared Neon-backed
+  replay store for delivery claims, controller receipts, and reconciliation
+  checkpoints. These are distinct from Codex session state and evaluation
+  replay.
 - Control Plane workflows run bounded deterministic checks and route approved
-  work to a pinned execution profile on the self-hosted runner.
+  work to a pinned Codex CLI execution profile on the self-hosted runner.
 - Architecture, Primitive, and Distribution sources are consumed through
   immutable commits and digests. Consumer repositories hold only the
   versioned integration/projection required by their surface.
@@ -29,6 +34,9 @@ participant is active or that each hosting rule has been enabled.
 | --- | --- | --- |
 | Repository sources | Six factory repositories and adapters have current main commit pins in system evidence. | Pins identify the observed default-branch commits; they do not prove release compatibility or active deployment. |
 | GitHub App, Actions, and repo protection | At 10:44 UTC, organization Actions settings reported all repositories enabled, all Actions allowed, and full-SHA pinning not required. Active workflow/ruleset counts were Control Plane 13/1, public adapter 2/1, Architecture 1/2, Primitives 1/1, Distribution 1/1, and private adapter 1/unavailable. Nine organization Issue Types were readable. | The private ruleset request returned 403 under the reported plan; App installation lookup returned 401 for the OAuth request. Org policy does not prove each repo's effective settings or actual workflow pins. |
+| Vercel ingress and Neon replay store | The exact Control Plane main source contains the webhook function, scheduled reconciler, Neon adapter, and migrations; its runtime uses a pooled Neon connection. | Source presence does not prove deployment, secret configuration, migration state, webhook activation, successful reconciliation, or production data. |
+| Codex runtime | The exact Control Plane main source installs CLI 0.159.3; static review and an isolated package fixture verified instruction discovery and separate controller/task workspaces. | No Actions-run observation confirms the current runner binary, runtime CWD, or end-to-end issue delivery. |
+| Product delivery | The strategy specifies an owning product repository and steward boundary. | The read-only six-repository inventory found no distinct product repository or accountable steward; no product bootstrap or outcome baseline is claimed. |
 | GitHub Projects | At 11:51 UTC, the authenticated CLI and complete organization, personal, and six repository GraphQL inventories returned zero Projects. All 19 open Issues returned zero Project associations. The organization REST response reported `plan=free`, `has_organization_projects=true`, and `has_repository_projects=true`; the membership endpoint returned `state=active`, `role=admin` for `sjefsharp`. | Projects are available as organization/repository features, but no Project is configured or visible within the queried owner scopes. Membership, fields, views, and visibility could not be inspected; App access and Projects owned outside the organization/user scopes remain unknown. |
 | Organization Issue Fields | Six fields were read; Priority, dates, effort, Lifecycle Stage, and Delivery Readiness are all organization-members-only. | Current Project visibility fit and Issue Field pinning remain unverified. |
 | Per-issue field values | At 11:52 UTC, the documented `/issue-field-values` endpoint returned an empty array for each of the 19 open Issues in the six visible repositories. | The read is limited to open Issues at that time. It does not establish Issue Type pinning or future Project visibility. The earlier request path was not captured and its 404 is inconclusive. |

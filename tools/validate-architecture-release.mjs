@@ -57,6 +57,7 @@ export async function validateArchitectureRelease(root = repositoryRoot, expecte
   if (release.contractVersions?.adrPrimitiveIndex !== '3.0.0') errors.push('architecture release must pin ADR/Primitive index contract 3.0.0');
   if (release.contractVersions?.decisionInventory !== '1.0.0') errors.push('architecture release must pin decision inventory contract 1.0.0');
   if (release.contractVersions?.architectureArtifacts !== '1.0.0') errors.push('architecture release must pin architecture artifact contract 1.0.0');
+  if (release.contractVersions?.evaluationReport !== '2.0.0') errors.push('architecture release must pin evaluation report contract 2.0.0');
   for (const [name, reference] of [['conformancePolicy', release.conformancePolicy], ['toolingLock', release.toolingLock]]) {
     if (!reference || !pathIsSafe(reference.path) || !SHA256.test(reference.sha256 ?? '')) {
       errors.push(`architecture release ${name} must identify a safe path and SHA-256 digest`);

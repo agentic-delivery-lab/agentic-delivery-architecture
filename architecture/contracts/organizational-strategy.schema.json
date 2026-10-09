@@ -117,7 +117,7 @@
         "additionalProperties": false,
         "required": [
           "id", "title", "outcome", "rationale", "stakeholders", "stewardRoles",
-          "contextIds", "architectureGoalIds", "measureIds", "reviewTriggers", "status"
+          "contextIds", "architectureGoalIds", "measureIds", "traceability", "reviewTriggers", "status"
         ],
         "properties": {
           "id": { "type": "string", "pattern": "^SG-[0-9]{2}$" },
@@ -150,6 +150,69 @@
             "minItems": 1,
             "uniqueItems": true,
             "items": { "type": "string", "pattern": "^SM-[0-9]{3}$" }
+          },
+          "traceability": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "qualityScenarioIds", "principleIds", "decisionIds", "capabilityRefs",
+              "capabilityGaps", "contractRefs", "implementationIssueRefs",
+              "projectPlanningRefs", "evaluationEvidenceRefs"
+            ],
+            "properties": {
+              "qualityScenarioIds": {
+                "type": "array", "minItems": 1, "uniqueItems": true,
+                "items": { "type": "string", "pattern": "^QR-[0-9]{3}$" }
+              },
+              "principleIds": {
+                "type": "array", "minItems": 1, "uniqueItems": true,
+                "items": { "type": "string", "pattern": "^AP-[0-9]{3}$" }
+              },
+              "decisionIds": {
+                "type": "array", "minItems": 1, "uniqueItems": true,
+                "items": { "type": "string", "pattern": "^(ADR|ADP|ADD)-[0-9]{4}$" }
+              },
+              "capabilityRefs": {
+                "type": "array",
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["capability", "repository", "sourceCommit", "path"],
+                  "properties": {
+                    "capability": { "type": "string", "minLength": 1 },
+                    "repository": { "type": "string", "pattern": "^agentic-delivery-lab/(?:agentic-delivery|agentic-delivery-architecture|agentic-delivery-primitives|agentic-delivery-distribution|\\.github|\\.github-private)$" },
+                    "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+                    "path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\s]+$" }
+                  }
+                }
+              },
+              "capabilityGaps": {
+                "type": "array", "uniqueItems": true,
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "contractRefs": {
+                "type": "array", "minItems": 1, "uniqueItems": true,
+                "items": { "type": "string", "pattern": "^architecture/contracts/[^/]+\\.schema\\.json$" }
+              },
+              "implementationIssueRefs": {
+                "type": "array", "minItems": 1, "uniqueItems": true,
+                "items": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/agentic-delivery-lab/[^/]+/issues/[1-9][0-9]*$" }
+              },
+              "projectPlanningRefs": {
+                "type": "array", "minItems": 1, "uniqueItems": true,
+                "items": { "type": "string", "format": "uri", "pattern": "^https://github\\.com/agentic-delivery-lab/[^/]+/issues/[1-9][0-9]*$" }
+              },
+              "evaluationEvidenceRefs": {
+                "type": "array", "minItems": 1,
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["reference", "status"],
+                  "properties": {
+                    "reference": { "type": "string", "minLength": 1, "format": "uri-reference" },
+                    "status": { "enum": ["pending", "synthetic", "observed"] }
+                  }
+                }
+              }
+            }
           },
           "reviewTriggers": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
           "status": { "enum": ["proposed", "adopted", "retired"] },

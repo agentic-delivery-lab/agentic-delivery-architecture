@@ -75,7 +75,7 @@ owns bounded evaluation-finding routing.
 
 ### Phase 3: Pin and trace the proposal
 
-- [ ] Task 3: Pin the report-contract version in the draft Architecture
+- [x] Task 3: Pin the report-contract version in the draft Architecture
   release and connect its evidence boundaries to quality requirements and the
   current-state matrix.
   - Acceptance: The exact contract version is validated; QR-015 and arc42
@@ -84,17 +84,17 @@ owns bounded evaluation-finding routing.
   - Verification: `pnpm architecture:check`, `pnpm migration:check`, and
     `pnpm test`; recompute and verify the normalized Architecture source digest.
   - Dependencies: Task 2.
-  - Files likely touched: Architecture release manifest/schema/validators,
-    `architecture/quality/quality-scenarios.yml`, arc42 evidence, and tests.
+  - Files touched: Architecture release manifest/schema, quality scenarios,
+    arc42 evidence, and tests.
   - Estimated scope: Medium.
 
 ### Checkpoint: Proposed contract
 
-- [ ] All Architecture validation and tests pass on the exact pinned tree.
-- [ ] The example remains explicitly synthetic and reports no live baseline.
-- [ ] The gap matrix links every unresolved operational increment to evidence
+- [x] All Architecture validation and tests pass on the exact pinned tree.
+- [x] The example remains explicitly synthetic and reports no live baseline.
+- [x] The gap matrix links every unresolved operational increment to evidence
   and an owner Issue.
-- [ ] No Projects, permissions, App settings, releases, or participants were
+- [x] No Projects, permissions, App settings, releases, or participants were
   changed.
 
 ## Risks and Mitigations

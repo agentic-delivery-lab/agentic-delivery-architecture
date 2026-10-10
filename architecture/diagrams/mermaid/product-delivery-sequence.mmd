@@ -1,0 +1,18 @@
+flowchart LR
+  INITIATIVE["Product initiative<br/>user or operator need and evidence"] --> REQUIREMENTS["Requirements and acceptance criteria<br/>owned by an identified product steward"]
+  REQUIREMENTS --> SOURCEISSUE["Typed source Issue<br/>in the product repository"]
+  SOURCEISSUE --> TRIAGE["Human prioritization<br/>Project is planning context only"]
+  TRIAGE --> AUTH["Source-Issue identity, permission, policy, and contract gates"]
+  AUTH -->|pass| BOOTSTRAP["Authorized repository bootstrap<br/>pinned Distribution and Primitive sources"]
+  AUTH -->|unknown or fail| HOLD["Hold without creating or mutating a repository"]
+  BOOTSTRAP --> IMPLEMENT["Bounded feature implementation<br/>Actions and Codex in the origin repository"]
+  IMPLEMENT --> PR["Issue-linked pull request<br/>automated checks and independent review"]
+  PR --> HUMAN["Human merge and release decision"]
+  HUMAN --> EVAL["Product outcome evaluation<br/>observed behavior, users, and stated window"]
+  EVAL --> NEXT["Reviewed result or unmet need"]
+  NEXT --> SOURCEISSUE
+  GATE["Product repository creation, steward, feedback path, and rollout require explicit maintainer approval"]
+  GATE -.-> INITIATIVE
+  STATUS["Current inventory: no distinct product repository, steward, or product outcome baseline identified"]
+  STATUS -.-> REQUIREMENTS
+  STATUS -.-> EVAL

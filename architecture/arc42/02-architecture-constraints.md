@@ -5,7 +5,7 @@
 ## 2.1 Organization and repository constraints
 
 - The system spans six repositories with distinct owners. The source commits
-  observed on 2026-09-24 are listed in
+  observed in the complete inventory on 2026-10-09 are listed in
   [system evidence](../references/system-evidence.yml).
 - Architecture Authority owns principles, terminology, architecture
   descriptions, and organization-wide decision text, including context-local
@@ -29,14 +29,22 @@ Native GitHub Issue Types classify work. The organization-level
 `Lifecycle Stage` field records lifecycle position. The separate orthogonal
 `Delivery State` concept controls or holds the next operation; its current
 live display name is `Delivery Readiness`. Governance metadata and runner
-execution state remain separate. GitHub Projects fields are a distinct
-projection surface. An issue form or configuration file does not prove that
-fields are pinned or visible to users.
+execution state remain separate. GitHub Projects is the primary portfolio
+planning and coordination surface; its fields remain distinct from
+organization Issue Fields. An issue form or configuration file does not prove
+that fields are pinned or visible to users.
 
 Semantic reasoning may propose an action. Deterministic code must validate the
 origin repository and issue, actor authorization, schema, native type,
 field/option identity, allowed transition, and orchestration policy before a
 write. Human review and merge authority remain with repository maintainers.
+
+Each authorized agentic operation needs a pinned upper bound for wall time,
+turns or invocations, retries, and recursion. The controller must stop
+privileged work at a hard limit and record usage and disposition; runtime
+quota or spend values remain unknown when the approved runtime does not expose
+them. Evaluation must not require chargeable external infrastructure without
+explicit authorization.
 
 ## 2.3 Interface and release constraints
 

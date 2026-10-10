@@ -25,13 +25,31 @@ The GitHub control plane owns native Issue Type, Lifecycle Stage, Delivery
 State, governance metadata, and source-issue lineage. The current live Delivery
 State field name is Delivery Readiness; the logical `readiness` key remains a
 versioned compatibility alias until an explicit migration. Runner state is
-separate and describes one resumable operation. Projects fields are a
-projection, not an alternate lifecycle authority.
+separate and describes one resumable operation. GitHub Projects is the primary
+portfolio planning and coordination surface, while Issues remain canonical
+work and authorization records. Project-owned planning fields must remain
+distinct from Issue-owned lifecycle values; a Project card never authorizes
+execution.
 
 A field rename must retain the one existing field identity and option IDs where
 the platform supports in-place change, compare old/new projections in shadow,
 and preserve rollback. The current architecture change does not mutate a
 field.
+
+The initial 2026-10-09 read failed because Project access was unavailable. The
+refreshed complete query under `project`, `admin:org`, and `repo` scopes
+returned no organization, personal, or repository Projects and no next page;
+all 19 open Issues in the six visible organization repositories also had no
+Project associations. The organization REST response reports both organization
+and repository Projects available under the Free plan, and the authenticated
+user's active organization role is `admin`. No Project field, membership, or
+visibility could be inspected. The selected-repository invoker installation
+declares no organization- or repository-Projects permission; its exact
+repository membership remains unverified. Projects owned outside the queried
+scopes also remain unknown. The proposed one-Project/two-view topology awaits
+a human decision in Architecture #15. All six organization Issue Fields
+have `organization_members_only` visibility, which remains a view-design
+constraint for any future Project.
 
 ## 8.3 Semantic proposals and deterministic authorization
 
@@ -87,3 +105,29 @@ Primitives owns reusable guards; Distribution owns pinned profile installation;
 the Control Plane applies those contracts to execution and artifact producers.
 QR-012 is a target scenario. Architecture issue #7 tracks implementation and
 rollout; this text does not demonstrate universal installation or enforcement.
+
+## 8.8 Evaluation evidence and recursive improvement
+
+Architecture owns the proposed version 2.0.0 evaluation-report envelope and
+its evidence semantics. It separates agent-capability, factory, and
+product-outcome evaluations; immutable subject, dataset, grader, comparator,
+baseline, and dependency pins; deterministic checks; semantic judgments;
+uncertainty; independent-review status; regression severity; and recommended
+owner-Issue follow-up. Each case states the task, stimulus, expected outcome,
+acceptance criteria, observed outcome, and failure class when needed. Each
+report pins its pre-run case-selection policy, dataset-integrity assessment,
+and partition; each grader names its evaluator version, independence basis,
+and calibration evidence for that exact version. A comparative claim is
+limited to uncontaminated validation or holdout cases with complete case
+coverage, independent calibrated graders, independent review, a
+measured pinned baseline, a comparable candidate measurement for the same
+metric, unit, and observation window, and a testable improvement hypothesis.
+Unknown independence, version drift without recalibration, or suspected or
+unknown dataset contamination leaves a result inconclusive.
+
+The report is evidence only. It cannot create or prioritize work, authorize
+execution, change policy, write Project state, activate participants, merge,
+or release. Primitives #3 owns reusable datasets, graders, and replay;
+Control Plane #103 owns bounded finding routing; product owners retain their
+domain outcomes. The schema and synthetic fixture are proposed in Architecture
+PR #14; none of these artifacts is a live evaluation result.

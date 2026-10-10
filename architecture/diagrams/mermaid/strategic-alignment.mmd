@@ -1,0 +1,19 @@
+flowchart LR
+  PURPOSE["Purpose<br/>why the factory exists"] --> MISSION["Mission<br/>governed software delivery for teams"] --> VISION["Vision<br/>bounded delegation with human direction and authority"]
+  VISION --> GOALS["Seven proposed strategic goals"]
+  GOALS --> PRINCIPLES["Architecture principles<br/>AP-001 to AP-004"]
+  PRINCIPLES --> ADRS["Accepted and proposed ADRs<br/>decision inventory preserves status"]
+  ADRS --> CAPABILITIES["Owner-context capabilities and contracts<br/>pinned source revisions"]
+  CAPABILITIES --> ISSUES["Typed source Issues<br/>in the owning repositories"]
+  ISSUES --> PROJECTS["GitHub Projects<br/>proposed planning and progress surface"]
+  GOALS --> QUALITY["Quality scenarios and measures<br/>baselines remain unmeasured until evidenced"]
+  QUALITY --> EVALUATION["Evaluation evidence<br/>synthetic, pending, or observed"]
+  ISSUES --> EVALUATION
+  EVALUATION --> FINDINGS["Reviewed finding or product outcome"]
+  FINDINGS --> ISSUES
+  PROJECTS -. "prioritizes; never authorizes execution" .-> ISSUES
+  AUTHORITY["Maintainers retain adoption, priority, review, merge, release, and activation authority"]
+  AUTHORITY -. "reviews proposals and evidence" .-> GOALS
+  STATUS["Proposal status: no Project or product repository is confirmed; fixture evidence is synthetic"]
+  STATUS -.-> PROJECTS
+  STATUS -.-> EVALUATION

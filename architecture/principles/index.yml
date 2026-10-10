@@ -52,3 +52,19 @@ principles:
       - ../decisions/0004-use-trunk-based-delivery.md
       - ../decisions/0007-use-issue-linked-conventional-branch-names.md
       - quality/quality-scenarios.yml#QR-012
+  - id: AP-004
+    name: Projects plan; Issues authorize
+    statement: GitHub Projects coordinates portfolio planning while an authorized source Issue remains the only execution authority.
+    source: principles/AP-004-projects-plan-issues-authorize.md
+    goalIds: [G-01, G-02, G-04]
+    decisions:
+      - {id: ADR-0012, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0019, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+      - {id: ADR-0023, owner: architecture, repository: agentic-delivery-lab/agentic-delivery-architecture}
+    consequences:
+      - A Project-only card remains planning input until a source Issue passes deterministic authorization.
+      - Project-owned portfolio facts remain distinct from Issue-owned intent and lifecycle values.
+    evidence:
+      - strategy/organizational-strategy.yml
+      - references/system-evidence.yml#project-inventory-access
+      - quality/quality-scenarios.yml#QR-013

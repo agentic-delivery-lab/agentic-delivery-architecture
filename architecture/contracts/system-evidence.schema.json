@@ -12,6 +12,14 @@
           "limitation": {
             "type": "string"
           },
+          "projectInventoryComplete": {
+            "type": "boolean"
+          },
+          "projectIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          },
           "liveChecks": {
             "type": "object",
             "properties": {

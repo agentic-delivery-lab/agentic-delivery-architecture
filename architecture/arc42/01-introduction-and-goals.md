@@ -15,6 +15,27 @@ system itself. The terms **stakeholder**, **concern**, **viewpoint**, and
 **view** follow ISO/IEC/IEEE 42010:2022 usage. This is a practical architecture
 description, not a claim of conformance to that standard.
 
+The single organizational purpose, mission, vision, strategic goals, value
+streams, measures, and review triggers are maintained in the
+[organizational strategy](../strategy/organizational-strategy.yml). Repository
+responsibility language in an AGENTS.md file remains local operating guidance
+and is not a second organizational mission statement.
+
+The proposal separates purpose, mission, and vision because a [construct
+review](https://link.springer.com/article/10.1007/s11573-023-01137-9) reports
+no universal definitions and distinguishes why the organization exists, the
+value it provides now, and the future state it seeks. A [mission-statement
+review](https://doi.org/10.5172/jmo.2012.18.4.430) identifies the rationale,
+development and implementation process, content and form, and member attitudes
+as conditions related to mission effectiveness. A [meta-analysis](https://doi.org/10.1108/00251741111120806)
+finds only a small positive relationship with financial-performance measures,
+with estimates sensitive to operationalization. This proposal therefore
+remains subject to maintainer review; the strategy links its claims to
+measurable goals and evidence instead of treating the wording itself as an
+outcome. The research basis and exact sources are recorded in the
+[canonical strategy](../strategy/organizational-strategy.yml) and its
+[strategy foundation research register](../references/strategy-research-register.md).
+
 ## 1.2 Goals
 
 | ID | Goal | Evidence or decision |
@@ -28,6 +49,13 @@ These are architecture goals supported by the recovery brief and existing
 decisions. They do not claim that current production operation satisfies
 them; section 7 and the evidence snapshot record observed gaps.
 
+The proposed organizational goals SG-01–SG-08 refine these architecture goals
+into authorized delivery, product outcomes, factory operations, capability
+reuse, adoption, portfolio planning, evidence-based improvement, and
+bounded-context/decision traceability. Their measures are proposals with
+unmeasured baselines and deferred targets; see the canonical
+[strategy source](../strategy/organizational-strategy.yml).
+
 ## 1.3 Quality goals
 
 | Priority | Quality goal | Required observable result |
@@ -36,6 +64,7 @@ them; section 7 and the evidence snapshot record observed gaps.
 | 2 | Safe state change | A model proposal cannot change lifecycle metadata until deterministic identity, permission, schema, option, and transition checks pass. |
 | 3 | Recoverable release rollout | A participant can return to its previous exact source pins without introducing a second authoritative copy. |
 | 4 | Reviewable architecture | A reviewer can follow source commits, file digests, and runtime observations without treating a passing structural check as live proof. |
+| 5 | Comparable evaluation evidence | Each result names its task, stimulus, expected outcome, pre-registered case selection and dataset-integrity assessment, dataset partition, evaluator version and matching calibration; comparisons use assessed validation or holdout cases, independent graders and review, and the same metric, unit, and observation window. |
 
 ## 1.4 Stakeholders, concerns, viewpoints, and views
 
@@ -44,12 +73,13 @@ uses ISO/IEC/IEEE 42010:2022 terminology; it does not reproduce the standard.
 
 | Stakeholder | Concern | Viewpoint | View(s) |
 | --- | --- | --- | --- |
-| Organization maintainer | Ownership, issue lifecycle, review authority, and safe rollout | Governance and ownership | Sections 3, 8, 9; context map and canonical decision inventory |
-| Organization operator | App access, field definitions and pinning, Projects access, rulesets, rollback | Runtime and deployment | Sections 6–7; issue-delivery sequence and live-evidence table |
+| Organization maintainer | Ownership, issue lifecycle, review authority, and safe rollout | Governance and ownership | Sections 3, 8, 9; strategic alignment, context map, and canonical decision inventory |
+| Organization operator | App access, field definitions and pinning, Projects access, rulesets, rollback | Runtime and deployment | Sections 6–7; Project-Issue lifecycle, issue-delivery sequence, and live-evidence table |
 | Repository writer | Clear source issue, allowed route, feedback, and human review | Delivery process | Section 6; three runtime paths |
 | Architecture reviewer and context stewards | Decision meaning, bounded-context language, quality evidence, and provenance | Architecture conformance | Sections 3–5, 8–11; context map, decision inventory, quality scenarios |
 | Primitive maintainer | Catalog impact, release identity, and consumer projections | Capability release | Sections 5, 8–9; generated ADR-to-Primitive index |
 | Distribution maintainer and consumer owner | Exact pins, safe bootstrap, conflict handling, and rollback | Distribution and deployment | Sections 5–7; bundle and deployment view |
+| Product user or operator | A real problem is solved and the change behaves as intended after delivery | Product outcome | Product-delivery sequence and post-delivery evidence; no product repository is confirmed in the six-repository factory inventory |
 | Independent Validator | Separate authorship, test evidence, semantic review, and source pins | Validation | Sections 9–11; ADR map and quality scenarios |
 
 ## 1.5 Scope

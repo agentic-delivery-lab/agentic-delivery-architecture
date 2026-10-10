@@ -14,6 +14,8 @@ export const architectureDataContracts = Object.freeze({
   'architecture/domain/bounded-contexts.yml': 'domain-bounded-contexts.schema.json',
   'architecture/domain/context-map.yml': 'domain-context-map.schema.json',
   'architecture/domain/ubiquitous-language.yml': 'domain-language.schema.json',
+  'architecture/strategy/organizational-strategy.yml': 'organizational-strategy.schema.json',
+  'architecture/evaluation/examples/agent-capability-report.yml': 'evaluation-report.schema.json',
   'architecture/principles/index.yml': 'principle-index.schema.json',
   'architecture/quality/quality-scenarios.yml': 'quality-scenarios.schema.json',
   'architecture/risks/risks.yml': 'risk-register.schema.json',
@@ -92,6 +94,59 @@ async function discoverArchitectureData(root, directory = 'architecture', result
   return results.sort();
 }
 
+function validateCrossFieldConstraints(schemaName, relativePath, value) {
+  if (schemaName !== 'evaluation-report.schema.json') return;
+
+  const datasetCaseIds = value.dataset?.caseIds ?? [];
+  const resultCaseIds = (value.cases ?? []).map(({ caseId }) => caseId);
+  if (new Set(resultCaseIds).size !== resultCaseIds.length
+    || datasetCaseIds.length !== resultCaseIds.length
+    || datasetCaseIds.some((caseId) => !resultCaseIds.includes(caseId))) {
+    throw new Error(`${relativePath} cases must cover exactly the pinned dataset case IDs`);
+  }
+
+  const registeredAt = Date.parse(value.dataset?.selection?.registeredAt ?? '');
+  const integrityAssessedAt = Date.parse(value.dataset?.integrity?.assessedAt ?? '');
+  const runStartedAt = Date.parse(value.runStartedAt ?? '');
+  const generatedAt = Date.parse(value.generatedAt ?? '');
+  if (registeredAt >= runStartedAt || integrityAssessedAt >= runStartedAt || runStartedAt >= generatedAt) {
+    throw new Error(`${relativePath} selection policy and dataset-integrity assessment must be recorded before the candidate run starts, and the report must be generated after it starts`);
+  }
+
+  if (!['improvement', 'regression', 'no-change'].includes(value.comparison?.claim)) return;
+
+  if (!['validation', 'holdout'].includes(value.dataset?.partition)) {
+    throw new Error(`${relativePath} comparative claims require a validation or holdout dataset partition`);
+  }
+
+  if (value.dataset?.integrity?.contaminationStatus !== 'assessed-no-known-contamination') {
+    throw new Error(`${relativePath} comparative claims require a dataset assessed with no known contamination`);
+  }
+
+  const gradersAreIndependentAndCalibrated = Object.values(value.graders ?? {}).every((grader) => (
+    grader.independence?.relation === 'independent'
+    && grader.calibration?.status === 'verified'
+  ));
+  if (!gradersAreIndependentAndCalibrated || value.review?.status !== 'independent') {
+    throw new Error(`${relativePath} comparative claims require independent, calibrated graders and an independent review`);
+  }
+
+  const calibrationMatchesPinnedEvaluator = Object.values(value.graders ?? {}).every((grader) => (
+    grader.calibration?.evaluatorVersion === grader.evaluator?.version
+  ));
+  if (!calibrationMatchesPinnedEvaluator) {
+    throw new Error(`${relativePath} comparative claims require calibration evidence for each pinned evaluator version`);
+  }
+
+  const baseline = value.baseline?.measurement;
+  const candidate = value.comparison?.candidateMeasurement;
+  const mismatches = ['metricId', 'unit', 'observationWindow']
+    .filter((field) => baseline?.[field] !== candidate?.[field]);
+  if (mismatches.length) {
+    throw new Error(`${relativePath} comparison baseline and candidate must use the same ${mismatches.join(', ')}`);
+  }
+}
+
 export async function validateStructuredValue(root, relativePath, value) {
   const schemaName = architectureDataContracts[relativePath];
   if (!schemaName) throw new Error(`${relativePath} has no architecture data contract`);
@@ -101,6 +156,7 @@ export async function validateStructuredValue(root, relativePath, value) {
   if (!validate(value)) {
     throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
   }
+  validateCrossFieldConstraints(schemaName, relativePath, value);
   return true;
 }
 
@@ -120,6 +176,7 @@ export async function validateStructuredData(root = repositoryRoot) {
     if (!validate(value)) {
       throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
     }
+    validateCrossFieldConstraints(schemaName, relativePath, value);
   }
   return { files: Object.keys(architectureDataContracts).length, schemas: schemaFiles.length };
 }

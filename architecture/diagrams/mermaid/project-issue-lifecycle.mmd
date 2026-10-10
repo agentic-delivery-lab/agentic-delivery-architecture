@@ -1,0 +1,43 @@
+flowchart TD
+  STATUS["PROPOSED TARGET CONTRACT<br/>2026-10-09 inventory found no organization or user Project and no Project associations; no end-to-end delivery is proved"]
+  PROJECT["GitHub Projects<br/>portfolio planning and progress visibility"]
+  CARD["Project-only card"]
+  HUMAN["Maintainer creates or links an Issue"]
+  ISSUE["Source Issue in the owning repository"]
+  EVENT["Eligible Issue event"]
+  APP["GitHub App installation<br/>signed event and selected repository access"]
+  INGRESS["Vercel webhook ingress<br/>signature, delivery ID, and bounded dispatch"]
+  CONTROL["Agentic Delivery Control Plane"]
+  IDENTITY["Deterministic origin identity and actor permission"]
+  CONTRACT["Issue Type, lifecycle, field, dependency, and policy checks"]
+  HOLD["Hold without mutation"]
+  WRITER["One bounded authorized writer"]
+  ACTIONS["GitHub Actions<br/>trusted intake and runner"]
+  CODEX["Pinned Codex CLI<br/>repository-scoped workspace"]
+  PR["Issue-linked pull request"]
+  REVIEW["Independent validation and evaluation"]
+  MERGE["Human review and merge decision"]
+  EVIDENCE["Provenance and product or factory outcome evidence"]
+  PROGRESS["Project progress projection<br/>planning visibility only"]
+  FINDING["Finding becomes an owner Issue"]
+  LOOP["People prioritize in Projects before next authorization"]
+
+  CARD -->|"planning input only"| PROJECT
+  PROJECT -->|"must link or convert before execution"| HUMAN
+  HUMAN --> ISSUE
+  ISSUE --> PROJECT
+  PROJECT -. "never an execution trigger" .-> IDENTITY
+  ISSUE --> EVENT --> APP --> INGRESS --> CONTROL --> IDENTITY --> CONTRACT
+  IDENTITY -->|"identity or permission fails"| HOLD
+  CONTRACT -->|"unknown or invalid"| HOLD
+  CONTRACT -->|"all gates pass"| ACTIONS --> CODEX --> WRITER --> PR --> REVIEW --> MERGE --> EVIDENCE
+  EVIDENCE --> PROGRESS --> PROJECT
+  EVIDENCE --> FINDING --> LOOP --> ISSUE
+
+  subgraph REPLAY["Separate state owners"]
+    WEBHOOK["Webhook delivery replay<br/>event-processing state"]
+    SESSION["Codex session continuation<br/>one bounded runner operation"]
+    EVALUATION["Evaluation replay<br/>versioned dataset and grader"]
+  end
+  STATUS -.-> PROJECT
+  STATUS -.-> CONTROL

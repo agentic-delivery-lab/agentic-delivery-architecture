@@ -1,4 +1,6 @@
 sequenceDiagram
+  actor HUMAN as Maintainer
+  participant PROJECT as GitHub Projects portfolio
   participant GH as GitHub event source
   participant APP as GitHub App installation
   participant CP as Agentic Delivery Control Plane
@@ -7,21 +9,43 @@ sequenceDiagram
   participant TYPES as Native Issue Type on issue
   participant DEFINITIONS as Organization issue-field definitions API
   participant VALUES as Per-issue field values API
+  participant PR as Origin pull request
+  participant VALIDATOR as Independent Validator
+  participant EVAL as Versioned evaluation
+  participant EVIDENCE as Delivery and outcome evidence
 
-  GH->>APP: subscribed issue or review event
+  HUMAN->>PROJECT: prioritize linked source Issue and track portfolio progress
+  PROJECT-->>ORIGIN: reference only; a Project-only card is planning input
+  Note over PROJECT,CP: Project membership, fields, status, and events never authorize execution
+  GH->>APP: subscribed event for source Issue
   APP->>APP: apply installation access and deliver event
   APP->>CP: event envelope with repository ID
   CP->>ENROLL: check selected repository and exact participant pins
   Note over APP,ENROLL: App installation access and Control Plane enrollment are separate checks
-  CP->>ORIGIN: re-fetch issue, repository identity, and native Issue Type
+  CP->>ORIGIN: re-fetch source Issue, repository identity, actor permission, and native Issue Type
+  alt issue identity, access, or permission is missing
+    CP-->>GH: hold; leave Issue and repository unchanged
+  else source Issue is authorized
   CP->>DEFINITIONS: read organization field definitions and option IDs
   CP->>VALUES: read this issue's field values using repository permissions
   Note over TYPES,ORIGIN: Organization Issue Type definitions and an issue's native type value are related but distinct surfaces
   Note over TYPES,VALUES: Issue Type, lifecycle position, delivery authorization, governance metadata, and runner state remain distinct
   CP->>CP: interpret intent; propose route and field values
   CP->>CP: deterministically validate identity, permission, schema, option, transition, and orchestration contracts
-  CP->>ORIGIN: mutate only the originating issue or branch after gates pass
+  CP->>ORIGIN: mutate only the originating issue or bounded branch after gates pass
+  ORIGIN->>PR: publish tested issue-linked change
+  PR->>VALIDATOR: request independent semantic and provenance review
+  VALIDATOR->>EVAL: run versioned offline evaluation and report result
+  EVAL->>EVIDENCE: record dataset, grader, candidate pins, baseline, and result
+  HUMAN->>PR: decide whether to merge
+  HUMAN->>PROJECT: reprioritize an improvement Issue from reviewed evidence
+  Note over PROJECT,PR: Human approval and merge remain outside agent authority
   CP->>VALUES: write only validated per-issue field values
-  Note over CP,VALUES: GitHub Projects fields are a separate surface and are not this lifecycle contract; issue-value writes do not change org field definitions
+  Note over CP,VALUES: Issue-value writes do not change organization definitions or Project-owned planning fields
   CP-->>GH: publish evidence and origin write-back links
+  end
+  Note over APP,CP: Webhook delivery replay restores event processing only
+  Note over CP,ORIGIN: Codex session continuation restores one bounded runner operation only
+  Note over EVAL,EVIDENCE: Evaluation replay repeats a versioned dataset and grader; it is not webhook or session replay
   Note over GH,ORIGIN: Target sequence; the 2026-09-24 live audit had no passing end-to-end run
+  Note over PROJECT,CP: 2026-10-09 status: complete org/user Project inventory returned none and 19 open Issues had no associations; the latest observed run skipped delivery and proves no end-to-end flow

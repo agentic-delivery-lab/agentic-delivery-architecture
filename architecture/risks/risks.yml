@@ -31,11 +31,11 @@ risks:
     evidence: system-evidence.yml#primitive-and-distribution-drafts
     mitigation: Correct Primitive release provenance and validate the source commit and digest before the next Architecture/Distribution pin.
   - id: R-006
-    title: Private adapter enforcement and publication entitlement are unknown
+    title: Private adapter ruleset access is plan-limited and publication eligibility remains unknown
     status: open
     owner: organization-operator
-    evidence: system-evidence.yml#public-and-private-adapters
-    mitigation: Confirm plan entitlement, live ruleset state, profile rendering, and an approved agent projection with an operator; do not infer absence from the 403 response.
+    evidence: [system-evidence.yml#current-organization-capability-inventory-20261009-1044, system-evidence.yml#public-and-private-adapters]
+    mitigation: Confirm entitlement and live ruleset state with an authorized operator; do not infer ruleset absence from the plan-related 403 or change publication settings without separate authorization.
   - id: R-007
     title: Repository-scoped required checks may be mistaken for organization-wide protection
     status: open
@@ -62,3 +62,43 @@ risks:
     relatedQualityScenario: QR-011
     evidence: [architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories, "recovery issue #59"]
     mitigation: Keep repository mapping as review routing only; an authorized maintainer must resolve the one-member/CODEOWNERS limitation and verify actual human reviews before claiming enforcement.
+  - id: R-012
+    title: No Project is visible despite reported organization Projects capability
+    status: open
+    owner: organization-operator
+    relatedQualityScenario: QR-014
+    evidence: system-evidence.yml#portfolio-issue-project-inventory-20261009-1839
+    mitigation: Use the complete empty inventory and positive feature-capability flags to support the human topology decision; verify Project ownership, access, and field visibility before configuration. Keep App access separately unverified before any write integration.
+  - id: R-013
+    title: Organization Actions policy does not require immutable action pins and App access is unverified
+    status: open
+    owner: organization-operator
+    evidence: system-evidence.yml#current-organization-capability-inventory-20261009-1044
+    mitigation: Inspect repository-level Actions policy and every workflow reference before claiming pinning; verify the App installation through an App-authenticated read path before relying on its permissions.
+  - id: R-014
+    title: Future evaluation tooling could depend on vendor products scheduled for retirement
+    status: open
+    owner: agentic-primitives-context-steward
+    evidence: architecture/references/strategy-research-register.md
+    mitigation: Keep the versioned evaluation case and result contracts portable, retain local deterministic replay, and recheck provider lifecycle before any external evaluation integration.
+  - id: R-015
+    title: Per-run resource limits and usage receipts are not proven end to end
+    status: open
+    owner: control-plane-maintainer
+    relatedQualityScenario: QR-017
+    evidence: [architecture/quality/quality-scenarios.yml, "https://github.com/agentic-delivery-lab/agentic-delivery/issues/105"]
+    mitigation: Define pinned duration, turn/invocation, retry, and recursion caps in the Control Plane contract; capture admission and terminal usage receipts, test hard-stop behavior, and keep unavailable runtime quota or spend evidence explicitly unknown.
+  - id: R-016
+    title: Comparative evaluation can be biased by grader drift or case selection
+    status: open
+    owner: agentic-primitives-context-steward
+    relatedQualityScenario: QR-019
+    evidence: [architecture/contracts/evaluation-report.schema.json, architecture/evaluation/README.md, "https://github.com/agentic-delivery-lab/agentic-delivery-primitives/issues/3"]
+    mitigation: Pin dataset partition, pre-run selection and integrity assessments, require full case coverage and calibration for exact evaluator versions, and keep comparative claims inconclusive without uncontaminated cases, independent graders, and review.
+  - id: R-017
+    title: Recovery receipts do not yet prove safe behavior across all replay paths
+    status: open
+    owner: control-plane-maintainer
+    relatedQualityScenario: QR-018
+    evidence: [architecture/quality/quality-scenarios.yml, system-evidence.yml#participant-modes-and-release-pins, "https://github.com/agentic-delivery-lab/agentic-delivery/issues/105"]
+    mitigation: Test webhook delivery replay, Codex session continuation, and evaluation replay as separate mechanisms; require durable operation identity and recovered-or-held disposition with duplicate-write checks.

@@ -1,0 +1,52 @@
+flowchart LR
+  STATUS["PROPOSED TRUST MODEL<br/>Project integration, production ingress, product ownership, and live evaluation are not verified"]
+  STRATEGY["Canonical strategy and Architecture contracts<br/>maintainer-reviewed source"]
+  subgraph HUMAN["Human authority boundary"]
+    PEOPLE["Maintainers, product owners, context stewards"]
+    REVIEWERS["Independent reviewers"]
+    MERGE["Human approval, merge, release, and activation"]
+  end
+
+  subgraph GITHUB["GitHub organization boundary"]
+    PROJECT["Portfolio Project<br/>planning facts and views"]
+    ISSUE["Untrusted Issue title, body, comments, and labels<br/>source record after independent authorization checks"]
+    PR["Origin repository pull request"]
+    ORG["Issue Types and organization Issue Fields"]
+  end
+
+  subgraph AUTOMATION["Bounded automation boundary"]
+    APP["GitHub App installation<br/>repository access and event delivery"]
+    VERCEL["Vercel ingress<br/>signature and delivery checks"]
+    NEON["Neon replay state<br/>delivery claims and controller receipts"]
+    CP["Agentic Delivery Control Plane<br/>identity, permission, policy, and contract gates"]
+    RUNNER["Isolated bounded runner session"]
+    AGENT["Agent capability<br/>proposes and implements authorized task"]
+    CODEX["Pinned Codex CLI<br/>no App or plugin authority"]
+  end
+
+  subgraph EVIDENCE["Validation and evidence boundary"]
+    VALIDATOR["Independent Validator"]
+    EVAL["Versioned evaluation dataset and grader"]
+    PRODUCT["Product repository and outcome owner<br/>not yet identified"]
+    RECEIPT["Delivery, provenance, and outcome evidence"]
+  end
+
+  STRATEGY --> PEOPLE
+  PEOPLE --> PROJECT
+  PEOPLE --> ISSUE
+  PROJECT -. "untrusted planning context only; cannot grant authority" .-> CP
+  ISSUE -->|"origin identity and actor permission"| CP
+  ORG -->|"native type, definitions, values"| CP
+  APP -->|"signed webhook"| VERCEL -->|"bounded dispatch"| CP
+  VERCEL --> NEON
+  CP -->|"all deterministic gates pass"| RUNNER --> CODEX --> AGENT
+  AGENT -->|"bounded branch change"| PR
+  PR --> VALIDATOR --> EVAL --> RECEIPT
+  VALIDATOR -->|"independent findings"| REVIEWERS
+  REVIEWERS --> MERGE
+  MERGE --> RECEIPT
+  RECEIPT -->|"reviewed improvement evidence"| PEOPLE
+  PRODUCT -->|"product-specific outcome evidence"| EVAL
+  PEOPLE -->|"prioritized, authorized follow-up only"| ISSUE
+  STATUS -.-> PROJECT
+  STATUS -.-> EVAL

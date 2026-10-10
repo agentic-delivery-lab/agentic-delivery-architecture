@@ -4,7 +4,7 @@
   "architecture": "urn:agentic-delivery:architecture:authority",
   "decisionInventory": {
     "path": "architecture/references/decision-inventory.yml",
-    "sha256": "c81e30053b52acd29d20cdb9564ccbf033ccd52e3d0818728869a1c7784ea013",
+    "sha256": "87f5c8bb2c03ca7208c7ed29f7eeb5ccb8735e17b3d52c7ad126f68dd798a592",
     "schemaVersion": 1
   },
   "primitiveRelease": {
@@ -309,6 +309,21 @@
         "semantic"
       ],
       "primitives": []
+    },
+    {
+      "id": "ADR-0023",
+      "file": "decisions/0023-use-projects-for-planning-and-issues-for-execution-authorization.md",
+      "domains": [
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
+      ],
+      "requiredEnforcement": [
+        "deterministic",
+        "semantic"
+      ],
+      "primitives": []
     }
   ],
   "externalAdrs": [],
@@ -319,7 +334,8 @@
     "ADR-0019",
     "ADR-0020",
     "ADR-0021",
-    "ADR-0022"
+    "ADR-0022",
+    "ADR-0023"
   ],
   "primitives": [
     {

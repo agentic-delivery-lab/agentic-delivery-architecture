@@ -11,7 +11,7 @@ its review pull request is merged.
 
 | Canonical text owner | Decisions |
 | --- | --- |
-| Architecture Authority | 20 ADRs (ADR-0001–0009, ADR-0011–0013, ADR-0015–0022), ADP-0001, ADD-0001 |
+| Architecture Authority | 21 ADRs (ADR-0001–0009, ADR-0011–0013, ADR-0015–0023), ADP-0001, ADD-0001 |
 
 Proposed ADR-0020 makes Architecture Authority the canonical text owner for
 all organization ADR, ADP, and ADD records while preserving each record's
@@ -22,6 +22,14 @@ ADR-0022 selects Neon Postgres as the durable shared replay store for the
 Control Plane webhook. Its recovery amendment proposes minimal dispatch state,
 a scheduled GitHub App failed-delivery reconciler, and idempotent controller
 handling; runtime provisioning and activation remain separate work.
+Proposed ADR-0023 makes GitHub Projects the required portfolio planning,
+prioritization, coordination, and progress-visibility surface while preserving
+origin Issues as the sole work and execution-authorization records. The
+current inventory found no Project in organization, user, or repository
+connections, while the organization API reports organization and repository
+Project capability under its Free plan. Project membership, views, field
+visibility, and GitHub App access remain unknown; this proposed decision
+authorizes no live configuration.
 
 Bounded-context scope remains on each record. The context registry maps each
 scope to the repository where semantic review is routed: governance and
@@ -62,5 +70,5 @@ with this repository's [Architecture issue #3](https://github.com/agentic-delive
 [`decisions/README.md`](../../decisions/README.md); external Control Plane
 records and source variants are pinned in
 [`decision-inventory.yml`](../references/decision-inventory.yml). The release
-lists the exact 22 decision IDs and pins canonical Architecture content by
+lists the exact 23 decision IDs and pins canonical Architecture content by
 source commit and digest.

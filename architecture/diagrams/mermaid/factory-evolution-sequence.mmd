@@ -1,0 +1,24 @@
+sequenceDiagram
+  actor OPERATOR as Maintainer or operator
+  participant EVAL as Failed evaluation or live observation
+  participant ISSUE as Owning-repository source Issue
+  participant PROJECT as Portfolio Project
+  participant STEWARD as Reviewed decision by context steward
+  participant PR as Reviewed change and pull request
+  participant RELEASE as Pinned release and rollout
+  participant POST as Post-change evaluation
+
+  EVAL->>OPERATOR: report failure, regression, uncertainty, or observed gap with evidence
+  OPERATOR->>ISSUE: open or update one typed owner Issue with bounded scope
+  ISSUE-->>PROJECT: link for human triage and portfolio sequencing
+  PROJECT-->>STEWARD: present planning context; no execution authorization
+  STEWARD->>ISSUE: review policy, trust boundary, owner, dependency, and acceptance criteria
+  OPERATOR->>ISSUE: authorize the selected bounded work through the source Issue
+  ISSUE->>PR: Actions and Codex produce a tested, provenance-pinned change
+  PR->>STEWARD: request independent semantic and architecture review
+  STEWARD->>PR: approve, request changes, or reject; keep findings distinct from gate results
+  OPERATOR->>RELEASE: decide merge, release, and any activation separately
+  RELEASE->>POST: publish exact pins and record rollout evidence
+  POST->>EVAL: evaluate with the same case, unit, and observation-window definitions
+  EVAL->>ISSUE: route any new finding to a human-prioritized owner Issue
+  Note over PROJECT,ISSUE: A result cannot create, prioritize, authorize, or recursively execute its own follow-up

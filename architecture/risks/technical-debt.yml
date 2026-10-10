@@ -36,3 +36,9 @@ items:
     owner: primitive-maintainer, distribution-maintainer, control-plane-maintainer
     evidence: "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/7"
     exit: Implement one reviewed reusable lifecycle contract, install pinned projections into each supported Codex profile with rollback, register failure-safe producer teardown, and provide QR-012 conformance and rollout evidence before claiming universal enforcement.
+  - id: TD-007
+    title: Projects are not yet an evidenced primary planning surface
+    status: open
+    owner: control-plane-maintainer, organization-operator
+    evidence: ADR-0023; system-evidence.yml#project-inventory-access
+    exit: Complete a read-only Project and field inventory, approve the minimum useful topology and visibility, then implement Project-aware planning and fail-closed source-Issue authorization in owner-repository pull requests with offline fixtures and separate live evidence.

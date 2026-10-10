@@ -1,4 +1,5 @@
 flowchart LR
+  STATUS["Source snapshot 2026-10-09<br/>Vercel reports a READY production deployment on Control Plane main; webhook delivery and Neon runtime state are unverified.<br/>No distinct product repository was identified."]
   subgraph DOMAIN["Domain contexts"]
     GOV["Agentic Delivery Governance"]
     CP["Agentic Delivery Control Plane"]
@@ -19,15 +20,29 @@ flowchart LR
   end
   WORK["Repository Issues and pull requests"]
   VALUES["Per-issue field values API<br/>repository-scoped values"]
-  PROJECTS["Projects fields<br/>separate planning projection; no lifecycle binding claimed"]
+  PROJECTS["GitHub Projects<br/>primary portfolio planning and coordination<br/>not an execution authority"]
   ENROLL["Control Plane participant contract<br/>selected repositories and pins"]
+  VERCEL["Vercel webhook ingress and scheduled reconciler<br/>production deployment READY; event delivery and runtime health unverified"]
+  NEON["Neon PostgreSQL replay store<br/>delivery claims, controller receipts, and scan checkpoints"]
+  ACTIONS["GitHub Actions<br/>trusted intake, bounded runner, validation, and finalizer"]
+  CODEX["Codex CLI<br/>pinned agent runtime inside the bounded runner"]
+  PRODUCT["Product repositories<br/>no distinct product owner repository identified"]
   APP -->|"access and event delivery"| CP
+  APP -->|"signed webhook delivery"| VERCEL
+  VERCEL -->|"deduplicate and persist delivery state"| NEON
+  VERCEL -->|"repository_dispatch to controller"| ACTIONS
+  ACTIONS -->|"receipt claims and finalization"| NEON
+  ACTIONS -->|"starts bounded source-Issue task"| CODEX
+  CODEX -->|"proposes and edits only authorized workspace changes"| CP
+  ACTIONS -->|"origin-scoped checks and pull requests"| WORK
   ENROLL -->|"separate enrollment check"| CP
   CP -->|"reads issue type and issue-field values"| TYPE
   CP -->|"origin-scoped issue and PR operations"| WORK
   CP -->|"reads definitions and options"| DEFINITIONS
   CP -->|"reads/writes validated per-issue values"| VALUES
   GOV -. "Issue Type, lifecycle, and delivery semantics" .-> TYPE
+  WORK -->|"canonical source Issue and PR references"| PROJECTS
+  PROJECTS -. "prioritization and progress views; never execution authorization" .-> WORK
 
   subgraph PUBLIC["Public .github repository adapter"]
     FORMS["Community health, issue forms,<br/>and PR template artifacts"]
@@ -42,8 +57,13 @@ flowchart LR
   PRIM -->|"primitive-release.v1"| DIST
   CP -->|"pinned workflow bundle source"| DIST
   DIST -->|"versioned bootstrap and consumer projection"| CONSUMER["Consumer repositories"]
+  DIST -. "target bootstrap after owner and approval" .-> PRODUCT
+  PRODUCT -. "future product Issues and outcome evidence" .-> PROJECTS
 
   NOTE["Target relationships are contracts; live bindings, publication entitlement,
   and end-to-end activation remain evidence-gated."]
   NOTE -.-> APP
   NOTE -.-> PROFILE
+  STATUS -.-> VERCEL
+  STATUS -.-> NEON
+  STATUS -.-> PRODUCT

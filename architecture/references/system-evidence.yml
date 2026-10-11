@@ -1906,3 +1906,104 @@ observations:
       Harness is automated review evidence, not a human approval. Passing
       checks do not establish live Project access, runtime adoption, or
       production behavior. No Project or other live configuration changed.
+  - id: strategy-and-open-work-recheck-20261011-0044
+    observedAt: '2026-10-11T00:44:06Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    runs:
+      - '38099004706: Architecture PR #17 validate'
+      - '38097571504: Architecture PR #16 validate'
+      - '38096907499: Control Plane PR #109 Harness review'
+      - '38092662952: Control Plane PR #110 validate'
+      - '38095416568: Primitives PR #4 validate'
+      - '38099004598: Control Plane main agent-observation'
+    request: >-
+      Read-only current-state recheck using Projects v2 GraphQL connections for
+      the organization, authenticated user, and all six organization
+      repositories; default and closed-inclusive `gh project list` queries;
+      open-Issue Project-item connections; documented REST
+      `/issue-field-values` reads for every open Issue; organization Issue
+      Field and Issue Type definitions; active user OAuth scopes and
+      organization membership; App installations and declared permissions;
+      GitHub Releases; Architecture coordination Issues #11/#13/#15; and open
+      pull-request heads, mergeability, review decisions, and checks. No live
+      resource was changed.
+    result: >-
+      Between 00:39 and 00:44 UTC, organization, viewer, and six-repository
+      Projects v2 connections returned zero Projects with no next pages. Default and
+      `--closed` Project lists for the organization and viewer were empty. The
+      six-repository connection was complete; its open-Issue counts were 11
+      Control Plane, 5 Architecture, 2 Primitives, 2 Distribution, 2 public
+      adapter, and 1 private adapter. Every one of the 23 open Issues had a
+      complete empty Project-item connection. The documented
+      `/issue-field-values` endpoint returned HTTP 200 and an empty array for
+      all 23. Eighteen open Issues have a native Issue Type; the five
+      untyped Issues remain Control Plane #62/#103, Architecture #7/#15, and
+      public .github #11. The six organization Issue Fields remain Priority 46797139,
+      Start date 46797140, Target date 46797141, Effort 46797142, Lifecycle
+      Stage 46888816, and Delivery Readiness 46888965; all are
+      `organization_members_only`. The nine enabled Issue Types are Task
+      866469117, Bug 866469118, Feature 866469119, Idea 868968825, Research
+      868969150, Requirements 868969391, Architecture Decision 868969683,
+      Implementation 868969915, and Validation 868970249. `sjefsharp` is an
+      active organization admin; the human CLI reports `admin:org`, `project`,
+      `repo`, and `workflow` scopes.
+
+      The six default-branch commits remain Control Plane
+      9a2e1f3549428bc042d5c59d09beb300ca2d1362, Architecture
+      61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Primitives
+      e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution
+      b69c5710928b47efc4d3ab12ec4d5b596c80720c, public .github
+      af52c92e49616e78f8d6647cf5cf538a7e571d78, and private .github-private
+      f9e6589b65c71da9e7b35d8e026f3d4a91dab78f. No published GitHub Release
+      is listed in any of the six repositories.
+
+      Three organization App installations remain visible. The Control Plane
+      invoker (installation 163255060) is selected-repository, subscribes to
+      issues, issue_comment, pull_request, pull_request_review, and
+      pull_request_review_comment, and declares contents:write,
+      issue_fields:read, issue_types:read, issues:write, metadata:read, and
+      pull_requests:write but no Projects permission. Vercel
+      (163160932) and the ChatGPT Codex connector (164559129) report
+      all-repository selection. The invoker's exact selected-repository list
+      remains unavailable through the human OAuth endpoint.
+
+      Control Plane #86 is OPEN and CONFLICTING at head 3c21e2aa; it changes
+      `CHANGELOG.md` and `scripts/setup-runner-codex.mjs`. Control Plane #109
+      (head d564d34d) and #110 (head 2074f2d8) remain open, mergeable, and
+      without a human review decision. Architecture #16 (head 8fdb84e2)
+      remains open and mergeable with validate run 38097571504 passed.
+      Architecture #17 (head edd3b5c1) is a draft stacked on #16, mergeable,
+      with validate run 38099004706 passed. Primitives #4 (head 4d6fe1f2)
+      remains a draft with review required; validate run 38095416568 passed.
+      Distribution and both adapters have no open PRs. Architecture Issues
+      #11, #13, and #15 remain open, unassigned, without comments or Project
+      items. Control Plane PR #104 is MERGED at 9a2e1f3; its merge commit
+      contains both #101 and #103 changelog entries, has no conflict markers,
+      and has no unresolved review threads.
+
+      The latest Control Plane main `agent-observation` run 38099004598
+      succeeded on 9a2e1f3 but only validated the pinned observation reader;
+      it is not an issue-to-PR delivery. The latest recorded issue-intake
+      delivery job remains skipped. No passing live end-to-end delivery is
+      evidenced.
+    limitation: >-
+      The empty Project result covers only the authenticated viewer,
+      organization, and six visible repository scopes. No Project was
+      available to inspect its views, field configuration, membership, or
+      visibility. Broad user OAuth scopes do not grant the runtime App
+      Projects permission. The owner and stewards for any product repository
+      outside the organization remain unknown. Passing checks and successful
+      observer validation do not establish independent human review, runtime
+      Project access, a live issue-to-PR flow, production webhook delivery, or
+      product outcomes. No Issue, Project, field, App, permission, release,
+      participant, or runtime setting was changed.

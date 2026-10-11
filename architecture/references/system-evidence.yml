@@ -2561,3 +2561,89 @@ observations:
       08:24 and earlier dated events for those scopes. Passing checks do not
       establish independent human review, release adoption, runtime behavior,
       webhook health, or product outcomes.
+  - id: strategy-pr-status-recheck-20261011-0901
+    observedAt: '2026-10-11T09:01:24Z'
+    source: GitHub API via gh CLI and local Git merge-tree
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    runs:
+      - '38126576639: Control Plane PR #109 body validation passed'
+      - '38126576396: Control Plane PR #109 Harness review passed; classify_updater skipped by policy'
+      - '38126145192: Control Plane PR #109 quality, recovery SQL, and three-platform portability passed'
+      - '38126145175: Control Plane PR #109 validation passed'
+      - '38126143307: Control Plane PR #109 body validation passed before the description refresh'
+      - '38124099068: Control Plane PR #110 Harness review passed; classify_updater skipped by policy'
+      - '38124099042: Control Plane PR #110 quality, recovery SQL, and three-platform portability passed'
+      - '38124099044: Control Plane PR #110 validation passed'
+      - '38124097708: Control Plane PR #110 body validation passed'
+      - '38120380694: Architecture PR #16 validation passed'
+      - '38125497292: Architecture PR #17 validation passed'
+      - '38095416568: Primitives PR #4 validation passed'
+      - 'Local: pnpm test passed 543 of 560 tests; 17 environment-conditioned tests skipped'
+      - 'Local: focused Evaluation Report router tests passed 17/17 and cross-stream acceptance tests passed 10/10'
+      - 'Local: pnpm control-plane:boundary passed; pnpm acceptance:check reported private-publication boundary unavailable'
+    request: >-
+      Read-only refresh of current Control Plane, Architecture, and Primitives
+      PR states and exact-head checks; inspect the current PR #86 merge conflict
+      against main; and compare the merged PR #104 changelog blob with main.
+      The Projects and per-Issue association inventory was not repeated. No PR
+      was approved or merged, and no Issue, Project, permission, release, or
+      runtime setting was changed during this observation.
+    result:
+      status: >-
+        Control Plane #109 and #110 are open and mergeable with required checks
+        passing but no human review decision. PR #86 is the sole current open
+        merge conflict found in the queried repositories; it is 62 commits
+        behind main and conflicts only in CHANGELOG.md. Architecture #16 still
+        requires review, #17 remains a draft stacked on #16, and Primitives #4
+        remains draft and review-required.
+      events:
+        - >-
+          Control Plane #109 is OPEN/CLEAN, non-draft, at
+          1180b1559a1e694b12fa95df1f548accb4697344, with no human review
+          decision. Validation, quality, recovery-SQL, macOS, Ubuntu, Windows,
+          body validation, Harness review, and Vercel passed. The applicable
+          classify_updater job was skipped by policy. The new exact-head
+          regression test preserves grader-calibration dataset pins in derived
+          source evidence while retaining the complete source report.
+        - >-
+          Control Plane #110 remains OPEN/CLEAN, non-draft, at
+          088a6b02391367f401b687e1873754e38c2a71fc, with no human review
+          decision. Validation, quality, recovery-SQL, three-platform
+          portability, body validation, Harness review, and Vercel passed; its
+          applicable classify_updater job was skipped by policy.
+        - >-
+          Control Plane #86 remains OPEN/CONFLICTING at
+          3c21e2aa4200f51171f88db226260baf97314661. Its feature commit is one
+          ahead and 62 commits behind current main
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362. The branch changes
+          CHANGELOG.md and scripts/setup-runner-codex.mjs; merge-tree reports
+          a content conflict only in CHANGELOG.md.
+        - >-
+          Architecture #16 is OPEN and mergeable but REVIEW_REQUIRED at
+          9635044ab2e7b91c8004ac1cd06241b35b9ec30e. Draft #17 is OPEN/CLEAN and
+          mergeable at 8275c63ca965ef3fd9004aae61568053f98b9676, stacked on
+          #16 without a human review decision; exact-head validation passed.
+          Primitives #4 remains OPEN/DRAFT/REVIEW_REQUIRED at
+          4d6fe1f2a2ff38adfcc332e8239dc224d2c2e99e, with validation passed.
+        - >-
+          Control Plane #104 is MERGED at
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362. CHANGELOG.md has identical
+          blob 4d5ab1f5b401737f45b72d31c710ad3d3f930b47 on its PR head, merge
+          commit, and current main; no conflict markers remain.
+        - >-
+          The full Control Plane test suite passed 543 of 560 tests with 17
+          environment-conditioned skips. The focused router tests passed
+          17/17 and cross-stream acceptance tests passed 10/10. The boundary
+          check passed; acceptance evidence remains offline and its private
+          publication boundary was unavailable from this worktree.
+    limitation: >-
+      The last complete Projects and per-Issue association inventory remains
+      the 08:24 UTC event strategy-current-status-recheck-20261011-0824. This
+      refresh did not query Project configuration, Field Values, Issue Types,
+      App installation access, the release list, or production runtime. Green
+      checks and fixtures do not establish human approval, Project adoption,
+      live delivery, or measured product outcomes.

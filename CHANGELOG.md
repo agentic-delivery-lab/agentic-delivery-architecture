@@ -6,16 +6,14 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
-- Refreshed Architecture #11's read-only Projects and open-Issue association
-  audit at 2026-10-11 08:24 UTC, and exact PR/check state through 09:01 UTC.
+- Refreshed Architecture #11's read-only Projects, Issue metadata, App,
+  Actions, ruleset, release, and open-PR evidence through 2026-10-11 19:14 UTC.
   The organization, viewer, and all six repository scopes expose no Projects;
-  all 23 open Issues had no Project items at that observation. Control Plane
-  #109 now includes grader-calibration dataset pins in derived source evidence;
-  its exact-head checks pass with human review pending. #110 also remains
-  review-pending with checks passing. The only current open merge conflict is
-  Control Plane #86's `CHANGELOG.md`; #104 was already merged, and its changelog
-  blob is identical on the PR head, merge commit, and current `main`. No live
-  configuration changed.
+  all 23 open Issues have no Project items or Issue Field Values. Nine native
+  Issue Types and six organization-members-only fields remain inventoried.
+  Control Plane #104 is merged with its changelog entry present; the current
+  CHANGELOG.md conflict is on open PR #86. Architecture #17 validation passes
+  at its exact draft head. No live configuration changed.
 
 - Recorded the 07:17 UTC exact-head recheck for Architecture PRs #16 and #17.
   Both hosted validations passed; #16 remains blocked pending human review,

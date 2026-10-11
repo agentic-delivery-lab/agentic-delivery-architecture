@@ -2647,3 +2647,127 @@ observations:
       App installation access, the release list, or production runtime. Green
       checks and fixtures do not establish human approval, Project adoption,
       live delivery, or measured product outcomes.
+
+  - id: strategy-live-inventory-recheck-20261011-1914
+    observedAt: '2026-10-11T19:14:17Z'
+    source: GitHub GraphQL and REST APIs via gh CLI, public App metadata, and local Git
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    runs:
+      - '38126145175: Control Plane PR #109 validation passed'
+      - '38126145192: Control Plane PR #109 quality, recovery-SQL, and macOS/Ubuntu/Windows portability passed'
+      - '38126576639: Control Plane PR #109 body validation passed'
+      - '38126576396: Control Plane PR #109 Harness review passed; classify_updater skipped by policy'
+      - '38124099044: Control Plane PR #110 validation passed'
+      - '38124099042: Control Plane PR #110 quality, recovery-SQL, and macOS/Ubuntu/Windows portability passed'
+      - '38124097708: Control Plane PR #110 body validation passed'
+      - '38124099068: Control Plane PR #110 Harness review passed; classify_updater skipped by policy'
+      - '38120380694: Architecture PR #16 validation passed'
+      - '38127188515: Architecture PR #17 validation passed'
+      - '38095416568: Primitives PR #4 validation passed'
+    request: >-
+      Read-only combined refresh from 19:09 through 19:14 UTC of organization,
+      viewer, six-repository and per-Issue Projects; open-Issue metadata and
+      Issue Field Values; App installations and public metadata; organization
+      Actions policy, repository rulesets and workflows; exact open-PR heads,
+      review states and checks; releases; and the Control Plane #104 merge and
+      #86 conflict. No GitHub or runtime configuration was written.
+    result:
+      status: >-
+        The six-repository inventory still exposes no Project or Issue-item
+        association. Control Plane #104 is merged with its changelog entry
+        present and identical across its PR head, merge commit, and current
+        main. The current CHANGELOG.md merge conflict is on open Control Plane
+        #86. Other open feature PRs remain review-gated; no release or runtime
+        acceptance was established.
+      events:
+        - >-
+          The organization, authenticated-user, and all six repository
+          GraphQL Projects v2 connections returned zero nodes with no next
+          pages. All 23 open Issues across the six repositories had zero
+          Project-item associations. The repositories and observed main commits
+          were Control Plane 1358455028 at
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362; Architecture 1380894616
+          at 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c; Primitives 1380894656
+          at e4933566fbf5b0f593830f8933f18fbd21024fa7; Distribution
+          1380894705 at b69c5710928b47efc4d3ab12ec4d5b596c80720c; public
+          .github 1368850419 at af52c92e49616e78f8d6647cf5cf538a7e571d78;
+          private .github-private 1380894756 at
+          f9e6589b65c71da9e7b35d8e026f3d4a91dab78f.
+        - >-
+          All 23 documented per-Issue Field Value requests returned empty
+          arrays. The organization defines six organization-members-only
+          fields: Priority 46797139, Start date 46797140, Target date
+          46797141, Effort 46797142, Lifecycle Stage 46888816, and Delivery
+          Readiness 46888965. Nine native Issue Types remain enabled: Task
+          866469117, Bug 866469118, Feature 866469119, Idea 868968825,
+          Research 868969150, Requirements 868969391, Architecture Decision
+          868969683, Implementation 868969915, and Validation 868970249.
+          Eighteen open Issues are typed Task; CP #62/#103, Architecture
+          #7/#15, and public .github #11 are untyped.
+        - >-
+          The organization is on the Free plan. Three App installations were
+          listed: Vercel 163160932 and ChatGPT Codex Connector 164559129 each
+          select all repositories; the Control Plane invoker 163255060 selects
+          repositories and declares contents write, Issues write, pull
+          requests write, Issue Fields read, and Issue Types read, with no
+          Projects permission. Its subscribed events are issues,
+          issue_comment, pull_request, pull_request_review, and
+          pull_request_review_comment. The selected-repository endpoint
+          returned HTTP 403 to the human OAuth token, so exact membership and
+          deployed credential binding remain unknown.
+        - >-
+          Organization Actions settings report all repositories enabled,
+          all actions allowed, and SHA pinning not required. Active public
+          rulesets are Control Plane 23697277, public .github 23698176,
+          Architecture 23909155 and 23804851, Primitives 23804855, and
+          Distribution 23804856. The private .github-private ruleset read
+          returned HTTP 403 on the Free plan, so its state is unknown. Active
+          workflow counts were 13, 2, 1, 1, 1, and 1 respectively; workflow
+          counts do not prove successful end-to-end runtime behavior.
+        - >-
+          Control Plane #104 is MERGED at 2026-10-10T21:26:16Z with merge
+          commit 9a2e1f3549428bc042d5c59d09beb300ca2d1362. CHANGELOG.md has
+          blob 4d5ab1f5b401737f45b72d31c710ad3d3f930b47 on its PR head, merge
+          commit, and current main, and the #103 entry is present. Open #86
+          remains DIRTY at 3c21e2aa4200f51171f88db226260baf97314661, one
+          commit ahead and 62 behind current main; local merge-tree reports a
+          content conflict only in CHANGELOG.md. No change was made to #86.
+        - >-
+          Control Plane #109 is OPEN/CLEAN at
+          1180b1559a1e694b12fa95df1f548accb4697344, with validation, quality,
+          recovery-SQL, three-platform portability, body validation, Harness,
+          and Vercel passing; classify_updater was skipped by policy. #110 is
+          OPEN/CLEAN at 088a6b02391367f401b687e1873754e38c2a71fc with the
+          same required checks passing and classify_updater skipped. Neither
+          has a human review decision. Architecture #16 is OPEN, mergeable,
+          and REVIEW_REQUIRED at 9635044ab2e7b91c8004ac1cd06241b35b9ec30e.
+          Draft #17 is OPEN/CLEAN and mergeable at
+          01528d3e9b966609b473732507299476c7cae752, stacked on #16, with
+          validation run 38127188515 passing and no human review decision.
+          Primitives #4 remains OPEN/DRAFT/REVIEW_REQUIRED at
+          4d6fe1f2a2ff38adfcc332e8239dc224d2c2e99e with validation passed.
+          Other repositories have no open PRs; all six Release listings are
+          empty.
+        - >-
+          gh auth status reports the sjefsharp human OAuth token with broad
+          project, admin:org, repo, workflow, and other scopes. These scopes
+          do not expand the invoker App's permissions. No Project, Issue,
+          Issue Field, App, permission, release, participant, or runtime
+          setting was changed.
+    limitation: >-
+      The inventories cover only the authenticated viewer, the organization,
+      and the six visible repositories. The invoker's selected repository
+      set and deployed credential binding remain unknown; the private
+      repository ruleset endpoint was unavailable. Production Vercel metadata
+      was last observed at 2026-10-10 03:27 UTC on an older Control Plane main
+      commit; webhook health, runtime App credentials, delivery, Neon state,
+      evaluation replay, and product outcomes were not tested in this refresh.

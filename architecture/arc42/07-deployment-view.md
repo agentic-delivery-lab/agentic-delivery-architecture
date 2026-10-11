@@ -28,7 +28,23 @@
 This is the desired logical deployment. It does not imply that every
 participant is active or that each hosting rule has been enabled.
 
-## 7.2 Current inventory snapshot (2026-10-09; observation times shown per surface)
+## 7.2 Current inventory snapshot (2026-10-11 19:14 UTC)
+
+| Surface | Observed state | Evidence limit |
+| --- | --- | --- |
+| Repository sources | The six default-branch commits are Control Plane 9a2e1f3549428bc042d5c59d09beb300ca2d1362, Architecture 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Primitives e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution b69c5710928b47efc4d3ab12ec4d5b596c80720c, public .github af52c92e49616e78f8d6647cf5cf538a7e571d78, and private .github-private f9e6589b65c71da9e7b35d8e026f3d4a91dab78f. | Observed branch heads do not prove compatibility or active deployment. |
+| GitHub Projects and Issues | The organization, authenticated user, and six repository Project v2 connections returned no Projects. All 23 open Issues had zero Project associations and empty Issue Field Value arrays. Nine native Issue Types and six organization-members-only fields were read. Five Issues remain untyped. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. Empty Issue values do not establish a lifecycle transition. |
+| GitHub Apps, Actions, and protection | Three App installations were listed. The Control Plane invoker installation selects repositories and has Contents/Issues/PR write plus Issue Field/Type read, with no Projects permission; its selected-repository API returned 403. Organization Actions allow all actions, do not require SHA pinning, and are enabled for all repositories. Public rulesets were read; the private ruleset endpoint returned 403. | The selected repository set, deployed credential binding, and private ruleset state remain unknown. Organization policy does not prove individual workflow pins or runtime behavior. |
+| Pull requests and Releases | Control Plane #104 is merged and its CHANGELOG.md blob matches across PR head, merge commit, and current main. Open #86 is 62 commits behind main and has a content conflict only in CHANGELOG.md. Control Plane #109/#110 checks pass with review pending; Architecture #16 needs review and draft #17 validation passes; Primitives #4 remains draft/review-required with validation passed. All six Release listings are empty. | Passing CI is not human review, release adoption, participant activation, or production acceptance. |
+| Production runtime | The last recorded Vercel production metadata observation is 2026-10-10 03:27 UTC on an older Control Plane main commit. | This refresh did not test webhook health, App credential binding, delivery, Neon state, evaluation replay, or product outcomes; deployment of current main is unverified. |
+
+The full read-only inventory, exact identities, PR heads, check runs, and
+scope limits are recorded in
+[system evidence](../references/system-evidence.yml#strategy-live-inventory-recheck-20261011-1914).
+The absence of a Project in the queried scopes does not identify or approve a
+topology. No Project, App permission, participant, or runtime setting changed.
+
+## 7.3 Historical deployment snapshot (2026-10-09; observation times shown per surface)
 
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
@@ -88,7 +104,7 @@ Apps. The Control Plane invoker declares no Project permission, and its
 selected-repository listing returned 403; the exact app/event/permission data
 is recorded in `github-app-installation-inventory-20261009-1845`.
 
-## 7.3 Historical deployment snapshot (2026-09-24)
+## 7.4 Historical deployment snapshot (2026-09-24)
 
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
@@ -108,7 +124,13 @@ The complete immutable repository commit pins and live API/run references are
 in [system evidence](../references/system-evidence.yml). The above table keeps
 desired topology separate from observed deployment.
 
-## 7.4 Access and change boundary
+## 7.5 Access and change boundary
+
+The latest read-only portfolio and App-permission evidence is
+system-evidence.yml#strategy-live-inventory-recheck-20261011-1914. It confirms
+that the human OAuth scopes do not grant Projects access to the runtime App;
+the selected repository list remains unavailable to this identity and no
+Project topology was approved.
 
 The initial Projects read failed because the session lacked Project access.
 The later read-only inventory ran after `gh auth status` reported `project`,

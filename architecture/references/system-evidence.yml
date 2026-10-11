@@ -2862,3 +2862,38 @@ observations:
       viewer, the organization, and the six visible repositories; external
       Projects remain unknown. No end-to-end delivery or evaluation replay
       was tested.
+
+  - id: architecture-pr14-review-recheck-20261011-1950
+    observedAt: '2026-10-11T19:50:14Z'
+    source: GitHub GraphQL pull-request and review connections via gh CLI
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    request: >-
+      Read Architecture PR #14's merge state, exact head, merge commit,
+      reviewDecision, and submitted reviews, then compare the recorded review
+      evidence with the independent-review-and-merge prerequisite in Control
+      Plane Issue #106. No Issue or repository state was written.
+    result:
+      status: >-
+        Architecture PR #14 is MERGED at 61d99cb, but GitHub reports
+        reviewDecision REVIEW_REQUIRED. Its only submitted review is a Codex
+        COMMENTED review on older commit da5a33f; an independent human review
+        is not established. The merge subcondition in Issue #106 is met, while
+        its independent-review subcondition remains open.
+      events:
+        - >-
+          PR #14's current head is 379f04110bd40e9c4bbc8ed55174e2e2ff28002a,
+          mergedAt is 2026-10-10T21:13:52Z, and merge commit is
+          61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c. GitHub returns
+          reviewDecision REVIEW_REQUIRED and one submitted review by
+          chatgpt-codex-connector with state COMMENTED, submitted on
+          2026-10-09T08:11:30Z against commit
+          da5a33f354fe663bd1bf7f49214f42fbe4a5b16d. No submitted independent
+          human approval is present in the review connection. Issue #106's
+          body still lists the independent-review-and-merge prerequisite;
+          no Issue body was changed.
+    limitation: >-
+      This records GitHub's review API state only; it is not an assessment of
+      review quality and does not replace a future independent human review.

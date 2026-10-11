@@ -507,10 +507,27 @@ reviews. Control Plane #104 remains merged and #86 remains conflicting;
 the last merge-tree check identifies CHANGELOG.md as the conflict. Control
 Plane #109/#110 remain clean with Codex COMMENTED reviews only; Primitives
 #4 remains draft and review-required. Control Plane #106 remains open with
-no Project item, and its body still lists the already-merged PR #14 review/
-merge gate; the body was not changed. The broad App, Actions, ruleset,
+no Project item. Its PR #14 review/merge gate is only partly satisfied:
+PR #14 is merged, but its GitHub reviewDecision remains REVIEW_REQUIRED and
+the only submitted review is Codex COMMENTED on an older head. Independent
+human review remains a blocker, and the Issue body was not changed. The broad
+App, Actions, ruleset,
 Release, and production observations remain the 19:14 event and were not
 re-read. No Project or runtime setting was changed.
+
+### 19:50 UTC PR #14 review-state follow-up
+
+The current review connection for merged Architecture PR #14 returns
+`REVIEW_REQUIRED` and only one submitted Codex `COMMENTED` review, against
+older head `da5a33f`; independent human review is not established. This means
+Control Plane #106's merge condition is met but its independent-review
+condition remains open. The Issue body correctly retains that gate and was not
+edited. Evidence: `system-evidence.yml#architecture-pr14-review-recheck-20261011-1950`.
+
+Independent review of Architecture PR #17 at `5b0dfe0542d78e0993b71a4e9ca093108360cc61`
+found this wording error and an optional precision improvement to the PR #109
+offline evidence description. Both documentation corrections are included in
+this follow-up; no runtime or GitHub configuration changed.
 
 ### Architecture decisions and invariants
 

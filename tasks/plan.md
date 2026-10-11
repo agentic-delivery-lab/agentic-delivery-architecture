@@ -582,6 +582,28 @@ and GitHub has no review decision for #17. The read is recorded at
 retargeting #17 to `main`. No Issue, Project, permission, App, release,
 participant, or runtime setting changed.
 
+### 21:34 UTC conflict and open-work verification
+
+A fresh read-only GitHub check confirms that the reported PR #104 conflict is
+already resolved and merged. Evidence is recorded at
+architecture/references/system-evidence.yml#control-plane-changelog-state-recheck-20261011-2134.
+
+- Control Plane PR #104 is MERGED at 9a2e1f3549428bc042d5c59d09beb300ca2d1362.
+  Its second parent is the PR head f9a536fee6f6fc436189a55acf3b8180d4144211,
+  which merged current main into the feature branch to resolve CHANGELOG.md.
+  Protected main still points at the merge commit, contains both #101 and #103
+  changelog entries, and has no conflict markers. No further #104 edit is needed.
+- The separate Control Plane PR #86 is OPEN/CLEAN at
+  3a0adfb7942c760f4504478c2f47cc6a0624f966; its exact-head hosted checks pass
+  and no human review has been submitted. It proposes Codex CLI 0.160.0, while
+  official upstream latest remains 0.162.1. The release asset and runner
+  compatibility for 0.162.1 are not verified; do not approve or retarget #86
+  solely from the changelog conflict resolution.
+- Control Plane #109/#110 remain open and clean with their required checks
+  passing and no human review. Architecture #16 remains blocked on independent
+  human review; draft #17 is clean on #16 and hosted validation passes. Primitives
+  #4 remains draft/review-required although its validation passes. No review,
+  approval, merge, release, Project, permission, or runtime mutation occurred.
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,

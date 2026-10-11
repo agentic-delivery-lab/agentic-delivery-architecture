@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Rechecked Architecture #11's Project inventory at 21:24 UTC and PR state at
+  21:34 UTC. The six repository scopes still have no Project v2 nodes or
+  open-Issue associations. Control Plane #104 is merged, with both #101 and
+  #103 present in protected main and no conflict markers; #86 is open and
+  conflict-free at its current head. It proposes Codex CLI 0.160.0 while
+  upstream latest remains 0.162.1. No live configuration changed.
+
 - Aligned the strategy task sequence with PR #109's offline router coverage
   while retaining the separate Project-composition/live-runtime limitation;
   advanced the draft Architecture pin to 0.1.0-draft.38.

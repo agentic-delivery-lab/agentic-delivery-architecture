@@ -31,13 +31,15 @@ are examples of author practice, not standards or proof of outcomes.
 | Agent checks and human decisions — [OpenAI Agents SDK guardrails and approvals](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals), vendor documentation | The guide distinguishes automatic guardrails from human review and describes pausing for approval before sensitive tool actions. | Guidance about an SDK workflow does not prove the local Control Plane enforces equivalent checks. | Retain deterministic authorization and explicit human merge/release boundaries; do not treat model judgment as permission. |
 | Evaluation tooling lifecycle — [OpenAI API deprecations](https://developers.openai.com/api/docs/deprecations), vendor lifecycle notice inspected 2026-10-09 | OpenAI announced Evals platform deprecation on 2026-06-03; existing evals are scheduled to become read-only 2026-10-31 and the dashboard/API are scheduled to shut down 2026-11-30. Agent Builder is also scheduled to shut down 2026-11-30; the notice says ChatKit remains available. | These are announced schedules and may change; they do not mean this repository currently uses either product. | Keep the local evaluation case/result contract and deterministic replay provider-neutral. Recheck provider lifecycle before any integration and make no local evaluator depend on the retiring dashboard/API. |
 
+| Codex CLI release currency — [official latest release](https://github.com/openai/codex/releases/tag/rust-v0.162.1), release notes and annotated tag object retrieved 2026-10-11 | Upstream labels 0.162.1 Latest and reports publication on 2026-10-09; its annotated tag resolves to commit 092d3acd6bec3e3a14bdc7e7a2810ab628ab759d. Control Plane main pins 0.159.3; open PR #86 proposes 0.160.0. | Release metadata and tag identity do not verify the downloaded archive or extracted package tree; no Actions runner was tested with 0.162.1. | Do not describe PR #86 as current upstream latest or silently retarget its issue-specific change. Verify the exact asset, package-tree digest, and runner compatibility in a separately reviewed version update. |
+
 ## Reading this evidence
 
 The proposed one-Project/two-view topology and private-visibility
 recommendation are local decision options derived from documented features,
 not GitHub recommendations or applied settings. The latest complete Project
 and Issue-association inventory is recorded in
-[strategy-live-inventory-recheck-20261011-2007](system-evidence.yml#strategy-live-inventory-recheck-20261011-2007).
+[strategy-live-inventory-recheck-20261011-2124](system-evidence.yml#strategy-live-inventory-recheck-20261011-2124).
 The 20:07 UTC REST observation also confirmed the Free plan and enabled
 organization/repository Project capability. The invoker installation declares
 no Projects permission, and its selected repository set and binding to

@@ -3003,3 +3003,167 @@ observations:
       review, semantic acceptance, merge, Architecture release approval, or
       live/runtime behavior. No Issue, Project, permission, App, release,
       participant, or runtime setting was changed.
+
+  - id: strategy-live-inventory-recheck-20261011-2124
+    observedAt: '2026-10-11T21:24:16Z'
+    source: GitHub GraphQL API via `gh api graphql`, read-only
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Re-read the organization and authenticated-user Projects v2 connections,
+      all six repository Projects v2 connections, default-branch identities,
+      open-Issue counts, and every open Issue's Project-item connection.
+    result:
+      status: >-
+        The organization, viewer, and each repository Projects v2 connection
+        returned zero nodes with no additional pages. The six complete open-
+        Issue connections totaled 23 Issues; every nested Project-item
+        connection was complete and the total association count was zero.
+      events:
+        - >-
+          agentic-delivery: repository ID R_kgDOUPhg9A, main
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362, 11 open Issues, zero
+          Project v2 nodes and Project-item associations.
+        - >-
+          agentic-delivery-architecture: repository ID R_kgDOUk7HmA, main
+          61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, 5 open Issues, zero
+          Project v2 nodes and Project-item associations.
+        - >-
+          agentic-delivery-primitives: repository ID R_kgDOUk7HwA, main
+          e4933566fbf5b0f593830f8933f18fbd21024fa7, 2 open Issues, zero
+          Project v2 nodes and Project-item associations.
+        - >-
+          agentic-delivery-distribution: repository ID R_kgDOUk7H8Q, main
+          b69c5710928b47efc4d3ab12ec4d5b596c80720c, 2 open Issues, zero
+          Project v2 nodes and Project-item associations.
+        - >-
+          .github: repository ID R_kgDOUZb_8w, main
+          af52c92e49616e78f8d6647cf5cf538a7e571d78, 2 open Issues, zero
+          Project v2 nodes and Project-item associations.
+        - >-
+          .github-private: repository ID R_kgDOUk7IJA, main
+          f9e6589b65c71da9e7b35d8e026f3d4a91dab78f, 1 open Issue, zero
+          Project v2 nodes and Project-item associations.
+    limitation: >-
+      This recheck did not read Issue Field Values, native Issue Types, App
+      installations, Actions settings, rulesets, releases, or runtime state.
+      Use the 20:07 UTC and 19:14 UTC events for those separately timed facts.
+      No Project, Issue, field, permission, App, release, participant, or
+      runtime setting changed.
+
+  - id: control-plane-changelog-conflict-recheck-20261011-2124
+    observedAt: '2026-10-11T21:24:16Z'
+    source: GitHub pull-request, commit, contents, and checks APIs via `gh` CLI
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: CHANGELOG.md
+    request: >-
+      Re-read PRs #104 and #86, their merge/head identities, exact-head checks,
+      and CHANGELOG.md contents on their relevant Git refs. No GitHub write or
+      merge was performed.
+    result:
+      status: >-
+        PR #104 is MERGED at 9a2e1f3549428bc042d5c59d09beb300ca2d1362; its
+        conflict-resolution branch head is f9a536fee6f6fc436189a55acf3b8180d4144211.
+        PR #86 is OPEN/CLEAN/MERGEABLE at 3a0adfb7942c760f4504478c2f47cc6a0624f966.
+      events:
+        - >-
+          PR #104's merged diff adds the Issue #103 changelog entry while
+          retaining Issue #101. Current main contains both entries and no
+          conflict markers.
+        - >-
+          PR #86's merge-from-main branch contains the 0.160.0 changelog entry,
+          retains existing changelog content, and has no conflict markers.
+          Its exact-head validate, portability, quality, recovery-SQL, review,
+          and body checks passed; human review remains absent.
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38173557303
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38173446792
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38173446834
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38173556955
+    limitation: >-
+      Pull-request mergeability and passing checks do not establish human
+      approval or merge readiness for the proposed CLI version. PR #86 is a
+      separate version update and remains open; this observation did not
+      approve, merge, or edit either PR.
+
+  - id: control-plane-codex-upstream-release-recheck-20261011-2124
+    observedAt: '2026-10-11T21:24:16Z'
+    source: >-
+      https://api.github.com/repos/openai/codex/releases/latest;
+      https://github.com/openai/codex/releases/tag/rust-v0.162.1;
+      https://api.github.com/repos/openai/codex/git/tags/7a078f6bb4ce0dc2a81408b334ce52979d92c603;
+      Control Plane PR and repository APIs via `gh` CLI.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: scripts/setup-runner-codex.mjs
+    request: >-
+      Compare the Control Plane main pin and open PR #86 candidate with the
+      latest published upstream Codex CLI release. Verify the annotated tag's
+      commit identity and record artifact-verification limits.
+    result:
+      version: 0.162.1
+      sourceCommit: 092d3acd6bec3e3a14bdc7e7a2810ab628ab759d
+      status: >-
+        GitHub labels rust-v0.162.1 Latest and reports publication at
+        2026-10-09T19:44:51Z. Control Plane main at 9a2e1f3 still pins 0.159.3;
+        PR #86 proposes 0.160.0 at head 3a0adfb. That PR's verified archive
+        and package-tree digests apply only to 0.160.0.
+      events:
+        - >-
+          The 0.162.1 annotated tag resolves to commit
+          092d3acd6bec3e3a14bdc7e7a2810ab628ab759d.
+        - >-
+          Official release notes list fixes for multi-line asynchronous
+          questions in the TUI and startup compatibility checks for background
+          server feature settings.
+    limitation: >-
+      The 0.162.1 release asset and extracted package-tree digest were not
+      verified and no Actions runner was tested with that version. Upstream
+      release metadata alone does not establish runtime compatibility or
+      authorize replacing the version-specific scope of issue #85 and PR #86.
+  - id: control-plane-changelog-state-recheck-20261011-2134
+    observedAt: '2026-10-11T21:34:00Z'
+    source: >-
+      GitHub pull-request, branch, commit, and contents APIs via gh CLI;
+      official OpenAI Codex GitHub release page.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: CHANGELOG.md
+    request: >-
+      Verify the reported PR #104 changelog conflict against the current
+      protected main, its merge parents, PR #86 state, exact-head checks,
+      and the official latest upstream Codex CLI release. Read-only only.
+    result: >-
+      Protected main is 9a2e1f3549428bc042d5c59d09beb300ca2d1362 and contains
+      both Issue #101 and #103 changelog entries with no conflict markers.
+      PR #104 is MERGED at that commit; its second parent and PR head are
+      f9a536fee6f6fc436189a55acf3b8180d4144211, whose merge from main resolved
+      CHANGELOG.md. PR #86 remains OPEN/CLEAN at 3a0adfb7942c760f4504478c2f47cc6a0624f966
+      against main 9a2e1f3549428bc042d5c59d09beb300ca2d1362, with no submitted
+      human review and all listed hosted checks passing. It proposes Codex CLI
+      0.160.0; official upstream latest is 0.162.1 at tag commit
+      092d3acd6bec3e3a14bdc7e7a2810ab628ab759d. Control Plane main pins
+      0.159.3. The 0.162.1 release asset, package-tree digest, and runner
+      compatibility were not verified.
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38173446792
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38173446834
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38173556955
+    limitation: >-
+      GitHub reports PR #104 as merged; its merge commit message retains a
+      Conflicts line as historical merge metadata, not as an unresolved tree
+      state. PR #86 is separate and conflict-free but has no human review.
+      The 0.162.1 release asset, package-tree digest, and runner compatibility
+      were not verified. No PR approval, merge, repository change, or runtime
+      setting was performed by this recheck; PR #104 had already been merged.

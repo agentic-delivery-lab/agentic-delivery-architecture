@@ -594,22 +594,21 @@ successMeasures:
     targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-11 19:09 GraphQL inventory of the organization, authenticated user, six repositories, and all 23 open Issue associations returned no visible Project or Project item. The organization defines six organization-members-only Issue Fields, whose availability in a future portfolio remains unverified. Creation and configuration still require the separate human decision tracked in Architecture #15.
+  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-11 19:33 GraphQL inventory of the organization, authenticated user, six repositories, and all 23 open Issue associations returned no visible Project or Project item. The organization defines six organization-members-only Issue Fields, whose availability in a future portfolio remains unverified. Creation and configuration still require the separate human decision tracked in Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: strategy-live-inventory-recheck-20261011-1914
+  projectInventoryEvidenceId: strategy-live-inventory-recheck-20261011-1933
   inventoryEvidence:
-    observedAt: '2026-10-11T19:14:17Z'
+    observedAt: '2026-10-11T19:33:01Z'
     projectIds: []
     scopeSummary: >-
-      At 19:09 UTC, complete GraphQL organization, authenticated-user, and six
-      repository Project v2 inventories returned zero Projects and no further
-      pages. The 23 open Issues across those repositories each had zero
-      Project-item associations. At 19:13 UTC, the organization catalog still
-      returned six organization-members-only Issue Fields and nine native
-      Issue Types; all 23 Issue Field Value reads from the same recheck window
-      returned empty arrays. The human OAuth scopes do not extend the selected
-      repository invoker App's permissions. This is a read-only observation;
-      no Project IDs or configuration were available to inspect. The earlier
+      At 19:33 UTC, complete GraphQL organization, authenticated-user, and
+      six-repository Project v2 inventories returned zero Projects and no
+      further pages. The 23 open Issues across those repositories each had
+      zero Project-item associations. All 23 documented Issue Field Value
+      reads returned empty arrays. The six organization Issue Fields are
+      organization-members-only; nine native Issue Types remain enabled,
+      with five open Issues untyped. This is a read-only observation; no
+      Project IDs or configuration were available to inspect. The earlier
       2026-10-10 23:53 REST result remains the evidence for plan=free and the
       organization/repository Project feature flags.
   planningFieldRule: >-

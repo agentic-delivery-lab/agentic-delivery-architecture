@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Rechecked Architecture #11's Projects and Issue evidence at 2026-10-11
+  19:33 UTC: no Project is visible across the organization, viewer, or six
+  repository scopes; 23 open Issues have no Project associations or Issue
+  Field Values. Updated current arc42 and strategy evidence, corrected the
+  merged Architecture #14 gate, and advanced the draft Architecture pin to
+  0.1.0-draft.36. No Project or runtime configuration changed.
+
 - Refreshed Architecture #11's read-only Projects, Issue metadata, App,
   Actions, ruleset, release, and open-PR evidence through 2026-10-11 19:14 UTC.
   The organization, viewer, and all six repository scopes expose no Projects;

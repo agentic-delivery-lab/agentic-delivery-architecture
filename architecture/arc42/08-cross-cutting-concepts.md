@@ -37,19 +37,20 @@ and preserve rollback. The current architecture change does not mutate a
 field.
 
 The initial 2026-10-09 read failed because Project access was unavailable. The
-refreshed complete query under `project`, `admin:org`, and `repo` scopes
-returned no organization, personal, or repository Projects and no next page;
-all 19 open Issues in the six visible organization repositories also had no
-Project associations. The organization REST response reports both organization
-and repository Projects available under the Free plan, and the authenticated
-user's active organization role is `admin`. No Project field, membership, or
-visibility could be inspected. The selected-repository invoker installation
-declares no organization- or repository-Projects permission; its exact
-repository membership remains unverified. Projects owned outside the queried
-scopes also remain unknown. The proposed one-Project/two-view topology awaits
-a human decision in Architecture #15. All six organization Issue Fields
-have `organization_members_only` visibility, which remains a view-design
-constraint for any future Project.
+complete 2026-10-11 19:33 UTC recheck under the authenticated `project`,
+`admin:org`, and `repo` scopes returned no organization, personal, or
+repository Projects and no next page; all 23 open Issues in the six visible
+organization repositories also had no Project associations, and all 23
+documented Issue Field Value reads were empty. The six organization Issue
+Fields remain `organization_members_only`; the organization defines nine
+native Issue Types, with five open Issues untyped. No Project field,
+membership, or visibility could be inspected. The 19:14 UTC App inventory
+reports no Projects permission for the selected-repository invoker, but its
+exact repository membership and deployed credential binding remain
+unverified. Projects owned outside the queried scopes also remain unknown.
+The proposed one-Project/two-view topology awaits a human decision in
+Architecture #15. See
+`system-evidence.yml#strategy-live-inventory-recheck-20261011-1933`.
 
 ## 8.3 Semantic proposals and deterministic authorization
 

@@ -2771,3 +2771,94 @@ observations:
       was last observed at 2026-10-10 03:27 UTC on an older Control Plane main
       commit; webhook health, runtime App credentials, delivery, Neon state,
       evaluation replay, and product outcomes were not tested in this refresh.
+
+  - id: strategy-live-inventory-recheck-20261011-1933
+    observedAt: '2026-10-11T19:33:01Z'
+    source: GitHub GraphQL and REST APIs via gh CLI, local Git, and GitHub Actions
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    runs:
+      - '38167634212: Architecture PR #17 exact-head validation passed'
+    request: >-
+      Targeted read-only refresh from 19:29 through 19:33 UTC of the
+      organization, authenticated-user, and six-repository Projects v2
+      connections; open-Issue counts, Issue Types, and Project-item
+      associations; all 23 documented per-Issue Field Value endpoints
+      and organization Issue Field definitions; Architecture PR #14, #16,
+      and #17; Control Plane PR #104, #86, #109, and #110; Primitives
+      PR #4; and Control Plane Issue #106's state, body, and Project links.
+      Review-decision summaries were re-read for open Architecture #16/#17,
+      Control Plane #109/#110, and Primitives #4. No GitHub or runtime
+      configuration was written.
+    result:
+      status: >-
+        The complete Project and open-Issue inventory is unchanged: no
+        Project is visible in the queried scopes, and no Issue has a
+        Project-item association or Issue Field Value. Architecture PR
+        #14 is merged; PR #16 remains review-blocked; draft PR #17 is
+        clean at its exact validated head. Control Plane #104 is merged
+        and #86 remains conflicting. No independent human review approval
+        or live runtime acceptance was established in this refresh.
+      events:
+        - >-
+          Organization, authenticated-user, and all six repository
+          GraphQL Projects v2 connections returned zero nodes with no
+          next pages. The 23 open Issues are Control Plane 11, public
+          .github 2, Architecture 5, Primitives 2, Distribution 2, and
+          private .github-private 1; all 23 per-Issue Project-item
+          connections returned zero nodes. Observed main commits were
+          Control Plane 9a2e1f3549428bc042d5c59d09beb300ca2d1362,
+          Architecture 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c,
+          Primitives e4933566fbf5b0f593830f8933f18fbd21024fa7,
+          Distribution b69c5710928b47efc4d3ab12ec4d5b596c80720c,
+          public .github af52c92e49616e78f8d6647cf5cf538a7e571d78,
+          and private .github-private
+          f9e6589b65c71da9e7b35d8e026f3d4a91dab78f.
+        - >-
+          All 23 documented Issue Field Value requests returned empty
+          arrays. The six organization-members-only fields remain
+          Priority 46797139, Start date 46797140, Target date 46797141,
+          Effort 46797142, Lifecycle Stage 46888816, and Delivery
+          Readiness 46888965. Nine native Issue Types remain enabled;
+          18 open Issues are typed Task and five are untyped: Control
+          Plane #62/#103, Architecture #7/#15, and public .github #11.
+        - >-
+          Control Plane PR #104 remains MERGED at commit
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362. PR #86 remains
+          OPEN/DIRTY/CONFLICTING at head
+          3c21e2aa4200f51171f88db226260baf97314661. The 19:14 merge-tree
+          check identified CHANGELOG.md as its only content conflict.
+          Architecture PR #14 remains MERGED at 61d99cb; #16 is
+          OPEN/BLOCKED with reviewDecision REVIEW_REQUIRED at 9635044;
+          its only review is a Codex COMMENTED review. Draft #17 is
+          OPEN/CLEAN at 979a5bdba5f0c3b1a47a03d520a8539032f795c1 on
+          base #16 with run 38167634212 passed and no submitted reviews.
+          Control Plane #109/#110 remain OPEN/CLEAN with no review decision
+          and only Codex COMMENTED reviews. Primitives #4 is OPEN/DRAFT/
+          BLOCKED, REVIEW_REQUIRED, and has no submitted reviews. Control
+          Plane Issue #106 remains OPEN with no Project item; its body still
+          lists the merged PR #14 review/merge prerequisite alongside the
+          approved Architecture release, #60/#66 metadata, and #101 planning
+          gates. No Issue body was changed.
+        - >-
+          Human gh auth status still reports project, admin:org, repo,
+          and workflow scopes. Those OAuth scopes do not change the
+          invoker App permission contract. No Project, Issue, Issue
+          Field, App, permission, release, participant, or runtime
+          setting was changed.
+    limitation: >-
+      This targeted refresh did not re-read App installations, Actions
+      policy, rulesets, release listings, or Vercel/Neon production
+      runtime. The 19:14 UTC event remains the latest broad evidence for
+      those surfaces. The Project inventory covers only the authenticated
+      viewer, the organization, and the six visible repositories; external
+      Projects remain unknown. No end-to-end delivery or evaluation replay
+      was tested.

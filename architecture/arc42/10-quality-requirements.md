@@ -41,12 +41,13 @@ repositories had zero Project item associations. The organization REST response 
 organization and repository Projects available under the Free plan, and the
 identity has an active organization admin role. The six organization Issue
 Fields are organization-members-only.
-Architecture PR #14 proposes the QR-015 evaluation-report schema and synthetic
-fixture, while Primitives #3 owns dataset/grader/replay implementation and
-Control Plane #103 owns finding routing. There is no measured baseline or live
-evaluation. QR-013–QR-016 remain target scenarios; they do not report complete
-runtime integration or achieved outcomes. These are unresolved evidence gaps,
-not satisfied quality goals.
+Architecture PR #14 merged the QR-015 evaluation-report schema and synthetic
+fixture at `61d99cb`; the schema remains in a draft Architecture release.
+Primitives #3 owns dataset/grader/replay implementation and Control Plane
+#103 owns finding routing. There is no measured baseline or live evaluation.
+QR-013–QR-016 remain target scenarios; they do not report complete runtime
+integration or achieved outcomes. These are unresolved evidence gaps, not
+satisfied quality goals.
 
 The proposed report contract 2.0.0 requires each case to state its task,
 stimulus, expected outcome, and acceptance criteria; the case set must match

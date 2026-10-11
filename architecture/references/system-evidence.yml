@@ -1,5 +1,5 @@
 schemaVersion: 1
-snapshotDate: '2026-10-09'
+snapshotDate: '2026-10-10'
 snapshotKind: read-only-live-audit
 purpose: >-
   Pin current repository revisions and dated live observations used by this
@@ -10,7 +10,7 @@ repositories:
   - id: architecture
     slug: agentic-delivery-lab/agentic-delivery-architecture
     githubRepositoryId: 1380894616
-    mainCommit: 4ae924966280706c28cb602ea0b3d338e8e4a875
+    mainCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
     role: cross-context architecture authority
     evidencePaths:
       - decisions/README.md
@@ -20,7 +20,7 @@ repositories:
   - id: control-plane
     slug: agentic-delivery-lab/agentic-delivery
     githubRepositoryId: 1358455028
-    mainCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+    mainCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
     role: Agentic Delivery Control Plane
     evidencePaths:
       - config/issue-metadata.yml
@@ -1753,3 +1753,80 @@ observations:
       runtime Project read was tested. No Project, Issue Field, Issue Type,
       App installation, permission, participant, or runtime setting was
       changed.
+  - id: strategy-github-project-issue-inventory-20261010-2353
+    observedAt: '2026-10-10T23:53:04Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Repeat the read-only GitHub Projects v2 inventory for the organization,
+      authenticated user, and six organization repositories; inspect all open
+      Issue project-item and Issue Field Value connections, native Issue Types,
+      Issue Field definitions, current main refs, Releases, organization role
+      and plan, installed App permissions, and open PR state. No Project,
+      Issue, field, permission, participant, release, or runtime setting was
+      changed.
+    result: >-
+      The organization is on the Free plan, reports both organization and
+      repository Projects as enabled, and the authenticated user is an org
+      admin with broad human OAuth scopes including admin:org, project, repo,
+      and workflow. Complete organization, viewer, and six-repository
+      Projects v2 connections and closed-inclusive CLI lists returned zero
+      Projects and no next pages. The complete repository connection returned
+      six repositories. The 23 open Issues (11 Control Plane, 5 Architecture,
+      2 Primitives, 2 Distribution, 2 public adapter, and 1 private adapter)
+      each had complete empty Project-item connections; REST Issue Field Value
+      reads were empty for all 23. Eighteen Issues have native Issue Types;
+      five are untyped: Control Plane #62/#103, Architecture #7/#15, and
+      public .github #11. Nine native Issue Types are enabled. The six
+      organization_members_only Issue Fields are Priority 46797139, Start date
+      46797140, Target date 46797141, Effort 46797142, Lifecycle Stage
+      46888816, and Delivery Readiness 46888965 (the live field name for the
+      Delivery State concept).
+
+      The current main commits are Control Plane
+      9a2e1f3549428bc042d5c59d09beb300ca2d1362, Architecture
+      61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Primitives
+      e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution
+      b69c5710928b47efc4d3ab12ec4d5b596c80720c, public .github
+      af52c92e49616e78f8d6647cf5cf538a7e571d78, and private .github-private
+      f9e6589b65c71da9e7b35d8e026f3d4a91dab78f. No GitHub Releases were
+      listed. Four PRs were open: Control Plane #86 was DIRTY; #109 and #110
+      were CLEAN and non-draft with passing code checks but no human review
+      decision; Primitives #4 remained Draft, BLOCKED, and REVIEW_REQUIRED
+      with its exact-head validation passing. Architecture #14 and Control
+      Plane #102/#104 were merged. The review APIs expose Codex COMMENTED
+      reviews, not an APPROVED human review, for those merged PRs. PR #104's
+      branch merge commit f9a536fee6f6fc436189a55acf3b8180d4144211 records the
+      CHANGELOG.md conflict resolution and preserves both #101 and #103
+      entries; merge commit 9a2e1f3549428bc042d5c59d09beb300ca2d1362 is the
+      current Control Plane main. The current changelog has no conflict
+      markers.
+
+      Three organization App installations are listed. The selected-repository
+      Control Plane invoker installation 163255060 subscribes to issue,
+      issue_comment, pull_request, pull_request_review, and
+      pull_request_review_comment events and declares contents:write,
+      issue_fields:read, issue_types:read, issues:write, metadata:read, and
+      pull_requests:write; it has no Projects permission. The Vercel and
+      ChatGPT Codex connector installations report all-repository selection.
+      The invoker selected-repository endpoint returned 403 for this OAuth
+      identity. No App token value was recorded.
+    limitation: >-
+      The empty Project result covers the authenticated user's, organization,
+      and six visible repository-owner scopes only. No Projects existed in
+      those scopes to inspect views, membership, visibility, or fields. The
+      invoker installation's exact selected repository list and deployed
+      credential binding remain unverified, and no runtime Project read was
+      performed. The user OAuth scopes establish human CLI authority only;
+      they do not grant runtime App permission. No Project, Issue Field, Issue
+      Type, App installation, permission, participant, release, or runtime
+      setting was changed.

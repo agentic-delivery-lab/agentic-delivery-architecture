@@ -15,6 +15,8 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Refreshed Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s read-only GitHub Projects and Issue inventory at 2026-10-10 23:53 UTC, including current repository refs, open pull requests, release state, organization Issue Fields, and App permission limits. No Project or live configuration was changed.
+
 - Proposed ADR-0022 to use Neon Postgres for durable webhook replay claims.
   The decision records the provider and replay-store constraints only; it does
   not provision a database or activate the webhook.

@@ -31,9 +31,9 @@ are examples of author practice, not standards or proof of outcomes.
 ## Reading this evidence
 
 The proposed one-Project/two-view topology and private-visibility recommendation are local decision options derived from the documented features,
-not GitHub recommendations or applied settings. The 06:46 UTC empty Project
+not GitHub recommendations or applied settings. The 08:24 UTC empty Project and Issue-association
 inventory is recorded in
-[`strategy-current-status-recheck-20261011-0646`](system-evidence.yml#strategy-current-status-recheck-20261011-0646);
+[`strategy-current-status-recheck-20261011-0829`](system-evidence.yml#strategy-current-status-recheck-20261011-0829);
 the 2026-10-10 23:53 UTC REST observation separately records organization
 plan capability flags. The invoker installation's
 declared permission map contains no organization- or repository-Projects

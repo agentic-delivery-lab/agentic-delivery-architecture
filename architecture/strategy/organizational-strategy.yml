@@ -594,14 +594,14 @@ successMeasures:
     targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-11 06:46 GraphQL inventory of the organization, authenticated user, six repositories, and all 23 open Issue associations returned no visible Project or Project item. The 2026-10-10 23:53 REST observation reported both organization and repository Projects as supported by the organization plan. Creation and configuration still require the separate human decision tracked in Architecture #15.
+  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-11 08:24 GraphQL inventory of the organization, authenticated user, six repositories, and all 23 open Issue associations returned no visible Project or Project item. The 2026-10-10 23:53 REST observation reported both organization and repository Projects as supported by the organization plan. Creation and configuration still require the separate human decision tracked in Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: strategy-current-status-recheck-20261011-0646
+  projectInventoryEvidenceId: strategy-current-status-recheck-20261011-0829
   inventoryEvidence:
-    observedAt: '2026-10-11T06:46:24Z'
+    observedAt: '2026-10-11T08:24:55Z'
     projectIds: []
     scopeSummary: >-
-      At 06:46 UTC, complete GraphQL organization, authenticated-user, and six
+      At 08:24 UTC, complete GraphQL organization, authenticated-user, and six
       repository Project v2 inventories returned zero Projects and no further
       pages. The 23 open Issues across those repositories each had zero
       Project-item associations. The active identity was sjefsharp, and

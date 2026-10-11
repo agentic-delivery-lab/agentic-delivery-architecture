@@ -6,6 +6,14 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Refreshed Architecture #11's read-only Project-scope and open-PR checks at
+  2026-10-11 07:45 UTC. Organization, viewer, and all six repository scopes
+  still expose no Projects; the latest per-Issue Project-item count remains
+  the 06:46 UTC audit. Recorded current exact PR heads and checks, including
+  the human-review gates. Reconfirmed that Control Plane #104's changelog
+  conflict was resolved before merge and its entry is present in current
+  `main` without conflict markers. No live configuration changed.
+
 - Recorded the 07:17 UTC exact-head recheck for Architecture PRs #16 and #17.
   Both hosted validations passed; #16 remains blocked pending human review,
   and draft #17 now includes the corrected #16 head without live configuration

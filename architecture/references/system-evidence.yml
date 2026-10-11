@@ -2309,3 +2309,91 @@ observations:
       pin and successful main validation before release. The latest complete
       Project and Issue inventory remains the separate 06:46 UTC event; this
       recheck did not repeat those API queries.
+  - id: strategy-project-pr-status-recheck-20261011-0745
+    observedAt: '2026-10-11T07:45:29Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    runs:
+      - '38121924057: Control Plane PR #109 pull-request-body validation passed'
+      - '38121923748: Control Plane PR #109 Harness review passed'
+      - '38121578454: Control Plane PR #109 quality, recovery SQL, and portability passed'
+      - '38121578355: Control Plane PR #109 validation passed'
+      - '38100354177: Control Plane PR #110 Harness review passed'
+      - '38100354532: Control Plane PR #110 pull-request-body validation passed'
+      - '38100334829: Control Plane PR #110 quality, recovery SQL, and portability passed'
+      - '38100334819: Control Plane PR #110 validation passed'
+      - '38120380694: Architecture PR #16 validation passed'
+      - '38121003917: Architecture PR #17 validation passed'
+      - '38095416568: Primitives PR #4 validation passed'
+      - '37339050312: Control Plane PR #86 pull-request-body validation passed'
+      - '37339049560: Control Plane PR #86 review and classify-updater checks passed'
+      - '37339049466: Control Plane PR #86 quality and portability passed'
+      - '37339049543: Control Plane PR #86 validation passed'
+    request: >-
+      Read-only recheck of organization, authenticated-user, and all six
+      repository Projects v2 connections; current open-Issue counts; open PR
+      heads, mergeability, review decisions, and checks in all six
+      repositories; and the merged Control Plane #104 changelog state. No
+      Issue, Project, PR, permission, release, or runtime setting was changed.
+    result:
+      projectScopes: >-
+        The organization, authenticated user, and each of the six repository
+        Projects v2 connections returned zero nodes with hasNextPage=false;
+        the repository connection returned all six repositories with no next
+        page. The six repositories currently have 11, 5, 2, 2, 2, and 1 open
+        Issues respectively (23 total). The latest explicit per-Issue
+        Project-item query remains the 06:46 UTC event, which returned
+        totalCount=0 for all 23 open Issues.
+      pullRequests: >-
+        Control Plane #86 is OPEN/CONFLICTING at
+        3c21e2aa4200f51171f88db226260baf97314661. Control Plane #109 is
+        OPEN/CLEAN, non-draft, at
+        4e70c17b970f7500674dacc12a26f2c84cabafdc; #110 is OPEN/CLEAN,
+        non-draft, at ce109c85ba767337c4aee2c755af914d6996984b. Their
+        GitHub review decisions are empty. #109's exact-head validation,
+        quality, recovery-SQL, portability, body validation, and Harness
+        review passed; its classify_updater job was skipped by workflow
+        policy. #110's corresponding validation, quality, recovery-SQL,
+        portability, body validation, and Harness review passed; its
+        classify_updater job was skipped by workflow policy. Architecture
+        #16 is OPEN/BLOCKED but mergeable at
+        9635044ab2e7b91c8004ac1cd06241b35b9ec30e, with REVIEW_REQUIRED and
+        validation run 38120380694 passed. Draft #17 is OPEN/CLEAN and
+        mergeable at 08f9e4fe5916c06550477ed39d86066dbc9f7816, based on #16
+        head 9635044ab2e7b91c8004ac1cd06241b35b9ec30e; it has no human
+        review decision and validation run 38121003917 passed. Primitives #4
+        is OPEN/DRAFT/BLOCKED at
+        4d6fe1f2a2ff38adfcc332e8239dc224d2c2e99e, REVIEW_REQUIRED, with
+        validation run 38095416568 passed. Distribution and both adapter
+        repositories have no open PRs.
+      mergedChangelog: >-
+        Control Plane #104 is MERGED at
+        9a2e1f3549428bc042d5c59d09beb300ca2d1362. The CHANGELOG.md blob is
+        4d5ab1f5b401737f45b72d31c710ad3d3f930b47 in the PR head, merge
+        commit, and current main. It contains the #103 entry and no conflict
+        markers. The recorded merge-commit message's conflict note describes
+        the earlier resolution; no conflict remains in the merged tree.
+      currentAuth: >-
+        The authenticated GitHub CLI account is sjefsharp and reports the
+        project, admin:org, repo, and workflow scopes. OAuth scopes do not
+        establish Projects access for the runtime App.
+    limitation: >-
+      This observation covers the authenticated viewer, organization, and
+      six visible repository scopes. It does not rule out Projects or product
+      repositories outside those scopes. The 07:45 refresh did not repeat
+      per-Issue Project-item or Field Value reads, Issue Types, GitHub App
+      installation and repository-selection reads, release inventory, or
+      production-runtime checks; use the 06:46, 00:44, and earlier dated
+      events for those observations. Passing hosted checks do not establish
+      independent human review, release adoption, Project configuration,
+      runtime behavior, webhook health, or product outcomes. No live
+      configuration was changed.

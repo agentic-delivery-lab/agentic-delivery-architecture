@@ -45,11 +45,12 @@ Factory Evolution and Software Product Delivery.
 
 The organizational strategy is a proposal linked to Architecture Issue #11.
 The initial 2026-10-09 live audit lacked Project access. A complete
-read-only inventory at 2026-10-11 19:33 UTC returned no organization,
+read-only inventory at 2026-10-11 20:07 UTC returned no organization,
 authenticated-user, or repository Projects and no Project associations for
 the 23 open Issues in the six visible repositories. The organization Issue
-Field catalog reports member-only visibility, and suitability for a future
-Project has not been verified. The query does not cover Projects outside
-those scopes or establish GitHub App access. See
-`system-evidence.yml#strategy-live-inventory-recheck-20261011-1933`. The
+Field catalog reports member-only visibility, which excludes the fields from
+public and internal Projects; suitability for a future private Project has
+not been verified. The query does not cover Projects outside those scopes or
+establish GitHub App access. See
+`system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`. The
 principle does not claim an implemented or passing live integration.

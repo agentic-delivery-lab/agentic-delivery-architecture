@@ -2897,3 +2897,72 @@ observations:
     limitation: >-
       This records GitHub's review API state only; it is not an assessment of
       review quality and does not replace a future independent human review.
+
+  - id: strategy-live-inventory-recheck-20261011-2007
+    observedAt: '2026-10-11T20:07:09Z'
+    source: GitHub GraphQL and REST APIs via gh CLI, plus repository metadata
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Read the organization, authenticated-user, and six-repository Projects
+      v2 connections; open-Issue counts, types, Project items, and Issue Field
+      Values; organization Issue Type and Issue Field definitions; organization
+      Project capability flags; and current default-branch commit identities.
+      No GitHub or runtime configuration was written.
+    result:
+      status: >-
+        The complete Project inventory remains empty in every queried scope.
+        All 23 open Issues have zero Project items and zero Issue Field Values.
+        The organization still has nine native Issue Types and six
+        organization-members-only Issue Fields. This confirms the earlier
+        inventory without establishing visibility outside the authenticated
+        viewer, organization, and six repositories.
+      events:
+        - >-
+          Organization, authenticated-user, and all six repository Projects
+          v2 connections returned zero nodes with no additional pages. All 23
+          open Issue Project-item connections and Issue Field Value
+          connections returned totalCount zero. Open Issue counts are Control
+          Plane 11, Architecture 5, Primitives 2, Distribution 2, public
+          .github 2, and private .github-private 1. Eighteen Issues have native
+          type Task; five are untyped: Control Plane #62/#103, Architecture
+          #7/#15, and public .github #11.
+        - >-
+          The organization API reports plan Free with organization and
+          repository Projects enabled. Its Issue Fields are Priority
+          46797139, Start date 46797140, Target date 46797141, Effort 46797142,
+          Lifecycle Stage 46888816, and Delivery Readiness 46888965; all six
+          have organization_members_only visibility. The nine native Issue
+          Types are Task 866469117, Bug 866469118, Feature 866469119, Idea
+          868968825, Research 868969150, Requirements 868969391, Architecture
+          Decision 868969683, Implementation 868969915, and Validation
+          868970249.
+        - >-
+          Default-branch commits are Architecture
+          61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Control Plane
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362, Primitives
+          e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution
+          b69c5710928b47efc4d3ab12ec4d5b596c80720c, public .github
+          af52c92e49616e78f8d6647cf5cf538a7e571d78, and private .github-private
+          f9e6589b65c71da9e7b35d8e026f3d4a91dab78f.
+        - >-
+          gh auth status reports the authenticated sjefsharp account with
+          project, admin:org, repo, and workflow among its OAuth scopes. Those
+          human CLI scopes do not change the separate Control Plane App
+          permission contract.
+    limitation: >-
+      The inventory covers only the authenticated viewer, the organization,
+      and its six visible repositories. It does not inspect Projects owned by
+      external accounts, Project contents or fields because no Project is
+      visible, App installations, Actions policy, rulesets, releases, or
+      production runtime. Empty values do not establish why values are unset.
+      No Issue, Project, field, permission, App, release, participant, or
+      runtime setting was changed.

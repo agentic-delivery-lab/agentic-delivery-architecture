@@ -1,6 +1,6 @@
 schemaVersion: 1
 status: proposed
-asOf: '2026-10-09'
+asOf: '2026-10-11'
 sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
 purpose: Make software engineering continuously improvable, explainable, and trustworthy.
 mission: >-
@@ -594,23 +594,22 @@ successMeasures:
     targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-11 19:33 GraphQL inventory of the organization, authenticated user, six repositories, and all 23 open Issue associations returned no visible Project or Project item. The organization defines six organization-members-only Issue Fields, whose availability in a future portfolio remains unverified. Creation and configuration still require the separate human decision tracked in Architecture #15.
+  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-11 20:07 GraphQL inventory of the organization, authenticated user, six repositories, and all 23 open Issue associations returned no visible Project or Project item. The organization defines six organization-members-only Issue Fields, which are unavailable in public or internal Projects; availability in a future private portfolio remains unverified. Creation and configuration still require the separate human decision tracked in Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: strategy-live-inventory-recheck-20261011-1933
+  projectInventoryEvidenceId: strategy-live-inventory-recheck-20261011-2007
   inventoryEvidence:
-    observedAt: '2026-10-11T19:33:01Z'
+    observedAt: '2026-10-11T20:07:09Z'
     projectIds: []
     scopeSummary: >-
-      At 19:33 UTC, complete GraphQL organization, authenticated-user, and
+      At 20:07 UTC, complete GraphQL organization, authenticated-user, and
       six-repository Project v2 inventories returned zero Projects and no
       further pages. The 23 open Issues across those repositories each had
-      zero Project-item associations. All 23 documented Issue Field Value
-      reads returned empty arrays. The six organization Issue Fields are
-      organization-members-only; nine native Issue Types remain enabled,
-      with five open Issues untyped. This is a read-only observation; no
-      Project IDs or configuration were available to inspect. The earlier
-      2026-10-10 23:53 REST result remains the evidence for plan=free and the
-      organization/repository Project feature flags.
+      zero Project-item associations and zero Issue Field Values. Eighteen
+      Issues are typed Task; five remain untyped. The six organization Issue
+      Fields are organization-members-only, and nine native Issue Types remain
+      enabled. The REST organization read reports plan=free and both
+      organization and repository Projects enabled. This is a read-only
+      observation; no Project IDs or configuration were available to inspect.
   planningFieldRule: >-
     Use the existing Issue-owned Priority field for per-Issue priority wherever
     the approved Project view can expose it. After human field-ownership review,

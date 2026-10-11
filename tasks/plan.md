@@ -532,6 +532,27 @@ with the actual offline router tests while retaining the limitation on
 composed/live Project-runtime evidence. No runtime or GitHub configuration
 changed.
 
+### 20:07 UTC Projects and Issue metadata refresh
+
+The complete read-only Projects v2 inventory again returned zero nodes for
+the organization, authenticated user, and all six repositories. All 23 open
+Issues had zero Project-item and Issue Field Value connections. The
+organization remains on the Free plan with organization and repository
+Projects enabled; it has nine native Issue Types and six organization-only
+Issue Fields. Eighteen open Issues are typed Task; five are untyped. Exact
+Issue counts, field/type IDs, and all six `main` commit identities are
+recorded in `system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`.
+No Project or Issue metadata was changed. This recheck did not refresh App
+installations, Actions policy, rulesets, releases, or production runtime; those
+surfaces retain their separate timestamped observations.
+
+Architecture PR #17 remains OPEN/DRAFT/MERGEABLE at
+`fef542dbfdcfa66eb8c35f590fb6aee8e7bca3a7`, based on open PR #16, and exact-
+head validation run `38170217742` passes. It is not merged or an approved
+Architecture release. Control Plane PR #104 is already merged; the open
+Control Plane conflict remains on PR #86. No GitHub write occurred during this
+read-only refresh.
+
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,

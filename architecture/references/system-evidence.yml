@@ -2406,8 +2406,8 @@ observations:
       independent human review, release adoption, Project configuration,
       runtime behavior, webhook health, or product outcomes. No live
       configuration was changed.
-  - id: strategy-current-status-recheck-20261011-0829
-    observedAt: '2026-10-11T08:29:02Z'
+  - id: strategy-current-status-recheck-20261011-0824
+    observedAt: '2026-10-11T08:24:55Z'
     source: https://api.github.com/graphql
     sourceRepositories:
       - agentic-delivery-lab/agentic-delivery
@@ -2435,15 +2435,15 @@ observations:
       Read-only recheck of Projects v2 inventories, all open-Issue Project-item
       associations, six default-branch commits, open PR heads and review
       decisions, exact-head checks, releases, Architecture Issues #13/#15,
-      Control Plane #106, and gh auth status. Project and Issue association
-      queries completed at 08:24:55 UTC; PR/check state was refreshed at
-      08:29 UTC. No write or configuration operation was issued.
+      Control Plane #106, and gh auth status. The full Project, Issue
+      association, and open-PR inventory completed at 08:24:55 UTC. No write
+      or configuration operation was issued.
     result:
       status: >-
         The complete organization, authenticated-user, and six-repository
         Projects inventory returned no nodes. All 23 open Issues had zero
         Project-item associations. Open-PR heads and required checks were
-        refreshed through 08:29 UTC; there are no human review decisions on
+        refreshed through 08:24 UTC; there are no human review decisions on
         the listed feature PRs. No live configuration changed.
       events:
         - >-
@@ -2481,13 +2481,6 @@ observations:
           covered by local regression tests. Architecture #16/#17 validation
           and Primitives #4 validation passed.
         - >-
-          Control Plane #104 is MERGED at
-          9a2e1f3549428bc042d5c59d09beb300ca2d1362. CHANGELOG.md has blob
-          4d5ab1f5b401737f45b72d31c710ad3d3f930b47 in the PR head, merge
-          commit, and current main; the #103 entry is present and no conflict
-          markers remain. The merge-commit conflict note records the earlier
-          resolution, not an unresolved conflict.
-        - >-
           No GitHub Releases were listed in any of the six repositories.
           Architecture #13 and #15 remain OPEN, unassigned, unlabeled, and
           without comments; #13 and #15 remain human product-owner and
@@ -2503,3 +2496,68 @@ observations:
       dated events for those observations. Hosted checks do not establish
       independent human review, release adoption, runtime behavior, webhook
       health, or product outcomes. No live configuration was changed.
+  - id: strategy-pr-check-recheck-20261011-0829
+    observedAt: '2026-10-11T08:29:02Z'
+    source: GitHub API via gh CLI
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    runs:
+      - '38121924057: Control Plane PR #109 body validation passed'
+      - '38121923748: Control Plane PR #109 Harness review passed; classify_updater skipped by policy'
+      - '38121578454: Control Plane PR #109 quality, recovery SQL, and portability passed'
+      - '38121578355: Control Plane PR #109 validation passed'
+      - '38124097708: Control Plane PR #110 body validation passed'
+      - '38124099068: Control Plane PR #110 Harness review passed; classify_updater skipped by policy'
+      - '38124099042: Control Plane PR #110 quality, recovery SQL, and portability passed'
+      - '38124099044: Control Plane PR #110 validation passed'
+      - '38120380694: Architecture PR #16 validation passed'
+      - '38122832364: Architecture PR #17 validation passed'
+      - '38095416568: Primitives PR #4 validation passed'
+    request: >-
+      Read-only exact-head recheck of the open Control Plane, Architecture, and
+      Primitives PRs, their review decisions and checks, and the merged Control
+      Plane #104 changelog blobs. No PR, Issue, permission, release, or runtime
+      setting was changed.
+    result:
+      status: >-
+        Current exact PR heads and hosted checks were refreshed at 08:29 UTC.
+        The required checks pass, applicable classify_updater jobs were skipped
+        by workflow policy, and no human review decision exists for the open
+        feature PRs.
+      events:
+        - >-
+          Control Plane #109 is OPEN/CLEAN, non-draft, at
+          4e70c17b970f7500674dacc12a26f2c84cabafdc. Its validation, quality,
+          recovery-SQL, portability, body-validation, Harness, and Vercel checks
+          pass; classify_updater was skipped by workflow policy.
+        - >-
+          Control Plane #110 is OPEN/CLEAN, non-draft, at
+          088a6b02391367f401b687e1873754e38c2a71fc. Its validation, quality,
+          recovery-SQL, portability, body-validation, Harness, and Vercel checks
+          pass; classify_updater was skipped by workflow policy. Its two
+          selector regressions have local regression coverage.
+        - >-
+          Architecture #16 is OPEN and mergeable but REVIEW_REQUIRED at
+          9635044ab2e7b91c8004ac1cd06241b35b9ec30e; validation passed. Draft
+          Architecture #17 is OPEN/CLEAN and mergeable at
+          f50a1cdebef5432373ba8250965db91940c87f51, stacked on #16, with no
+          human review decision; validation passed. Primitives #4 remains
+          OPEN/DRAFT/BLOCKED and REVIEW_REQUIRED at
+          4d6fe1f2a2ff38adfcc332e8239dc224d2c2e99e; validation passed.
+        - >-
+          Control Plane #104 is MERGED at
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362. CHANGELOG.md has blob
+          4d5ab1f5b401737f45b72d31c710ad3d3f930b47 in the PR head, merge
+          commit, and current main; the #103 entry is present and no conflict
+          markers remain. The merge-commit conflict note records the earlier
+          resolution, not an unresolved conflict.
+    limitation: >-
+      This check refresh did not repeat the Projects or per-Issue association
+      query, the release inventory, Issue Field Value and Issue Type reads,
+      GitHub App installation reads, or production-runtime checks. See the
+      08:24 and earlier dated events for those scopes. Passing checks do not
+      establish independent human review, release adoption, runtime behavior,
+      webhook health, or product outcomes.

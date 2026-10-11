@@ -596,7 +596,7 @@ projectPlanning:
   primarySurface: GitHub Projects
   proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-11 08:24 GraphQL inventory of the organization, authenticated user, six repositories, and all 23 open Issue associations returned no visible Project or Project item. The 2026-10-10 23:53 REST observation reported both organization and repository Projects as supported by the organization plan. Creation and configuration still require the separate human decision tracked in Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: strategy-current-status-recheck-20261011-0829
+  projectInventoryEvidenceId: strategy-current-status-recheck-20261011-0824
   inventoryEvidence:
     observedAt: '2026-10-11T08:24:55Z'
     projectIds: []

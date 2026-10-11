@@ -1883,3 +1883,26 @@ observations:
       repository or accountable steward, and an Issue read cannot substitute
       for the accountable human's Project-topology decision. No Issue was
       edited and no Project was created or configured.
+  - id: control-plane-pr109-harness-recheck-20261011-0008
+    observedAt: '2026-10-11T00:08:47Z'
+    source: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery/actions/runs/38096907499
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: d564d34d3b381c0e708f6f0c14fd72ec4e35e542
+    request: >-
+      Recheck the fresh Harness review run triggered by the PR #109 body
+      correction. Distinguish the automated review job and hosted body
+      validation from human review approval; make no PR merge or code change.
+    result: >-
+      Harness review run 38096907499 completed with conclusion success at
+      2026-10-11T00:07:29Z on exact PR #109 head
+      d564d34d3b381c0e708f6f0c14fd72ec4e35e542. Its review job succeeded and
+      classification was skipped. The corrected PR body check 38096907666
+      passed; exact-head code checks 38092951912 and 38092951882 also passed.
+      PR #109 remains OPEN, CLEAN, and non-draft. Its reviewDecision is empty;
+      the only submitted review is the Codex bot's COMMENTED review. No branch
+      commit changed during the body correction.
+    limitation: >-
+      Harness is automated review evidence, not a human approval. Passing
+      checks do not establish live Project access, runtime adoption, or
+      production behavior. No Project or other live configuration changed.

@@ -7,10 +7,12 @@ All notable changes to this repository are documented here.
 ### Changed
 
 - Refreshed Architecture #11's read-only Project and pull-request evidence
-  at 2026-10-11 01:12 UTC. The visible organization Project query remains
-  empty, PR #110
-  passes its current automated checks but awaits human review, and no live
-  issue-to-PR delivery is evidenced; no Project or runtime setting changed.
+  at 2026-10-11 06:27 UTC. Organization, viewer, and six-repository
+  inventories found no visible Projects or Project items among 23 open Issues.
+  Control Plane PRs #109 and #110 pass their current automated checks but
+  await human review; #106 remains gated on an approved Architecture release.
+  No release or live issue-to-PR delivery is evidenced, and no Project or
+  runtime setting changed.
 
 - Clarified Project membership and portfolio-planning ownership, and made
   product-repository bootstrap precede product Issues in a new repository.

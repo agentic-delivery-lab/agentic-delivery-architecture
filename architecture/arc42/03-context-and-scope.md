@@ -31,14 +31,17 @@ because they have separate repositories. The machine-readable context map is
   coordination, and progress-visibility surface for Factory Evolution and
   Software Product Delivery. Origin repository Issues remain canonical work
   records and the only source of execution authorization. The complete
-  2026-10-11 19:33 UTC inventory found no Project in the organization,
+  2026-10-11 20:07 UTC inventory found no Project in the organization,
   authenticated-user, or any of the six repository scopes; all 23 open
-  Issues had zero Project-item associations.
+  Issues had zero Project-item associations and zero Issue Field Values.
+  Organization and repository Projects are enabled on the Free plan. The six
+  organization-only Issue Fields are unavailable in public and internal
+  Projects; visibility in a future private Project remains unverified.
   Project views, fields, per-Project access, GitHub App access, and live
   lifecycle integration remain unverified. External repositories and
   Projects outside the queried organization scopes remain unknown. No live
   configuration is claimed; see
-  `system-evidence.yml#strategy-live-inventory-recheck-20261011-1933`.
+  `system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`.
 - **GitHub App:** installation access, permissions, and subscribed event
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.

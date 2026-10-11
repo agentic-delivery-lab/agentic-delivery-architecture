@@ -2966,3 +2966,40 @@ observations:
       production runtime. Empty values do not establish why values are unset.
       No Issue, Project, field, permission, App, release, participant, or
       runtime setting was changed.
+
+  - id: architecture-pr17-validation-recheck-20261011-2025
+    observedAt: '2026-10-11T20:25:35Z'
+    source: GitHub GraphQL pull-request and Actions check APIs via gh CLI
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: 9635044ab2e7b91c8004ac1cd06241b35b9ec30e
+    request: >-
+      Read Architecture PR #16 and #17 state, draft status, base/head commits,
+      mergeability, review decision, and the exact-head hosted validation for
+      PR #17. No GitHub or runtime configuration was written.
+    result:
+      status: >-
+        Architecture PR #16 is OPEN/MERGEABLE with reviewDecision
+        REVIEW_REQUIRED at head 9635044ab2e7b91c8004ac1cd06241b35b9ec30e.
+        PR #17 is OPEN/DRAFT/MERGEABLE on the #16 branch at exact head
+        19dcc691006d93e169f9eb4f76c9456f5c6b46fe, with no review decision.
+        Its exact-head hosted validation passed.
+      events:
+        - >-
+          PR #17 remains based on feat/issue-12-project-inventory-refresh;
+          GitHub reports OPEN, draft, MERGEABLE, and an empty reviewDecision.
+          The base PR #16 remains open and review-required, so #17 is still
+          stacked and is not ready to retarget to main.
+        - >-
+          GitHub Actions run
+          https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38171652069
+          completed successfully on exact head
+          19dcc691006d93e169f9eb4f76c9456f5c6b46fe. The required validate
+          check passed.
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38171652069
+    limitation: >-
+      GitHub mergeability and a passing required check do not establish human
+      review, semantic acceptance, merge, Architecture release approval, or
+      live/runtime behavior. No Issue, Project, permission, App, release,
+      participant, or runtime setting was changed.

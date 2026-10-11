@@ -33,20 +33,23 @@ participant is active or that each hosting rule has been enabled.
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
 | Repository sources | The six default-branch commits are Control Plane 9a2e1f3549428bc042d5c59d09beb300ca2d1362, Architecture 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Primitives e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution b69c5710928b47efc4d3ab12ec4d5b596c80720c, public .github af52c92e49616e78f8d6647cf5cf538a7e571d78, and private .github-private f9e6589b65c71da9e7b35d8e026f3d4a91dab78f. | Observed branch heads do not prove compatibility or active deployment. |
-| GitHub Projects and Issues | The organization, authenticated user, and six repository Project v2 connections returned no Projects. All 23 open Issues had zero Project associations and empty Issue Field Value arrays. Nine native Issue Types and six organization-members-only fields were read. Five Issues remain untyped. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. Empty Issue values do not establish a lifecycle transition. |
+| GitHub Projects and Issues | The complete 20:07 UTC organization, authenticated-user, and six-repository Project v2 connections returned no Projects. All 23 open Issues had zero Project items and zero Issue Field Values. Nine native Issue Types and six organization-members-only fields were read; five Issues remain untyped. The Free plan reports organization and repository Projects enabled. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. Organization-only Issue Fields are unavailable in public/internal Projects; visibility in a future private Project remains unverified. Empty Issue values do not establish a lifecycle transition. |
 | GitHub Apps, Actions, and protection | Three App installations were listed. The Control Plane invoker installation selects repositories and has Contents/Issues/PR write plus Issue Field/Type read, with no Projects permission; its selected-repository API returned 403. Organization Actions allow all actions, do not require SHA pinning, and are enabled for all repositories. Public rulesets were read; the private ruleset endpoint returned 403. | The selected repository set, deployed credential binding, and private ruleset state remain unknown. Organization policy does not prove individual workflow pins or runtime behavior. |
-| Pull requests and Releases | Control Plane #104 is merged and its CHANGELOG.md blob matches across PR head, merge commit, and current main. Open #86 is 62 commits behind main and has a content conflict only in CHANGELOG.md. Control Plane #109/#110 checks pass with review pending; Architecture #16 needs review and draft #17 validation passes; Primitives #4 remains draft/review-required with validation passed. All six Release listings are empty. | Passing CI is not human review, release adoption, participant activation, or production acceptance. |
+| Pull requests and Releases | The 20:05 UTC PR inventory found Control Plane #104 merged with matching CHANGELOG.md blobs across PR head, merge commit, and current main; #86 conflicting in CHANGELOG.md; #109/#110 checks passing with review pending; and Primitives #4 draft/review-required. At 20:25 UTC, Architecture #16 was open/review-required and #17 remained open/draft/mergeable at exact head `19dcc691006d93e169f9eb4f76c9456f5c6b46fe`, based on #16, with exact-head validation run 38171652069 passed and no review decision. The latest recorded six-repository Release inventory (19:14 UTC) listed no releases. | Passing CI is not human review, release adoption, participant activation, or production acceptance. PR #17 remains stacked on #16 and is not an approved Architecture release. |
 | Production runtime | The last recorded Vercel production metadata observation is 2026-10-10 03:27 UTC on an older Control Plane main commit. | This refresh did not test webhook health, App credential binding, delivery, Neon state, evaluation replay, or product outcomes; deployment of current main is unverified. |
 
 The broad read-only inventory, exact identities, PR heads, check runs, and
 scope limits are recorded in
 [system evidence](../references/system-evidence.yml#strategy-live-inventory-recheck-20261011-1914).
-The targeted 19:33 UTC follow-up reconfirmed zero Projects, 23 open Issues
-without Project associations, empty values on all 23 Issues, and the current
-Architecture and Control Plane PR states; see
-`system-evidence.yml#strategy-live-inventory-recheck-20261011-1933`. App
-installations, Actions policy, rulesets, Release listings, and production
-runtime were not re-read in that targeted refresh and remain tied to the
+The targeted 20:07 UTC follow-up reconfirmed zero Projects, 23 open Issues
+without Project items or Issue Field Values, and records Project capability
+and field-visibility limits; see
+`system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`. A
+separate 20:25 UTC pull-request read records the exact Architecture #16/#17
+states and #17 validation run in
+`system-evidence.yml#architecture-pr17-validation-recheck-20261011-2025`.
+App installations, Actions policy, rulesets, Release listings, and production
+runtime were not re-read in these targeted refreshes and remain tied to the
 19:14 observation above. The inventory does not approve a Project topology.
 No Project, App permission, participant, or runtime setting changed.
 

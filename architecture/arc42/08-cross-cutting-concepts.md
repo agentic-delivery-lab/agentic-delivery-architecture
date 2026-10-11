@@ -37,20 +37,22 @@ and preserve rollback. The current architecture change does not mutate a
 field.
 
 The initial 2026-10-09 read failed because Project access was unavailable. The
-complete 2026-10-11 19:33 UTC recheck under the authenticated `project`,
+complete 2026-10-11 20:07 UTC recheck under the authenticated `project`,
 `admin:org`, and `repo` scopes returned no organization, personal, or
 repository Projects and no next page; all 23 open Issues in the six visible
-organization repositories also had no Project associations, and all 23
-documented Issue Field Value reads were empty. The six organization Issue
-Fields remain `organization_members_only`; the organization defines nine
-native Issue Types, with five open Issues untyped. No Project field,
-membership, or visibility could be inspected. The 19:14 UTC App inventory
+organization repositories also had no Project associations or Issue Field
+Values. Organization and repository Projects are enabled on the Free plan.
+The six organization Issue Fields remain `organization_members_only`; the
+organization defines nine native Issue Types, with five open Issues untyped.
+GitHub documents that organization-only Issue Fields do not appear in public
+or internal Projects; no Project field, membership, or private-Project
+visibility could be inspected. The 19:14 UTC App inventory
 reports no Projects permission for the selected-repository invoker, but its
 exact repository membership and deployed credential binding remain
 unverified. Projects owned outside the queried scopes also remain unknown.
 The proposed one-Project/two-view topology awaits a human decision in
 Architecture #15. See
-`system-evidence.yml#strategy-live-inventory-recheck-20261011-1933`.
+`system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`.
 
 ## 8.3 Semantic proposals and deterministic authorization
 

@@ -1812,7 +1812,7 @@ observations:
       markers.
 
       Three organization App installations are listed. The selected-repository
-      Control Plane invoker installation 163255060 subscribes to issue,
+      Control Plane invoker installation 163255060 subscribes to issues,
       issue_comment, pull_request, pull_request_review, and
       pull_request_review_comment events and declares contents:write,
       issue_fields:read, issue_types:read, issues:write, metadata:read, and

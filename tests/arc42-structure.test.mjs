@@ -387,7 +387,10 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
     [/native Issue Type definitions/i, /Organization Issue Types/],
     [/organization Issue Field definitions/i, /Organization Issue Field/],
     [/Issue-native type value.*labels/i, /Origin repository Issue/],
-    [/portfolio sequencing/i, /Approved organization portfolio Project/],
+    [
+      /Project membership, portfolio priority, iteration, roadmap, grouping, portfolio sequencing, planned dependency/i,
+      /Approved organization portfolio Project/,
+    ],
     [/pull request review.*release decisions/i, /human maintainer/],
     [/evaluation datasets, cases, graders/i, /Agentic Primitives/],
     [/observed evaluation report values/i, /repository that owns the evaluated/],

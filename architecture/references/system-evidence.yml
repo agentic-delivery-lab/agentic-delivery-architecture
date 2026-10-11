@@ -1,5 +1,5 @@
 schemaVersion: 1
-snapshotDate: '2026-10-10'
+snapshotDate: '2026-10-11'
 snapshotKind: read-only-live-audit
 purpose: >-
   Pin current repository revisions and dated live observations used by this
@@ -1830,3 +1830,56 @@ observations:
       they do not grant runtime App permission. No Project, Issue Field, Issue
       Type, App installation, permission, participant, release, or runtime
       setting was changed.
+  - id: control-plane-pr109-documentation-recheck-20261011-0005
+    observedAt: '2026-10-11T00:05:45Z'
+    source: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery/pulls/109
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: d564d34d3b381c0e708f6f0c14fd72ec4e35e542
+    request: >-
+      Refresh the open Control Plane PR #109 body after verifying the merged
+      Architecture release manifest and exact-head GitHub checks. Remove the
+      stale whole-tree digest mismatch and stale statement that checks were
+      still running. Validate the body before editing; make no branch change,
+      merge, Project operation, or runtime configuration change.
+    result: >-
+      PR #109 remains open, CLEAN, non-draft, and at exact head
+      d564d34d3b381c0e708f6f0c14fd72ec4e35e542. The body was edited at
+      2026-10-10T23:59:51Z without changing the branch. It now states that
+      merged Architecture main 61d99cb validates with whole-tree digest
+      07c327d2fcbf8bb33fae198a65f7a378fab0a176980471d8b3969633d174730a and
+      that the pinned report schema bytes remain
+      02ae624c21234bb7494dfc3308fe5cd54c112909e215192e2a07307651ebf55d. It
+      reports completed exact-head code checks instead of saying they are
+      running. The local organization-template validator passed and the
+      hosted PR-body check 38096907666 passed. The original exact-head Harness
+      review 38093031156 and code checks 38092951912/38092951882 passed. A
+      fresh Harness review run 38096907499 was still in progress at this
+      observation. The GitHub review decision is empty; only the Codex bot's
+      COMMENTED review is present.
+    limitation: >-
+      No human approval is recorded for PR #109. The new Harness review run
+      was in progress at the observation time. This body-only update changes
+      no code and does not establish Project access, runtime adoption, or
+      production behavior.
+  - id: architecture-issue-decision-gate-recheck-20261011-0005
+    observedAt: '2026-10-11T00:05:45Z'
+    source: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery/issues
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    request: >-
+      Recheck the Architecture #12 inventory task, #13 product-ownership task,
+      and #15 Project-topology decision before preparing the #12 review PR.
+      Read only; make no Issue updates or topology decision.
+    result: >-
+      At 2026-10-11T00:05:45Z, Issues #12, #13, and #15 were all OPEN,
+      unassigned, and had no comments. Issue #12 remains the source for the
+      read-only inventory refresh. The #13 product-repository/steward question
+      and #15 topology choice remain unresolved human decision gates.
+    limitation: >-
+      The organization inventory cannot identify an external product
+      repository or accountable steward, and an Issue read cannot substitute
+      for the accountable human's Project-topology decision. No Issue was
+      edited and no Project was created or configured.

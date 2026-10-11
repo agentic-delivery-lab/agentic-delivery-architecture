@@ -6,6 +6,11 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Recorded the 07:17 UTC exact-head recheck for Architecture PRs #16 and #17.
+  Both hosted validations passed; #16 remains blocked pending human review,
+  and draft #17 now includes the corrected #16 head without live configuration
+  changes. The draft source pin requires a merge commit or a later repin.
+
 - Refreshed Architecture #11's read-only Project, Issue, release, and pull-
   request evidence at 2026-10-11 06:46 UTC. Organization, viewer, and six-
   repository inventories found no visible Projects or Project items among 23

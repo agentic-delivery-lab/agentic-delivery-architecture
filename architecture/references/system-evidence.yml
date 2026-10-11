@@ -2262,3 +2262,50 @@ observations:
       Project configuration, runtime adoption, webhook health, or product
       outcomes. No Issue, Project, field, App, permission, release,
       participant, or runtime setting was changed.
+  - id: architecture-pr-review-recheck-20261011-0717
+    observedAt: '2026-10-11T07:17:00Z'
+    source: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery-architecture/pulls/17
+    sourceCommit: a2df1d8f557e938b9c3d8ccd0d3dd2c949d42c44
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    runs:
+      - '38120380694: PR #16 Architecture validation passed on exact head 9635044ab2e7b91c8004ac1cd06241b35b9ec30e'
+      - '38120726327: PR #17 Architecture validation passed on exact head a2df1d8f557e938b9c3d8ccd0d3dd2c949d42c44'
+    request: >-
+      Recheck Architecture PR #16 after its evidence corrections and PR #17
+      after importing the updated #16 head. Record exact branch heads,
+      mergeability, human review state, and hosted validation. Read-only; do
+      not merge, publish, or change live configuration.
+    result:
+      status: >-
+        PR #16 is OPEN and non-draft from main `61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c`
+        at head `9635044ab2e7b91c8004ac1cd06241b35b9ec30e`;
+        mergeStateStatus=BLOCKED, mergeable=MERGEABLE, and reviewDecision is
+        empty. Its exact-head validate run 38120380694 passed. PR #17 is OPEN
+        and DRAFT from updated base `9635044ab2e7b91c8004ac1cd06241b35b9ec30e`
+        at head `a2df1d8f557e938b9c3d8ccd0d3dd2c949d42c44`;
+        mergeStateStatus=CLEAN, mergeable=MERGEABLE, and reviewDecision is
+        empty. Its exact-head validate run 38120726327 passed. Its Architecture
+        release manifest remains draft 0.1.0-draft.30, source commit
+        `794c8724518819b7bab598e0cca49bc9eaf2a9fe`, digest
+        `c1c5ca0dedf11d2c62a57abf60c9d2ef96b845510534ea7d14b67bc55f2cdfe7`.
+      events:
+        - >-
+          PR #16 incorporates corrections for the exact GitHub `issues` event
+          name, release-manifest authority, PR #109 fixture-composition limits,
+          PR #110 evidence scope, and the obsolete PR #4 migration statement.
+          Its PR description records that a merge commit is required to retain
+          the draft sourceCommit; the repository permits merge, squash, and
+          rebase methods.
+        - >-
+          PR #17 contains updated PR #16 head 9635044 as an ancestor and keeps
+          the exact #11 branch history. Both PRs remain without a human review
+          decision. No Issue, Project, field, App, permission, release,
+          participant, or runtime setting changed.
+    limitation: >-
+      These observations verify GitHub branch metadata and hosted validation,
+      not human approval or live Project/runtime operation. Squash or rebase
+      of either draft source pin would require a new main-reachable manifest
+      pin and successful main validation before release. The latest complete
+      Project and Issue inventory remains the separate 06:46 UTC event; this
+      recheck did not repeat those API queries.

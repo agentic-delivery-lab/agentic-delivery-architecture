@@ -6,6 +6,10 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Aligned the strategy task sequence with PR #109's offline router coverage
+  while retaining the separate Project-composition/live-runtime limitation;
+  advanced the draft Architecture pin to 0.1.0-draft.38.
+
 - Following independent review, clarified that Architecture PR #14 is merged
   but its independent human review remains unverified, so Control Plane #106's
   review/merge gate is still open. Clarified PR #109's offline router coverage

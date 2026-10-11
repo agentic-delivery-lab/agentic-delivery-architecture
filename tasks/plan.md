@@ -527,7 +527,10 @@ edited. Evidence: `system-evidence.yml#architecture-pr14-review-recheck-20261011
 Independent review of Architecture PR #17 at `5b0dfe0542d78e0993b71a4e9ca093108360cc61`
 found this wording error and an optional precision improvement to the PR #109
 offline evidence description. Both documentation corrections are included in
-this follow-up; no runtime or GitHub configuration changed.
+this follow-up. A second consistency pass aligned the strategy task sequence
+with the actual offline router tests while retaining the limitation on
+composed/live Project-runtime evidence. No runtime or GitHub configuration
+changed.
 
 ### Architecture decisions and invariants
 

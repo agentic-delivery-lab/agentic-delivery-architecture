@@ -32,8 +32,10 @@
    semantic review. Its four-case replay is synthetic, reports no change, and
    establishes no outcome improvement.
 3. Review open Control Plane PRs #109 and #110; no human review decision is
-   recorded. PR #109's Project and evaluation-hold cases are fixture assertions,
-   not composed execution through the #102/#104 contracts. PR #110's
+   recorded. PR #109's offline synthetic evaluation tests invoke
+   `routeEvaluationReports` and assert non-actionable owner-verification holds.
+   Its separate Project-context cases remain fixtures; they do not compose the
+   #102 planning path with #104 routing or show live Project access. PR #110's
    exact-head checks are recorded in the 06:46 UTC evidence event. PRs #102 and
    #104 are merged with Codex COMMENTED reviews only. Keep #105/#106 runtime
    work and live Project behavior separately gated; neither is live Project

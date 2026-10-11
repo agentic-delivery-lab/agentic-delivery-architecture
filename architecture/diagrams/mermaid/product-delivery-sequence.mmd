@@ -1,18 +1,27 @@
 flowchart LR
-  INITIATIVE["Product initiative<br/>user or operator need and evidence"] --> REQUIREMENTS["Requirements and acceptance criteria<br/>owned by an identified product steward"]
-  REQUIREMENTS --> SOURCEISSUE["Typed source Issue<br/>in the product repository"]
-  SOURCEISSUE --> TRIAGE["Human prioritization<br/>Project is planning context only"]
+  INITIATIVE["Product initiative<br/>user or operator need and evidence"] --> OWNER["Requirements and acceptance criteria<br/>Identify product steward and repository"]
+  OWNER -->|approved steward-owned repository exists| SOURCEISSUE["Typed product source Issue<br/>in the identified repository"]
+  OWNER -->|no steward-owned repository confirmed| FACTORYISSUE["Record requirements, ownership discovery, and outcome<br/>in an Issue in an existing owning repository"]
+  FACTORYISSUE --> FACTORYTRIAGE["Human prioritization in the approved portfolio Project<br/>planning context only"]
+  FACTORYTRIAGE --> APPROVAL["Human decision on steward, access, repository, and bootstrap plan"]
+  APPROVAL -->|approved existing repository| SOURCEISSUE
+  APPROVAL -->|new repository approved| BOOTSTRAP["Authorized repository bootstrap<br/>Create or onboard from pinned Distribution and Primitive sources"]
+  APPROVAL -->|unknown or rejected| HOLD["Hold without creating or mutating a repository"]
+  BOOTSTRAP --> SOURCEISSUE
+  SOURCEISSUE --> TRIAGE["Human prioritization in an approved Project<br/>planning context only"]
   TRIAGE --> AUTH["Source-Issue identity, permission, policy, and contract gates"]
-  AUTH -->|pass| BOOTSTRAP["Authorized repository bootstrap<br/>pinned Distribution and Primitive sources"]
-  AUTH -->|unknown or fail| HOLD["Hold without creating or mutating a repository"]
-  BOOTSTRAP --> IMPLEMENT["Bounded feature implementation<br/>Actions and Codex in the origin repository"]
+  AUTH -->|pass| IMPLEMENT["Bounded feature implementation<br/>Actions and Codex in the origin repository"]
+  AUTH -->|unknown or fail| ISSUEHOLD["Hold the Issue operation without mutation"]
   IMPLEMENT --> PR["Issue-linked pull request<br/>automated checks and independent review"]
   PR --> HUMAN["Human merge and release decision"]
   HUMAN --> EVAL["Product outcome evaluation<br/>observed behavior, users, and stated window"]
   EVAL --> NEXT["Reviewed result or unmet need"]
   NEXT --> SOURCEISSUE
-  GATE["Product repository creation, steward, feedback path, and rollout require explicit maintainer approval"]
-  GATE -.-> INITIATIVE
+  PROJECT["Project membership, priority, and progress<br/>do not authorize execution"]
+  TRIAGE -.-> PROJECT
+  FACTORYTRIAGE -.-> PROJECT
+  GATE["Repository creation, access, stewardship, and bootstrap require explicit maintainer approval"]
+  GATE -.-> APPROVAL
   STATUS["Current inventory: no distinct product repository, steward, or product outcome baseline identified"]
-  STATUS -.-> REQUIREMENTS
+  STATUS -.-> OWNER
   STATUS -.-> EVAL

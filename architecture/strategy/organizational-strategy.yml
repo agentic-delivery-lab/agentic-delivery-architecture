@@ -182,7 +182,8 @@ valueStreams:
   - id: software-product-delivery
     outcome: Users receive useful, reliable software changes with evidence of the problem addressed and the result observed.
     operatingLoop:
-      - Capture a user or operator problem, desired outcome, and evidence in an Issue owned by the product repository.
+      - When no steward-owned product repository is confirmed, record product discovery, accountable-owner work, desired outcome, and evidence in an Issue in an existing owning repository; after an approved product repository exists, record product feature work in a typed Issue owned by that repository.
+      - Require human approval for product repository creation, access, stewardship, and pinned bootstrap before creating product Issues in a new repository.
       - Prioritize the linked Issue in the portfolio Project.
       - Deliver through the same authorized Issue, pull request, automated validation, independent review, and human merge boundary.
       - Observe product behavior and user feedback against the Issue's stated outcome.
@@ -609,7 +610,16 @@ projectPlanning:
       organization admin role. The organization REST response reported
       plan=free and both has_organization_projects=true and
       has_repository_projects=true.
-  planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the approved Project view can expose it. Project-owned fields may express distinct cross-Issue grouping, sequencing, or planned dependencies; do not duplicate Issue Priority or lifecycle values.
+  planningFieldRule: >-
+    Use the existing Issue-owned Priority field for per-Issue priority wherever
+    the approved Project view can expose it. After human field-ownership review,
+    Project-owned fields may express distinct cross-Issue portfolio priority,
+    grouping, iteration, roadmap, sequencing, or planned dependencies. Give any
+    Project priority an explicitly distinct portfolio meaning; do not duplicate,
+    overwrite, or write it back to Issue Priority, lifecycle, delivery state, or
+    governance metadata. Project membership is a planning association, not
+    execution authority. Multiple candidate Project links remain an explicit
+    gap until the approved topology and selection policy resolve them.
   executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation never authorizes or blocks execution or authorizes a model call, repository write, issue-field write, pull request, release, or activation.
   projectReadFailureRule: >-
     Unavailable or ambiguous Project identity, access, or field data is reported
@@ -638,9 +648,22 @@ sourceOfTruth:
   - fact: Issue-native type value, Lifecycle Stage, Delivery State, Priority, labels, and other per-Issue values
     owner: Origin repository Issue
     rule: Keep values with the source Issue; labels are annotations and governance markers, not a substitute for native type, lifecycle, delivery readiness, authorization, or Project planning facts.
-  - fact: portfolio sequencing, planned dependency, and cross-stream visibility
+  - fact: Project membership, portfolio priority, iteration, roadmap, grouping, sequencing, planned dependency, and cross-stream visibility
     owner: Approved organization portfolio Project, after inventory and field-ownership review
-    rule: Project fields, views, and iterations may own distinct portfolio sequencing, grouping, and planning dependencies only. Issue Priority remains the canonical per-Issue priority wherever exposed. Execution dependency gates remain owned by the source Issue and Control Plane contract, and no Project is currently inventoried.
+    rule: >-
+      The association between a source Issue and its Project item records
+      portfolio inclusion and is owned by the approved Project. Project
+      planning fields may own human-reviewed cross-Issue portfolio
+      priority, iteration, roadmap, grouping, sequencing, and planned
+      dependencies only. Give Project priority a distinct portfolio
+      meaning; never mirror or write it back to the source Issue's canonical
+      Priority, Lifecycle Stage, Delivery State, or governance metadata. The
+      source Issue and Control Plane contract remain authoritative for work
+      intent, per-Issue priority, authorization, lifecycle, and execution
+      dependency gates. Project membership and planning values cannot authorize
+      or block execution. Multiple Project links remain unresolved until the
+      Architecture #15 topology decision and Control Plane #107 selection policy
+      are approved; no Project is currently inventoried.
   - fact: pull request review, approval, merge, and repository release decisions
     owner: Origin repository pull request and named human maintainer
     rule: Issue or Project state, evaluation results, and agent output cannot impersonate reviewer approval or authorize merge, release, or activation.

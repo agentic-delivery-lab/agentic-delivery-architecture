@@ -79,14 +79,19 @@ observed Control Plane baseline.
 
 ## 4.5 Three delivery paths
 
-1. **Product delivery loop:** a user or operator need becomes requirements and
-   an Issue in an identified, authorized product repository, is prioritized in
-   Projects, and is interpreted;
-   deterministic gates authorize one bounded writer; a Validator checks the
-   change; a pull request is independently reviewed and merged by a human.
-   Product evidence after delivery informs the next Issue. Repository creation,
-   product stewardship, and bootstrap remain approval-gated and no product
-   repository is currently identified.
+1. **Product delivery loop:** when a steward-owned product repository exists,
+   product work starts from a typed Issue in that repository. When no
+   steward-owned product repository is confirmed, record requirements,
+   ownership discovery, and the intended user or operator outcome in an Issue
+   in an existing owning repository. A human must approve the repository
+   choice, access, stewardship, and feedback path; creating a repository and its
+   pinned bootstrap require explicit approval. Only an owned, onboarded
+   repository can own product Issues. Link the product Issue to the approved
+   Project for prioritization and progress visibility. Deterministic gates
+   authorize one bounded writer; a Validator checks the change; a pull request
+   is independently reviewed and merged by a human. Product evidence after delivery informs the
+   next Issue. No product repository or accountable steward is currently
+   identified.
 2. **Factory evolution loop:** a factory defect, capability gap, or measured
    improvement becomes an Issue in its owning factory repository, is
    prioritized in Projects, and follows the same authorized delivery and

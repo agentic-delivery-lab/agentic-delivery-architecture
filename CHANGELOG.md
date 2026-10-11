@@ -6,6 +6,12 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Refreshed Architecture #11's read-only Project and pull-request evidence
+  at 2026-10-11 01:12 UTC. The visible organization Project query remains
+  empty, PR #110
+  passes its current automated checks but awaits human review, and no live
+  issue-to-PR delivery is evidenced; no Project or runtime setting changed.
+
 - Clarified Project membership and portfolio-planning ownership, and made
   product-repository bootstrap precede product Issues in a new repository.
 

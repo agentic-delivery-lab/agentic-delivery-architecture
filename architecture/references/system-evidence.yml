@@ -2007,3 +2007,79 @@ observations:
       Project access, a live issue-to-PR flow, production webhook delivery, or
       product outcomes. No Issue, Project, field, App, permission, release,
       participant, or runtime setting was changed.
+  - id: strategy-current-status-recheck-20261011-0112
+    observedAt: '2026-10-11T01:12:05Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: false
+    projectIds: []
+    runs:
+      - '38100354177: Control Plane PR #110 Harness review passed'
+      - '38100334819: Control Plane PR #110 architecture validation passed'
+      - '38100334829: Control Plane PR #110 quality, recovery SQL, and portability checks passed'
+      - '38100354532: Control Plane PR #110 pull request body validation passed'
+      - '38100356790: Control Plane main agent-observation succeeded'
+    request: >-
+      Read-only follow-up at 01:09–01:12 UTC: query the organization Projects
+      v2 GraphQL connection and default gh project list for the organization
+      and authenticated user; read the six repository inventory and default
+      branch commits; read Architecture Issues #11/#13/#15 and Control Plane
+      Issues #107/#108; read PR states, exact heads, merge state, review
+      decisions, and checks for Control Plane #104/#109/#110/#86,
+      Architecture #16/#17, and Primitives #4; query visible Releases for all
+      six repositories. No mutation was issued.
+    result: >-
+      Organization Projects v2 returned zero nodes and hasNextPage=false;
+      the organization and user gh project list calls returned no entries.
+      gh auth status reported the active sjefsharp account with admin:org,
+      project, repo, and workflow scopes. This is a follow-up to, not a
+      replacement for, the complete six-scope Project, Issue-field-value,
+      App, and Issue metadata inventory recorded at
+      strategy-and-open-work-recheck-20261011-0044.
+
+      The organization still exposes the same six repositories. Their
+      default-branch commits match the 00:44 pins: Control Plane
+      9a2e1f3549428bc042d5c59d09beb300ca2d1362, Architecture
+      61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Primitives
+      e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution
+      b69c5710928b47efc4d3ab12ec4d5b596c80720c, public adapter
+      af52c92e49616e78f8d6647cf5cf538a7e571d78, and private adapter
+      f9e6589b65c71da9e7b35d8e026f3d4a91dab78f. No published GitHub
+      Release is listed in any of the six repositories.
+
+      Architecture Issues #11, #13, and #15 remain OPEN, unassigned, without
+      labels or comments. Control Plane Issues #107 and #108 remain OPEN,
+      unassigned, without labels or comments. Control Plane PR #104 remains
+      MERGED at merge commit 9a2e1f3549428bc042d5c59d09beb300ca2d1362; its
+      CHANGELOG.md merge contains both #101 and #103 entries and no conflict
+      markers. PR #86 remains OPEN and DIRTY at 3c21e2aa; it modifies
+      CHANGELOG.md and scripts/setup-runner-codex.mjs. PR #109 is OPEN and
+      CLEAN at d564d34d, with no human review decision. PR #110 is OPEN and
+      CLEAN at ce109c85ba767337c4aee2c755af914d6996984b, with no human
+      review decision; its validation, quality, recovery-SQL, Ubuntu, macOS,
+      Windows, pull-request-body, Vercel, and Harness review checks passed.
+      Architecture #16 is OPEN and BLOCKED at 8fdb84e2; its validation passed.
+      Architecture #17 is OPEN, DRAFT, and CLEAN at 5235c4bc; its validation
+      passed. Primitives #4 is OPEN, DRAFT, BLOCKED, and REVIEW_REQUIRED at
+      4d6fe1f2; its validation passed.
+
+      The latest observed Control Plane main run is agent-observation
+      38100356790, which succeeded on 9a2e1f3. It validates the observation
+      reader and is not evidence of issue-to-PR delivery. No passing live
+      end-to-end issue-to-PR flow is evidenced.
+    limitation: >-
+      This follow-up rechecked organization/user Projects and current GitHub
+      work but did not repeat the full six-scope Project, per-Issue field
+      value, App installation, or effective-permission queries. The latest
+      complete cross-repository audit remains
+      strategy-and-open-work-recheck-20261011-0044. Empty visible Project
+      results do not identify a maintainer-approved topology. No Issue,
+      Project, field, App, permission, release, participant, or runtime
+      setting was changed.

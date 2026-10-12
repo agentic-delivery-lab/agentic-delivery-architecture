@@ -4174,3 +4174,71 @@ observations:
       successful authorization/classification/finalization run with delivery
       skipped does not prove end-to-end delivery, live database migration, or
       acceptance. PR #17 remains a draft stacked on a PR requiring human review.
+  - id: control-plane-pr112-hold-retry-validation-20261012-1230
+    observedAt: '2026-10-12T12:30:46Z'
+    source: >-
+      GitHub REST and Actions checks via the authenticated gh identity; exact-head
+      read-only inspection of PR #112 and local validation output.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 61f0565e4208eeb7c7b7477032e9a023592be757
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38248396439
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38248396494
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38248523042
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38248524081
+    request: >-
+      Recheck Control Plane PR #112 after the routing-hold retry fix. Verify its
+      exact head, current main/head distinction, hosted validations, and the
+      remaining migration and review limits. Read-only; do not dispatch a
+      workflow, apply a migration, or change participant configuration.
+    result: >-
+      Control Plane main remains at 9a2e1f3549428bc042d5c59d09beb300ca2d1362.
+      PR #112 is OPEN/DRAFT/CLEAN at 61f0565e4208eeb7c7b7477032e9a023592be757.
+      Its workflow classifies an empty or hold route as a failed finalizer
+      outcome even when delivery is skipped, which releases the existing
+      attributed receipt as retryable with backoff. Successful non-hold routes
+      retain intentional shadow/read-only completion when delivery is skipped.
+      The regression test `unresolved routing holds stay retryable when the
+      delivery job is skipped` verifies the workflow expression. Local `pnpm
+      test` reported 561 tests, 528 passed, 0 failed, and 33 environment-gated
+      skips. Hosted quality, recovery-SQL, portability on Ubuntu/macOS/Windows,
+      ADR validation, PR-body validation, Vercel, and Harness review checks
+      passed; `classify_updater` was skipped by policy. GitHub reports the PR
+      remains draft and has no human review decision.
+    limitation: >-
+      The PR head is not merged, so Control Plane main retains the observed
+      behavior. Passing offline/hosted checks do not prove an actual delivery
+      or live migration. The PR body says migration 0008 has not been applied to
+      a live database; this recheck did not query Neon. Do not enable the
+      workflow revision until the migration is applied and verified under the
+      existing approval gate.
+  - id: control-plane-pr104-conflict-recheck-20261012-1234
+    observedAt: '2026-10-12T12:34:44Z'
+    source: >-
+      GitHub REST/GraphQL via the authenticated gh identity and a read-only
+      scan of the decoded default-branch changelog.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/agentic-delivery-distribution
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    request: >-
+      Recheck the reported CHANGELOG.MD conflict on PR #104. Inspect PR state,
+      changed paths, current default-branch content, and same-number PRs across
+      the six repositories. Read-only; do not reopen or amend a merged PR.
+    result: >-
+      Only agentic-delivery has a PR #104 among the six repositories. It is
+      merged, with merge commit 9a2e1f3549428bc042d5c59d09beb300ca2d1362. Its
+      changed path is lowercase CHANGELOG.md. The lowercase file at main and
+      the PR head both resolve to blob 4d5ab1f5b401737f45b72d31c710ad3d3f930b47
+      (53,803 bytes); the decoded main file has no conflict-marker lines.
+      Uppercase CHANGELOG.MD returns 404. The PR is closed as merged, so there
+      is no active PR conflict to resolve.
+    limitation: >-
+      GitHub does not expose mergeability as meaningful for this merged PR.
+      This observation does not infer or change any other repository's local
+      worktree state.

@@ -76,6 +76,12 @@ changed.
 The exact run states, source inventory, PR heads, and review limits are recorded
 in `system-evidence.yml#portfolio-runtime-and-pr17-recheck-20261012-1156`.
 
+### 7.2.3 Hold-retry fix in Control Plane PR #112 (2026-10-12 12:30 UTC)
+
+| Surface | Observed state | Evidence limit |
+| --- | --- | --- |
+| Control Plane PR #112 | The draft head is `61f0565e4208eeb7c7b7477032e9a023592be757`; it makes an empty or `hold` route produce a retryable receipt when delivery is skipped. Non-hold shadow/read-only skips preserve the current intentional completion behavior. Hosted quality, recovery-SQL, all three portability jobs, ADR validation, PR-body validation, Vercel, and Harness review checks pass; `classify_updater` is skipped by policy. | Control Plane `main` remains `9a2e1f3549428bc042d5c59d09beb300ca2d1362`; the change is not merged and has no human review decision. Migration 0008 remains unverified in the live database, and these checks do not prove end-to-end delivery. See `system-evidence.yml#control-plane-pr112-hold-retry-validation-20261012-1230`. |
+
 See `system-evidence.yml#vercel-production-runtime-recheck-20261012-0556`
 and `system-evidence.yml#control-plane-invocation-runtime-recheck-20261012-0555`.
 

@@ -909,3 +909,22 @@ for the separate human decisions recorded in Architecture #13 and #15.
   meaningful cross-repository contract?
 - Which evaluation cases, deterministic graders, and replay environment can be
   used without paid external infrastructure?
+
+### 12:30 UTC Control Plane #112 hold-retry revalidation
+
+The earlier 11:56 observation remains the historical state of that PR head.
+At the current Control Plane head `61f0565e4208eeb7c7b7477032e9a023592be757`,
+PR #112 adds the missing empty/`hold` route guard: the workflow-revision
+finalizer receives failure when delivery is skipped for an unresolved hold,
+so the existing attributed receipt remains retryable. Successful non-hold
+shadow/read-only skips retain their prior completion behavior. The focused
+workflow regression passed; the full local suite reported 561 tests, 528
+passed, 0 failed, 33 environment-gated skips. Exact-head hosted quality,
+recovery-SQL, Ubuntu/macOS/Windows portability, ADR validation, PR-body
+validation, Vercel, and Harness review checks passed. `classify_updater` was
+skipped by policy. PR #112 remains OPEN/DRAFT/CLEAN with no human review
+decision. Control Plane `main` remains `9a2e1f3549428bc042d5c59d09beb300ca2d1362`.
+Migration 0008 remains unverified: the PR body states it has not been applied
+to a live database, and no Neon read was part of this recheck. Do not enable the
+workflow revision until migration application and live verification pass the
+separate approval gate. Evidence: `system-evidence.yml#control-plane-pr112-hold-retry-validation-20261012-1230`.

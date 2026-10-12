@@ -28,7 +28,7 @@
 This is the desired logical deployment. It does not imply that every
 participant is active or that each hosting rule has been enabled.
 
-## 7.2 Current inventory snapshot (broad, 2026-10-11 19:14 UTC)
+## 7.2 Operational inventory snapshot (observation times appear per surface)
 
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
@@ -36,7 +36,7 @@ participant is active or that each hosting rule has been enabled.
 | GitHub Projects and Issues | The 2026-10-12 04:59 UTC GraphQL recheck returned no Projects in the viewer, organization, or six repository scopes and no Project item on any of the 61 Issues. The separate 2026-10-11 22:57 UTC full inventory found empty Issue Field Values on all 23 then-open Issues, nine native Issue Types (five then-open Issues untyped), six organization-members-only fields, and Free-plan support for organization and repository Projects. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. Organization-only Issue Fields are unavailable in public/internal Projects; visibility in a future private Project remains unverified. Empty Issue values do not establish a lifecycle transition. See `portfolio-project-issue-association-recheck-20261012-0459` and `portfolio-issue-project-inventory-20261011-2257` in system evidence. |
 | GitHub Apps, Actions, and protection | Three App installations were listed. The Control Plane invoker installation selects repositories and has Contents/Issues/PR write plus Issue Field/Type read, with no Projects permission; its selected-repository API returned 403. Organization Actions allow all actions, do not require SHA pinning, and are enabled for all repositories. Public rulesets were read; the private ruleset endpoint returned 403. | The selected repository set, deployed credential binding, and private ruleset state remain unknown. Organization policy does not prove individual workflow pins or runtime behavior. |
 | Pull requests and Releases | The 20:05 UTC PR inventory found Control Plane #104 merged with matching CHANGELOG.md blobs across PR head, merge commit, and current main; #86 conflicting in CHANGELOG.md; #109/#110 checks passing with review pending; and Primitives #4 draft/review-required. At 20:25 UTC, Architecture #16 was open/review-required and #17 remained open/draft/mergeable at exact head `19dcc691006d93e169f9eb4f76c9456f5c6b46fe`, based on #16, with exact-head validation run 38171652069 passed and no review decision. The latest recorded six-repository Release inventory (19:14 UTC) listed no releases. | Passing CI is not human review, release adoption, participant activation, or production acceptance. PR #17 remains stacked on #16 and is not an approved Architecture release. |
-| Production runtime | The last recorded Vercel production metadata observation is 2026-10-10 03:27 UTC on an older Control Plane main commit. | This refresh did not test webhook health, App credential binding, delivery, Neon state, evaluation replay, or product outcomes; deployment of current main is unverified. |
+| Production runtime | The 2026-10-12 05:56 UTC Vercel recheck found production deployment `dpl_5hgNTb6CWoTqVv5TBCMqFYFRoMKZ` READY on Control Plane `main` commit `9a2e1f3549428bc042d5c59d09beb300ca2d1362`; five webhook POSTs for Architecture returned HTTP 202. Invocation and reconciler observations are detailed in §7.2.1. | Readiness and HTTP 202 do not prove signature validation, durable receipts, successful delivery, or reconciler execution. Production Neon data was not read. See `system-evidence.yml#vercel-production-runtime-recheck-20261012-0556`. |
 
 The broad read-only inventory, exact identities, PR heads, check runs, and
 scope limits are recorded in
@@ -52,6 +52,18 @@ App installations, Actions policy, rulesets, Release listings, and production
 runtime were not re-read in these targeted refreshes and remain tied to the
 19:14 observation above. The inventory does not approve a Project topology.
 No Project, App permission, participant, or runtime setting changed.
+
+### 7.2.1 Production and invocation recheck (2026-10-12 05:56 UTC)
+
+| Surface | Observed state | Evidence limit |
+| --- | --- | --- |
+| Production deployment | Vercel deployment `dpl_5hgNTb6CWoTqVv5TBCMqFYFRoMKZ` is `READY` on Control Plane `main` commit `9a2e1f3549428bc042d5c59d09beb300ca2d1362`; GitHub deployment `6987095413` reports success. | Readiness does not prove webhook processing, receipt persistence, or completed delivery. |
+| Webhook ingress | The seven-day request-log query for Architecture repository ID `1380894616` found five webhook POSTs, all HTTP 202. The detailed function-log sample includes `pull_request:synchronize` at 05:03:52.353 UTC and `issues:edited` at 05:04:44.069 UTC. | HTTP 202 is an accepted response, not proof of signature verification, durable state, Actions completion, or downstream delivery. |
+| Invocation finalization | Actions run 38206400933 on that same `main` commit passed authorization, classification, and route validation. Finalization failed because the checked-out participant pin `7d38227f7f8d8377ed7cd1b883d90b71b69bfc9` lacks `scripts/finalize-agent-invocation.mjs`; the command failed with `MODULE_NOT_FOUND`. The participant is in shadow mode, so delivery was skipped. | No terminal receipt or successful delivery was established. Production Neon data was not read, and request logs do not correlate a particular webhook with the Actions run. Pin repair belongs to a reviewed Control Plane change. |
+| Scheduled reconciliation | Production configuration declares `/api/cron/reconcile-webhooks` on a daily 00:00 UTC schedule. | No reconciler request was observed in the seven-day request-log query; configuration does not prove a cron execution. |
+
+See `system-evidence.yml#vercel-production-runtime-recheck-20261012-0556`
+and `system-evidence.yml#control-plane-invocation-runtime-recheck-20261012-0555`.
 
 ## 7.3 Historical deployment snapshot (2026-10-09; observation times shown per surface)
 

@@ -3141,11 +3141,11 @@ observations:
     sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
     sourcePath: CHANGELOG.md
     request: >-
-      Verify the reported PR #104 changelog conflict against the current
-      protected main, its merge parents, PR #86 state, exact-head checks,
+      Verify the reported PR #104 changelog conflict against current main,
+      its merge parents, PR #86 state, exact-head checks,
       and the official latest upstream Codex CLI release. Read-only only.
     result: >-
-      Protected main is 9a2e1f3549428bc042d5c59d09beb300ca2d1362 and contains
+      Current main is 9a2e1f3549428bc042d5c59d09beb300ca2d1362 and contains
       both Issue #101 and #103 changelog entries with no conflict markers.
       PR #104 is MERGED at that commit; its second parent and PR head are
       f9a536fee6f6fc436189a55acf3b8180d4144211, whose merge from main resolved
@@ -3537,3 +3537,58 @@ observations:
       A passing exact-head validation does not establish independent human
       review, adoption, or release approval. PR #17 remains stacked on PR #16;
       no merge or release was performed.
+  - id: control-plane-changelog-state-recheck-20261012-0622
+    observedAt: '2026-10-12T06:22:50Z'
+    source: >-
+      GitHub pull-request and file APIs; Git fetch, commit ancestry, and the
+      current origin/main CHANGELOG.md blob.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: CHANGELOG.md
+    request: >-
+      Recheck the reported CHANGELOG.md conflict on PR #104 against its current
+      state, merge commit, changed-file record, current main blob, and conflict
+      markers. Check the same PR number in the other five inventoried
+      repositories. Read-only; no PR, review, approval, or file mutation.
+    result: >-
+      GitHub reports PR #104 as CLOSED and MERGED at 2026-10-10T21:26:16Z, with
+      merge commit 9a2e1f3549428bc042d5c59d09beb300ca2d1362 and head
+      f9a536fee6f6fc436189a55acf3b8180d4144211. The merge commit is an ancestor
+      of current origin/main, which remains at 9a2e1f3549428bc042d5c59d09beb300ca2d1362.
+      The PR file API records CHANGELOG.md as modified with two additions and
+      no deletions. The current main blob contains both the #103 and existing
+      #101 entries and no conflict-marker lines. All executed checks report
+      SUCCESS; classify_updater is SKIPPED by policy. The other five queried
+      repositories returned no PR #104. The closed PR has no unresolved
+      conflict to edit.
+    limitation: >-
+      This check covers the six inventoried repositories and their current
+      default branches; it does not identify a different PR #104 in an
+      unqueried repository or organization. No PR, review, approval, merge, or
+      file mutation was performed.
+  - id: architecture-pr17-exact-head-recheck-20261012-0622
+    observedAt: '2026-10-12T06:22:50Z'
+    source: GitHub pull-request, pull-request-body, and Actions run APIs.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: 9987691b17eaf9a6ced96366f980734d5761b5f8
+    request: >-
+      Verify Architecture PR #17's exact head, base, draft/review state, body,
+      and exact-head validation before the next documentation refresh.
+      Read-only; no review or merge action was taken.
+    result: >-
+      PR #17 is OPEN, DRAFT, and MERGEABLE at head
+      9987691b17eaf9a6ced96366f980734d5761b5f8, based on PR #16 at
+      c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f. Exact-head validation run
+      38211441830 succeeded. No human review decision exists. The description
+      states draft release 0.1.0-draft.45 in its Changes section but retains
+      stale draft.44 references in Verification and Risk.
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38211441830
+    limitation: >-
+      This exact-head observation predates the current runtime/deployment
+      documentation refresh and any subsequent PR-body correction. A hosted
+      validation pass does not establish independent review, adoption, or
+      release approval. PR #17 remains stacked on #16; no merge or release was
+      performed.

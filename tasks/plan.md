@@ -600,7 +600,7 @@ architecture/references/system-evidence.yml#control-plane-changelog-state-rechec
 - Control Plane PR #104 is MERGED at 9a2e1f3549428bc042d5c59d09beb300ca2d1362.
   Its second parent is the PR head f9a536fee6f6fc436189a55acf3b8180d4144211,
   which merged current main into the feature branch to resolve CHANGELOG.md.
-  Protected main still points at the merge commit, contains both #101 and #103
+  `main` still points at the merge commit, contains both #101 and #103
   changelog entries, and has no conflict markers. No further #104 edit is needed.
 - The separate Control Plane PR #86 is OPEN/CLEAN at
   3a0adfb7942c760f4504478c2f47cc6a0624f966; its exact-head hosted checks pass
@@ -652,6 +652,24 @@ the PR OPEN, DRAFT, CLEAN, and stacked on #16; exact-head Architecture
 validation run 38211127172 passed. No human review decision exists. Keep the
 draft open pending review of #16 and #17; no merge or release occurred. See
 `system-evidence.yml#architecture-pr17-verified-head-20261012-0610`.
+
+### 06:22 UTC PR #104 and exact-head recheck
+
+The user-reported CHANGELOG conflict was checked again against GitHub and the
+fetched `main` history. PR #104 remains merged; its merge commit is an ancestor
+of current `main`, the PR file listing records two additions to
+`CHANGELOG.md`, and current `main` contains both the #101 and #103 entries
+without conflict-marker lines. GitHub returned Not Found for PR #104 on the
+other five inventoried repository paths. No change to the closed PR or Control Plane
+files was made. See
+`system-evidence.yml#control-plane-changelog-state-recheck-20261012-0622`.
+
+At this observation, Architecture PR #17 remained OPEN/DRAFT/MERGEABLE at
+`9987691b17eaf9a6ced96366f980734d5761b5f8`, stacked on PR #16, with exact-head
+validation run 38211441830 passing and no human review decision. This was the
+head before the current runtime/deployment documentation refresh; the pushed
+documentation revision requires its own hosted validation. See
+`system-evidence.yml#architecture-pr17-exact-head-recheck-20261012-0622`.
 
 ### Architecture decisions and invariants
 

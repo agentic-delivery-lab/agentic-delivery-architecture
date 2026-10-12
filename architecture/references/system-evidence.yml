@@ -3702,3 +3702,98 @@ observations:
       This read covers the six inventoried repositories. A closed and merged PR
       cannot be amended; any new change would require a separate authorized PR.
       No review, approval, merge, or repository mutation was performed.
+  - id: portfolio-project-issue-association-recheck-20261012-0827
+    observedAt: '2026-10-12T08:27:20Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Recheck Project existence and all open and closed Issue associations
+      after Control Plane #111 was recorded under #105. Queried organization,
+      authenticated-viewer, repository ProjectV2, all Issue, and per-Issue
+      Project-item connections for the six visible repositories, with
+      pagination state. The query was read-only; no Project, Issue, or field
+      mutation was attempted.
+    result:
+      status: >-
+        Complete read-only Project-existence and Issue-association inventory
+        for the authenticated viewer, organization, and six visible
+        repositories.
+      available:
+        - >-
+          Organization and viewer ProjectV2 connections each returned
+          totalCount=0 with no next page. All six repository ProjectV2
+          connections also returned totalCount=0 with no next page.
+        - >-
+          The six repository Issue connections returned 62 Issues in total:
+          Control Plane 12 open/31 closed; public .github 2/4; Architecture
+          5/3; Primitives 2/0; Distribution 2/0; and .github-private 1/0.
+          All Issue connections were complete. Every Issue returned zero
+          Project items; all 24 open Issues returned zero organization Issue
+          Field Values.
+        - >-
+          Control Plane #111 is OPEN with native Issue Type Bug, is linked
+          under recovery Issue #105, and has zero Project items and zero Issue
+          Field Values.
+        - >-
+          Five open Issues remain without a native Issue Type: Control Plane
+          #62/#103, Architecture #7/#15, and public .github #11.
+      absent:
+        - No organization-owned, viewer-owned, or repository-linked ProjectV2
+          node in the queried scopes.
+        - No Project item on any of the 62 Issues in the six repositories.
+        - No organization Issue Field Value on any of the 24 open Issues.
+    limitation: >-
+      This inventory covers the authenticated viewer, organization, and six
+      visible repository scopes; it does not establish absence of Projects
+      outside those scopes or describe Project fields or views. Issue Field
+      definitions, plan entitlements, App permissions, and PR/release state
+      remain tied to their separately timed observations. No topology decision
+      was inferred and no configuration was changed.
+  - id: control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0833
+    observedAt: '2026-10-12T08:33:58Z'
+    source: >-
+      GitHub pull-request, changed-file, review-thread, commit, and contents
+      APIs; repository branch and file checks.
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: CHANGELOG.md
+    request: >-
+      Recheck the reported unresolved changelog conflict on PR #104 after the
+      user reiterated that it still needed resolution. Verify PR state, the
+      recorded merge-conflict commit, changed path casing, final contents on
+      the PR head and current main, review threads, and whether another
+      organization repository has a PR numbered 104. Read-only.
+    result: >-
+      The only PR #104 in the six visible organization repositories is
+      Control Plane PR #104, merged at 2026-10-10T21:26:16Z. Its merge commit
+      9a2e1f3549428bc042d5c59d09beb300ca2d1362 is current main; its PR head
+      f9a536fee6f6fc436189a55acf3b8180d4144211 is a merge commit whose message
+      records '# Conflicts: CHANGELOG.md', with parents
+      2cf258d5a48a75524514d67f440d0f5bb16fb85a and
+      c0536ea01e10d7b2a51bb4f934bcfbc20211144c. The PR changed-file API
+      records lowercase CHANGELOG.md with two additions and zero deletions;
+      uppercase CHANGELOG.MD does not exist on main. Both the PR-head and
+      current-main lowercase changelog blobs retain the Issue #103 and #101
+      entries and contain no conflict-marker lines. All three Codex review
+      threads are resolved. The PR head branch is no longer present on origin,
+      and the other five repositories returned no PR #104.
+    limitation: >-
+      This verifies that the historical conflict was resolved before the PR
+      was merged; no unresolved conflict remains on this merged PR. A further
+      change would need a new PR. If PR #104 refers to a repository outside the
+      six visible organization repositories, its URL was not provided.

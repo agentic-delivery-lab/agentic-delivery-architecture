@@ -6,6 +6,17 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Refreshed Architecture #11's Projects and Issue association evidence at
+  2026-10-12 08:27 UTC after recording Control Plane Bug #111. The complete
+  six-repository inventory found no Project items across 62 Issues; all 24
+  open Issues had no organization Issue Field Values. Bug #111 is typed and
+  linked to recovery Issue #105. No Project or runtime configuration changed;
+  see architecture/references/system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0827.
+  A separate 08:33 UTC recheck confirmed that Control Plane PR #104's merge
+  commit recorded and resolved the `CHANGELOG.md` conflict, retaining both
+  #103 and #101 entries. The draft Architecture release advances to
+  0.1.0-draft.49.
+
 - Added a 26-item Phase K coverage map that separates structural and offline
   test evidence from partial, blocked, and unverified live acceptance. It
   records the remaining owners and gates without treating synthetic fixtures

@@ -705,6 +705,8 @@ nonGoals:
   - Claim a verified addressable market size, production product, customer count, or outcome baseline without product and user evidence.
   - Create or configure a GitHub Project, change Project access, or expand the App or OAuth permissions in this strategy proposal.
   - Replace source Issues, native Issue Types, organization Issue Fields, pull requests, or context-owned runtime and release artifacts with strategy fields.
+  - Create a second Control Plane in a product or consumer repository, or introduce GitHub Agentic Workflows as a delivery dependency.
+  - Make paid evaluation infrastructure a prerequisite for governed offline fixtures, replay, or review; any additional service requires a separate evidence-based decision.
   - Let strategy prose, a Project card, an evaluation result, or an agent decide whether its own implementation is authorized.
 references:
   - title: >-

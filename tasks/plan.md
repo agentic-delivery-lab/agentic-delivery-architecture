@@ -153,11 +153,17 @@ topology and configuration gates.
 
 - [x] Task 6: Complete strategic alignment, organization context,
   Project/Issue lifecycle, factory evolution, product delivery, and trust
-  boundary diagrams; update the canonical Structurizr/C4 model.
+  boundary diagrams; review the canonical Structurizr/C4 model and update it
+  where a required relationship is missing.
   - Acceptance: Each view distinguishes a target relationship from observed
     operation; context includes GitHub App, Vercel ingress, Neon replay,
     Actions/Codex, both adapters, and the unidentified product-repository
     boundary. Webhook, session, and evaluation replay remain separate.
+  - Evidence: The existing `architecture/models/workspace.dsl` already
+    contains the required Project, Issue, factory-owner, ingress, replay,
+    Actions/Codex, and product-boundary elements. Review found no missing
+    relationship that justified a C4 source change; the six supporting views
+    carry the current evidence and target sequences.
   - Verification: Diagram source tests and `pnpm architecture:check`.
   - Dependencies: Tasks 4–5 and current source inventory.
   - Files likely touched: `architecture/diagrams/`, Structurizr DSL,
@@ -503,8 +509,11 @@ The six main commits and exact Issues are recorded in
 Architecture PR #14 is merged at `61d99cb`; #16 remains blocked pending
 human review at `9635044`; draft #17 is clean at `979a5bd`, stacked on
 #16, with exact-head validation run 38167634212 passed and no submitted
-reviews. Control Plane #104 remains merged and #86 remains conflicting;
-the last merge-tree check identifies CHANGELOG.md as the conflict. Control
+reviews. Control Plane #104 was already merged; at this historical checkpoint,
+the CHANGELOG.md conflict belonged to PR #86, not #104. The later
+`system-evidence.yml#control-plane-changelog-state-recheck-20261011-2134`
+supersedes that branch state: it confirms PR #104's conflict-resolution merge
+and PR #86 clean against current main. Control
 Plane #109/#110 remain clean with Codex COMMENTED reviews only; Primitives
 #4 remains draft and review-required. Control Plane #106 remains open with
 no Project item. Its PR #14 review/merge gate is only partly satisfied:
@@ -604,6 +613,36 @@ architecture/references/system-evidence.yml#control-plane-changelog-state-rechec
   human review; draft #17 is clean on #16 and hosted validation passes. Primitives
   #4 remains draft/review-required although its validation passes. No review,
   approval, merge, release, Project, permission, or runtime mutation occurred.
+
+### 06:01 UTC PR #104 and adapter-protection recheck
+
+GitHub still reports Control Plane PR #104 as MERGED at
+`9a2e1f3549428bc042d5c59d09beb300ca2d1362`. Its changed-file record includes
+`CHANGELOG.md` with two additions; current `main` has no conflict-marker lines.
+All executed PR checks report success; `classify_updater` is skipped by policy.
+The `Conflicts: CHANGELOG.md` text is historical merge-commit metadata from the
+conflict-resolution merge on the PR head, not an outstanding GitHub conflict.
+See
+`system-evidence.yml#control-plane-changelog-state-recheck-20261012-0601`.
+
+The active public `.github` ruleset 23698176 requires only the pull-request
+body status check, and the default-branch protection API reports the branch is
+not protected. The private adapter's ruleset API remains inaccessible (403),
+so effective private protection is unknown. See
+`system-evidence.yml#adapter-protection-recheck-20261012-0601`. These were
+read-only checks; no PR, review, approval, or governance setting changed.
+
+### 06:04 UTC Distribution source review
+
+Static review at Distribution `main` commit
+`b69c5710928b47efc4d3ab12ec4d5b596c80720c` found that bootstrap and
+projection-promotion path checks do not inspect parent components for symbolic
+links before file operations. The Dev Container Feature install script checks
+the controller SHA shape and prints a prepared message; it does not install the
+controller. This is a source-based risk inference, not a reproduced exploit or
+live-consumer test. No Distribution file or consumer was changed. See
+`system-evidence.yml#distribution-bootstrap-source-review-20261012-0604`.
+
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,

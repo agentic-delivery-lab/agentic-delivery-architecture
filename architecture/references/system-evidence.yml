@@ -3348,3 +3348,169 @@ observations:
       Issue #15 remains the human decision gate for any topology or
       configuration. No Issue, Project, permission, App, participant, release,
       or runtime setting was changed.
+  - id: control-plane-invocation-runtime-recheck-20261012-0555
+    observedAt: '2026-10-12T05:55:17Z'
+    source: >-
+      GitHub Actions run and Git tree APIs; read-only Vercel deployment metadata
+      is recorded separately.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: .github/workflows/issue-intake.yml
+    request: >-
+      Inspect Actions run 38206400933 and the participant, current-main, and
+      newer-participant Git trees. No workflow, participant mode, release pin,
+      or production setting was changed.
+    result: >-
+      Run 38206400933 was a repository_dispatch event on main commit
+      9a2e1f3549428bc042d5c59d09beb300ca2d1362. Authorization, classification,
+      and route validation passed. The finalize-invocation job checked out
+      participant commit 7d38227f7f8d8377ed7cd1b883d90b71b69bfc9, whose Git
+      tree has no scripts/finalize-agent-invocation.mjs; the pinned command
+      failed with MODULE_NOT_FOUND. The file exists in current main and newer
+      participant commit 08728c4210ec2d227eec2b6c182dcf3bafd80db1. The
+      participant is shadow-mode, so delivery was skipped. The run does not
+      establish terminal receipt persistence or successful delivery.
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38206400933
+    limitation: >-
+      This is one exact Actions run. It does not prove that all issue events or
+      participants fail in the same way, and it does not authorize changing
+      the participant pin or mode. Repair and bounded acceptance belong in a
+      reviewed Control Plane change.
+  - id: primitive-distribution-release-pin-recheck-20261012-0555
+    observedAt: '2026-10-12T05:55:17Z'
+    source: >-
+      GitHub repository tree, content, and commit APIs; repository validation
+      runs.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+    sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
+    sourcePath: manifests/primitive-release.json
+    request: >-
+      Compare the exact Primitive and Distribution main release pins, resolve
+      their source commit identities, and recheck the six repository Release
+      lists. Read-only; no pin, release, or consumer configuration changed.
+    result: >-
+      Primitive main declares 0.1.0-draft.4 with sourceCommit
+      a39267da377328dbfb1ed210a23b2628c224bed6 and Architecture sourceCommit
+      d4714c9489fb14824ef0967903d34a73c3e437fb. GitHub commit lookup returned
+      HTTP 422 for both source identifiers in the expected repositories.
+      Distribution main pins the same Primitive release ID to
+      01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e with the same
+      36a7e7e95a89ee00288f08a30ac41e4166e11516165e93af47b342026ce894d0
+      digest; that commit resolves in Primitive history. No GitHub Release
+      entry was listed for any of the six factory repositories.
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-primitives/actions/runs/35690801475
+      - https://github.com/agentic-delivery-lab/agentic-delivery-distribution/actions/runs/35690806704
+    limitation: >-
+      The Primitive and Distribution artifacts are drafts, not published
+      releases. Passing validation checks do not establish resolvable
+      cross-repository pins or deployment.
+  - id: vercel-production-runtime-recheck-20261012-0556
+    observedAt: '2026-10-12T05:56:35Z'
+    source: >-
+      Vercel production deployment and function-log APIs; Control Plane
+      configuration at the deployed source commit; GitHub deployment API.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: api/github/webhook.mjs
+    request: >-
+      Recheck the production deployment, webhook function outcomes for
+      repository 1380894616, and the deployed webhook/reconciliation routes.
+      Read-only; no environment value or runtime setting was changed.
+    result: >-
+      Production deployment dpl_5hgNTb6CWoTqVv5TBCMqFYFRoMKZ is READY and
+      points to Control Plane main commit
+      9a2e1f3549428bc042d5c59d09beb300ca2d1362. GitHub deployment 6987095413
+      reports success. The deployed configuration includes
+      /api/github/webhook and /api/cron/reconcile-webhooks on a daily 00:00
+      UTC schedule. Production function logs filtered to repository
+      1380894616 returned accepted HTTP 202 outcomes for pull_request with
+      action synchronize at 05:03:52.353Z and issues with action edited at
+      05:04:44.069Z. A separate seven-day Vercel request-log query found five
+      webhook POSTs, all HTTP 202, but no reconciler request.
+    limitation: >-
+      Deployment readiness and HTTP 202 outcomes establish neither direct
+      signature-verification evidence nor downstream receipt inspection.
+      Production Neon data was not read, and the request logs do not expose a
+      correlation that proves which webhook produced Actions run 38206400933.
+      The scheduled configuration does not establish that a cron execution
+      occurred; no reconciler execution was observed in the seven-day query.
+  - id: control-plane-changelog-state-recheck-20261012-0601
+    observedAt: '2026-10-12T06:01:29Z'
+    source: >-
+      GitHub CLI PR view and checks; GitHub REST PR-files and raw contents
+      endpoints.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: CHANGELOG.md
+    request: >-
+      Recheck the reported CHANGELOG.md conflict on Control Plane PR #104,
+      including its merge state, changed-file record, current main file, and
+      checks. Read-only; no PR or file was changed.
+    result: >-
+      GitHub reports PR #104 as MERGED at 2026-10-10T21:26:16Z, with merge
+      commit 9a2e1f3549428bc042d5c59d09beb300ca2d1362 and head
+      f9a536fee6f6fc436189a55acf3b8180d4144211. The PR file listing includes
+      CHANGELOG.md with two additions and no deletions. Current main's raw
+      CHANGELOG.md has no conflict-marker lines. All executed checks report
+      SUCCESS; classify_updater is SKIPPED by policy. The reported conflict
+      was resolved before the merge; no #104 conflict-resolution change is
+      pending.
+    limitation: >-
+      This recheck concerns PR #104 and current main only. It does not assess a
+      conflict on another pull request. No review, approval, merge, or file
+      mutation was performed during this recheck.
+  - id: adapter-protection-recheck-20261012-0601
+    observedAt: '2026-10-12T06:01:29Z'
+    source: GitHub REST repository ruleset and branch protection APIs.
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    request: >-
+      Inspect public adapter ruleset 23698176 and the default-branch
+      protection endpoints for both public and private adapters. Read-only; no
+      governance setting was changed.
+    result: >-
+      Public .github ruleset 23698176 is active and requires only the
+      Validate pull request body status check. The public default-branch
+      protection API returned HTTP 404 (branch not protected). The private
+      .github-private ruleset API returned HTTP 403 on the organization's
+      current plan; its effective protection remains unknown.
+    limitation: >-
+      The public ruleset does not require an approving review or a pull
+      request through the observed rules. The private API denial is not
+      evidence that private protection is absent. No governance setting was
+      changed.
+  - id: distribution-bootstrap-source-review-20261012-0604
+    observedAt: '2026-10-12T06:04:40Z'
+    source: GitHub tree and raw content APIs at an immutable Distribution commit.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-distribution
+    sourceCommit: b69c5710928b47efc4d3ab12ec4d5b596c80720c
+    sourcePath: bootstrap/src/bootstrap.mjs
+    request: >-
+      Inspect Distribution bootstrap and projection-promotion path validation,
+      writes, and the Dev Container Feature install script. Read-only; no
+      Distribution file or consumer repository was changed.
+    result: >-
+      bootstrap/src/bootstrap.mjs and
+      bootstrap/src/promote-agent-projections.mjs use lexical path containment
+      checks and lstat on final file paths, but do not inspect parent path
+      components for symbolic links before reading or writing. Inference from
+      these paths: a symlinked parent can redirect file operations outside the
+      intended root. features/src/agentic-delivery/install.sh only validates
+      that CONTROLPLANECOMMIT is a 40-character lowercase hexadecimal SHA and
+      prints that the feature is prepared; it does not fetch or install the
+      pinned controller. No actual consumer bootstrap, upgrade, or rollback
+      was exercised.
+    limitation: >-
+      This is static source inspection at Distribution main commit
+      b69c5710928b47efc4d3ab12ec4d5b596c80720c. No symlink exploit or live
+      consumer operation was executed; the finding does not establish that an
+      unintended symlink exists in a consumer repository.

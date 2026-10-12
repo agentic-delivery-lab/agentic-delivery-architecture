@@ -1,6 +1,6 @@
 # Strategy foundation and operational gap matrix
 
-**Updated:** 2026-10-12 12:57 UTC after the fresh Project, release-chain, Actions, Issue-dependency, and Architecture PR #17 recheck recorded at system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257. The 09:22 Issue Type/Field values, 10:50 strategy-publication scan, 05:55 release-source review, 06:04 Distribution bootstrap review, and earlier PR/runtime observations remain tied to their individually dated events. PR #104's resolved lowercase CHANGELOG.md conflict remains recorded at system-evidence.yml#control-plane-pr104-conflict-recheck-20261012-1234. The current-state delta below supersedes older table snapshots for Projects, release-chain status, runtime, and PR #17. This matrix does not imply that live settings remained unchanged after any read. Unknown means evidence was unavailable; it does not mean absent.
+**Updated:** 2026-10-12 13:07 UTC after the Projects/runtime/release-chain recheck at system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257 and open-PR/release inventory at system-evidence.yml#portfolio-pr-release-recheck-20261012-1307. Earlier dated observations for Issue Fields, strategy publication, app/ruleset configuration, and Distribution source review remain separately identified. PR #104's resolved lowercase CHANGELOG.md conflict is recorded at system-evidence.yml#control-plane-pr104-conflict-recheck-20261012-1234. The 12:57 and 13:07 deltas below supersede older table snapshots for Projects, release-chain status, runtime, open PRs, releases, and Architecture PR #17. This matrix does not imply that live settings remained unchanged after any read. Unknown means evidence was unavailable; it does not mean absent.
 
 | Area | Evidence and current state | Gap / risk | Owner and next step |
 | --- | --- | --- | --- |
@@ -59,6 +59,27 @@ source reviews in those rows retain their original observation dates.
   issue-to-PR delivery or evaluation-to-Issue feedback is proven. The exact
   sources, run identities, and limitations are in
   system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257.
+
+### Portfolio delta — 2026-10-12 13:07 UTC
+
+This inventory supersedes the older Open work and releases table snapshot.
+Eight PRs are open across Control Plane, Architecture, and Primitives:
+
+- Control Plane #112 is draft/clean; #109, #110, and #86 are clean and
+  non-draft. #109, #110, and #112 have no recorded review decision. #110 is
+  the clearest current candidate for independent human review as an
+  offline-only change; #109's 1,406-line diff warrants a careful review or
+  split. Do not approve on CI status alone.
+- Architecture #17 is draft/clean at 1cb7019, stacked on #16; #16 is blocked
+  and requires review. No human review decision is recorded for #17.
+- Primitives #4 is draft/blocked and #5 is blocked; both require review.
+- Distribution, .github, and .github-private have no open PRs. All six
+  repositories return zero published GitHub Releases.
+
+Exact head identities and statuses are recorded at
+system-evidence.yml#portfolio-pr-release-recheck-20261012-1307. This is
+point-in-time state; green checks, CLEAN status, and machine-authored review
+comments do not replace independent human review.
 
 ## Phase K acceptance coverage
 

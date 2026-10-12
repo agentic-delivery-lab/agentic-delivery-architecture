@@ -958,3 +958,18 @@ shadow mode; the two 08:14 invocation runs failed explicit-invocation
 validation. These events do not prove an end-to-end delivery or eval-feedback
 loop. No live Projects, workflow, participant, permission, release, or
 production configuration was changed.
+
+
+### 13:07 UTC open-PR and release inventory
+
+The six-repository read found eight open PRs: Control Plane #112 (draft/clean),
+#110 (clean), #109 (clean), and #86 (clean); Architecture #17
+(draft/clean, stacked on #16) and #16 (blocked/review required); Primitives #4
+(draft/blocked/review required) and #5 (blocked/review required). No human
+review decision is recorded for Control Plane #109/#110/#112 or Architecture
+#17. Distribution, .github, and .github-private have no open PRs. All six
+repositories returned an empty GitHub Release list. Exact heads and review
+states are in
+architecture/references/system-evidence.yml#portfolio-pr-release-recheck-20261012-1307.
+The inventory does not treat clean checks as human review and made no approval,
+merge, or publication.

@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Refreshed the six-repository open-PR and GitHub Release inventory at
+  13:07 UTC: eight PRs remain open and no published Releases were returned.
+  The status distinguishes drafts, blocked reviews, and clean PRs without
+  treating CI as human approval. See
+  architecture/references/system-evidence.yml#portfolio-pr-release-recheck-20261012-1307.
+  The Architecture draft release advances to 0.1.0-draft.57.
+
 - Refreshed the read-only Project, release-chain, Actions, dependency, and
   Architecture PR #17 evidence at 12:57 UTC. All 62 Issues remain outside any
   Project in the six visible repositories; the exact consumer release-chain

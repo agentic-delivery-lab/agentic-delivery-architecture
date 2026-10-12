@@ -4304,3 +4304,41 @@ observations:
       end-to-end issue-to-PR delivery or evaluation-to-Issue feedback. No
       Projects, permissions, releases, participant state, or production setting
       changed in this check.
+  - id: portfolio-pr-release-recheck-20261012-1307
+    observedAt: '2026-10-12T13:07:06Z'
+    source: >-
+      Authenticated GitHub pull-request and release list reads across the six
+      visible organization repositories.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 1cb7019a06ec341749d15be7d8a392fe911209d3
+    request: >-
+      Refresh all open pull requests and published GitHub Releases across the
+      six visible repositories. Read-only; do not approve, merge, or publish.
+    result: >-
+      Eight pull requests are open. Control Plane #112 is DRAFT/CLEAN at
+      61f0565e4208eeb7c7b7477032e9a023592be757 with no review decision; #110
+      is non-draft/CLEAN at 088a6b02391367f401b687e1873754e38c2a71fc with no
+      review decision; #109 is non-draft/CLEAN at
+      1180b1559a1e694b12fa95df1f548accb4697344 with no review decision; #86
+      is non-draft/CLEAN at 3a0adfb7942c760f4504478c2f47cc6a0624f966 with no
+      review decision. Architecture #17 is DRAFT/CLEAN at
+      1cb7019a06ec341749d15be7d8a392fe911209d3, based on PR #16 at
+      c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no review decision;
+      #16 is BLOCKED/REVIEW_REQUIRED at c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f.
+      Primitives #4 is DRAFT/BLOCKED/REVIEW_REQUIRED at
+      951433b2be5f0c3ada8144926f5b2cc69e7d6c95; #5 is
+      BLOCKED/REVIEW_REQUIRED at 035547fc1c7885e96cf9a8f8295c94a26f269847.
+      Distribution, .github, and .github-private have no open pull requests.
+      All six repositories return an empty GitHub Release list.
+    limitation: >-
+      Pull-request mergeability and review decisions are point-in-time GitHub
+      metadata; CLEAN or passing checks do not replace independent human review.
+      An empty GitHub Release list does not establish that no untagged or
+      external deployment exists. No pull request was approved or merged and no
+      release was published.

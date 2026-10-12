@@ -50,7 +50,7 @@ test('arc42 contract rejects legacy suffixes and non-template headings', async (
 });
 
 test('architecture contracts and aliases are deterministic', async () => {
-  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 7, aliases: 21 });
+  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 7, aliases: 22 });
 });
 
 test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
@@ -308,8 +308,8 @@ test('ADR/Primitive traceability resolves only through the canonical Architectur
 test('canonical inventory has exact record coverage and rejects projections and duplicate IDs', async () => {
   const result = await validateDecisionInventory(root);
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
-  assert.equal(result.decisionIds.length, 23);
-  assert.equal(result.adrIds.length, 21);
+  assert.equal(result.decisionIds.length, 24);
+  assert.equal(result.adrIds.length, 22);
   assert.ok(result.recordById.has('ADP-0001'));
   assert.ok(result.recordById.has('ADD-0001'));
   assert.equal(result.importedTransforms.length, 10);

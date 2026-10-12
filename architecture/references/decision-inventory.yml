@@ -269,6 +269,10 @@ records:
     path: decisions/0023-use-projects-for-planning-and-issues-for-execution-authorization.md
     domains: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
     origin: {type: proposed, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11}
+  - id: ADR-0024
+    path: decisions/0024-centralize-approved-requirements-in-requirements-authority.md
+    domains: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
+    origin: {type: proposed, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11}
 historicalVariants:
   - id: ADR-0012
     repository: agentic-delivery-lab/agentic-delivery

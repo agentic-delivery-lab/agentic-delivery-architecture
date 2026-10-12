@@ -6,6 +6,12 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Added ADR-0024 for W03's owner-selected public Requirements Authority.
+  Approved requirements and their immutable applicability baselines have one
+  owner; Architecture retains organizational decisions and models. W04 owns
+  the separate QR cutover, with original IDs and evidence preserved and no
+  automatic adoption of generated drafts or live-satisfaction claims.
+
 - Reconciled W02 development authority in ADR-0009, ADR-0018 and strategy:
   `sjefsharp` and the owner-authorized interactive Codex CLI may exercise
   scoped development acceptance and administration; the self-hosted runner

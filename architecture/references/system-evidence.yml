@@ -4022,6 +4022,8 @@ observations:
       - agentic-delivery-lab/agentic-delivery-distribution
       - agentic-delivery-lab/agentic-delivery-primitives
     sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
     request: >-
       Check current Projects and complete Issue associations while auditing
       canonical organizational strategy publication surfaces, mission/vision

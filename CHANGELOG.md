@@ -6,6 +6,15 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Clarified that ADR-0023's one-Project/two-view topology remains a proposal
+  for Architecture #15 to approve, revise, or reject, and replaced its stale
+  19-open-Issue snapshot with the complete 62-Issue/24-open-Issue inventory.
+  Updated arc42's current open-PR summary with the latest #112 and #17 heads
+  and check states; the six-repository refresh still finds eight open PRs and
+  requires human review where recorded. See
+  architecture/references/system-evidence.yml#portfolio-open-pr-recheck-20261012-1034.
+  The draft Architecture release advances to 0.1.0-draft.51.
+
 - Refreshed Architecture #11's Projects and Issue evidence from the complete
   2026-10-12 09:17–09:22 UTC inventory. No Project was visible in the viewer,
   organization, or six repository scopes; all 62 Issues had no Project item,

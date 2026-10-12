@@ -689,6 +689,20 @@ PR #104 remains merged at `9a2e1f3549428bc042d5c59d09beb300ca2d1362`, the curren
 
 After the user reiterated the conflict report, a 09:34 UTC live API recheck confirmed PR #104 is still MERGED and current remote `main` is the merge commit. The `main` Contents API returns lowercase `CHANGELOG.md` with both Issue #103 and #101 entries and no conflict markers; uppercase `CHANGELOG.MD` returns 404. The historical conflict note is in a commit message only, and a merged PR cannot receive a conflict-resolution commit. Evidence: `architecture/references/system-evidence.yml#control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0934`.
 
+### 10:34 UTC open-PR refresh
+
+The six-repository refresh found the same eight open PRs. Control Plane #112
+advanced to `996e9bf2254c23de288dd21612b213f7780bdb4c`; it remains draft and
+CLEAN, with required checks passing except `classify_updater`, skipped by
+policy, and no human review decision. The other Control Plane heads and review
+states are unchanged from the 09:23 snapshot. Architecture #17 is draft/CLEAN
+at `7c3fffcfa35946100df71d818a0e05a3c225b338`, still stacked on #16 at
+`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; exact-head validation passes and
+no human review decision is recorded. Architecture #16 and Primitives #4/#5
+remain blocked on required human review. Distribution and both `.github`
+repositories have no open PRs. Evidence:
+`architecture/references/system-evidence.yml#portfolio-open-pr-recheck-20261012-1034`.
+
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,

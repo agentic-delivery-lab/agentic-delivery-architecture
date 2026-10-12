@@ -15,6 +15,8 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Refreshed Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s read-only inventory at 2026-10-11 22:57–23:02 UTC. The organization, viewer, and all six repository Project v2 inventories returned no Projects, and all 61 Issues had no Project item. The audit also records enabled GitHub Projects entitlements, current Issue Types/Fields, open Issue/PR and release state, and the limits of the observed access. No Project or live configuration was changed; Architecture #15 remains the human topology decision. See `architecture/references/system-evidence.yml#portfolio-issue-project-inventory-20261011-2257`.
+
 - Refreshed Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s read-only GitHub Projects and Issue inventory at 2026-10-10 23:53 UTC, including current repository refs, open pull requests, release state, organization Issue Fields, and App permission limits. No Project or live configuration was changed.
 
 - Proposed ADR-0022 to use Neon Postgres for durable webhook replay claims.

@@ -594,22 +594,35 @@ successMeasures:
     targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-12 04:59:52 UTC GraphQL recheck of the organization, authenticated user, six repositories, and all 61 Issues returned no visible Project or Project item. The 2026-10-11 full inventory separately found six organization-members-only Issue Fields, empty values on all 23 then-open Issues, nine native Issue Types, and Free-plan organization/repository Projects enabled. Availability in a future private portfolio remains unverified. Creation and configuration still require the separate human decision tracked in Architecture #15.
+  proposedTopology: >-
+    One organization portfolio Project with separate Factory Evolution and
+    Software Product Delivery views remains a candidate. The complete
+    2026-10-12 09:22 UTC read-only recheck found no Project in the authenticated
+    viewer, organization, or six repository scopes and no Project item across
+    all 62 Issues; all 24 open Issues had zero organization Issue Field Values.
+    The same read found six organization Issue Fields and nine native Issue
+    Types; five open Issues remain untyped, while Control Plane #111 is a Bug
+    under recovery Issue #105. The organization plan is Free. Project
+    membership, custom fields, views, and visibility could not be inspected
+    because no Project existed in the queried scopes. Creation and
+    configuration remain subject to the separate human decision in
+    Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: portfolio-project-issue-association-recheck-20261012-0459
+  projectInventoryEvidenceId: portfolio-project-issue-association-recheck-20261012-0922
   inventoryEvidence:
-    observedAt: '2026-10-12T04:59:52Z'
+    observedAt: '2026-10-12T09:22:00Z'
     projectIds: []
     scopeSummary: >-
-      At 04:59:52 UTC, complete GraphQL organization, authenticated-user, and
-      six-repository Project v2 inventories returned zero Projects and no
-      further pages. Every Issue among the 61 Issues across those repositories
-      had zero Project-item associations; all Issue and Project-item connections
-      were complete. This recheck did not read Issue Field Values, Issue Types,
-      organization entitlements, or App permissions. The full 2026-10-11
-      inventory remains separately recorded in
-      portfolio-issue-project-inventory-20261011-2257. This is a read-only
-      observation; no Project IDs or configuration were available to inspect.
+      The complete 09:17–09:22 UTC recheck returned zero organization, viewer,
+      and repository Projects with no further pages. All 62 Issues across the
+      six visible repositories had zero Project-item associations, and all 24
+      open Issues had zero organization Issue Field Values. The read also
+      confirmed the six organization Issue Fields, nine native Issue Types,
+      current type assignments, and Free organization plan; Control Plane #111
+      is a Bug under #105. No Project IDs or configuration were available to
+      inspect. See
+      portfolio-project-issue-association-recheck-20261012-0922 for the full
+      read-only inventory and its scope limits.
   planningFieldRule: >-
     Use the existing Issue-owned Priority field for per-Issue priority wherever
     the approved Project view can expose it. After human field-ownership review,

@@ -24,23 +24,23 @@ GitHub Projects is the primary portfolio surface for both value streams. The
 proposed minimum topology is one organization portfolio Project with separate
 Factory Evolution and Software Product Delivery views, reusing a suitable
 existing Project if an authorized inventory confirms fit. The latest complete
-read-only GraphQL recheck, at 2026-10-12 04:59 UTC, found no Project in the
+read-only recheck, completed 2026-10-12 09:17–09:22 UTC, found no Project in the
 authenticated-viewer, organization, or six repository scopes and no Project
-association on any of the 61 Issues. The separate full inventory at
-2026-10-11 22:57 UTC found that organization and repository Projects are
-enabled on the Free plan and that six organization Issue Fields are
-organization-members-only. Project-specific ownership, fields, views, and
-visibility must be reviewed before selecting or configuring a Project. A
-Project-only card can be discussed and prioritized but cannot authorize
-execution. See
-`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459`
-and `system-evidence.yml#portfolio-issue-project-inventory-20261011-2257`.
+association across all 62 Issues. All 24 open Issues had zero organization
+Issue Field Values. The same inventory found six organization Issue Fields,
+nine native Issue Types, and Free organization plan support; Project-specific
+ownership, fields, views, and visibility could not be inspected because no
+Project existed. A Project-only card can be discussed and prioritized but
+cannot authorize execution. See
+`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
 
 Every executable unit of work has a source Issue in its owning repository.
 The Project links that Issue and may own distinct portfolio planning facts.
-Issue intent, Issue Type, Priority, Lifecycle Stage, Delivery State, and
-authorization remain with the source Issue and organization Issue Field
-contracts. Use the existing Issue-owned Priority value for per-Issue priority
+Issue intent, Issue Type, Priority, Lifecycle Stage, the delivery-readiness
+value, and authorization remain with the source Issue and organization Issue
+Field contracts. The current organization Issue Field is named `Delivery
+Readiness`; the live inventory returned no field named `Delivery State`. Use
+the existing Issue-owned Priority value for per-Issue priority
 where the approved Project view can expose it; a Project field must not
 silently duplicate that value. The issue-field catalog is currently
 organization-members-only and Project-view suitability has not been verified.

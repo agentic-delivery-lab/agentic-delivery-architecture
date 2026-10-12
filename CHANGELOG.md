@@ -6,16 +6,20 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
-- Refreshed Architecture #11's Projects and Issue association evidence at
-  2026-10-12 08:27 UTC after recording Control Plane Bug #111. The complete
-  six-repository inventory found no Project items across 62 Issues; all 24
-  open Issues had no organization Issue Field Values. Bug #111 is typed and
-  linked to recovery Issue #105. No Project or runtime configuration changed;
-  see architecture/references/system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0827.
-  A separate 08:33 UTC recheck confirmed that Control Plane PR #104's merge
-  commit recorded and resolved the `CHANGELOG.md` conflict, retaining both
-  #103 and #101 entries. The draft Architecture release advances to
-  0.1.0-draft.49.
+- Refreshed Architecture #11's Projects and Issue evidence from the complete
+  2026-10-12 09:17–09:22 UTC inventory. No Project was visible in the viewer,
+  organization, or six repository scopes; all 62 Issues had no Project item,
+  and all 24 open Issues had no organization Issue Field Values. Control Plane
+  #111 is typed Bug under recovery Issue #105. The canonical strategy and
+  diagrams now use the current Issue Field name `Delivery Readiness`. No
+  Project or runtime configuration changed; see
+  architecture/references/system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922.
+  A 09:34 UTC live recheck confirms Control Plane PR #104 is merged and its
+  historical `CHANGELOG.md` conflict is resolved; both #103 and #101 remain
+  in the current `main` file, with no conflict markers. The uppercase path
+  `CHANGELOG.MD` returns 404. See
+  architecture/references/system-evidence.yml#control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0934.
+  The draft Architecture release advances to 0.1.0-draft.50.
 
 - Added a 26-item Phase K coverage map that separates structural and offline
   test evidence from partial, blocked, and unverified live acceptance. It

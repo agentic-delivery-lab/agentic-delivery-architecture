@@ -33,7 +33,7 @@ participant is active or that each hosting rule has been enabled.
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
 | Repository sources | The six default-branch commits are Control Plane 9a2e1f3549428bc042d5c59d09beb300ca2d1362, Architecture 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Primitives e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution b69c5710928b47efc4d3ab12ec4d5b596c80720c, public .github af52c92e49616e78f8d6647cf5cf538a7e571d78, and private .github-private f9e6589b65c71da9e7b35d8e026f3d4a91dab78f. | Observed branch heads do not prove compatibility or active deployment. |
-| GitHub Projects and Issues | The 2026-10-12 04:59 UTC GraphQL recheck returned no Projects in the viewer, organization, or six repository scopes and no Project item on any of the 61 Issues. The separate 2026-10-11 22:57 UTC full inventory found empty Issue Field Values on all 23 then-open Issues, nine native Issue Types (five then-open Issues untyped), six organization-members-only fields, and Free-plan support for organization and repository Projects. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. Organization-only Issue Fields are unavailable in public/internal Projects; visibility in a future private Project remains unverified. Empty Issue values do not establish a lifecycle transition. See `portfolio-project-issue-association-recheck-20261012-0459` and `portfolio-issue-project-inventory-20261011-2257` in system evidence. |
+| GitHub Projects and Issues | The complete 2026-10-12 09:17–09:22 UTC recheck returned no Projects in the viewer, organization, or six repository scopes and no Project item on any of the 62 Issues. All 24 open Issues had zero organization Issue Field Values; #111 is a Bug under recovery Issue #105, and five open Issues remain untyped. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. The same read found six organization Issue Fields and nine native Issue Types, but did not establish Project-specific field visibility or App access. Empty Issue values do not establish a lifecycle transition. See `portfolio-project-issue-association-recheck-20261012-0922` in system evidence. |
 | GitHub Apps, Actions, and protection | Three App installations were listed. The Control Plane invoker installation selects repositories and has Contents/Issues/PR write plus Issue Field/Type read, with no Projects permission; its selected-repository API returned 403. Organization Actions allow all actions, do not require SHA pinning, and are enabled for all repositories. Public rulesets were read; the private ruleset endpoint returned 403. | The selected repository set, deployed credential binding, and private ruleset state remain unknown. Organization policy does not prove individual workflow pins or runtime behavior. |
 | Pull requests and Releases | The 20:05 UTC PR inventory found Control Plane #104 merged with matching CHANGELOG.md blobs across PR head, merge commit, and current main; #86 conflicting in CHANGELOG.md; #109/#110 checks passing with review pending; and Primitives #4 draft/review-required. At 20:25 UTC, Architecture #16 was open/review-required and #17 remained open/draft/mergeable at exact head `19dcc691006d93e169f9eb4f76c9456f5c6b46fe`, based on #16, with exact-head validation run 38171652069 passed and no review decision. The latest recorded six-repository Release inventory (19:14 UTC) listed no releases. | Passing CI is not human review, release adoption, participant activation, or production acceptance. PR #17 remains stacked on #16 and is not an approved Architecture release. |
 | Production runtime | The 2026-10-12 05:56 UTC Vercel recheck found production deployment `dpl_5hgNTb6CWoTqVv5TBCMqFYFRoMKZ` READY on Control Plane `main` commit `9a2e1f3549428bc042d5c59d09beb300ca2d1362`; five webhook POSTs for Architecture returned HTTP 202. Invocation and reconciler observations are detailed in §7.2.1. | Readiness and HTTP 202 do not prove signature validation, durable receipts, successful delivery, or reconciler execution. Production Neon data was not read. See `system-evidence.yml#vercel-production-runtime-recheck-20261012-0556`. |
@@ -41,17 +41,17 @@ participant is active or that each hosting rule has been enabled.
 The broad read-only inventory, exact identities, PR heads, check runs, and
 scope limits are recorded in
 [system evidence](../references/system-evidence.yml#strategy-live-inventory-recheck-20261011-1914).
-The targeted 20:07 UTC follow-up reconfirmed zero Projects, 23 open Issues
-without Project items or Issue Field Values, and records Project capability
-and field-visibility limits; see
-`system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`. A
-separate 20:25 UTC pull-request read records the exact Architecture #16/#17
-states and #17 validation run in
-`system-evidence.yml#architecture-pr17-validation-recheck-20261011-2025`.
-App installations, Actions policy, rulesets, Release listings, and production
-runtime were not re-read in these targeted refreshes and remain tied to the
-19:14 observation above. The inventory does not approve a Project topology.
-No Project, App permission, participant, or runtime setting changed.
+The latest complete Project and Issue recheck, completed 09:17–09:22 UTC,
+found no Project or Project-item association across all 62 Issues and no field
+value on any of the 24 open Issues; see
+`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
+The 09:23 UTC pull-request snapshot records eight open PRs, current exact heads,
+review state, and check status in
+`system-evidence.yml#portfolio-open-pr-recheck-20261012-0923`. App installations,
+Actions policy, rulesets, Release listings, and production runtime remain tied
+to their separately dated observations. The inventory does not approve a
+Project topology. No Project, App permission, participant, or runtime setting
+changed.
 
 ### 7.2.1 Production and invocation recheck (2026-10-12 05:56 UTC)
 
@@ -148,9 +148,12 @@ desired topology separate from observed deployment.
 ## 7.5 Access and change boundary
 
 The latest Project-existence and Issue-association inventory is
-system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459;
-the separately timed Issue Field/Type, entitlement, App, PR, and release
-inventory is system-evidence.yml#portfolio-issue-project-inventory-20261011-2257.
+system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922;
+it found no Project-item association across all 62 Issues and no organization
+Issue Field Values on any of the 24 open Issues. It also confirmed the current
+Issue Field is named `Delivery Readiness`, not `Delivery State`. App, ruleset,
+runtime, and release observations remain separately dated in their evidence
+events.
 The latest App-permission evidence remains
 system-evidence.yml#strategy-live-inventory-recheck-20261011-1914; it confirms
 that human OAuth scopes do not grant Projects access to the runtime App, and
@@ -159,14 +162,13 @@ Project topology was approved.
 
 The initial Projects read failed because the session lacked Project access.
 The later read-only inventory ran after `gh auth status` reported `project`,
-`admin:org`, and `repo`; the CLI and all organization, personal, and repository
-GraphQL connections returned no Project, and the targeted 2026-10-11 19:33
-recheck confirmed all 23 open Issues had zero Project associations. The
-separate organization REST capability and membership reads remain dated
-evidence; no plan or role data was refreshed in the 19:33 query. No scope
-change was requested and no Project mutation was performed. The org role
-does not provide Project permission to the runtime App, and no Project
-topology or configuration approval was given.
+`admin:org`, and `repo`; earlier organization, personal, and repository
+GraphQL reads returned no Project. A targeted 2026-10-11 19:33 recheck found
+no Project items on the 23 then-open Issues; this is a historical snapshot,
+superseded by the complete 2026-10-12 inventory above. No scope change was
+requested and no Project mutation was performed. The org role does not provide
+Project permission to the runtime App, and no Project topology or configuration
+approval was given.
 Persistent `admin:org` is not a routine requirement. Any organization
 field-definition change would require a separate, temporary, reviewed
 operator action and is outside this Architecture change.

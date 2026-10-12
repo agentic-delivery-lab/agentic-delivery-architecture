@@ -1,6 +1,6 @@
 # Strategy foundation and operational gap matrix
 
-**Updated:** 2026-10-12 12:34 UTC after rechecking the reported #104 changelog conflict and the exact-head Control Plane #112 hold-retry validation. The latest Project association inventory covers all 62 Issues at system-evidence.yml#strategy-publication-surface-and-project-recheck-20261012-1054; Issue Field and Issue Type details remain tied to the separate 09:22 inventory at #portfolio-project-issue-association-recheck-20261012-0922. The 11:48 open-PR inventory, 09:01 invocation run, and earlier Architecture #17 exact-head check are recorded at #portfolio-runtime-and-pr17-recheck-20261012-1156. PR #104 is merged at `9a2e1f3`; lowercase `CHANGELOG.md` on the PR head and `main` has the same blob and no conflict markers, uppercase `CHANGELOG.MD` returns 404, and no other repository in the six-repository inventory has a PR #104. The current recheck is recorded at #control-plane-pr104-conflict-recheck-20261012-1234; the earlier review-thread check is #control-plane-pr104-review-thread-recheck-20261012-1156. The #112 head, workflow fix, hosted checks, and remaining live-migration gate are recorded at #control-plane-pr112-hold-retry-validation-20261012-1230. Runtime, App, and ruleset observations remain separately dated. This matrix does not imply that live settings remained unchanged after any recorded read. Unknown means evidence was unavailable; it does not mean absent.
+**Updated:** 2026-10-12 12:57 UTC after the fresh Project, release-chain, Actions, Issue-dependency, and Architecture PR #17 recheck recorded at system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257. The 09:22 Issue Type/Field values, 10:50 strategy-publication scan, 05:55 release-source review, 06:04 Distribution bootstrap review, and earlier PR/runtime observations remain tied to their individually dated events. PR #104's resolved lowercase CHANGELOG.md conflict remains recorded at system-evidence.yml#control-plane-pr104-conflict-recheck-20261012-1234. The current-state delta below supersedes older table snapshots for Projects, release-chain status, runtime, and PR #17. This matrix does not imply that live settings remained unchanged after any read. Unknown means evidence was unavailable; it does not mean absent.
 
 | Area | Evidence and current state | Gap / risk | Owner and next step |
 | --- | --- | --- | --- |
@@ -19,6 +19,46 @@
 | Release and consumer provenance | Primitives `main` (`e4933566fbf5b0f593830f8933f18fbd21024fa7`) declares draft release `.4` with source commit `a39267da377328dbfb1ed210a23b2628c224bed6` and Architecture commit `d4714c9489fb14824ef0967903d34a73c3e437fb`; GitHub's commit API returns 422 for both identifiers in the expected source repositories. Distribution `main` (`b69c5710928b47efc4d3ab12ec4d5b596c80720c`) pins the same Primitive release ID to `01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e`, whose `36a7e7…` digest reproduces under the main algorithm. The two draft artifacts therefore disagree on the commit for the same release ID. Static source inspection found that bootstrap and projection promotion validate lexical path containment and inspect leaf files, but do not reject symlinked parent directories before file operations. The Dev Container Feature install script only validates a 40-character controller SHA and prints a status line; it does not install the pinned controller. No consumer repository, validated consumer bootstrap, or completed rollback is evidenced. Evidence: system-evidence.yml#primitive-distribution-release-pin-recheck-20261012-0555 and system-evidence.yml#distribution-bootstrap-source-review-20261012-0604. | Green validators currently check SHA shape and local lock agreement, not resolution and digest of all cross-repository source pins. A symlinked parent can redirect file reads or writes outside the intended root; Distribution has no evidenced live consumer or completed upgrade/rollback path. | Primitive Issues #2/#3 and Distribution Issues #2/#3 own pin, evaluation, and consumer work. Validate and review these changes in their owning repositories; do not publish or onboard a consumer from this Architecture proposal. |
 | Runtime evidence and invocation completion | Vercel deployment `dpl_5hgNTb6CWoTqVv5TBCMqFYFRoMKZ` is READY for production on Control Plane `main` commit `9a2e1f3549428bc042d5c59d09beb300ca2d1362`. Seven-day request logs contain five webhook POSTs for Architecture repository ID `1380894616`, all HTTP 202; sampled events include `pull_request:synchronize` and `issues:edited`. Actions run 38206400933 on that same commit passed authorize/classify/route validation but failed finalization because participant pin `7d38227f7f8d8377ed7cd1b883d90b71b69bfc9` lacks `scripts/finalize-agent-invocation.mjs`; `MODULE_NOT_FOUND` caused the finalizer job to fail, and delivery was skipped in shadow mode. The configured daily reconciler had no request in the seven-day query. Evidence: system-evidence.yml#vercel-production-runtime-recheck-20261012-0556 and system-evidence.yml#control-plane-invocation-runtime-recheck-20261012-0555. | HTTP 202 and deployment readiness do not prove signature verification, durable webhook state, terminal receipt, or successful delivery. Production Neon was not read; logs do not correlate a specific webhook to the Actions run. Cron configuration does not prove execution. | Control Plane maintainers should repair the participant pin through its owning Issue/PR and rerun bounded acceptance for terminal receipts and safe recovery. Keep this Architecture PR read-only with respect to Control Plane runtime. |
 | Open work and releases | The 10:34 UTC six-repository inventory confirms eight open PRs. Control Plane #112 is DRAFT/CLEAN at `996e9bf`; required checks pass except `classify_updater`, skipped by policy, and no human review decision is recorded. #86/#109/#110 remain CLEAN at `3a0adfb`/`1180b15`/`088a6b0`; named required checks pass, with the same policy skip on #109/#110 and no human review decisions. Architecture #16 remains BLOCKED/REVIEW_REQUIRED; draft #17 remains open, CLEAN, stacked on #16, with no human review decision. Its exact-head checks are recorded separately in `tasks/plan.md`. Primitives #4 remains DRAFT/BLOCKED/REVIEW_REQUIRED at `6e4a2ab`; #5 is BLOCKED/REVIEW_REQUIRED at `035547f`; both validations pass. Distribution, .github, and .github-private have no open PRs. PR #104 is MERGED at `9a2e1f3`; a fresh 10:57 check confirms its head is in `main`, the lowercase changelog retains both #101 and #103 without conflict markers, and uppercase `CHANGELOG.MD` does not exist. Evidence: system-evidence.yml#portfolio-open-pr-recheck-20261012-1034 and #control-plane-pr104-changelog-confirmation-20261012-1057. The latest release inventory remains the 06:22 UTC read, which found no GitHub Releases across all six repositories. | Passing checks and machine-authored reviews do not establish independent human review, release adoption, participant activation, or a complete runtime loop. Architecture #17 remains stacked until #16 receives human review; then repin if its base changes. | Human review is still required for eligible PRs. Preserve the draft and runtime gates; do not merge or release as part of this refresh. |
+
+### Current-state delta — 2026-10-12 12:57 UTC
+
+This delta supersedes older time-stamped table values for Project presence,
+release-chain status, runtime activity, and Architecture PR #17. Historical
+source reviews in those rows retain their original observation dates.
+
+- **Projects and Issues:** the viewer, organization, and all six repository
+  scopes return zero ProjectsV2. The six repositories contain 62 Issues and
+  zero Project items; the queried connections have no additional pages. No
+  views, membership, or Project field visibility can be inspected without an
+  existing Project. Architecture #12 records the read-only inventory and
+  Architecture #15 remains the human topology decision.
+- **Release and consumer pins:** the current static release-chain check fails
+  on Distribution and its Agent Plugin/Automation projections. Distribution
+  Control Plane commit expected 08728c4210ec2d227eec2b6c182dcf3bafd80db1 but
+  got 7d38227f7f8d8377ed7cd1b883d90b71b69bfc9b; Architecture commit expected
+  7db77a53841d6a1e451e0a536fe68416e050b0de but got
+  9d4872c39e9c52075a7a299ad4584ac3eb704a1b; Architecture digest expected
+  5352c13fd6c3da425f427c8ac3ddc3deb9c52bdbac2837563ac580b4da4b71fb but got
+  ac4430f7aa86c016c51ea8f9458627d4412d36256960c1bf54b63e851dc2350c. The
+  Agent Plugin repeats the Architecture commit/digest and Control Plane commit
+  differences; the Automation source commit repeats the Control Plane
+  difference. Distribution #2 remains OPEN and gates implementation until #59,
+  Architecture #3, Control Plane #60, Primitives #2, and Architecture #11 are
+  reviewed. #59, #60, Primitives #2, and #11 remain OPEN; #3 is CLOSED. Keep
+  these pin repairs in their owning Issues and repositories.
+- **Runtime and PR #17:** successful 12:40 repository-dispatch runs
+  38250462660 and 38250333675 executed only observation validation. The latest
+  agent-invocation run 38227232599 passed authorization, classification, and
+  finalization, then skipped delivery in shadow mode; two 08:14 runs failed
+  explicit-invocation validation. Architecture PR #17 remains OPEN/DRAFT/CLEAN
+  at a96a877b0005f72a5b9671d613105e866d93cd7f on PR #16 at
+  c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no human review decision.
+  Its exact-head hosted validate check passed in run 38250330307.
+- **Acceptance consequence:** Phase K criterion 23 remains a Gap. These static
+  mismatches do not demonstrate a consumer upgrade or rollback; no end-to-end
+  issue-to-PR delivery or evaluation-to-Issue feedback is proven. The exact
+  sources, run identities, and limitations are in
+  system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257.
 
 ## Phase K acceptance coverage
 

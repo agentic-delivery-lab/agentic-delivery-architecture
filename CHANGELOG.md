@@ -6,6 +6,16 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Refreshed the read-only Project, release-chain, Actions, dependency, and
+  Architecture PR #17 evidence at 12:57 UTC. All 62 Issues remain outside any
+  Project in the six visible repositories; the exact consumer release-chain
+  check reports Control Plane and Architecture pin drift, and recent successful
+  runs only validate shadow-mode observation events. Distribution #2 still
+  gates pin implementation on open owner reviews. No Project, pin, permission,
+  published GitHub release, participant, or production state changed. See
+  architecture/references/system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257.
+  The Architecture draft release advances to 0.1.0-draft.56.
+
 - Added an Architecture test that enforces one canonical organizational
   strategy artifact, and completed a read-only scan of the six visible
   repositories' mission/vision publication surfaces. Rechecked Project

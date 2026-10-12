@@ -928,3 +928,33 @@ Migration 0008 remains unverified: the PR body states it has not been applied
 to a live database, and no Neon read was part of this recheck. Do not enable the
 workflow revision until migration application and live verification pass the
 separate approval gate. Evidence: `system-evidence.yml#control-plane-pr112-hold-retry-validation-20261012-1230`.
+
+
+### 12:57 UTC Project, runtime, and release-chain refresh
+
+A fresh authenticated GraphQL inventory found zero ProjectsV2 in the viewer,
+organization, or any of the six repositories. All 62 Issues remain unassociated
+with a Project; no queried connection had another page. Architecture PR #17 is
+OPEN/DRAFT/CLEAN and mergeable at exact head
+a96a877b0005f72a5b9671d613105e866d93cd7f, stacked on PR #16 at
+c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no human review decision. Its
+exact-head hosted validate check passed as run 38250330307.
+
+The exact release-chain check failed. Distribution's bundle, Agent Plugin, and
+Automation projections disagree with the Control Plane and Architecture pins;
+the exact expected/got values are recorded in
+architecture/references/system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257.
+Distribution Issue #2 remains OPEN and explicitly gates implementation on
+review of coordinating Issue #59, Architecture #3, Control Plane #60,
+Primitives #2, and Architecture #11. #59, #60, Primitives #2, and Architecture
+#11 are OPEN; Architecture #3 is CLOSED. No pins were changed because these
+dependencies remain open.
+
+The two newest successful 12:40 repository-dispatch runs validated signed
+observation events and immutable controller pins in an observation-only job.
+The latest agent-invocation, run 38227232599 at 09:01 UTC, completed
+authorization, classification, and finalization but skipped delivery in
+shadow mode; the two 08:14 invocation runs failed explicit-invocation
+validation. These events do not prove an end-to-end delivery or eval-feedback
+loop. No live Projects, workflow, participant, permission, release, or
+production configuration was changed.

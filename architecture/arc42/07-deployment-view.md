@@ -33,21 +33,23 @@ participant is active or that each hosting rule has been enabled.
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
 | Repository sources | The six default-branch commits are Control Plane 9a2e1f3549428bc042d5c59d09beb300ca2d1362, Architecture 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Primitives e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution b69c5710928b47efc4d3ab12ec4d5b596c80720c, public .github af52c92e49616e78f8d6647cf5cf538a7e571d78, and private .github-private f9e6589b65c71da9e7b35d8e026f3d4a91dab78f. | Observed branch heads do not prove compatibility or active deployment. |
-| GitHub Projects and Issues | The complete 2026-10-12 09:17–09:22 UTC recheck returned no Projects in the viewer, organization, or six repository scopes and no Project item on any of the 62 Issues. All 24 open Issues had zero organization Issue Field Values; #111 is a Bug under recovery Issue #105, and five open Issues remain untyped. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. The same read found six organization Issue Fields and nine native Issue Types, but did not establish Project-specific field visibility or App access. Empty Issue values do not establish a lifecycle transition. See `portfolio-project-issue-association-recheck-20261012-0922` in system evidence. |
+| GitHub Projects and Issues | The 10:50 UTC complete recheck returned no Projects in the viewer, organization, or six repository scopes and no Project item on any of the 62 Issues. The separate 09:17–09:22 UTC metadata inventory found no organization Issue Field Values on the 24 open Issues, six organization Issue Fields, nine native Issue Types, #111 typed as a Bug under #105, and five untyped open Issues. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. The metadata inventory does not establish Project-specific field visibility or App access. Empty Issue values do not establish a lifecycle transition. See `strategy-publication-surface-and-project-recheck-20261012-1054` and `portfolio-project-issue-association-recheck-20261012-0922` in system evidence. |
 | GitHub Apps, Actions, and protection | Three App installations were listed. The Control Plane invoker installation selects repositories and has Contents/Issues/PR write plus Issue Field/Type read, with no Projects permission; its selected-repository API returned 403. Organization Actions allow all actions, do not require SHA pinning, and are enabled for all repositories. Public rulesets were read; the private ruleset endpoint returned 403. | The selected repository set, deployed credential binding, and private ruleset state remain unknown. Organization policy does not prove individual workflow pins or runtime behavior. |
-| Pull requests and Releases | The 09:23 UTC six-repository PR inventory found eight open PRs. Control Plane #112 was draft/clean; #86/#109/#110 were clean. Architecture #16 was blocked on review and #17 was draft/clean, stacked on #16. Primitives #4/#5 were blocked on review; Distribution and both `.github` adapters had no open PRs. A 10:34 UTC follow-up confirmed #112's current head `996e9bf2254c23de288dd21612b213f7780bdb4c`; its required checks pass, except `classify_updater` is skipped by policy. All exact heads, named-check results, and review states are recorded in `system-evidence.yml#portfolio-open-pr-recheck-20261012-0923` and `#portfolio-open-pr-recheck-20261012-1034`. The latest recorded six-repository Release inventory (06:22 UTC) listed no releases. | Passing CI is not human review, release adoption, participant activation, or production acceptance. Architecture #17 remains stacked on #16 and is not an approved Architecture release. |
+| Pull requests and Releases | The 11:48 UTC six-repository PR inventory found eight open PRs. Control Plane #112 is draft/clean; #86/#109/#110 are clean. Architecture #16 is blocked on review and #17 is draft/clean at `c241997ca864fd1842ba0c2d79bcec9b8cfffb91`, stacked on #16 at `c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; exact-head validation run [38243930448](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38243930448) passed. Primitives #4 is draft/blocked and #5 is blocked on review; Distribution and both `.github` adapters have no open PRs. Control Plane #112 remains draft at `996e9bf2254c23de288dd21612b213f7780bdb4c`; its checks pass, but its held-receipt retry semantics and live migration prerequisite remain unresolved. The latest six-repository Release inventory (06:22 UTC) listed no releases. | Passing CI is not human review, release adoption, participant activation, or production acceptance. Architecture #17 remains stacked on #16 and is not an approved Architecture release. See `portfolio-runtime-and-pr17-recheck-20261012-1156` in system evidence. |
 | Production runtime | The 2026-10-12 05:56 UTC Vercel recheck found production deployment `dpl_5hgNTb6CWoTqVv5TBCMqFYFRoMKZ` READY on Control Plane `main` commit `9a2e1f3549428bc042d5c59d09beb300ca2d1362`; five webhook POSTs for Architecture returned HTTP 202. Invocation and reconciler observations are detailed in §7.2.1. | Readiness and HTTP 202 do not prove signature validation, durable receipts, successful delivery, or reconciler execution. Production Neon data was not read. See `system-evidence.yml#vercel-production-runtime-recheck-20261012-0556`. |
+| Control Plane invocation | The latest observed repository-dispatch run on Control Plane `main` was 38227232599 at 09:01 UTC. Authorization, classification, and finalization passed on `9a2e1f3549428bc042d5c59d09beb300ca2d1362`; delivery was skipped because the participant remained in shadow mode. | This is not end-to-end delivery. Two 08:14 UTC runs failed explicit-invocation validation and skipped finalization/delivery; the 05:56 production snapshot separately records an earlier finalizer failure. See `portfolio-runtime-and-pr17-recheck-20261012-1156` and `vercel-production-runtime-recheck-20261012-0556`. |
 
 The broad read-only inventory, exact identities, PR heads, check runs, and
 scope limits are recorded in
 [system evidence](../references/system-evidence.yml#strategy-live-inventory-recheck-20261011-1914).
-The latest complete Project and Issue recheck, completed 09:17–09:22 UTC,
-found no Project or Project-item association across all 62 Issues and no field
-value on any of the 24 open Issues; see
+The latest complete Project and Issue association recheck, completed at 10:50
+UTC, found no Project or Project-item association across all 62 Issues; see
+`system-evidence.yml#strategy-publication-surface-and-project-recheck-20261012-1054`.
+The separate 09:17–09:22 UTC metadata inventory records Issue Field values,
+Issue Types, and assignments in
 `system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
-The 09:23 UTC pull-request snapshot records eight open PRs, current exact heads,
-review state, and check status in
-`system-evidence.yml#portfolio-open-pr-recheck-20261012-0923`. App installations,
+The 11:48 UTC pull-request, runtime, and exact-head refresh is recorded in
+`system-evidence.yml#portfolio-runtime-and-pr17-recheck-20261012-1156`. App installations,
 Actions policy, rulesets, Release listings, and production runtime remain tied
 to their separately dated observations. The inventory does not approve a
 Project topology. No Project, App permission, participant, or runtime setting
@@ -61,6 +63,18 @@ changed.
 | Webhook ingress | The seven-day request-log query for Architecture repository ID `1380894616` found five webhook POSTs, all HTTP 202. The detailed function-log sample includes `pull_request:synchronize` at 05:03:52.353 UTC and `issues:edited` at 05:04:44.069 UTC. | HTTP 202 is an accepted response, not proof of signature verification, durable state, Actions completion, or downstream delivery. |
 | Invocation finalization | Actions run 38206400933 on that same `main` commit passed authorization, classification, and route validation. Finalization failed because the checked-out participant pin `7d38227f7f8d8377ed7cd1b883d90b71b69bfc9` lacks `scripts/finalize-agent-invocation.mjs`; the command failed with `MODULE_NOT_FOUND`. The participant is in shadow mode, so delivery was skipped. | No terminal receipt or successful delivery was established. Production Neon data was not read, and request logs do not correlate a particular webhook with the Actions run. Pin repair belongs to a reviewed Control Plane change. |
 | Scheduled reconciliation | Production configuration declares `/api/cron/reconcile-webhooks` on a daily 00:00 UTC schedule. | No reconciler request was observed in the seven-day request-log query; configuration does not prove a cron execution. |
+
+### 7.2.2 Invocation and PR recheck (2026-10-12 08:14–11:56 UTC)
+
+| Surface | Observed state | Evidence limit |
+| --- | --- | --- |
+| Explicit invocation validation | Runs [38222376379](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38222376379) and [38222376214](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38222376214) passed authorization but failed explicit-invocation validation at 08:14 UTC. Finalization and delivery were skipped. | These runs did not create a completed invocation receipt and do not establish delivery behavior. |
+| Shadow invocation | Run [38227232599](https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38227232599) on Control Plane `main` commit `9a2e1f3549428bc042d5c59d09beb300ca2d1362` passed authorization, classification, and finalization at 09:01 UTC using controller commit `08728c4210ec2d227eec2b6c182dcf3bafd80db1`. The finalizer persisted completion/retryability; delivery was skipped in shadow mode. | A successful finalizer with delivery skipped does not prove a completed product or factory task, write-back, or runtime acceptance. |
+| Recovery follow-up | Control Plane PR #112 remains OPEN/DRAFT/CLEAN at `996e9bf2254c23de288dd21612b213f7780bdb4c`, with passing named checks and no human review decision. | Read-only review found unresolved routing holds can be finalized as completed, preventing retry. Migration 0008 has not been proven applied to the live database; do not treat the draft as accepted recovery behavior. |
+| Architecture PR #17 | PR #17 remains OPEN/DRAFT/CLEAN at `c241997ca864fd1842ba0c2d79bcec9b8cfffb91`, stacked on PR #16 at `c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; exact-head validation run [38243930448](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38243930448) passed. | No human review decision is recorded. PR #17 remains a proposal and is not an approved Architecture release. |
+
+The exact run states, source inventory, PR heads, and review limits are recorded
+in `system-evidence.yml#portfolio-runtime-and-pr17-recheck-20261012-1156`.
 
 See `system-evidence.yml#vercel-production-runtime-recheck-20261012-0556`
 and `system-evidence.yml#control-plane-invocation-runtime-recheck-20261012-0555`.
@@ -148,12 +162,13 @@ desired topology separate from observed deployment.
 ## 7.5 Access and change boundary
 
 The latest Project-existence and Issue-association inventory is
-system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922;
-it found no Project-item association across all 62 Issues and no organization
-Issue Field Values on any of the 24 open Issues. It also confirmed the current
-Issue Field is named `Delivery Readiness`, not `Delivery State`. App, ruleset,
-runtime, and release observations remain separately dated in their evidence
-events.
+system-evidence.yml#strategy-publication-surface-and-project-recheck-20261012-1054;
+it found no Project-item association across all 62 Issues. The separate
+system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922
+records Issue Field Values, Issue Types, and assignments; it found no values
+on any of the 24 open Issues and confirmed the actual Issue Field is named
+`Delivery Readiness`, not `Delivery State`. App, ruleset, runtime, and release
+observations remain separately dated in their evidence events.
 The latest App-permission evidence remains
 system-evidence.yml#strategy-live-inventory-recheck-20261011-1914; it confirms
 that human OAuth scopes do not grant Projects access to the runtime App, and

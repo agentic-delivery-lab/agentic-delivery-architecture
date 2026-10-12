@@ -596,33 +596,35 @@ projectPlanning:
   primarySurface: GitHub Projects
   proposedTopology: >-
     One organization portfolio Project with separate Factory Evolution and
-    Software Product Delivery views remains a candidate. The complete
-    2026-10-12 09:22 UTC read-only recheck found no Project in the authenticated
+    Software Product Delivery views remains a candidate. The latest complete
+    Project-association read at 10:50 UTC found no Project in the authenticated
     viewer, organization, or six repository scopes and no Project item across
-    all 62 Issues; all 24 open Issues had zero organization Issue Field Values.
-    The same read found six organization Issue Fields and nine native Issue
-    Types; five open Issues remain untyped, while Control Plane #111 is a Bug
-    under recovery Issue #105. The organization plan is Free. Project
+    all 62 Issues. The separate 09:17–09:22 UTC Issue metadata inventory found
+    six organization Issue Fields and nine native Issue Types; all 24 open
+    Issues had zero organization Issue Field Values, five open Issues remain
+    untyped, and Control Plane #111 is a Bug under recovery Issue #105. The
+    organization plan is Free. Project
     membership, custom fields, views, and visibility could not be inspected
     because no Project existed in the queried scopes. Creation and
     configuration remain subject to the separate human decision in
     Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: portfolio-project-issue-association-recheck-20261012-0922
+  projectInventoryEvidenceId: strategy-publication-surface-and-project-recheck-20261012-1054
   inventoryEvidence:
-    observedAt: '2026-10-12T09:22:00Z'
+    observedAt: '2026-10-12T10:54:40Z'
     projectIds: []
     scopeSummary: >-
-      The complete 09:17–09:22 UTC recheck returned zero organization, viewer,
-      and repository Projects with no further pages. All 62 Issues across the
-      six visible repositories had zero Project-item associations, and all 24
-      open Issues had zero organization Issue Field Values. The read also
-      confirmed the six organization Issue Fields, nine native Issue Types,
-      current type assignments, and Free organization plan; Control Plane #111
-      is a Bug under #105. No Project IDs or configuration were available to
-      inspect. See
-      portfolio-project-issue-association-recheck-20261012-0922 for the full
-      read-only inventory and its scope limits.
+      The 10:50 UTC recheck returned zero organization, viewer, and repository
+      Projects with no further pages. All 62 Issues across the six visible
+      repositories had zero Project-item associations. The separate complete
+      09:17–09:22 UTC Issue metadata read found zero organization Issue Field
+      Values on all 24 open Issues and recorded the six organization Issue
+      Fields, nine native Issue Types, current assignments, and Free plan.
+      Control Plane #111 is a Bug under #105. No Project IDs or configuration
+      were available to inspect. See
+      strategy-publication-surface-and-project-recheck-20261012-1054 and
+      portfolio-project-issue-association-recheck-20261012-0922 for the
+      separate read-only inventories and their scope limits.
   planningFieldRule: >-
     Use the existing Issue-owned Priority field for per-Issue priority wherever
     the approved Project view can expose it. After human field-ownership review,

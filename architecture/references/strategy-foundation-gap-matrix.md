@@ -1,6 +1,6 @@
 # Strategy foundation and operational gap matrix
 
-**Updated:** 2026-10-12 10:57 UTC after a live recheck of PR #104 and the 10:54 canonical-source/Project scan. The latest complete Project query covers all 62 Issues and is recorded at system-evidence.yml#strategy-publication-surface-and-project-recheck-20261012-1054; Issue Field and Issue Type details remain tied to the full 09:22 inventory at #portfolio-project-issue-association-recheck-20261012-0922. The 10:34 six-repository open-PR check and 10:47 Architecture #17 follow-up are historical snapshots; see #portfolio-open-pr-recheck-20261012-1034 and tasks/plan.md. PR #104 is merged at `9a2e1f3`; its PR head is an ancestor of current `main`, and lowercase `CHANGELOG.md` contains both entries with no conflict markers. Uppercase `CHANGELOG.MD` returns 404. The 10:57 read-only confirmation is at system-evidence.yml#control-plane-pr104-changelog-confirmation-20261012-1057. Runtime, App, and ruleset observations remain separately dated. This matrix does not imply that live settings remained unchanged after any recorded read. Unknown means evidence was unavailable; it does not mean absent.
+**Updated:** 2026-10-12 11:56 UTC after a complete Issue/Project, invocation, PR #17, and PR #104 review-thread recheck. The latest Project association inventory covers all 62 Issues at system-evidence.yml#strategy-publication-surface-and-project-recheck-20261012-1054; Issue Field and Issue Type details remain tied to the separate 09:22 inventory at #portfolio-project-issue-association-recheck-20261012-0922. The 11:48 open-PR inventory, 09:01 invocation run, and current Architecture #17 exact-head check are recorded at #portfolio-runtime-and-pr17-recheck-20261012-1156. PR #104 is merged at `9a2e1f3`; lowercase `CHANGELOG.md` contains both entries without conflict markers, uppercase `CHANGELOG.MD` returns 404, and all three Codex review threads are resolved. The evidence records are #control-plane-pr104-changelog-confirmation-20261012-1057 and #control-plane-pr104-review-thread-recheck-20261012-1156. Runtime, App, and ruleset observations remain separately dated. This matrix does not imply that live settings remained unchanged after any recorded read. Unknown means evidence was unavailable; it does not mean absent.
 
 | Area | Evidence and current state | Gap / risk | Owner and next step |
 | --- | --- | --- | --- |
@@ -57,7 +57,7 @@ adequate acceptance evidence yet.
 | 23 | Gap | Architecture, Primitive, and Distribution manifests define immutable pin and rollback concepts. | Current draft pins disagree or fail to resolve, and no consumer upgrade/rollback has been completed; see Release and consumer provenance above. |
 | 24 | Blocked | Architecture #13 and Distribution #2/#3 define product ownership and onboarding dependencies. | No product steward is identified and repository creation/onboarding is explicitly gated; no approved bootstrap path has been exercised. |
 | 25 | Gap | #109 contains a synthetic product-feature scenario and preserves source-Issue identity. | No real product repository, steward, bounded-context model, product metrics, or authorized outcome evidence has been identified. |
-| 26 | Partial | The Control Plane suite has continuation and quota-stop coverage in [codex-controller.test.mjs](https://github.com/agentic-delivery-lab/agentic-delivery/blob/9a2e1f3549428bc042d5c59d09beb300ca2d1362/tests/delivery/codex-controller.test.mjs) and [codex-loop.test.mjs](https://github.com/agentic-delivery-lab/agentic-delivery/blob/9a2e1f3549428bc042d5c59d09beb300ca2d1362/tests/delivery/codex-loop.test.mjs); #109/#110 hosted suites pass on their exact heads. | There is no paired end-to-end acceptance for short gated and long-running delivery. Current runtime evidence also records a failed invocation finalizer. |
+| 26 | Partial | The Control Plane suite has continuation and quota-stop coverage in [codex-controller.test.mjs](https://github.com/agentic-delivery-lab/agentic-delivery/blob/9a2e1f3549428bc042d5c59d09beb300ca2d1362/tests/delivery/codex-controller.test.mjs) and [codex-loop.test.mjs](https://github.com/agentic-delivery-lab/agentic-delivery/blob/9a2e1f3549428bc042d5c59d09beb300ca2d1362/tests/delivery/codex-loop.test.mjs); #109/#110 hosted suites pass on their exact heads. The latest 09:01 repository-dispatch run passed authorization, classification, and finalization but skipped delivery in shadow mode. | There is no paired end-to-end acceptance for short gated and long-running delivery. Two 08:14 invocations failed explicit-invocation validation. Control Plane #112 is still draft; its current code can finalize an unresolved routing hold as completed, and live migration 0008 is unverified. A successful shadow-mode receipt does not prove delivery or recovery acceptance. |
 
 ## Sequencing and tradeoffs
 
@@ -67,19 +67,25 @@ adequate acceptance evidence yet.
    repository owner has been identified.
 2. Architecture #14 is merged, but its review API records only a Codex
    COMMENTED review; do not infer independent human acceptance from merge
-   state. Primitives #4 consumes evaluation-report contract 2.0.0 and remains
+   state. Control Plane #104's three Codex review threads are resolved, but its
+   COMMENTED review does not establish independent human approval. Primitives
+   #4 consumes evaluation-report contract 2.0.0 and remains
    Draft/REVIEW_REQUIRED pending Issue #2 ADR-0023 mapping and independent
    semantic review. Its four-case replay is synthetic, reports no change, and
    establishes no outcome improvement.
 3. Review open Control Plane PRs #109 and #110; no human review decision is
-   recorded. PR #109's offline synthetic evaluation tests invoke
+   recorded. At the 11:48 UTC snapshot, #110 is CLEAN at
+   `088a6b02391367f401b687e1873754e38c2a71fc`; #109 is CLEAN at
+   `1180b1559a1e694b12fa95df1f548accb4697344`. PR #109's offline synthetic evaluation tests invoke
    `routeEvaluationReports` and assert non-actionable owner-verification holds.
    Its separate Project-context cases remain fixtures; they do not compose the
    #102 planning path with #104 routing or show live Project access. PR #110's
-   exact-head checks are recorded in the 06:46 UTC evidence event. PRs #102 and
-   #104 are merged with Codex COMMENTED reviews only. Keep #105/#106 runtime
-   work and live Project behavior separately gated; neither is live Project
-   integration.
+   exact-head checks are recorded in the 11:48 UTC evidence event. Control
+   Plane #112 remains a draft with a held-receipt retry gap and an unverified
+   live migration prerequisite. PRs #102 and #104 are merged with Codex
+   COMMENTED reviews only; #104's resolved automated threads do not replace
+   human review. Keep #105/#106 runtime work and live Project behavior
+   separately gated; neither is live Project integration.
 4. Begin Distribution #2 only after its Architecture, Control Plane, and
    Primitive dependencies are reviewed. Keep Distribution #3 and product
    outcome measures gated on confirmed product existence and a steward.

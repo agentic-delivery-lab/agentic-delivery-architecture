@@ -4097,3 +4097,78 @@ observations:
       PR #104 was already merged before this check, so it has no active merge
       conflict to resolve. This read does not identify any PR #104 outside the
       six visible organization repositories; no repository change was made.
+  - id: control-plane-pr104-review-thread-recheck-20261012-1156
+    observedAt: '2026-10-12T11:56:42Z'
+    source: >-
+      GitHub GraphQL review-thread and REST contents APIs via the authenticated
+      gh identity; read-only inspection of the merged source and regression tests.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    request: >-
+      Verify whether the three Codex review comments on Control Plane PR #104
+      remain unresolved in the merged source, independently of the historical
+      CHANGELOG.md merge-conflict note. Read-only; do not change the merged PR.
+    result: >-
+      GitHub reports all three Codex review threads as resolved. Current main
+      normalizes owner and repository casing plus Issue number before rejecting
+      a self-target; it checks measured improvement/regression claims against
+      the supported absolute-difference comparator direction and sends claims
+      that depend on unavailable tolerance semantics to human review. Owner
+      Issue URLs remain non-actionable awaiting-owner-verification dispositions
+      with no target and executionAuthorized false until an authoritative owner
+      map is pinned. Regression tests cover case-variant self-targets and
+      directional measured claims. The current source has no active changelog
+      conflict; lowercase CHANGELOG.md is the only tracked path.
+    limitation: >-
+      Resolved automated review threads do not establish independent human
+      review or authorize runtime use. PR #104 is already merged, so later
+      changes would require a separate reviewed PR.
+  - id: portfolio-runtime-and-pr17-recheck-20261012-1156
+    observedAt: '2026-10-12T11:56:42Z'
+    source: >-
+      Complete GitHub REST/GraphQL Issue, Project, pull-request, and Actions
+      reads via the authenticated gh identity; read-only PR source review.
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38222376379
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38222376214
+      - https://github.com/agentic-delivery-lab/agentic-delivery/actions/runs/38227232599
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38243930448
+    request: >-
+      Refresh the complete Issue/Project inventory, current open pull-request
+      heads, Architecture PR #17 exact-head check, and the newest Control Plane
+      invocation runs. Distinguish successful shadow-mode finalization from
+      delivery and unresolved draft recovery work. Read-only.
+    result: >-
+      The six visible repositories contain 62 Issues (24 open and 38 closed),
+      no organization, viewer, or repository Project, and no Project item on
+      any Issue. All 24 open Issues have zero organization Issue Field Values;
+      the organization has six Issue Fields and nine native Issue Types. Only
+      closed Control Plane Issues #44, #46, #47, and #48 have values; five open
+      Issues remain untyped, and no field named Delivery State exists.
+      Architecture PR #17 is OPEN/DRAFT/CLEAN at head
+      c241997ca864fd1842ba0c2d79bcec9b8cfffb91, stacked on PR #16 at
+      c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f. Exact-head validation run
+      38243930448 passed; no human review decision is recorded. Control Plane
+      main run 38227232599 on 9a2e1f3549428bc042d5c59d09beb300ca2d1362 passed
+      authorization, classification, and finalization at 09:01 UTC, then
+      skipped delivery because the participant remained in shadow mode. The
+      two 08:14 UTC runs 38222376379 and 38222376214 failed explicit-invocation
+      validation after authorization; finalization and delivery were skipped.
+      Control Plane PR #112 remains OPEN/DRAFT at 996e9bf2254c23de288dd21612b213f7780bdb4c.
+      Its code review found that an unresolved routing hold can be finalized as
+      completed, preventing retry, and that migration 0008 has not been proven
+      applied to the live database. Do not treat its passing checks or the
+      successful shadow hold as completion of Issue #111.
+    limitation: >-
+      Inventories, checks, and runtime observations are point-in-time. A
+      successful authorization/classification/finalization run with delivery
+      skipped does not prove end-to-end delivery, live database migration, or
+      acceptance. PR #17 remains a draft stacked on a PR requiring human review.

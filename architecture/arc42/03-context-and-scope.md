@@ -30,12 +30,17 @@ because they have separate repositories. The machine-readable context map is
 - **GitHub Projects:** required primary planning, prioritization,
   coordination, and progress-visibility surface for Factory Evolution and
   Software Product Delivery. Origin repository Issues remain canonical work
-  records and the only source of execution authorization. The 2026-10-09
-  inventory found no organization, user, or repository Project, while the
-  organization API reports Project capability under its Free plan. The
-  authenticated user has an active organization admin role, but Project views,
-  fields, per-Project access, GitHub App access, and live lifecycle integration
-  remain unverified. No live configuration is claimed.
+  records and the only source of execution authorization. The latest complete
+  Project and Issue recheck, completed 2026-10-12 09:17–09:22 UTC, found no
+  Project in the authenticated-viewer, organization, or six repository scopes;
+  none of the 62 Issues had a Project-item association, and all 24 open Issues
+  had zero organization Issue Field Values. The same inventory found six
+  organization Issue Fields and nine native Issue Types; five open Issues
+  remain untyped, while Control Plane #111 is typed Bug under recovery Issue
+  #105. The organization plan is Free. No Project existed to inspect views,
+  membership, custom fields, or visibility. External repositories and Projects
+  outside the queried scopes remain unknown. No live configuration is claimed;
+  see `system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
 - **GitHub App:** installation access, permissions, and subscribed event
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.
@@ -54,8 +59,11 @@ because they have separate repositories. The machine-readable context map is
 - **Consumer repositories:** receive thin, version-pinned integration from
   Distribution and reviewed Primitive projections from their canonical source.
 - **Product repositories:** the expected owner boundary for product Issues and
-  product outcome evidence; no distinct product repository or steward was
-  identified in the six-repository inventory.
+  product outcome evidence; the 2026-10-11 19:33 UTC repository mapping
+  identified no distinct product repository or steward among the six
+  organization repositories. The 2026-10-12 09:22 UTC recheck covered those
+  same six repositories, not external repositories; an external product
+  repository remains unknown.
 
 ## 3.3 Scope exclusions
 

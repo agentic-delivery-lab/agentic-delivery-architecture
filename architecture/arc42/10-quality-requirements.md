@@ -34,19 +34,23 @@ are introduced by this proposal; Primitive impact review automation remains
 open. QR-011's repository routing is validated, but independent human steward
 approval is blocked by the one-member/CODEOWNERS gate. Issue-field pinning is
 unverified. The recovery intake runs failed before dependency installation.
-Participants remain in shadow mode. The refreshed authorized Projects
-inventory returned no organization, personal, or repository Project visible
-to the queried identity, and all 19 open Issues in the six visible
-repositories had zero Project item associations. The organization REST response reports
-organization and repository Projects available under the Free plan, and the
-identity has an active organization admin role. The six organization Issue
-Fields are organization-members-only.
-Architecture PR #14 proposes the QR-015 evaluation-report schema and synthetic
-fixture, while Primitives #3 owns dataset/grader/replay implementation and
-Control Plane #103 owns finding routing. There is no measured baseline or live
-evaluation. QR-013–QR-016 remain target scenarios; they do not report complete
-runtime integration or achieved outcomes. These are unresolved evidence gaps,
-not satisfied quality goals.
+Participants remain in shadow mode. The latest complete Projects and Issue
+inventory, read on 2026-10-12 09:17–09:22 UTC, returned no organization,
+viewer, or repository Project in the queried scopes and no Project-item
+association on any of the 62 Issues; all 24 open Issues had zero organization
+Issue Field Values. It confirmed six organization-members-only Issue Fields,
+nine native Issue Types, and Free-plan organization/repository Project
+capability. Project field visibility and runtime App access remain unknown
+because no Project exists in the queried scopes. The earlier 2026-10-09
+counts are historical; see
+`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
+Architecture PR #14 merged the QR-015 evaluation-report schema and synthetic
+fixture at `61d99cb`; the schema remains in a draft Architecture release.
+Primitives #3 owns dataset/grader/replay implementation and Control Plane
+#103 owns finding routing. There is no measured baseline or live evaluation.
+QR-013–QR-016 remain target scenarios; they do not report complete runtime
+integration or achieved outcomes. These are unresolved evidence gaps, not
+satisfied quality goals.
 
 The proposed report contract 2.0.0 requires each case to state its task,
 stimulus, expected outcome, and acceptance criteria; the case set must match

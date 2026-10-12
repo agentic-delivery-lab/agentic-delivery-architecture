@@ -1,6 +1,6 @@
 schemaVersion: 1
 status: proposed
-asOf: '2026-10-09'
+asOf: '2026-10-12'
 sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
 purpose: Make software engineering continuously improvable, explainable, and trustworthy.
 mission: >-
@@ -182,7 +182,8 @@ valueStreams:
   - id: software-product-delivery
     outcome: Users receive useful, reliable software changes with evidence of the problem addressed and the result observed.
     operatingLoop:
-      - Capture a user or operator problem, desired outcome, and evidence in an Issue owned by the product repository.
+      - When no steward-owned product repository is confirmed, record product discovery, accountable-owner work, desired outcome, and evidence in an Issue in an existing owning repository; after an approved product repository exists, record product feature work in a typed Issue owned by that repository.
+      - Require human approval for product repository creation, access, stewardship, and pinned bootstrap before creating product Issues in a new repository.
       - Prioritize the linked Issue in the portfolio Project.
       - Deliver through the same authorized Issue, pull request, automated validation, independent review, and human merge boundary.
       - Observe product behavior and user feedback against the Issue's stated outcome.
@@ -593,23 +594,43 @@ successMeasures:
     targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-10 23:53 inventory returned no Project while the organization REST API reported both organization and repository Projects available, so creation and configuration still require the separate human decision tracked in Architecture #15.
+  proposedTopology: >-
+    One organization portfolio Project with separate Factory Evolution and
+    Software Product Delivery views remains a candidate. The complete
+    13:25–13:31 UTC recheck found no Project in the authenticated viewer,
+    organization, or six repository scopes and no Project item across all 62
+    Issues. The organization is on the Free plan, with both Projects
+    capability flags enabled. All 24 open Issues had no organization Issue
+    Field Values; the nine Issue Types and six organization Issue Fields were
+    unchanged. Project membership, fields, views, and visibility could not be
+    inspected because no Project existed in the queried scopes. Creation and
+    configuration remain subject to the separate human decision in
+    Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: strategy-github-project-issue-inventory-20261010-2353
+  projectInventoryEvidenceId: portfolio-current-work-management-pr-refresh-20261012-1331
   inventoryEvidence:
-    observedAt: '2026-10-10T23:53:04Z'
+    observedAt: '2026-10-12T13:31:40Z'
     projectIds: []
     scopeSummary: >-
-      At 23:53 UTC, complete GraphQL organization, authenticated-user, and six
-      repository Project inventories returned no
-      Projects or additional pages; organization and user CLI listings
-      including closed Projects were empty. All 23 open Issues had no Project
-      items, and all per-Issue field-value reads returned empty arrays. The
-      active identity had project, admin:org, repo, and workflow scopes and
-      organization admin role. The organization REST response reported
-      plan=free and both has_organization_projects=true and
-      has_repository_projects=true.
-  planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the approved Project view can expose it. Project-owned fields may express distinct cross-Issue grouping, sequencing, or planned dependencies; do not duplicate Issue Priority or lifecycle values.
+      The 13:25–13:31 UTC recheck returned zero organization, viewer, and
+      repository Projects with no further pages. All 62 Issues across the six
+      visible repositories had zero Project-item associations. All 24 open
+      Issues had no organization Issue Field Values; the complete inventory
+      recorded nine Issue Types, six organization Issue Fields, and the Free
+      plan with organization and repository Projects enabled. No Project IDs
+      or configuration were available to inspect. See
+      portfolio-current-work-management-pr-refresh-20261012-1331 for the
+      complete read-only inventory and its scope limits.
+  planningFieldRule: >-
+    Use the existing Issue-owned Priority field for per-Issue priority wherever
+    the approved Project view can expose it. After human field-ownership review,
+    Project-owned fields may express distinct cross-Issue portfolio priority,
+    grouping, iteration, roadmap, sequencing, or planned dependencies. Give any
+    Project priority an explicitly distinct portfolio meaning; do not duplicate,
+    overwrite, or write it back to Issue Priority, lifecycle, delivery state, or
+    governance metadata. Project membership is a planning association, not
+    execution authority. Multiple candidate Project links remain an explicit
+    gap until the approved topology and selection policy resolve them.
   executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation never authorizes or blocks execution or authorizes a model call, repository write, issue-field write, pull request, release, or activation.
   projectReadFailureRule: >-
     Unavailable or ambiguous Project identity, access, or field data is reported
@@ -638,9 +659,24 @@ sourceOfTruth:
   - fact: Issue-native type value, Lifecycle Stage, Delivery State, Priority, labels, and other per-Issue values
     owner: Origin repository Issue
     rule: Keep values with the source Issue; labels are annotations and governance markers, not a substitute for native type, lifecycle, delivery readiness, authorization, or Project planning facts.
-  - fact: portfolio sequencing, planned dependency, and cross-stream visibility
+  - fact: Project membership, portfolio priority, iteration, roadmap, grouping, portfolio sequencing, planned dependency, and cross-stream visibility
     owner: Approved organization portfolio Project, after inventory and field-ownership review
-    rule: Project fields, views, and iterations may own distinct portfolio sequencing, grouping, and planning dependencies only. Issue Priority remains the canonical per-Issue priority wherever exposed. Execution dependency gates remain owned by the source Issue and Control Plane contract, and no Project is currently inventoried.
+    rule: >-
+      Issue Priority remains the canonical per-Issue priority wherever exposed.
+      The association between a source Issue and its Project item records
+      portfolio inclusion and is owned by the approved Project. Project-owned
+      priority, iteration, roadmap, and grouping are distinct portfolio
+      planning facts. Project fields may express distinct portfolio sequencing,
+      grouping, and planning dependencies only as planning context. Any Project
+      priority must have a distinct portfolio meaning; it never mirrors or
+      writes back to Issue Priority, Lifecycle Stage, Delivery State, or
+      governance metadata. Project membership and planning values cannot
+      authorize or block execution. The source Issue and Control Plane contract
+      remain authoritative for work intent, per-Issue priority, authorization,
+      and lifecycle. Execution dependency gates remain owned by the source Issue
+      and Control Plane contract. Multiple Project links remain unresolved
+      until the Architecture #15 topology decision and Control Plane #107
+      selection policy are approved; no Project is currently inventoried.
   - fact: pull request review, approval, merge, and repository release decisions
     owner: Origin repository pull request and named human maintainer
     rule: Issue or Project state, evaluation results, and agent output cannot impersonate reviewer approval or authorize merge, release, or activation.
@@ -680,6 +716,8 @@ nonGoals:
   - Claim a verified addressable market size, production product, customer count, or outcome baseline without product and user evidence.
   - Create or configure a GitHub Project, change Project access, or expand the App or OAuth permissions in this strategy proposal.
   - Replace source Issues, native Issue Types, organization Issue Fields, pull requests, or context-owned runtime and release artifacts with strategy fields.
+  - Create a second Control Plane in a product or consumer repository, or introduce GitHub Agentic Workflows as a delivery dependency.
+  - Make paid evaluation infrastructure a prerequisite for governed offline fixtures, replay, or review; any additional service requires a separate evidence-based decision.
   - Let strategy prose, a Project card, an evaluation result, or an agent decide whether its own implementation is authorized.
 references:
   - title: >-

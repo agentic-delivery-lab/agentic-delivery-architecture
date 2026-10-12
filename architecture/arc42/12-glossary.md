@@ -23,8 +23,10 @@ Key distinctions for this architecture description:
   controller** in Agentic Delivery Control Plane is the executable event and
   routing implementation.
 - **Issue Type**, **Lifecycle Stage**, and **Delivery State** are distinct
-  dimensions. Delivery State is currently exposed under the legacy
-  `Delivery Readiness` name. Runner execution state is separate.
+  dimensions. Delivery State is the logical readiness concept; its current
+  organization Issue Field is named `Delivery Readiness`. The live inventory
+  returned no organization Issue Field named Delivery State. Runner execution
+  state is separate.
 - **Pinned issue field** is an organization-level field configured for relevant
   issue types. Its definition does not prove UI pinning or user visibility.
 - **GitHub Projects field** is a Project-specific field, distinct from an

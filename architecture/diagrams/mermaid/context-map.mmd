@@ -1,5 +1,5 @@
 flowchart LR
-  STATUS["Source snapshot 2026-10-09<br/>Vercel reports a READY production deployment on Control Plane main; webhook delivery and Neon runtime state are unverified.<br/>No distinct product repository was identified."]
+  STATUS["Project/Issue recheck 2026-10-12 09:17–09:22 UTC; Issue definitions and values rechecked in the same window; App/Actions inventory 19:14 UTC; production recheck 05:56 UTC<br/>No Project exists in the viewer, organization, or six repository scopes; none of the 62 Issues has a Project item, and all 24 open Issues have zero organization Issue Field Values. The current inventory found six organization Issue Fields and nine Issue Types; the correct field name is Delivery Readiness. Private-Project field visibility remains unverified.<br/>No distinct product repository was identified. The six-repository inventory does not confirm a product steward; external product repositories remain unknown.<br/>Production Vercel deployment is READY on Control Plane main 9a2e1f3. Five Architecture webhook POSTs returned 202, but Actions run 38206400933 failed finalization on a stale participant pin and delivery was skipped; no reconciler request appeared in the seven-day query. HTTP 202 does not prove downstream processing or a terminal receipt, and production Neon was not read. Evidence: system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922; system-evidence.yml#vercel-production-runtime-recheck-20261012-0556; system-evidence.yml#control-plane-invocation-runtime-recheck-20261012-0555."]
   subgraph DOMAIN["Domain contexts"]
     GOV["Agentic Delivery Governance"]
     CP["Agentic Delivery Control Plane"]
@@ -15,7 +15,7 @@ flowchart LR
 
   subgraph GHORG["GitHub organization surfaces"]
     TYPE["Native Issue Types"]
-    DEFINITIONS["Organization issue-field definitions<br/>Lifecycle Stage + Delivery State<br/>(currently displayed as Delivery Readiness)"]
+    DEFINITIONS["Organization issue-field definitions<br/>Lifecycle Stage + Delivery Readiness"]
     APP["GitHub App<br/>installation access + subscribed events"]
   end
   WORK["Repository Issues and pull requests"]

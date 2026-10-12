@@ -6,6 +6,149 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Pointed the canonical Project-planning inventory at the complete 13:25–13:31
+  UTC work-management recheck and recorded the read-only review of Architecture
+  PR #16. Corrected 17 stored references to the full PR #16 commit ID. The
+  strategy remains a proposal; no Project or live setting changed.
+  See architecture/references/system-evidence.yml#architecture-pr16-review-and-strategy-inventory-refresh-20261012-1353.
+  The Architecture draft release advances to 0.1.0-draft.62.
+
+- Reproduced the Control Plane release-chain mismatch against PR #112's
+  draft `.66` candidate and clarified that this result does not establish a
+  failure on Control Plane `main`. No consumer pins changed. See
+  architecture/references/system-evidence.yml#architecture-release-chain-pr112-candidate-recheck-20261012-1341.
+  The Architecture draft release advances to 0.1.0-draft.61.
+
+- Rechecked the complete viewer, organization, and six-repository Project
+  inventory, all Issue Field values, open PR heads/checks, and GitHub Releases
+  at 13:25–13:31 UTC. No Project or Issue association exists in the queried
+  scopes; PR #17 remains draft on #16 with exact-head validation passing. See
+  architecture/references/system-evidence.yml#portfolio-current-work-management-pr-refresh-20261012-1331.
+  The Architecture draft release advances to 0.1.0-draft.60.
+
+- Rechecked the portfolio-topology and product-ownership gates at 13:18 UTC.
+  No Projects or Issue associations exist in the six visible repositories;
+  Architecture #13 and #15 remain open without comments or assignees. See
+  architecture/references/system-evidence.yml#architecture-project-gate-recheck-20261012-1318.
+  The Architecture draft release advances to 0.1.0-draft.59.
+
+- Reconciled the Architecture PR #17 matrix snapshot with its current exact
+  head, draft release, and passing hosted validation. The PR remains draft and
+  stacked on #16 without a human review decision. See
+  architecture/references/system-evidence.yml#architecture-pr17-head-recheck-20261012-1312.
+  The local Architecture draft advances to 0.1.0-draft.58.
+
+- Refreshed the six-repository open-PR and GitHub Release inventory at
+  13:07 UTC: eight PRs remain open and no published Releases were returned.
+  The status distinguishes drafts, blocked reviews, and clean PRs without
+  treating CI as human approval. See
+  architecture/references/system-evidence.yml#portfolio-pr-release-recheck-20261012-1307.
+  The Architecture draft release advances to 0.1.0-draft.57.
+
+- Refreshed the read-only Project, release-chain, Actions, dependency, and
+  Architecture PR #17 evidence at 12:57 UTC. All 62 Issues remain outside any
+  Project in the six visible repositories; the exact consumer release-chain
+  check reports Control Plane and Architecture pin drift, and recent successful
+  runs only validate shadow-mode observation events. Distribution #2 still
+  gates pin implementation on open owner reviews. No Project, pin, permission,
+  published GitHub release, participant, or production state changed. See
+  architecture/references/system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257.
+  The Architecture draft release advances to 0.1.0-draft.56.
+
+- Added an Architecture test that enforces one canonical organizational
+  strategy artifact, and completed a read-only scan of the six visible
+  repositories' mission/vision publication surfaces. Rechecked Project
+  associations and PR #104 after the repeated conflict report: all 62 Issues
+  still have no Project item, and #104 is already merged with the lowercase
+  `CHANGELOG.md` conflict resolved. See
+  architecture/references/system-evidence.yml#strategy-publication-surface-and-project-recheck-20261012-1054
+  and #control-plane-pr104-changelog-confirmation-20261012-1057. The cross-
+  repository scan is point-in-time and has no automated drift guard; the
+  Architecture draft release advances to 0.1.0-draft.53.
+
+- Clarified that ADR-0023's one-Project/two-view topology remains a proposal
+  for Architecture #15 to approve, revise, or reject, and replaced its stale
+  19-open-Issue snapshot with the complete 62-Issue/24-open-Issue inventory.
+  Updated arc42's current open-PR summary with the latest #112 and #17 heads
+  and check states; the six-repository refresh still finds eight open PRs and
+  requires human review where recorded. See
+  architecture/references/system-evidence.yml#portfolio-open-pr-recheck-20261012-1034.
+  The Phase K release evidence points to the updated draft 0.1.0-draft.52.
+  The Architecture draft release advances to that version.
+
+- Refreshed Architecture #11's Projects and Issue evidence from the complete
+  2026-10-12 09:17–09:22 UTC inventory. No Project was visible in the viewer,
+  organization, or six repository scopes; all 62 Issues had no Project item,
+  and all 24 open Issues had no organization Issue Field Values. Control Plane
+  #111 is typed Bug under recovery Issue #105. The canonical strategy and
+  diagrams now use the current Issue Field name `Delivery Readiness`. No
+  Project or runtime configuration changed; see
+  architecture/references/system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922.
+  A 09:34 UTC live recheck confirms Control Plane PR #104 is merged and its
+  historical `CHANGELOG.md` conflict is resolved; both #103 and #101 remain
+  in the current `main` file, with no conflict markers. The uppercase path
+  `CHANGELOG.MD` returns 404. See
+  architecture/references/system-evidence.yml#control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0934.
+  The draft Architecture release advances to 0.1.0-draft.50.
+
+- Added a 26-item Phase K coverage map that separates structural and offline
+  test evidence from partial, blocked, and unverified live acceptance. It
+  records the remaining owners and gates without treating synthetic fixtures
+  as operational proof; advanced the draft Architecture release to
+  0.1.0-draft.48.
+
+- Refreshed the arc42 context, building-block, runtime, deployment, and cross-cutting summaries and the Project status diagrams to cite the 2026-10-12 04:59 UTC recheck of all 61 Issues. Kept Issue Field, Issue Type, and entitlement findings tied to the separate 2026-10-11 22:57 UTC full inventory; advanced the draft Architecture pin to 0.1.0-draft.43.
+
+- Rechecked Architecture #11's Project inventory at 21:24 UTC and PR state at
+  21:34 UTC. The six repository scopes still have no Project v2 nodes or
+  open-Issue associations. Control Plane #104 is merged, with both #101 and
+  #103 present in protected main and no conflict markers; #86 is open and
+  conflict-free at its current head. It proposes Codex CLI 0.160.0 while
+  upstream latest remains 0.162.1. No live configuration changed.
+
+- Aligned the strategy task sequence with PR #109's offline router coverage
+  while retaining the separate Project-composition/live-runtime limitation;
+  advanced the draft Architecture pin to 0.1.0-draft.38.
+
+- Following independent review, clarified that Architecture PR #14 is merged
+  but its independent human review remains unverified, so Control Plane #106's
+  review/merge gate is still open. Clarified PR #109's offline router coverage
+  separately from composed/live Project-runtime coverage and advanced the draft
+  Architecture pin to 0.1.0-draft.37.
+
+- Rechecked Architecture #11's Projects and Issue evidence at 2026-10-11
+  19:33 UTC: no Project is visible across the organization, viewer, or six
+  repository scopes; 23 open Issues have no Project associations or Issue
+  Field Values. Updated current arc42 and strategy evidence, clarified that
+  Architecture #14 is merged while independent human review is unverified, and
+  advanced the draft Architecture pin to 0.1.0-draft.36. No Project or runtime
+  configuration changed.
+
+- Refreshed Architecture #11's read-only Projects, Issue metadata, App,
+  Actions, ruleset, release, and open-PR evidence through 2026-10-11 19:14 UTC.
+  The organization, viewer, and all six repository scopes expose no Projects;
+  all 23 open Issues have no Project items or Issue Field Values. Nine native
+  Issue Types and six organization-members-only fields remain inventoried.
+  Control Plane #104 is merged with its changelog entry present; the current
+  CHANGELOG.md conflict is on open PR #86. Architecture #17 validation passes
+  at its exact draft head. No live configuration changed.
+
+- Recorded the 07:17 UTC exact-head recheck for Architecture PRs #16 and #17.
+  Both hosted validations passed; #16 remains blocked pending human review,
+  and draft #17 now includes the corrected #16 head without live configuration
+  changes. The draft source pin requires a merge commit or a later repin.
+
+- Refreshed Architecture #11's read-only Project, Issue, release, and pull-
+  request evidence at 2026-10-11 06:46 UTC. Organization, viewer, and six-
+  repository inventories found no visible Projects or Project items among 23
+  open Issues. Architecture #16 is blocked on human review; draft #17 and
+  Control Plane #109/#110 remain open without review decisions; #106 remains
+  gated on an approved Architecture release. No GitHub Release or live
+  issue-to-PR delivery is evidenced, and no Project or runtime setting changed.
+
+- Clarified Project membership and portfolio-planning ownership, and made
+  product-repository bootstrap precede product Issues in a new repository.
+
 - Amended ADR-0004 and ADR-0007 with managed workspace ownership, safe exact-tip cleanup, sibling worktree topology and failure-safe artifact teardown; registered AP-003 and QR-012, with profile rollout retained as implementation debt (Architecture #7).
 
 - Amended ADR-0022 with recovery for ambiguous Neon writes, a scheduled

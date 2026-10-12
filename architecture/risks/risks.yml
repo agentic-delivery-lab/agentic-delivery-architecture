@@ -67,7 +67,9 @@ risks:
     status: open
     owner: organization-operator
     relatedQualityScenario: QR-014
-    evidence: system-evidence.yml#portfolio-issue-project-inventory-20261009-1839
+    evidence:
+      - system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459
+      - system-evidence.yml#portfolio-issue-project-inventory-20261011-2257
     mitigation: Use the complete empty inventory and positive feature-capability flags to support the human topology decision; verify Project ownership, access, and field visibility before configuration. Keep App access separately unverified before any write integration.
   - id: R-013
     title: Organization Actions policy does not require immutable action pins and App access is unverified

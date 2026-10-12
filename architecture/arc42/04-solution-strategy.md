@@ -23,19 +23,24 @@ The current owner and provenance inventory is in
 GitHub Projects is the primary portfolio surface for both value streams. The
 proposed minimum topology is one organization portfolio Project with separate
 Factory Evolution and Software Product Delivery views, reusing a suitable
-existing Project if an authorized inventory confirms fit. The 2026-10-09
-inventory found no Project within the queried organization, user, or
-repository scopes; the organization REST API reports Project capability
-available under its Free plan. Project-specific ownership, fields, views, and
-visibility must be reviewed before selecting or configuring a Project. A
-Project-only card can be discussed and prioritized but cannot authorize
-execution.
+existing Project if an authorized inventory confirms fit. The latest complete
+read-only recheck, completed 2026-10-12 09:17–09:22 UTC, found no Project in the
+authenticated-viewer, organization, or six repository scopes and no Project
+association across all 62 Issues. All 24 open Issues had zero organization
+Issue Field Values. The same inventory found six organization Issue Fields,
+nine native Issue Types, and Free organization plan support; Project-specific
+ownership, fields, views, and visibility could not be inspected because no
+Project existed. A Project-only card can be discussed and prioritized but
+cannot authorize execution. See
+`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
 
 Every executable unit of work has a source Issue in its owning repository.
 The Project links that Issue and may own distinct portfolio planning facts.
-Issue intent, Issue Type, Priority, Lifecycle Stage, Delivery State, and
-authorization remain with the source Issue and organization Issue Field
-contracts. Use the existing Issue-owned Priority value for per-Issue priority
+Issue intent, Issue Type, Priority, Lifecycle Stage, the delivery-readiness
+value, and authorization remain with the source Issue and organization Issue
+Field contracts. The current organization Issue Field is named `Delivery
+Readiness`; the live inventory returned no field named `Delivery State`. Use
+the existing Issue-owned Priority value for per-Issue priority
 where the approved Project view can expose it; a Project field must not
 silently duplicate that value. The issue-field catalog is currently
 organization-members-only and Project-view suitability has not been verified.
@@ -47,7 +52,8 @@ evidence → improvement Issue → Project prioritization. The diagrams under
 [architecture diagrams](../diagrams/README.md) show the value streams,
 strategic alignment, portfolio lifecycle, factory evolution, product delivery,
 and trust boundaries. Project planning remains a proposed integration because
-the dated read-only inventory found no Project.
+the latest read-only recheck found no Project in the queried scopes; see the
+evidence events above.
 
 ## 4.3 Proposal and enforcement
 
@@ -79,14 +85,19 @@ observed Control Plane baseline.
 
 ## 4.5 Three delivery paths
 
-1. **Product delivery loop:** a user or operator need becomes requirements and
-   an Issue in an identified, authorized product repository, is prioritized in
-   Projects, and is interpreted;
-   deterministic gates authorize one bounded writer; a Validator checks the
-   change; a pull request is independently reviewed and merged by a human.
-   Product evidence after delivery informs the next Issue. Repository creation,
-   product stewardship, and bootstrap remain approval-gated and no product
-   repository is currently identified.
+1. **Product delivery loop:** when a steward-owned product repository exists,
+   product work starts from a typed Issue in that repository. When no
+   steward-owned product repository is confirmed, record requirements,
+   ownership discovery, and the intended user or operator outcome in an Issue
+   in an existing owning repository. A human must approve the repository
+   choice, access, stewardship, and feedback path; creating a repository and its
+   pinned bootstrap require explicit approval. Only an owned, onboarded
+   repository can own product Issues. Link the product Issue to the approved
+   Project for prioritization and progress visibility. Deterministic gates
+   authorize one bounded writer; a Validator checks the change; a pull request
+   is independently reviewed and merged by a human. Product evidence after delivery informs the
+   next Issue. No product repository or accountable steward is currently
+   identified.
 2. **Factory evolution loop:** a factory defect, capability gap, or measured
    improvement becomes an Issue in its owning factory repository, is
    prioritized in Projects, and follows the same authorized delivery and

@@ -1,6 +1,6 @@
 flowchart TD
-  STATUS["PROPOSED TARGET CONTRACT<br/>2026-10-09 inventory found no organization or user Project and no Project associations; no end-to-end delivery is proved"]
-  PROJECT["GitHub Projects<br/>portfolio planning and progress visibility"]
+  STATUS["PROPOSED TARGET CONTRACT<br/>2026-10-12 09:17–09:22 UTC recheck found no Project in the viewer, organization, or six repository scopes and no Project item on any of 62 Issues; all 24 open Issues had zero organization Issue Field Values. The read confirmed six organization Issue Fields and nine Issue Types. No Project exists to inspect fields or membership; no live end-to-end delivery is proved. Evidence: system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922"]
+  PROJECT["GitHub Projects<br/>item membership, portfolio planning, and progress visibility"]
   CARD["Project-only card"]
   HUMAN["Maintainer creates or links an Issue"]
   ISSUE["Source Issue in the owning repository"]
@@ -25,7 +25,7 @@ flowchart TD
   CARD -->|"planning input only"| PROJECT
   PROJECT -->|"must link or convert before execution"| HUMAN
   HUMAN --> ISSUE
-  ISSUE --> PROJECT
+  ISSUE -->|"Project item membership for planning; not authorization"| PROJECT
   PROJECT -. "never an execution trigger" .-> IDENTITY
   ISSUE --> EVENT --> APP --> INGRESS --> CONTROL --> IDENTITY --> CONTRACT
   IDENTITY -->|"identity or permission fails"| HOLD

@@ -44,12 +44,14 @@ Factory Evolution and Software Product Delivery.
 ## Evidence and current limits
 
 The organizational strategy is a proposal linked to Architecture Issue #11.
-The initial 2026-10-09 live audit lacked Project access. A later complete
-read-only inventory under an active organization admin identity reporting
-`project`, `admin:org`, and `repo` returned no organization, personal, or
-repository Project and no associations for the 19 open Issues in the six
-visible repositories. The organization REST response reports Project features
-available. This does not cover Projects owned outside those scopes or GitHub
-App access. The organization Issue Field catalog reports member-only
-visibility, and suitability for a future Project has not been verified. The
-principle does not claim an implemented or passing live integration.
+The initial 2026-10-09 live audit lacked Project access. The latest complete
+read-only inventory, completed 2026-10-12 09:17–09:22 UTC, found no Project in
+the authenticated-viewer, organization, or six repository scopes and no
+Project association on any of the 62 Issues. All 24 open Issues had zero
+organization Issue Field Values. The same read confirmed six organization
+Issue Fields and nine native Issue Types. Organization-only fields do not
+appear in public or internal Projects; suitability for a future private
+Project has not been verified. The inventory does not cover Projects outside
+those scopes or establish GitHub App access. See
+`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
+The principle does not claim an implemented or passing live integration.

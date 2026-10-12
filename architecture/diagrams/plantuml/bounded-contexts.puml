@@ -11,7 +11,7 @@ rectangle "Architecture Authority\nCross-context authority, not a bounded contex
 rectangle "Public .github repository adapter\nCommunity and template defaults" as public
 rectangle "Private .github-private repository adapter\nMember profile and approved agent-publication boundary" as private
 rectangle "GitHub native Issue Type definitions" as nativeTypes
-rectangle "Organization issue-field definitions\nLifecycle Stage + Delivery State" as fieldDefinitions
+rectangle "Organization issue-field definitions\nLifecycle Stage + Delivery Readiness" as fieldDefinitions
 rectangle "GitHub Projects portfolio\nPrimary planning; not execution authority" as projects
 rectangle "GitHub App installation\nAccess + subscribed events" as app
 rectangle "Repository Issues and pull requests" as work

@@ -47,5 +47,5 @@ sequenceDiagram
   Note over APP,CP: Webhook delivery replay restores event processing only
   Note over CP,ORIGIN: Codex session continuation restores one bounded runner operation only
   Note over EVAL,EVIDENCE: Evaluation replay repeats a versioned dataset and grader; it is not webhook or session replay
-  Note over GH,ORIGIN: Target sequence; the 2026-09-24 live audit had no passing end-to-end run
-  Note over PROJECT,CP: 2026-10-09 status: complete org/user Project inventory returned none and 19 open Issues had no associations; the latest observed run skipped delivery and proves no end-to-end flow
+  Note over GH,ORIGIN: Target sequence; no passing live issue-to-PR delivery is evidenced in the current audit
+  Note over PROJECT,CP: 2026-10-12 09:17–09:22 UTC: complete GraphQL recheck returned no Projects across the viewer, organization, or six repository scopes; none of the 62 Issues had an association, and the 24 open Issues had zero field values. Run 38099004598 validates only the pinned observer, not issue delivery. See system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922.

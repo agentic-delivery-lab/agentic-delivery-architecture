@@ -2,7 +2,7 @@
   "$schema": "../contracts/architecture-release.schema.json",
   "schemaVersion": 2,
   "architectureId": "urn:agentic-delivery:architecture:authority",
-  "version": "0.1.0-draft.57",
+  "version": "0.1.0-draft.58",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
   "sourceCommit": "3fa7dfb88d8184e75e70dbf47add1f6189ba832a",
   "contentSha256": "0ec44bcbe0d8b3cbe37ebe251ca30d9a0fb2843e882005464580bc49cbdd6641",

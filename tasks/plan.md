@@ -973,3 +973,18 @@ states are in
 architecture/references/system-evidence.yml#portfolio-pr-release-recheck-20261012-1307.
 The inventory does not treat clean checks as human review and made no approval,
 merge, or publication.
+
+
+### 13:12 UTC Architecture PR #17 exact-head refresh
+
+GitHub reports PR #17 OPEN/DRAFT/CLEAN at
+5934a7f7e29c1c14872a9db253579a777d3beb1c, stacked on PR #16 at
+c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no human review decision.
+Exact-head architecture-quality run 38253715469 passed. At that observed head,
+the draft release was 0.1.0-draft.57 with source commit
+3fa7dfb88d8184e75e70dbf47add1f6189ba832a and digest
+0ec44bcbe0d8b3cbe37ebe251ca30d9a0fb2843e882005464580bc49cbdd6641.
+This refresh also corrected stale matrix references to the prior PR head and
+draft version. The local Architecture draft advances to .58 for the updated
+evidence; it remains unpublished and unadopted. Evidence:
+architecture/references/system-evidence.yml#architecture-pr17-head-recheck-20261012-1312.

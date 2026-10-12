@@ -4342,3 +4342,29 @@ observations:
       An empty GitHub Release list does not establish that no untagged or
       external deployment exists. No pull request was approved or merged and no
       release was published.
+  - id: architecture-pr17-head-recheck-20261012-1312
+    observedAt: '2026-10-12T13:12:54Z'
+    source: >-
+      Authenticated GitHub pull-request and Actions run reads plus local draft
+      Architecture release metadata.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: 5934a7f7e29c1c14872a9db253579a777d3beb1c
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38253715469
+    request: >-
+      Reconcile the Architecture PR #17 exact head, draft release pin, and
+      hosted validation after the 13:07 portfolio update. Read-only.
+    result: >-
+      Architecture PR #17 is OPEN/DRAFT/CLEAN at head
+      5934a7f7e29c1c14872a9db253579a777d3beb1c, based on Architecture PR #16
+      at c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f. No human review decision is
+      recorded. The draft Architecture release is 0.1.0-draft.57, pinned to
+      source commit 3fa7dfb88d8184e75e70dbf47add1f6189ba832a with digest
+      0ec44bcbe0d8b3cbe37ebe251ca30d9a0fb2843e882005464580bc49cbdd6641.
+      Hosted architecture-quality run 38253715469 completed successfully on
+      the exact PR head.
+    limitation: >-
+      A clean branch and passing hosted validation do not establish human
+      review, approval, merge, or consumer adoption. PR #17 remains draft and
+      stacked on PR #16, which is blocked and requires human review.

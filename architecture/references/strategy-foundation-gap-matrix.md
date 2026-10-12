@@ -1,6 +1,6 @@
 # Strategy foundation and operational gap matrix
 
-**Updated:** 2026-10-12 13:07 UTC after the Projects/runtime/release-chain recheck at system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257 and open-PR/release inventory at system-evidence.yml#portfolio-pr-release-recheck-20261012-1307. Earlier dated observations for Issue Fields, strategy publication, app/ruleset configuration, and Distribution source review remain separately identified. PR #104's resolved lowercase CHANGELOG.md conflict is recorded at system-evidence.yml#control-plane-pr104-conflict-recheck-20261012-1234. The 12:57 and 13:07 deltas below supersede older table snapshots for Projects, release-chain status, runtime, open PRs, releases, and Architecture PR #17. This matrix does not imply that live settings remained unchanged after any read. Unknown means evidence was unavailable; it does not mean absent.
+**Updated:** 2026-10-12 13:12 UTC after the exact-head Architecture PR #17 recheck at system-evidence.yml#architecture-pr17-head-recheck-20261012-1312. The 12:57 Project/runtime/release-chain snapshot and 13:07 six-repository PR/release inventory remain separately dated; this refresh supersedes their PR #17 head and draft-release values. Earlier dated observations for Issue Fields, strategy publication, App/ruleset configuration, and Distribution source review remain separately identified. PR #104's resolved lowercase CHANGELOG.md conflict is recorded at system-evidence.yml#control-plane-pr104-conflict-recheck-20261012-1234. No live settings changed. Unknown means evidence was unavailable; it does not mean absent.
 
 | Area | Evidence and current state | Gap / risk | Owner and next step |
 | --- | --- | --- | --- |
@@ -81,6 +81,17 @@ system-evidence.yml#portfolio-pr-release-recheck-20261012-1307. This is
 point-in-time state; green checks, CLEAN status, and machine-authored review
 comments do not replace independent human review.
 
+### Architecture PR #17 exact-head delta — 2026-10-12 13:12 UTC
+
+The 13:07 PR inventory observed #17 at its then-current .57 head. GitHub now
+reports PR #17 OPEN/DRAFT/CLEAN at 5934a7f7e29c1c14872a9db253579a777d3beb1c,
+stacked on PR #16 at c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f. It has no human
+review decision. Hosted architecture-quality run 38253715469 passed on that
+exact head. At that snapshot the draft was .57; this evidence refresh advances
+the local draft to .58 and keeps it unpublished. This delta supersedes the
+prior .57 / 1cb7019 values in the portfolio section above. Evidence:
+system-evidence.yml#architecture-pr17-head-recheck-20261012-1312.
+
 ## Phase K acceptance coverage
 
 These labels describe source and test evidence, not completion of the factory
@@ -97,7 +108,7 @@ adequate acceptance evidence yet.
 | 2 | Static | The strategy validator rejects duplicate identifiers and mismatched capability pins; Architecture release tests reproduce the pinned source commit and normalized digest. | The release is still draft, so its immutable provenance has not been adopted by consumers. |
 | 3 | Static | The test named “every strategic goal declares traceability across governance, delivery, planning, and evaluation” verifies links for all goals and rejects missing traceability. | Structural links do not demonstrate delivered outcomes. |
 | 4 | Static | The traceability test rejects unknown quality scenarios, contracts, repositories, observations, and mismatched capability pins. | Semantic suitability of each mapping still needs human review. |
-| 5 | Static | The Architecture release validator checks the immutable source commit and deterministic digest over authoritative Architecture roots; the manifest normalizes only its mutually referential `sourceCommit` and `contentSha256` fields. This branch advances the draft to 0.1.0-draft.53. | A valid draft is not an approved or consumer-adopted release. |
+| 5 | Static | The Architecture release validator checks the immutable source commit and deterministic digest over authoritative Architecture roots; the manifest normalizes only its mutually referential `sourceCommit` and `contentSha256` fields. The current local evidence refresh advances the draft to 0.1.0-draft.58. | A valid draft is not an approved or consumer-adopted release. |
 | 6 | Partial | pnpm architecture:check reproduces the generated ADR-to-Primitive index from its approved local sources. | Cross-repository pins and Distribution projections do not yet all resolve to matching source commits and digests; see Release and consumer provenance above. |
 | 7 | Offline | Control Plane #109 acceptance tests re-fetch and route synthetic factory/product work through a source Issue: [cross-stream acceptance tests](https://github.com/agentic-delivery-lab/agentic-delivery/blob/1180b1559a1e694b12fa95df1f548accb4697344/tests/delivery/cross-stream-acceptance.test.mjs). | Synthetic identities do not prove live actor, repository, or participant authorization. |
 | 8 | Offline | #109 asserts Project priority and status remain planning context; #110 selection tests require a pinned policy: [Project planning selection tests](https://github.com/agentic-delivery-lab/agentic-delivery/blob/088a6b02391367f401b687e1873754e38c2a71fc/tests/delivery/project-planning-selection.test.mjs). | No live Project read or approved topology is available. |

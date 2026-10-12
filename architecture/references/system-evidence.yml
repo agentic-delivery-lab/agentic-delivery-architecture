@@ -4475,3 +4475,41 @@ observations:
       review, merge, release adoption, runtime activation, or end-to-end
       issue-to-PR and evaluation-feedback operation. No settings or work items
       were changed.
+  - id: architecture-release-chain-pr112-candidate-recheck-20261012-1341
+    observedAt: '2026-10-12T13:41:37Z'
+    source: >-
+      Local execution of scripts/validate-release-chain.mjs with explicit
+      repository roots; read-only.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 7bc35f7a2967446b192d482ebe60c85789eaee85
+    request: >-
+      Reproduce the reported release-chain mismatch against the exact open
+      Control Plane PR #112 candidate and clarify which ref was checked. Do not
+      change release pins or consumer configuration.
+    result: >-
+      The validator ran from the Control Plane PR #112 worktree at
+      61f0565e4208eeb7c7b7477032e9a023592be757 (draft release 0.2.0-draft.66),
+      with Architecture worktree 7bc35f7a2967446b192d482ebe60c85789eaee85,
+      Primitives checkout 951433b2be5f0c3ada8144926f5b2cc69e7d6c95,
+      Distribution checkout b69c5710928b47efc4d3ab12ec4d5b596c80720c, and
+      private-adapter checkout 124569da05168632c96b674f925d37e785ca2ca2.
+      It reproduced the candidate-only pin differences: Distribution Control
+      Plane commit expected 08728c4210ec2d227eec2b6c182dcf3bafd80db1, got
+      7d38227f7f8d8377ed7cd1b883d90b71b69bfc9b; Distribution Architecture
+      commit expected 7db77a53841d6a1e451e0a536fe68416e050b0de, got
+      9d4872c39e9c52075a7a299ad4584ac3eb704a1b; Distribution Architecture
+      digest expected 5352c13fd6c3da425f427c8ac3ddc3deb9c52bdbac2837563ac580b4da4b71fb,
+      got ac4430f7aa86c016c51ea8f9458627d4412d36256960c1bf54b63e851dc2350c.
+      Agent Plugin repeats the Architecture commit/digest and Control Plane
+      commit differences; Automation repeats the Control Plane commit
+      difference. This command did not use Control Plane main as its input.
+    limitation: >-
+      This is a static check of PR #112's candidate release against the
+      supplied local roots. It does not establish a Control Plane main failure,
+      consumer activation, or production behavior. No pin or live setting was
+      changed.

@@ -940,10 +940,12 @@ a96a877b0005f72a5b9671d613105e866d93cd7f, stacked on PR #16 at
 c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no human review decision. Its
 exact-head hosted validate check passed as run 38250330307.
 
-The exact release-chain check failed. Distribution's bundle, Agent Plugin, and
-Automation projections disagree with the Control Plane and Architecture pins;
-the exact expected/got values are recorded in
-architecture/references/system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257.
+The Control Plane PR #112 candidate release-chain check failed. Distribution's
+bundle, Agent Plugin, and Automation projections disagree with the candidate's
+Control Plane and Architecture pins; this was not a check of Control Plane
+main. Exact expected/got values and the later scope recheck are recorded in
+architecture/references/system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257
+and #architecture-release-chain-pr112-candidate-recheck-20261012-1341.
 Distribution Issue #2 remains OPEN and explicitly gates implementation on
 review of coordinating Issue #59, Architecture #3, Control Plane #60,
 Primitives #2, and Architecture #11. #59, #60, Primitives #2, and Architecture
@@ -1002,7 +1004,7 @@ unresolved items remain explicit.
 | Duplicate sources of truth or redundant artifacts | The six-repository scan found one organizational strategy source and no competing mission/vision/charter files at its observation time. The scan is point-in-time and has no cross-repository drift guard. |
 | Projects/Issues confusion or duplicated lifecycle | ADR-0023, the source-of-truth matrix, and offline #109/#110 cases preserve Issue authorization and lifecycle ownership while treating Project data as planning context. No live Project exists in the queried scopes, so live behavior is not demonstrated. |
 | Bounded-context leakage or repository-ownership violations | The Architecture model retains four existing bounded contexts and assigns runtime, primitives, distribution, and adapter ownership to their existing repositories. Structural validation passes; cross-repository compatibility and independent review remain open. |
-| Incompatible schemas/pins or unreviewed decision divergence | Architecture contracts, ADRs, 143 source mappings, and the draft .59 digest validate locally. The exact release-chain check fails on Control Plane and Architecture pins in Distribution, Agent Plugin, and Automation projections. Distribution #2 gates repairs on open owner reviews; PR #16 remains review-required. |
+| Incompatible schemas/pins or unreviewed decision divergence | At the 13:16 review, Architecture contracts, ADRs, 143 source mappings, and the draft .59 digest validated locally. The 13:41 refresh validates draft .61; its reproduced release-chain failure is scoped to Control Plane PR #112 at draft .66 and does not establish a Control Plane `main` failure. Distribution #2 gates pin repairs on open owner reviews; PR #16 remains review-required. |
 | Untrusted instruction injection or privilege escalation | Project/Issue content is modeled as untrusted and non-authorizing, with static and offline checks. No adversarial test of injected strategy context in a real Codex Actions invocation exists; Control Plane #106 remains open. |
 | Recursive loops, bot self-invocation, quota, or permission changes | Existing policies and #105 define bounded execution and recovery. The latest invocation finalized in shadow mode and skipped delivery; resource-limit and terminal-receipt behavior are not proven end to end. |
 | Self-grading, metric gaming, or eval contamination | The evaluation contract requires pinned baselines, case selection, dataset-integrity assessment, calibrated independent graders, and evidence. Available replays are synthetic; there is no representative baseline or independent outcome review. |
@@ -1049,3 +1051,16 @@ comments. PR #17 is OPEN/DRAFT/MERGEABLE at
 Evidence: `system-evidence.yml#portfolio-current-work-management-pr-refresh-20261012-1331`.
 No Project, field, permission, release, participant, review, or production
 mutation was made.
+
+
+### 13:41 UTC release-chain scope clarification
+
+Reproduced the static release-chain failure from the exact Control Plane PR
+#112 worktree at `61f0565e4208eeb7c7b7477032e9a023592be757` (draft `.66`). It
+reports pin differences against the supplied Distribution checkout at
+`b69c5710928b47efc4d3ab12ec4d5b596c80720c` and its Agent Plugin/Automation
+projections. This candidate check did not use Control Plane `main`, so it does
+not establish a `main` failure. Exact repository roots and mismatch values are
+recorded at
+`architecture/references/system-evidence.yml#architecture-release-chain-pr112-candidate-recheck-20261012-1341`.
+No release pin, Project, or live setting changed.

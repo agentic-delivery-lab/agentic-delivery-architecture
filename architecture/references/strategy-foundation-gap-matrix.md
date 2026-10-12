@@ -32,8 +32,11 @@ source reviews in those rows retain their original observation dates.
   views, membership, or Project field visibility can be inspected without an
   existing Project. Architecture #12 records the read-only inventory and
   Architecture #15 remains the human topology decision.
-- **Release and consumer pins:** the current static release-chain check fails
-  on Distribution and its Agent Plugin/Automation projections. Distribution
+- **Release and consumer pins:** the 12:57 UTC release-chain result used the
+  Control Plane PR #112 candidate (draft `.66`, head
+  `61f0565e4208eeb7c7b7477032e9a023592be757`), not Control Plane `main`; the
+  same candidate check was reproduced at 13:41 UTC. It fails on Distribution
+  and its Agent Plugin/Automation projections. Distribution
   Control Plane commit expected 08728c4210ec2d227eec2b6c182dcf3bafd80db1 but
   got 7d38227f7f8d8377ed7cd1b883d90b71b69bfc9b; Architecture commit expected
   7db77a53841d6a1e451e0a536fe68416e050b0de but got
@@ -45,7 +48,10 @@ source reviews in those rows retain their original observation dates.
   difference. Distribution #2 remains OPEN and gates implementation until #59,
   Architecture #3, Control Plane #60, Primitives #2, and Architecture #11 are
   reviewed. #59, #60, Primitives #2, and #11 remain OPEN; #3 is CLOSED. Keep
-  these pin repairs in their owning Issues and repositories.
+  these pin repairs in their owning Issues and repositories. This result does
+  not establish that the Control Plane `main` release chain fails. Exact input
+  roots and scope are recorded at
+  system-evidence.yml#architecture-release-chain-pr112-candidate-recheck-20261012-1341.
 - **Runtime and PR #17:** successful 12:40 repository-dispatch runs
   38250462660 and 38250333675 executed only observation validation. The latest
   agent-invocation run 38227232599 passed authorization, classification, and
@@ -59,6 +65,8 @@ source reviews in those rows retain their original observation dates.
   issue-to-PR delivery or evaluation-to-Issue feedback is proven. The exact
   sources, run identities, and limitations are in
   system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257.
+
+### Release-chain scope clarification — 2026-10-12 13:41 UTC
 
 ### Portfolio delta — 2026-10-12 13:07 UTC
 
@@ -120,6 +128,17 @@ evidence event. No Project or repository settings, Issue fields, permissions,
 releases, participants, or production state changed. Evidence:
 system-evidence.yml#portfolio-current-work-management-pr-refresh-20261012-1331.
 
+### Release-chain scope clarification — 2026-10-12 13:41 UTC
+
+The reproduced release-chain failure is scoped to Control Plane PR #112 at
+`61f0565e4208eeb7c7b7477032e9a023592be757` (draft `.66`). Its supplied
+Distribution root is `b69c5710928b47efc4d3ab12ec4d5b596c80720c`; the exact
+candidate mismatch is recorded at
+`system-evidence.yml#architecture-release-chain-pr112-candidate-recheck-20261012-1341`.
+The run did not use Control Plane `main`, so it does not support a claim that
+the current main release chain fails. It changes no owner pins and establishes
+no runtime activation.
+
 ## Phase K acceptance coverage
 
 These labels describe source and test evidence, not completion of the factory
@@ -136,7 +155,7 @@ adequate acceptance evidence yet.
 | 2 | Static | The strategy validator rejects duplicate identifiers and mismatched capability pins; Architecture release tests reproduce the pinned source commit and normalized digest. | The release is still draft, so its immutable provenance has not been adopted by consumers. |
 | 3 | Static | The test named “every strategic goal declares traceability across governance, delivery, planning, and evaluation” verifies links for all goals and rejects missing traceability. | Structural links do not demonstrate delivered outcomes. |
 | 4 | Static | The traceability test rejects unknown quality scenarios, contracts, repositories, observations, and mismatched capability pins. | Semantic suitability of each mapping still needs human review. |
-| 5 | Static | The Architecture release validator checks the immutable source commit and deterministic digest over authoritative Architecture roots; the manifest normalizes only its mutually referential `sourceCommit` and `contentSha256` fields. The current local evidence refresh advances the draft to 0.1.0-draft.59. | A valid draft is not an approved or consumer-adopted release. |
+| 5 | Static | The Architecture release validator checks the immutable source commit and deterministic digest over authoritative Architecture roots; the manifest normalizes only its mutually referential `sourceCommit` and `contentSha256` fields. The current local evidence refresh advances the draft to 0.1.0-draft.61. | A valid draft is not an approved or consumer-adopted release. |
 | 6 | Partial | pnpm architecture:check reproduces the generated ADR-to-Primitive index from its approved local sources. | Cross-repository pins and Distribution projections do not yet all resolve to matching source commits and digests; see Release and consumer provenance above. |
 | 7 | Offline | Control Plane #109 acceptance tests re-fetch and route synthetic factory/product work through a source Issue: [cross-stream acceptance tests](https://github.com/agentic-delivery-lab/agentic-delivery/blob/1180b1559a1e694b12fa95df1f548accb4697344/tests/delivery/cross-stream-acceptance.test.mjs). | Synthetic identities do not prove live actor, repository, or participant authorization. |
 | 8 | Offline | #109 asserts Project priority and status remain planning context; #110 selection tests require a pinned policy: [Project planning selection tests](https://github.com/agentic-delivery-lab/agentic-delivery/blob/088a6b02391367f401b687e1873754e38c2a71fc/tests/delivery/project-planning-selection.test.mjs). | No live Project read or approved topology is available. |

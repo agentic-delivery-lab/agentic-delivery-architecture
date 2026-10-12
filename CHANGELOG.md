@@ -6,6 +6,12 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Reproduced the Control Plane release-chain mismatch against PR #112's
+  draft `.66` candidate and clarified that this result does not establish a
+  failure on Control Plane `main`. No consumer pins changed. See
+  architecture/references/system-evidence.yml#architecture-release-chain-pr112-candidate-recheck-20261012-1341.
+  The Architecture draft release advances to 0.1.0-draft.61.
+
 - Rechecked the complete viewer, organization, and six-repository Project
   inventory, all Issue Field values, open PR heads/checks, and GitHub Releases
   at 13:25–13:31 UTC. No Project or Issue association exists in the queried

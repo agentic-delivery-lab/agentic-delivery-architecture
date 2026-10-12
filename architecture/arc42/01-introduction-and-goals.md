@@ -56,6 +56,32 @@ bounded-context/decision traceability. Their measures are proposals with
 unmeasured baselines and deferred targets; see the canonical
 [strategy source](../strategy/organizational-strategy.yml).
 
+### Factory and independent-product acceptance
+
+The factory is itself a product and acceptance subject. Factory Evolution
+therefore includes governed correction and self-development before a distinct
+product is available. The canonical acceptance criteria are in the two
+[value streams](../strategy/organizational-strategy.yml); this overview does
+not establish a second editable requirements catalog.
+
+| Milestone | Acceptance objective | Evidence boundary |
+| --- | --- | --- |
+| A — governed factory self-development | Useful active delivery across Architecture, Requirements, Agent Customizations, Distribution, Control Plane, `.github`, and `.github-private`, after the safety floor is demonstrated. | Each surface needs ordinary Issue intake, actual artifact or code production, exact-tree validation, an attributable PR, and recorded acceptance. Also demonstrate controlled interruption/recovery and denied runner escalation. Administrative bootstrap is excluded. |
+| B — independent product delivery | Reuse the accepted factory for a real independent owner with an evidenced user need, central product requirements, scoped enrollment, Distribution integration, and actual product-stack validation. | Record product behavior, owner acceptance, observed usefulness, consumer update/rollback, and failure or denial evidence. Product discovery remains with [Architecture #13](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13). |
+
+The seven surfaces describe the proposed target: Requirements has not been
+created and the Primitives-to-Agent-Customizations rename has not occurred.
+These location changes preserve existing domain-context and canonical IDs.
+The six-repository inventory above remains the observed baseline.
+
+Strategy and goals remain proposed. Active operation requires separately
+admitted authority, constraints, safety evidence, and supported rollback pins;
+participants advance one at a time. A receipt must identify the accepting actor
+and the validation performed. Delegated operator acceptance cannot be called
+independent human review without evidence of that independence. Passing CI,
+shadow observations, model parsing, or PR publication do not establish useful
+accepted delivery, and bootstrap cannot substitute for either milestone.
+
 ## 1.3 Quality goals
 
 | Priority | Quality goal | Required observable result |

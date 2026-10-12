@@ -703,6 +703,19 @@ remain blocked on required human review. Distribution and both `.github`
 repositories have no open PRs. Evidence:
 `architecture/references/system-evidence.yml#portfolio-open-pr-recheck-20261012-1034`.
 
+### 10:47 UTC Architecture #17 exact-head validation
+
+After the 10:34 inventory, Architecture PR #17 advanced to
+`505111e2bc9c06b2dfe5b7f2b88d0a70785c0742`. It remains OPEN/DRAFT/CLEAN on
+Architecture PR #16 at `c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`, with no
+human review decision. Hosted exact-head validation run 38238355151 passed in
+32 seconds. Local `pnpm architecture:check` passed with the three sibling
+source roots configured; `pnpm migration:check` passed for 143 commit
+mappings; `pnpm test` passed all 16 tests. Draft release `.52` pins source
+commit `09d8cc23646c54e2395933f7723b18ed70e96901` and digest
+`df5093a653b33f8f2921f6bc58af784c057402516b7be69978ce876ae9f9644e`. No
+topology decision, Project mutation, merge, or release occurred.
+
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,

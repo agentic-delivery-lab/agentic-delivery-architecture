@@ -1,6 +1,6 @@
 schemaVersion: 1
 status: proposed
-asOf: '2026-10-09'
+asOf: '2026-10-12'
 sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
 purpose: Make software engineering continuously improvable, explainable, and trustworthy.
 mission: >-
@@ -130,7 +130,7 @@ marketAndProductContext:
     - The factory's value is lower coordination and setup effort with stronger authorization, provenance, validation, and recovery evidence.
     - Product changes should be selected from evidenced user or operator problems in an identified product repository.
   unknowns:
-    - No distinct product repository, named external customer, market size, willingness-to-pay evidence, or product outcome baseline is confirmed by the current six-repository inventory.
+    - No independent product repository, named external customer, market size, willingness-to-pay evidence, or independent-product outcome baseline is confirmed by the current six-repository inventory; the factory itself is a product and acceptance subject.
     - A product steward, product telemetry policy, and approved user-feedback collection path have not been designated.
 audiences:
   - id: maintainers
@@ -171,7 +171,12 @@ valuePropositions:
     proposition: Product changes address a concrete user or operator need, retain traceability to that need, and are checked against observed behavior after delivery.
 valueStreams:
   - id: factory-evolution
-    outcome: The factory becomes safer, more useful, easier to operate, and better evidenced.
+    outcome: >-
+      The factory is a product and acceptance subject. Governed self-development
+      makes it safer, more useful, easier to operate, and better evidenced.
+      Milestone A demonstrates this value across all seven target repository
+      surfaces; an independent product is not a prerequisite for necessary
+      factory correction and development.
     operatingLoop:
       - Record a factory need or evidence-backed improvement as a source Issue in its owning repository.
       - Prioritize and sequence the Issue in the portfolio Project.
@@ -179,14 +184,25 @@ valueStreams:
       - Validate the change with automated checks and independent semantic review; humans decide merge and activation.
       - Record outcomes, regressions, operational evidence, and rollback results.
       - Convert a validated finding into a new or updated Issue for portfolio prioritization.
+      - For Milestone A, demonstrate useful active delivery in Architecture, Requirements, Agent Customizations, Distribution, Control Plane, public .github, and private .github-private. Requirements is a proposed new repository and Agent Customizations a proposed identity-preserving rename of Primitives; this scope is a target, not an installed composition.
+      - Each surface must show ordinary source-Issue intake, bounded artifact or code production, exact-tree validation, an attributable pull request, and useful accepted delivery. Retain the Issue, admitted origin and actor, approved context, plan, operation and attempt, tested tree, validation, pull request, and accepting actor with the acceptance record.
+      - Milestone A also requires controlled failure or interruption with safe recovery and denied runner attempts to inherit operator privilege, change governance, merge critical work, or promote itself.
+      - Administrative bootstrap, repository creation or rename, installation, shadow observations, offline fixtures, passing CI, and pull request publication alone do not count as factory-delivered acceptance evidence.
+      - Admit the demonstrated safety floor before active delivery and activate one participant at a time with current and supported rollback pins. Reconcile development authority separately; neither this proposed strategy nor milestone wording authorizes execution, merge, release, or activation.
   - id: software-product-delivery
-    outcome: Users receive useful, reliable software changes with evidence of the problem addressed and the result observed.
+    outcome: >-
+      Milestone B tests reuse and generalizability through useful, reliable
+      delivery for a real independent product with an accountable owner and
+      evidenced user need. It follows Milestone A and adds product acceptance
+      and observed usefulness; no fictional product is created to satisfy it.
     operatingLoop:
       - Capture a user or operator problem, desired outcome, and evidence in an Issue owned by the product repository.
       - Prioritize the linked Issue in the portfolio Project.
       - Deliver through the same authorized Issue, pull request, automated validation, independent review, and human merge boundary.
       - Observe product behavior and user feedback against the Issue's stated outcome.
       - Route unmet needs, defects, and capability gaps to Issues in the product or factory owner repository.
+      - Before Milestone B delivery, establish the real independent owner and user need, central approved product requirements suitable for public visibility, rights agreement, explicit enrollment and scoped access, Distribution installation, and a validation profile for the actual product stack.
+      - Retain the same attributable delivery chain as Milestone A, plus actual product behavior, product-owner acceptance, observed usefulness, consumer update and rollback, and controlled failure or denial evidence. Architecture #13 retains the independent-product discovery question; no product or owner is inferred from repository setup.
 strategicGoals:
   - id: SG-01
     title: Deliver authorized work with end-to-end traceability

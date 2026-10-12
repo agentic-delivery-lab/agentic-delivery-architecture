@@ -6,6 +6,14 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Clarified Architecture #11 / W01: the factory is a product and acceptance
+  subject. Proposed Milestone A requires useful governed self-development
+  across seven target surfaces; Milestone B adds real independent-product
+  ownership, reuse, and observed usefulness. Administrative bootstrap and
+  successful checks alone cannot establish either milestone. Strategy and
+  goals remain proposed, with active delivery gated on admitted safety and
+  authority rather than prior independent-product delivery.
+
 - Amended ADR-0004 and ADR-0007 with managed workspace ownership, safe exact-tip cleanup, sibling worktree topology and failure-safe artifact teardown; registered AP-003 and QR-012, with profile rollout retained as implementation debt (Architecture #7).
 
 - Amended ADR-0022 with recovery for ambiguous Neon writes, a scheduled

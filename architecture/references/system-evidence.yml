@@ -4270,7 +4270,7 @@ observations:
       have zero Project items. No Project, repository, or Issue connection has
       another page. Architecture PR #17 is OPEN/DRAFT/CLEAN and mergeable at
       a96a877b0005f72a5b9671d613105e866d93cd7f on PR #16 at
-      c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f; no human review decision is
+      c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f; no human review decision is
       recorded. Its draft release is 0.1.0-draft.55, pinned to
       95616de07c342671bf4f845431768ddc54afdd22 with digest
       5eac95e03e957293be046f5871a6c7bdb7c7321ec19cf70bedd94a19687d6c63.
@@ -4329,8 +4329,8 @@ observations:
       is non-draft/CLEAN at 3a0adfb7942c760f4504478c2f47cc6a0624f966 with no
       review decision. Architecture #17 is DRAFT/CLEAN at
       1cb7019a06ec341749d15be7d8a392fe911209d3, based on PR #16 at
-      c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no review decision;
-      #16 is BLOCKED/REVIEW_REQUIRED at c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f.
+      c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f, with no review decision;
+      #16 is BLOCKED/REVIEW_REQUIRED at c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f.
       Primitives #4 is DRAFT/BLOCKED/REVIEW_REQUIRED at
       951433b2be5f0c3ada8144926f5b2cc69e7d6c95; #5 is
       BLOCKED/REVIEW_REQUIRED at 035547fc1c7885e96cf9a8f8295c94a26f269847.
@@ -4358,7 +4358,7 @@ observations:
     result: >-
       Architecture PR #17 is OPEN/DRAFT/CLEAN at head
       5934a7f7e29c1c14872a9db253579a777d3beb1c, based on Architecture PR #16
-      at c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f. No human review decision is
+      at c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f. No human review decision is
       recorded. The draft Architecture release is 0.1.0-draft.57, pinned to
       source commit 3fa7dfb88d8184e75e70dbf47add1f6189ba832a with digest
       0ec44bcbe0d8b3cbe37ebe251ca30d9a0fb2843e882005464580bc49cbdd6641.
@@ -4394,7 +4394,7 @@ observations:
       unassigned, with no comments; Issue #13 also remains OPEN, unassigned, and
       without comments. Architecture PR #17 is OPEN/DRAFT/CLEAN at
       da9e673af7b5d9d22b2645fa6d5a618f33aad6f4, based on PR #16 at
-      c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no human review decision.
+      c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f, with no human review decision.
       Hosted architecture-quality run 38254582397 passed on the exact head.
       The draft release at that head was 0.1.0-draft.58 with source commit
       3a7c2fdbdd03248176657a70d933a6124b39163a and digest
@@ -4460,7 +4460,7 @@ observations:
       are empty. Architecture #13 and #15 remain OPEN, unassigned, and have no
       comments. PR #17 is OPEN/DRAFT/MERGEABLE at exact head
       bbd87f4135be529b7b5fe3cdb77e9ce4e89b1df0, based on #16 at
-      c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no review decision;
+      c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f, with no review decision;
       hosted validate run 38254966187 passed. Its draft release is
       0.1.0-draft.59, pinned to source commit
       e7ea6f2c140a59b5635b9c47154371a4979e154c with content digest
@@ -4513,3 +4513,41 @@ observations:
       supplied local roots. It does not establish a Control Plane main failure,
       consumer activation, or production behavior. No pin or live setting was
       changed.
+  - id: architecture-pr16-review-and-strategy-inventory-refresh-20261012-1353
+    observedAt: '2026-10-12T13:53:05Z'
+    source: >-
+      GitHub pull-request and Actions reads plus a read-only diff review;
+      no review submission or mutation.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38206340047
+    request: >-
+      Review the exact Architecture PR #16 diff and checks as the base of PR
+      #17; identify evidence-freshness issues and refresh the canonical Project
+      inventory pointer from the most recent complete read. Do not submit a
+      review, approval, merge, or Project mutation.
+    result: >-
+      Architecture PR #16 is OPEN, non-draft, mergeable, and REVIEW_REQUIRED at
+      exact head c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f on main
+      61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c. Its exact-head hosted
+      architecture-quality validate run 38206340047 passed. The six changed
+      files are documentation, evidence, changelog, and the draft release
+      manifest; no runtime, permission, Project, or application code is
+      changed. PR #16's strategy inventory pointer references the 2026-10-10
+      23:53 event even though the complete 2026-10-11 22:57 inventory and later
+      2026-10-12 13:31 inventory are available. The canonical strategy pointer
+      in PR #17 is refreshed to the 13:31 complete inventory. PR #17 is OPEN,
+      DRAFT, and MERGEABLE at 7ddb2f40f3e9f9e40ecfbcd4b89aecbfd12b8a41 on PR
+      #16, with exact-head hosted validate run 38258170867 passed. Neither PR
+      has a human review decision. The exact PR #16 object ID was verified as
+      c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f against GitHub and the local
+      checkout; 17 earlier 39-character references were corrected in the
+      evidence, matrix, and task plan. No GitHub review or approval was
+      submitted.
+    limitation: >-
+      This review assessed the exact documented scope and verification shown
+      for PR #16; it is not a human approval or a review of live Project
+      behavior. Historical inventory observations remain dated evidence. No
+      Project, Issue, field, permission, release, or runtime state changed.

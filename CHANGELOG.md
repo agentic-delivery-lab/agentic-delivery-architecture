@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Pointed the canonical Project-planning inventory at the complete 13:25–13:31
+  UTC work-management recheck and recorded the read-only review of Architecture
+  PR #16. Corrected 17 stored references to the full PR #16 commit ID. The
+  strategy remains a proposal; no Project or live setting changed.
+  See architecture/references/system-evidence.yml#architecture-pr16-review-and-strategy-inventory-refresh-20261012-1353.
+  The Architecture draft release advances to 0.1.0-draft.62.
+
 - Reproduced the Control Plane release-chain mismatch against PR #112's
   draft `.66` candidate and clarified that this result does not establish a
   failure on Control Plane `main`. No consumer pins changed. See

@@ -937,7 +937,7 @@ organization, or any of the six repositories. All 62 Issues remain unassociated
 with a Project; no queried connection had another page. Architecture PR #17 is
 OPEN/DRAFT/CLEAN and mergeable at exact head
 a96a877b0005f72a5b9671d613105e866d93cd7f, stacked on PR #16 at
-c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no human review decision. Its
+c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f, with no human review decision. Its
 exact-head hosted validate check passed as run 38250330307.
 
 The Control Plane PR #112 candidate release-chain check failed. Distribution's
@@ -981,7 +981,7 @@ merge, or publication.
 
 GitHub reports PR #17 OPEN/DRAFT/CLEAN at
 5934a7f7e29c1c14872a9db253579a777d3beb1c, stacked on PR #16 at
-c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no human review decision.
+c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f, with no human review decision.
 Exact-head architecture-quality run 38253715469 passed. At that observed head,
 the draft release was 0.1.0-draft.57 with source commit
 3fa7dfb88d8184e75e70dbf47add1f6189ba832a and digest
@@ -1004,7 +1004,7 @@ unresolved items remain explicit.
 | Duplicate sources of truth or redundant artifacts | The six-repository scan found one organizational strategy source and no competing mission/vision/charter files at its observation time. The scan is point-in-time and has no cross-repository drift guard. |
 | Projects/Issues confusion or duplicated lifecycle | ADR-0023, the source-of-truth matrix, and offline #109/#110 cases preserve Issue authorization and lifecycle ownership while treating Project data as planning context. No live Project exists in the queried scopes, so live behavior is not demonstrated. |
 | Bounded-context leakage or repository-ownership violations | The Architecture model retains four existing bounded contexts and assigns runtime, primitives, distribution, and adapter ownership to their existing repositories. Structural validation passes; cross-repository compatibility and independent review remain open. |
-| Incompatible schemas/pins or unreviewed decision divergence | At the 13:16 review, Architecture contracts, ADRs, 143 source mappings, and the draft .59 digest validated locally. The 13:41 refresh validates draft .61; its reproduced release-chain failure is scoped to Control Plane PR #112 at draft .66 and does not establish a Control Plane `main` failure. Distribution #2 gates pin repairs on open owner reviews; PR #16 remains review-required. |
+| Incompatible schemas/pins or unreviewed decision divergence | At the 13:16 review, Architecture contracts, ADRs, 143 source mappings, and the draft .59 digest validated locally. The 13:41 refresh validated draft .61; its reproduced release-chain failure is scoped to Control Plane PR #112 at draft .66 and does not establish a Control Plane `main` failure. Distribution #2 gates pin repairs on open owner reviews; PR #16 remains review-required. The 13:53 refresh updates the strategy inventory pointer and advances the local draft to .62. |
 | Untrusted instruction injection or privilege escalation | Project/Issue content is modeled as untrusted and non-authorizing, with static and offline checks. No adversarial test of injected strategy context in a real Codex Actions invocation exists; Control Plane #106 remains open. |
 | Recursive loops, bot self-invocation, quota, or permission changes | Existing policies and #105 define bounded execution and recovery. The latest invocation finalized in shadow mode and skipped delivery; resource-limit and terminal-receipt behavior are not proven end to end. |
 | Self-grading, metric gaming, or eval contamination | The evaluation contract requires pinned baselines, case selection, dataset-integrity assessment, calibrated independent graders, and evidence. Available replays are synthetic; there is no representative baseline or independent outcome review. |
@@ -1025,7 +1025,7 @@ Issues. Architecture #15 and #13 remain open, unassigned, and without comments;
 there is no new topology decision, product owner, or outcome-evidence path in
 GitHub. PR #17 is OPEN/DRAFT/CLEAN at
 da9e673af7b5d9d22b2645fa6d5a618f33aad6f4, based on #16 at
-c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f; exact-head run 38254582397 passed.
+c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f; exact-head run 38254582397 passed.
 The .58 draft at that head is valid; this evidence update advances the local
 draft manifest to .59, still unpublished and unadopted. Evidence:
 architecture/references/system-evidence.yml#architecture-project-gate-recheck-20261012-1318.
@@ -1044,7 +1044,7 @@ commits are unchanged; eight PRs remain open and all six GitHub Release lists
 are empty. Architecture #13 and #15 remain OPEN, unassigned, and without
 comments. PR #17 is OPEN/DRAFT/MERGEABLE at
 `bbd87f4135be529b7b5fe3cdb77e9ce4e89b1df0`, based on #16 at
-`c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f`; its exact-head `validate` run
+`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; its exact-head `validate` run
 38254966187 passed. The draft release is .59, source
 `e7ea6f2c140a59b5635b9c47154371a4979e154c`, digest
 `4a2fa6c1b5f8fa904ec47fb780951bc5ddcb6c1831864431471a919a6f6d14c4`.
@@ -1064,3 +1064,23 @@ not establish a `main` failure. Exact repository roots and mismatch values are
 recorded at
 `architecture/references/system-evidence.yml#architecture-release-chain-pr112-candidate-recheck-20261012-1341`.
 No release pin, Project, or live setting changed.
+
+
+### 13:53 UTC Architecture PR #16 review and current inventory pointer
+
+Architecture PR #16 is OPEN, non-draft, mergeable, and REVIEW_REQUIRED at
+`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; exact-head hosted validate run
+38206340047 passed. Its six-file change is documentation, evidence, changelog,
+and draft-manifest work; no runtime or permission code changes. The PR #16
+strategy record still points at the 2026-10-10 23:53 Project inventory, while
+the 2026-10-11 22:57 and 2026-10-12 13:31 full inventories are newer. The
+canonical `projectPlanning` record in this PR #17 branch now points to the
+complete 13:31 inventory for all 62 Issues. PR #17 remains OPEN/DRAFT at
+`7ddb2f40f3e9f9e40ecfbcd4b89aecbfd12b8a41` on #16, with exact-head validate
+run 38258170867 passed and no human review decision. The read-only review
+record is at
+`architecture/references/system-evidence.yml#architecture-pr16-review-and-strategy-inventory-refresh-20261012-1353`.
+The exact PR #16 object ID was verified as
+`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; 17 earlier 39-character
+references were corrected in this evidence, matrix, and task plan. No review,
+approval, Project, or live setting was submitted or changed.

@@ -6,6 +6,8 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Refreshed the arc42 context, building-block, runtime, deployment, and cross-cutting summaries and the Project status diagrams to cite the 2026-10-12 04:59 UTC recheck of all 61 Issues. Kept Issue Field, Issue Type, and entitlement findings tied to the separate 2026-10-11 22:57 UTC full inventory; advanced the draft Architecture pin to 0.1.0-draft.43.
+
 - Rechecked Architecture #11's Project inventory at 21:24 UTC and PR state at
   21:34 UTC. The six repository scopes still have no Project v2 nodes or
   open-Issue associations. Control Plane #104 is merged, with both #101 and

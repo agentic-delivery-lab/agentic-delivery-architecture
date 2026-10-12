@@ -30,18 +30,21 @@ because they have separate repositories. The machine-readable context map is
 - **GitHub Projects:** required primary planning, prioritization,
   coordination, and progress-visibility surface for Factory Evolution and
   Software Product Delivery. Origin repository Issues remain canonical work
-  records and the only source of execution authorization. The complete
-  2026-10-11 20:07 UTC inventory found no Project in the organization,
-  authenticated-user, or any of the six repository scopes; all 23 open
-  Issues had zero Project-item associations and zero Issue Field Values.
-  Organization and repository Projects are enabled on the Free plan. The six
-  organization-only Issue Fields are unavailable in public and internal
-  Projects; visibility in a future private Project remains unverified.
-  Project views, fields, per-Project access, GitHub App access, and live
-  lifecycle integration remain unverified. External repositories and
-  Projects outside the queried organization scopes remain unknown. No live
-  configuration is claimed; see
-  `system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`.
+  records and the only source of execution authorization. The latest complete
+  Project-existence and association recheck, at 2026-10-12 04:59 UTC, found no
+  Project in the authenticated-viewer, organization, or six repository scopes;
+  none of the 61 Issues had a Project-item association. A separate full
+  inventory at 2026-10-11 22:57 UTC found empty Issue Field Values for all 23
+  then-open Issues, six organization-members-only Issue Fields, nine native
+  Issue Types (five of those open Issues were untyped), and Free-plan support
+  for organization and repository Projects. Organization-only Issue Fields
+  are unavailable in public and internal Projects; visibility in a future
+  private Project remains unverified. Project views, fields, per-Project
+  access, GitHub App access, and live lifecycle integration remain
+  unverified. External repositories and Projects outside the queried scopes
+  remain unknown. No live configuration is claimed; see
+  `system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459`
+  and `system-evidence.yml#portfolio-issue-project-inventory-20261011-2257`.
 - **GitHub App:** installation access, permissions, and subscribed event
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.
@@ -60,9 +63,11 @@ because they have separate repositories. The machine-readable context map is
 - **Consumer repositories:** receive thin, version-pinned integration from
   Distribution and reviewed Primitive projections from their canonical source.
 - **Product repositories:** the expected owner boundary for product Issues and
-  product outcome evidence; the 2026-10-11 19:33 UTC inventory still identifies
-  no distinct product repository or steward among the six organization
-  repositories. An external product repository remains unknown.
+  product outcome evidence; the 2026-10-11 19:33 UTC repository mapping
+  identified no distinct product repository or steward among the six
+  organization repositories. The 2026-10-12 04:59 UTC recheck covered those
+  same six repositories, not external repositories; an external product
+  repository remains unknown.
 
 ## 3.3 Scope exclusions
 

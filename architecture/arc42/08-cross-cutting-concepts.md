@@ -37,22 +37,22 @@ and preserve rollback. The current architecture change does not mutate a
 field.
 
 The initial 2026-10-09 read failed because Project access was unavailable. The
-complete 2026-10-11 20:07 UTC recheck under the authenticated `project`,
-`admin:org`, and `repo` scopes returned no organization, personal, or
-repository Projects and no next page; all 23 open Issues in the six visible
-organization repositories also had no Project associations or Issue Field
-Values. Organization and repository Projects are enabled on the Free plan.
-The six organization Issue Fields remain `organization_members_only`; the
-organization defines nine native Issue Types, with five open Issues untyped.
-GitHub documents that organization-only Issue Fields do not appear in public
-or internal Projects; no Project field, membership, or private-Project
-visibility could be inspected. The 19:14 UTC App inventory
-reports no Projects permission for the selected-repository invoker, but its
-exact repository membership and deployed credential binding remain
-unverified. Projects owned outside the queried scopes also remain unknown.
-The proposed one-Project/two-view topology awaits a human decision in
-Architecture #15. See
-`system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`.
+latest complete read-only GraphQL recheck, at 2026-10-12 04:59 UTC, found no
+Project in the authenticated-viewer, organization, or six repository scopes;
+all 61 Issues across those repositories had zero Project-item associations.
+The separate full inventory at 2026-10-11 22:57 UTC found empty Issue Field
+Values on all 23 then-open Issues, six `organization_members_only` Issue
+Fields, nine native Issue Types (five then-open Issues untyped), and Free-plan
+support for organization and repository Projects. GitHub documents that
+organization-only Issue Fields do not appear in public or internal Projects;
+no Project field, membership, or private-Project visibility could be
+inspected. The 19:14 UTC App inventory reports no Projects permission for the
+selected-repository invoker, but its exact repository membership and deployed
+credential binding remain unverified. Projects owned outside the queried
+scopes also remain unknown. The proposed one-Project/two-view topology awaits
+a human decision in Architecture #15. See
+`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459`
+and `system-evidence.yml#portfolio-issue-project-inventory-20261011-2257`.
 
 ## 8.3 Semantic proposals and deterministic authorization
 

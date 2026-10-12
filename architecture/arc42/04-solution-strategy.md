@@ -23,13 +23,18 @@ The current owner and provenance inventory is in
 GitHub Projects is the primary portfolio surface for both value streams. The
 proposed minimum topology is one organization portfolio Project with separate
 Factory Evolution and Software Product Delivery views, reusing a suitable
-existing Project if an authorized inventory confirms fit. The 2026-10-09
-inventory found no Project within the queried organization, user, or
-repository scopes; the organization REST API reports Project capability
-available under its Free plan. Project-specific ownership, fields, views, and
+existing Project if an authorized inventory confirms fit. The latest complete
+read-only GraphQL recheck, at 2026-10-12 04:59 UTC, found no Project in the
+authenticated-viewer, organization, or six repository scopes and no Project
+association on any of the 61 Issues. The separate full inventory at
+2026-10-11 22:57 UTC found that organization and repository Projects are
+enabled on the Free plan and that six organization Issue Fields are
+organization-members-only. Project-specific ownership, fields, views, and
 visibility must be reviewed before selecting or configuring a Project. A
 Project-only card can be discussed and prioritized but cannot authorize
-execution.
+execution. See
+`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459`
+and `system-evidence.yml#portfolio-issue-project-inventory-20261011-2257`.
 
 Every executable unit of work has a source Issue in its owning repository.
 The Project links that Issue and may own distinct portfolio planning facts.
@@ -47,7 +52,8 @@ evidence → improvement Issue → Project prioritization. The diagrams under
 [architecture diagrams](../diagrams/README.md) show the value streams,
 strategic alignment, portfolio lifecycle, factory evolution, product delivery,
 and trust boundaries. Project planning remains a proposed integration because
-the dated read-only inventory found no Project.
+the latest read-only recheck found no Project in the queried scopes; see the
+evidence events above.
 
 ## 4.3 Proposal and enforcement
 

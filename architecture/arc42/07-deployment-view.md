@@ -33,7 +33,7 @@ participant is active or that each hosting rule has been enabled.
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |
 | Repository sources | The six default-branch commits are Control Plane 9a2e1f3549428bc042d5c59d09beb300ca2d1362, Architecture 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c, Primitives e4933566fbf5b0f593830f8933f18fbd21024fa7, Distribution b69c5710928b47efc4d3ab12ec4d5b596c80720c, public .github af52c92e49616e78f8d6647cf5cf538a7e571d78, and private .github-private f9e6589b65c71da9e7b35d8e026f3d4a91dab78f. | Observed branch heads do not prove compatibility or active deployment. |
-| GitHub Projects and Issues | The complete 20:07 UTC organization, authenticated-user, and six-repository Project v2 connections returned no Projects. All 23 open Issues had zero Project items and zero Issue Field Values. Nine native Issue Types and six organization-members-only fields were read; five Issues remain untyped. The Free plan reports organization and repository Projects enabled. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. Organization-only Issue Fields are unavailable in public/internal Projects; visibility in a future private Project remains unverified. Empty Issue values do not establish a lifecycle transition. |
+| GitHub Projects and Issues | The 2026-10-12 04:59 UTC GraphQL recheck returned no Projects in the viewer, organization, or six repository scopes and no Project item on any of the 61 Issues. The separate 2026-10-11 22:57 UTC full inventory found empty Issue Field Values on all 23 then-open Issues, nine native Issue Types (five then-open Issues untyped), six organization-members-only fields, and Free-plan support for organization and repository Projects. | No Project exists in the queried scopes to inspect membership, fields, views, or visibility. Organization-only Issue Fields are unavailable in public/internal Projects; visibility in a future private Project remains unverified. Empty Issue values do not establish a lifecycle transition. See `portfolio-project-issue-association-recheck-20261012-0459` and `portfolio-issue-project-inventory-20261011-2257` in system evidence. |
 | GitHub Apps, Actions, and protection | Three App installations were listed. The Control Plane invoker installation selects repositories and has Contents/Issues/PR write plus Issue Field/Type read, with no Projects permission; its selected-repository API returned 403. Organization Actions allow all actions, do not require SHA pinning, and are enabled for all repositories. Public rulesets were read; the private ruleset endpoint returned 403. | The selected repository set, deployed credential binding, and private ruleset state remain unknown. Organization policy does not prove individual workflow pins or runtime behavior. |
 | Pull requests and Releases | The 20:05 UTC PR inventory found Control Plane #104 merged with matching CHANGELOG.md blobs across PR head, merge commit, and current main; #86 conflicting in CHANGELOG.md; #109/#110 checks passing with review pending; and Primitives #4 draft/review-required. At 20:25 UTC, Architecture #16 was open/review-required and #17 remained open/draft/mergeable at exact head `19dcc691006d93e169f9eb4f76c9456f5c6b46fe`, based on #16, with exact-head validation run 38171652069 passed and no review decision. The latest recorded six-repository Release inventory (19:14 UTC) listed no releases. | Passing CI is not human review, release adoption, participant activation, or production acceptance. PR #17 remains stacked on #16 and is not an approved Architecture release. |
 | Production runtime | The last recorded Vercel production metadata observation is 2026-10-10 03:27 UTC on an older Control Plane main commit. | This refresh did not test webhook health, App credential binding, delivery, Neon state, evaluation replay, or product outcomes; deployment of current main is unverified. |
@@ -135,9 +135,11 @@ desired topology separate from observed deployment.
 
 ## 7.5 Access and change boundary
 
-The latest Project and Issue inventory is
-system-evidence.yml#strategy-live-inventory-recheck-20261011-1933. The latest
-App-permission evidence remains
+The latest Project-existence and Issue-association inventory is
+system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459;
+the separately timed Issue Field/Type, entitlement, App, PR, and release
+inventory is system-evidence.yml#portfolio-issue-project-inventory-20261011-2257.
+The latest App-permission evidence remains
 system-evidence.yml#strategy-live-inventory-recheck-20261011-1914; it confirms
 that human OAuth scopes do not grant Projects access to the runtime App, and
 the selected repository list remains unavailable to this identity. No

@@ -1002,7 +1002,7 @@ unresolved items remain explicit.
 | Duplicate sources of truth or redundant artifacts | The six-repository scan found one organizational strategy source and no competing mission/vision/charter files at its observation time. The scan is point-in-time and has no cross-repository drift guard. |
 | Projects/Issues confusion or duplicated lifecycle | ADR-0023, the source-of-truth matrix, and offline #109/#110 cases preserve Issue authorization and lifecycle ownership while treating Project data as planning context. No live Project exists in the queried scopes, so live behavior is not demonstrated. |
 | Bounded-context leakage or repository-ownership violations | The Architecture model retains four existing bounded contexts and assigns runtime, primitives, distribution, and adapter ownership to their existing repositories. Structural validation passes; cross-repository compatibility and independent review remain open. |
-| Incompatible schemas/pins or unreviewed decision divergence | Architecture contracts, ADRs, 143 source mappings, and the draft .58 digest validate locally. The exact release-chain check fails on Control Plane and Architecture pins in Distribution, Agent Plugin, and Automation projections. Distribution #2 gates repairs on open owner reviews; PR #16 remains blocked. |
+| Incompatible schemas/pins or unreviewed decision divergence | Architecture contracts, ADRs, 143 source mappings, and the draft .59 digest validate locally. The exact release-chain check fails on Control Plane and Architecture pins in Distribution, Agent Plugin, and Automation projections. Distribution #2 gates repairs on open owner reviews; PR #16 remains review-required. |
 | Untrusted instruction injection or privilege escalation | Project/Issue content is modeled as untrusted and non-authorizing, with static and offline checks. No adversarial test of injected strategy context in a real Codex Actions invocation exists; Control Plane #106 remains open. |
 | Recursive loops, bot self-invocation, quota, or permission changes | Existing policies and #105 define bounded execution and recovery. The latest invocation finalized in shadow mode and skipped delivery; resource-limit and terminal-receipt behavior are not proven end to end. |
 | Self-grading, metric gaming, or eval contamination | The evaluation contract requires pinned baselines, case selection, dataset-integrity assessment, calibrated independent graders, and evidence. Available replays are synthetic; there is no representative baseline or independent outcome review. |
@@ -1029,3 +1029,23 @@ draft manifest to .59, still unpublished and unadopted. Evidence:
 architecture/references/system-evidence.yml#architecture-project-gate-recheck-20261012-1318.
 No live Project, repository, permission, release, participant, or production
 setting changed.
+
+### 13:25–13:31 UTC complete work-management and PR refresh
+
+The authenticated read-only recheck returned zero ProjectsV2 for the viewer,
+organization, and each of the six repositories; all 62 Issues have zero Project
+items and no connection has another page. All 24 open Issues have zero Issue
+Field Values; only closed Control Plane #44/#46/#47/#48 have two values each.
+The organization remains Free with both Project capability flags true, nine
+native Issue Types, and six organization-only Issue Fields. The six `main`
+commits are unchanged; eight PRs remain open and all six GitHub Release lists
+are empty. Architecture #13 and #15 remain OPEN, unassigned, and without
+comments. PR #17 is OPEN/DRAFT/MERGEABLE at
+`bbd87f4135be529b7b5fe3cdb77e9ce4e89b1df0`, based on #16 at
+`c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f`; its exact-head `validate` run
+38254966187 passed. The draft release is .59, source
+`e7ea6f2c140a59b5635b9c47154371a4979e154c`, digest
+`4a2fa6c1b5f8fa904ec47fb780951bc5ddcb6c1831864431471a919a6f6d14c4`.
+Evidence: `system-evidence.yml#portfolio-current-work-management-pr-refresh-20261012-1331`.
+No Project, field, permission, release, participant, review, or production
+mutation was made.

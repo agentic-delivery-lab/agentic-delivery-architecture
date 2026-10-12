@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Rechecked the complete viewer, organization, and six-repository Project
+  inventory, all Issue Field values, open PR heads/checks, and GitHub Releases
+  at 13:25–13:31 UTC. No Project or Issue association exists in the queried
+  scopes; PR #17 remains draft on #16 with exact-head validation passing. See
+  architecture/references/system-evidence.yml#portfolio-current-work-management-pr-refresh-20261012-1331.
+  The Architecture draft release advances to 0.1.0-draft.60.
+
 - Rechecked the portfolio-topology and product-ownership gates at 13:18 UTC.
   No Projects or Issue associations exist in the six visible repositories;
   Architecture #13 and #15 remain open without comments or assignees. See

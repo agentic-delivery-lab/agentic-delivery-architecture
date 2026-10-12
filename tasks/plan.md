@@ -988,3 +988,28 @@ This refresh also corrected stale matrix references to the prior PR head and
 draft version. The local Architecture draft advances to .58 for the updated
 evidence; it remains unpublished and unadopted. Evidence:
 architecture/references/system-evidence.yml#architecture-pr17-head-recheck-20261012-1312.
+
+### Mandatory final self-review — 2026-10-12 13:16 UTC
+
+This is a requirement-level review of the original assignment's final checklist,
+not a claim of operational acceptance. Current evidence is classified below;
+unresolved items remain explicit.
+
+| Self-review concern | Current finding and evidence |
+| --- | --- |
+| Missing scope or either value stream | The strategy defines factory evolution and product delivery, with cross-stream synthetic fixtures in Control Plane #109. Product ownership and outcome evidence are still unknown under Architecture #13; no real product delivery has been demonstrated. |
+| Conflicting mission, vision, goal, and principle semantics | There is one canonical proposed strategy source with distinct purpose/mission/vision and eight traceable goals. Structural validation passes. Semantic adoption still requires independent human review of Architecture #17 and its blocked base PR #16. |
+| Duplicate sources of truth or redundant artifacts | The six-repository scan found one organizational strategy source and no competing mission/vision/charter files at its observation time. The scan is point-in-time and has no cross-repository drift guard. |
+| Projects/Issues confusion or duplicated lifecycle | ADR-0023, the source-of-truth matrix, and offline #109/#110 cases preserve Issue authorization and lifecycle ownership while treating Project data as planning context. No live Project exists in the queried scopes, so live behavior is not demonstrated. |
+| Bounded-context leakage or repository-ownership violations | The Architecture model retains four existing bounded contexts and assigns runtime, primitives, distribution, and adapter ownership to their existing repositories. Structural validation passes; cross-repository compatibility and independent review remain open. |
+| Incompatible schemas/pins or unreviewed decision divergence | Architecture contracts, ADRs, 143 source mappings, and the draft .58 digest validate locally. The exact release-chain check fails on Control Plane and Architecture pins in Distribution, Agent Plugin, and Automation projections. Distribution #2 gates repairs on open owner reviews; PR #16 remains blocked. |
+| Untrusted instruction injection or privilege escalation | Project/Issue content is modeled as untrusted and non-authorizing, with static and offline checks. No adversarial test of injected strategy context in a real Codex Actions invocation exists; Control Plane #106 remains open. |
+| Recursive loops, bot self-invocation, quota, or permission changes | Existing policies and #105 define bounded execution and recovery. The latest invocation finalized in shadow mode and skipped delivery; resource-limit and terminal-receipt behavior are not proven end to end. |
+| Self-grading, metric gaming, or eval contamination | The evaluation contract requires pinned baselines, case selection, dataset-integrity assessment, calibrated independent graders, and evidence. Available replays are synthetic; there is no representative baseline or independent outcome review. |
+| Negative evidence, rollback, or user-value measures | The contract retains negative evidence and the matrix distinguishes gaps. Distribution #2 has no completed consumer rollback; no product steward, user-value baseline, or authorized product outcome source has been identified. |
+| Scope creep, premature infrastructure, or documentation/runtime drift | No Project, permission, participant, production configuration, product repository, or published release was changed. The documented target is ahead of live behavior: no Project association or end-to-end Issue-to-PR/evaluation-feedback loop is evidenced. |
+
+**Disposition:** the architecture foundation is reviewable as a draft, but several
+criteria are partial, blocked, or gaps. Operational completion is not achieved.
+The evidence and exact owner gates remain in the strategy gap matrix and
+architecture/references/system-evidence.yml.

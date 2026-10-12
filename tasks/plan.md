@@ -740,6 +740,22 @@ exact-head hosted validation are pending; PR #17 remains draft and stacked on
 #16. No Project, repository configuration, participant, merge, or published
 release changed.
 
+### 11:20 UTC Architecture #17 exact-head validation follow-up
+
+The 11:03 checkpoint's pending push and hosted validation are now superseded.
+Architecture PR #17 is OPEN/DRAFT/CLEAN at exact head
+`b529f1c834fe78986d942eb6636d5eb8175eab4b`, stacked on PR #16 at
+`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`. Hosted `architecture-quality`
+run `38240266195` passed on that exact head; local `pnpm architecture:check`,
+`pnpm migration:check` (143 source mappings), and `pnpm test` (17 passed, 0
+failed) also passed. The draft `.53` release still pins source commit
+`c72c7fdedfbf49dd875d6932ad7c44d4c33f3ff4` and digest
+`4ce2f3d4a279b948017a8928c4433e035ebf4d6e3b6bff7993a30f821bdea15f`.
+PR #17 has no human review decision and remains stacked on #16; #15 and #13
+remain separate human topology and product-ownership gates. No Project,
+permission, runtime, participant, release, or repository configuration was
+changed.
+
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,

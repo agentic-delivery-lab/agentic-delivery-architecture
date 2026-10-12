@@ -2020,3 +2020,70 @@ observations:
       human decision gate for any portfolio Project topology or configuration.
       No Issue, Project, field, permission, App, participant, release, or
       runtime setting was changed.
+  - id: portfolio-project-issue-association-recheck-20261012-0459
+    observedAt: '2026-10-12T04:59:52Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Read-only GraphQL recheck started at 2026-10-12 04:59:52 UTC as
+      authenticated viewer sjefsharp. Queried organization.projectsV2,
+      viewer.projectsV2, repository.projectsV2 for all six visible
+      repositories, complete open-and-closed Issue connections, and each
+      Issue's Project-item connection. All connections had no next page. No
+      mutation or Project write was attempted.
+    result:
+      status: >-
+        Complete read-only recheck of Project existence and Issue association
+        across the authenticated viewer, organization, and six visible
+        repositories.
+      available:
+        - >-
+          Organization and viewer Project v2 connections returned
+          totalCount=0 with no next page. All six repository Project v2
+          connections also returned totalCount=0 with no next page.
+        - >-
+          The complete Issue connections returned 61 Issues in total and no
+          next pages. Every Issue's Project-item connection returned
+          totalCount=0 with no next page.
+        - >-
+          Current main HEADs: agentic-delivery
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362;
+          agentic-delivery-architecture
+          61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c;
+          agentic-delivery-primitives
+          e4933566fbf5b0f593830f8933f18fbd21024fa7;
+          agentic-delivery-distribution
+          b69c5710928b47efc4d3ab12ec4d5b596c80720c; .github
+          af52c92e49616e78f8d6647cf5cf538a7e571d78; and .github-private
+          f9e6589b65c71da9e7b35d8e026f3d4a91dab78f.
+        - >-
+          Issue counts remain: Control Plane 11 open/31 closed; Architecture
+          5/3; Primitives 2/0; Distribution 2/0; public adapter 2/4; and
+          private adapter 1/0.
+      absent:
+        - No organization-owned or viewer-owned Project v2 node in the queried
+          scopes.
+        - No repository-linked Project v2 node in the six queried repositories.
+        - No Project item on any of the 61 Issues in the six queried
+          repositories.
+    limitation: >-
+      This recheck covers only the authenticated viewer, organization, and six
+      visible repositories. It does not prove absence of Projects owned
+      elsewhere or shared through unqueried accounts. Issue Types, Issue Field
+      definitions and values, organization entitlements, App permissions, PR
+      state, and release state were not re-read; use the separately timed
+      complete inventory at
+      portfolio-issue-project-inventory-20261011-2257 for those observations.
+      No Project existed to inspect views, fields, visibility, or membership.
+      Issue #15 remains the human decision gate for any topology or
+      configuration. No Issue, Project, permission, App, participant, release,
+      or runtime setting was changed.

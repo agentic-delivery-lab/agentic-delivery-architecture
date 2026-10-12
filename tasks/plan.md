@@ -756,6 +756,40 @@ remain separate human topology and product-ownership gates. No Project,
 permission, runtime, participant, release, or repository configuration was
 changed.
 
+### 12:04 UTC Architecture #17 evidence and runtime refresh
+
+The 11:48–11:56 UTC read-only refresh is recorded at
+`architecture/references/system-evidence.yml#portfolio-runtime-and-pr17-recheck-20261012-1156`.
+It reconfirmed no Projects or Issue associations across the six repositories
+and all 62 Issues. Architecture PR #17 was OPEN/DRAFT/CLEAN at
+`c241997ca864fd1842ba0c2d79bcec9b8cfffb91`, stacked on #16 at
+`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; exact-head run `38243930448`
+passed. The latest Control Plane `main` invocation run `38227232599` passed
+authorization, classification, and finalization at 09:01 UTC, then skipped
+delivery because the participant remained in shadow mode. The two 08:14 UTC
+runs failed explicit-invocation validation and skipped finalization/delivery.
+Control Plane #112 remains draft with unresolved held-receipt retry semantics
+and an unverified live migration prerequisite.
+
+PR #104 remains merged, with its historical lowercase `CHANGELOG.md` conflict
+already resolved in the merge commit. Current `main` contains #101 and #103
+entries without conflict markers; uppercase `CHANGELOG.MD` does not exist. All
+three Codex review threads are resolved and covered by current code/tests, but
+their COMMENTED review remains distinct from independent human approval.
+Evidence is recorded at
+`architecture/references/system-evidence.yml#control-plane-pr104-review-thread-recheck-20261012-1156`.
+
+The local Architecture #17 worktree now has its inventory, runtime, and
+review-evidence refresh on top of the previously validated head. Draft release
+`.54` pins authored source commit
+`bed7af9b38744ae58f91502dcc896273eeb17ea7` with digest
+`a16971f3ff70140b7658b90a080931d70b266240728810bffb11fa8642e943fa`.
+With the Control Plane, Primitives, and Distribution source roots configured,
+`pnpm architecture:check`, `pnpm migration:check` (143 mappings), and
+`pnpm test` (17 passed, 0 failed) pass locally. Push and exact-head hosted
+validation are pending; keep PR #17 draft and stacked on #16. No Project,
+permission, runtime, participant, merge, or published release changed.
+
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,

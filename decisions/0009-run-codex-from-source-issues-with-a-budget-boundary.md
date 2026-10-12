@@ -243,6 +243,19 @@ Amendment source: [issue #32](https://github.com/agentic-delivery-lab/agentic-de
 
 ## More Information
 
+### Development-phase authority amendment (W02)
+
+The original source, date, decision makers and immutable imported-origin pin
+above remain historical provenance. For current factory correction and
+development, apply the scoped owner and interactive-operator delegation in
+[ADR-0018's W02 amendment](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md#development-phase-authority-amendment-w02),
+tracked by [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)
+and [Control Plane #59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59).
+The self-hosted runner receives no approval, merge, administration or owner
+credential authority from that delegation. Operator acceptance and separate
+validation are recorded as such; independent human review requires its own
+evidence. Proposed strategy adoption and live safety remain separate gates.
+
 - [Codex app-server](https://learn.chatgpt.com/docs/app-server)
 - [Codex permissions](https://learn.chatgpt.com/docs/permissions)
 - [Codex managed network proxy](https://github.com/openai/codex/blob/rust-v0.153.4/codex-rs/network-proxy/README.md)

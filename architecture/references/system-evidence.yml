@@ -4368,3 +4368,38 @@ observations:
       A clean branch and passing hosted validation do not establish human
       review, approval, merge, or consumer adoption. PR #17 remains draft and
       stacked on PR #16, which is blocked and requires human review.
+  - id: architecture-project-gate-recheck-20261012-1318
+    observedAt: '2026-10-12T13:18:12Z'
+    source: >-
+      Authenticated GitHub GraphQL Project inventory and GitHub Issue/PR/Actions
+      reads.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: da9e673af7b5d9d22b2645fa6d5a618f33aad6f4
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38254582397
+    request: >-
+      Recheck whether Project configuration or responses to the Architecture
+      #13 product-ownership and #15 portfolio-topology gates appeared, and
+      verify the current PR #17 status. Read-only.
+    result: >-
+      The viewer and organization expose zero ProjectsV2. All six repositories
+      expose zero ProjectsV2 and their 62 Issues have zero Project items; no
+      queried connection has another page. Architecture Issue #15 remains OPEN,
+      unassigned, with no comments; Issue #13 also remains OPEN, unassigned, and
+      without comments. Architecture PR #17 is OPEN/DRAFT/CLEAN at
+      da9e673af7b5d9d22b2645fa6d5a618f33aad6f4, based on PR #16 at
+      c11164c1cb387ca3b36706cda3a1a1d6bdd5a5f, with no human review decision.
+      Hosted architecture-quality run 38254582397 passed on the exact head.
+      The draft release at that head was 0.1.0-draft.58 with source commit
+      3a7c2fdbdd03248176657a70d933a6124b39163a and digest
+      bdac9c25633c34784244e0a5fe01129d7ecb2d9c8c6f52c9b40c2c67fa7473a2.
+    limitation: >-
+      Empty Project inventory and Issue threads do not supply the human
+      topology/product decisions. No Project, repository, permission, release,
+      participant, or production setting was changed.

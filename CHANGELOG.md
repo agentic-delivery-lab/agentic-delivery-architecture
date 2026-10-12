@@ -6,6 +6,12 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Rechecked the portfolio-topology and product-ownership gates at 13:18 UTC.
+  No Projects or Issue associations exist in the six visible repositories;
+  Architecture #13 and #15 remain open without comments or assignees. See
+  architecture/references/system-evidence.yml#architecture-project-gate-recheck-20261012-1318.
+  The Architecture draft release advances to 0.1.0-draft.59.
+
 - Reconciled the Architecture PR #17 matrix snapshot with its current exact
   head, draft release, and passing hosted validation. The PR remains draft and
   stacked on #16 without a human review decision. See

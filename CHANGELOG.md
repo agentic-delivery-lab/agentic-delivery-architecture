@@ -13,7 +13,8 @@ All notable changes to this repository are documented here.
   and check states; the six-repository refresh still finds eight open PRs and
   requires human review where recorded. See
   architecture/references/system-evidence.yml#portfolio-open-pr-recheck-20261012-1034.
-  The draft Architecture release advances to 0.1.0-draft.51.
+  The Phase K release evidence points to the updated draft 0.1.0-draft.52.
+  The Architecture draft release advances to that version.
 
 - Refreshed Architecture #11's Projects and Issue evidence from the complete
   2026-10-12 09:17–09:22 UTC inventory. No Project was visible in the viewer,

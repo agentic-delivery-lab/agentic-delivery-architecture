@@ -28,7 +28,7 @@
 This is the desired logical deployment. It does not imply that every
 participant is active or that each hosting rule has been enabled.
 
-## 7.2 Operational inventory snapshot (observation times appear per surface)
+## 7.2 Current inventory snapshot (observations dated per surface)
 
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |

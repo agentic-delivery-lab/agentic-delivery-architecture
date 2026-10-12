@@ -3514,3 +3514,26 @@ observations:
       b69c5710928b47efc4d3ab12ec4d5b596c80720c. No symlink exploit or live
       consumer operation was executed; the finding does not establish that an
       unintended symlink exists in a consumer repository.
+  - id: architecture-pr17-verified-head-20261012-0610
+    observedAt: '2026-10-12T06:10:31Z'
+    source: GitHub pull request and Actions run APIs.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+    sourceCommit: 1a4dba59d922bbef3fa2b927bc23e618ecaf3d9c
+    request: >-
+      Verify the pushed Architecture PR #17 head, base, draft/review state,
+      current description, and exact-head validation after updating its
+      issue-linked evidence. Read-only; no review or merge action was taken.
+    result: >-
+      PR #17 is OPEN, DRAFT, and CLEAN at head
+      1a4dba59d922bbef3fa2b927bc23e618ecaf3d9c, based on open PR #16 at
+      c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f. The PR body now records
+      Architecture draft release 0.1.0-draft.44 and its authored source commit
+      and digest. Exact-head Architecture validation run 38211127172 reports
+      success. GitHub has no human review decision for PR #17.
+    runs:
+      - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38211127172
+    limitation: >-
+      A passing exact-head validation does not establish independent human
+      review, adoption, or release approval. PR #17 remains stacked on PR #16;
+      no merge or release was performed.

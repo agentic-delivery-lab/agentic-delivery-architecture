@@ -643,6 +643,16 @@ controller. This is a source-based risk inference, not a reproduced exploit or
 live-consumer test. No Distribution file or consumer was changed. See
 `system-evidence.yml#distribution-bootstrap-source-review-20261012-0604`.
 
+### 06:10 UTC PR #17 exact-head verification
+
+Pushed the issue-linked draft branch by fast-forward to
+`1a4dba59d922bbef3fa2b927bc23e618ecaf3d9c` and refreshed PR #17's title and
+description with draft release .44 and the current evidence. GitHub reports
+the PR OPEN, DRAFT, CLEAN, and stacked on #16; exact-head Architecture
+validation run 38211127172 passed. No human review decision exists. Keep the
+draft open pending review of #16 and #17; no merge or release occurred. See
+`system-evidence.yml#architecture-pr17-verified-head-20261012-0610`.
+
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,

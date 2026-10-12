@@ -6,6 +6,12 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Added a 26-item Phase K coverage map that separates structural and offline
+  test evidence from partial, blocked, and unverified live acceptance. It
+  records the remaining owners and gates without treating synthetic fixtures
+  as operational proof; advanced the draft Architecture release to
+  0.1.0-draft.48.
+
 - Refreshed the arc42 context, building-block, runtime, deployment, and cross-cutting summaries and the Project status diagrams to cite the 2026-10-12 04:59 UTC recheck of all 61 Issues. Kept Issue Field, Issue Type, and entitlement findings tied to the separate 2026-10-11 22:57 UTC full inventory; advanced the draft Architecture pin to 0.1.0-draft.43.
 
 - Rechecked Architecture #11's Project inventory at 21:24 UTC and PR state at

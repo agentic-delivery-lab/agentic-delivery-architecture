@@ -49,6 +49,28 @@ test('arc42 contract rejects legacy suffixes and non-template headings', async (
   }
 });
 
+test('Architecture Authority has one canonical organizational strategy source', async () => {
+  const candidateSourcePaths = [];
+  const candidateSourceName = /^(?:MISSION|VISION|CHARTER)\.md$|^organizational-strategy\.ya?ml$/i;
+
+  async function collectSources(directory, relativeDirectory = '') {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      if (entry.isDirectory() && ['.git', 'node_modules'].includes(entry.name)) continue;
+      const relativePath = path.join(relativeDirectory, entry.name).replaceAll(path.sep, '/');
+      if (entry.isDirectory()) {
+        await collectSources(path.join(directory, entry.name), relativePath);
+      } else if (candidateSourceName.test(entry.name)) {
+        candidateSourcePaths.push(relativePath);
+      }
+    }
+  }
+
+  // Repository-local AGENTS.md mission sections are scoped responsibilities,
+  // not alternate organizational strategy artifacts.
+  await collectSources(root);
+  assert.deepEqual(candidateSourcePaths.sort(), ['architecture/strategy/organizational-strategy.yml']);
+});
+
 test('architecture contracts and aliases are deterministic', async () => {
   assert.deepEqual(await validateArchitectureContracts(root), { schemas: 7, aliases: 21 });
 });

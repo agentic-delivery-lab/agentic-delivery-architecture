@@ -6,6 +6,17 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Added an Architecture test that enforces one canonical organizational
+  strategy artifact, and completed a read-only scan of the six visible
+  repositories' mission/vision publication surfaces. Rechecked Project
+  associations and PR #104 after the repeated conflict report: all 62 Issues
+  still have no Project item, and #104 is already merged with the lowercase
+  `CHANGELOG.md` conflict resolved. See
+  architecture/references/system-evidence.yml#strategy-publication-surface-and-project-recheck-20261012-1054
+  and #control-plane-pr104-changelog-confirmation-20261012-1057. The cross-
+  repository scan is point-in-time and has no automated drift guard; the
+  Architecture draft release advances to 0.1.0-draft.53.
+
 - Clarified that ADR-0023's one-Project/two-view topology remains a proposal
   for Architecture #15 to approve, revise, or reject, and replaced its stale
   19-open-Issue snapshot with the complete 62-Issue/24-open-Issue inventory.

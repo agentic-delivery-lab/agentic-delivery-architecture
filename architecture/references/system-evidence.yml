@@ -4008,3 +4008,92 @@ observations:
       Machine checks and review do not establish human approval. Architecture
       #17 remains draft and stacked on #16; all required human review decisions
       remain separate. PR state may change after this observation.
+  - id: strategy-publication-surface-and-project-recheck-20261012-1054
+    observedAt: '2026-10-12T10:54:40Z'
+    source: >-
+      GitHub repository tree, contents, Projects, and Issue GraphQL APIs via
+      the authenticated gh identity; local git grep against matching
+      origin/main revisions.
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    request: >-
+      Check current Projects and complete Issue associations while auditing
+      canonical organizational strategy publication surfaces, mission/vision
+      files, repository-local AGENTS.md mission scopes, and public/private
+      profile content. Read-only; do not change organization profiles or
+      Project configuration.
+    result: >-
+      The authenticated viewer is sjefsharp. Organization and viewer Projects
+      v2 connections and all six repository Project connections returned
+      zero nodes with no further pages. All 62 Issues were fully paged across
+      Control Plane 12 open/31 closed, public .github 2/4, Architecture 5/3,
+      Primitives 2/0, Distribution 2/0, and .github-private 1/0; each Issue's
+      Project-item connection had no further page, and all 62 had zero Project
+      items. The six non-truncated default-branch trees were inspected at
+      Control Plane `9a2e1f3549428bc042d5c59d09beb300ca2d1362`, Architecture
+      `61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c`, Primitives
+      `e4933566fbf5b0f593830f8933f18fbd21024fa7`, Distribution
+      `b69c5710928b47efc4d3ab12ec4d5b596c80720c`, public .github
+      `af52c92e49616e78f8d6647cf5cf538a7e571d78`, and private .github-private
+      `f9e6589b65c71da9e7b35d8e026f3d4a91dab78f`. Among those trees, the only
+      canonical organizational strategy artifact is
+      `architecture/strategy/organizational-strategy.yml`; no `MISSION.md`,
+      `VISION.md`, or `CHARTER.md` exists. Exact purpose/mission/vision phrase
+      search found the candidate organizational statements only in that
+      strategy source. Root or nested AGENTS.md Mission sections in
+      Architecture, Primitives, Distribution, both GitHub adapters, and
+      Control Plane subdirectories define their local repository or directory
+      responsibility. Public `.github/profile/README.md` describes issue-based
+      lifecycle and source-of-truth boundaries; private
+      `.github-private/profile/README.md` points to approved system records
+      and says to link rather than copy mutable status. Neither profile copies
+      the organizational purpose, mission, or vision.
+    limitation: >-
+      This is a point-in-time scan of the six visible organization repositories
+      and their current default branches. It cannot rule out an external
+      product repository or future copied text, and no automated cross-repository
+      drift check exists. Repository-local AGENTS.md Mission sections are
+      explicitly scoped responsibilities, not alternate organizational
+      strategy authority.
+  - id: control-plane-pr104-changelog-confirmation-20261012-1057
+    observedAt: '2026-10-12T10:57:55Z'
+    source: >-
+      GitHub REST and GraphQL pull-request, checks, and contents APIs via the
+      authenticated gh identity; git fetch and commit-tree inspection.
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-primitives
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+    sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
+    sourcePath: CHANGELOG.md
+    request: >-
+      Recheck the repeated report that PR #104 still needs a CHANGELOG.MD
+      conflict resolution. Verify its live state, head and merge commits,
+      exact path casing, checks, current main contents, and conflict markers.
+      Read-only; do not alter the merged PR or Control Plane repository.
+    result: >-
+      GitHub reports Control Plane PR #104 as CLOSED/MERGED at
+      2026-10-10T21:26:16Z, with head
+      f9a536fee6f6fc436189a55acf3b8180d4144211 and merge commit
+      9a2e1f3549428bc042d5c59d09beb300ca2d1362. The PR's head is an ancestor
+      of freshly fetched origin/main, whose tip is the merge commit. The PR
+      changed-file list and current repository tree name the file
+      `CHANGELOG.md`; the `CHANGELOG.MD` Contents API request returned 404.
+      Current lowercase `CHANGELOG.md` retains both Issue #103 and #101
+      entries and has no conflict-marker lines. All applicable listed PR
+      checks pass; `classify_updater` is skipped by policy.
+      In the six visible organization repositories, only Control Plane has a
+      PR #104.
+    limitation: >-
+      PR #104 was already merged before this check, so it has no active merge
+      conflict to resolve. This read does not identify any PR #104 outside the
+      six visible organization repositories; no repository change was made.

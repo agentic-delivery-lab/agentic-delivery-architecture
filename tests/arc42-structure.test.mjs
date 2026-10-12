@@ -312,7 +312,7 @@ test('canonical inventory has exact record coverage and rejects projections and 
   assert.equal(result.adrIds.length, 21);
   assert.ok(result.recordById.has('ADP-0001'));
   assert.ok(result.recordById.has('ADD-0001'));
-  assert.equal(result.importedTransforms.length, 9);
+  assert.equal(result.importedTransforms.length, 10);
   assert.deepEqual(release.decisionIds, result.decisionIds);
   assert.deepEqual(release.adrIds, result.adrIds.map((id) => `urn:agentic-delivery:adr:architecture:${id.slice(4)}`));
   assert.deepEqual(JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8')).externalAdrs, []);
@@ -361,6 +361,10 @@ test('canonical inventory has exact record coverage and rejects projections and 
   const withWrongPath = structuredClone(result.inventory);
   withWrongPath.records[0].path = withWrongPath.records[1].path;
   await assert.rejects(validateDecisionInventory(root, { inventory: withWrongPath }), /canonical decisions file/);
+
+  const withUndeclaredAmendment = structuredClone(result.inventory);
+  withUndeclaredAmendment.records.find((record) => record.id === 'ADR-0009').origin.transformations.pop();
+  await assert.rejects(validateDecisionInventory(root, { inventory: withUndeclaredAmendment }), /canonical file must equal the immutable source text/);
 
   const withChangedOriginHash = structuredClone(result.inventory);
   withChangedOriginHash.records.find((record) => record.id === 'ADR-0008').origin.sha256 = '0'.repeat(64);

@@ -6,6 +6,14 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Reconciled W02 development authority in ADR-0009, ADR-0018 and strategy:
+  `sjefsharp` and the owner-authorized interactive Codex CLI may exercise
+  scoped development acceptance and administration; the self-hosted runner
+  receives none of that delegation. Operator acceptance, independent review,
+  separate validation, adoption and activation remain distinct evidence.
+  ADR-0009 retains its immutable historical origin with an exact declared
+  canonical amendment; undeclared additions fail inventory validation.
+
 - Clarified Architecture #11 / W01: the factory is a product and acceptance
   subject. Proposed Milestone A requires useful governed self-development
   across seven target surfaces; Milestone B adds real independent-product

@@ -134,6 +134,50 @@ deterministic authorization, orchestration policy, reusable workflows, runner
 and session control, GitHub Projects projection, evidence and controlled
 write-back.
 
+### Development-phase authority amendment (W02)
+
+Amendment source: [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)
+and the recovery lineage [Control Plane #59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59).
+The owner-selected 2026-10-12 implementation plan delegates the current factory
+correction and development work to `sjefsharp` and the owner-authorized
+interactive Codex CLI. This amendment records that selection; historical
+source Issues, dates, decision makers and review evidence remain unchanged.
+
+The delegation permits the named owner and interactive operator to approve,
+merge and administer this development work within the owner's explicit scope.
+It belongs to the authenticated operator session and its owner instruction,
+not to a repository name, model identity, source Issue, runner login or App
+installation. Record its source, actor, scope, exact candidate head/tree,
+separate validation results, decision and resulting GitHub action. A merge
+performed with owner bypass is delegated operator acceptance, not independent
+human review. Neither a green check nor a bot-authored approval supplies the
+missing acceptance evidence.
+
+Codex executing inside the self-hosted runner cannot inherit this delegation.
+Runner model tools, hooks, child processes, participant code and publication
+credentials remain excluded from owner credentials, administration, direct
+protected-branch writes, approval/merge authority, governance self-promotion
+and activation. Controller publication creates a review candidate only.
+W13 must prove credential and execution isolation and read back each
+repository's hosting controls before active admission; this documentation
+change does not prove their enforcement or repair unavailable private rulesets.
+
+This exception reconciles references to human review and merge in historical
+ADRs and strategy only for the named, owner-authorized interactive development
+work. Separate deterministic validation and semantic review must still be
+reported accurately. It does not authorize runner self-approval, unattended
+merging, altered policy through runtime output, new billing, or an independent
+review claim. Future deterministic routine merge eligibility, evaluation and
+activation remain separate W26–W28 decisions.
+
+A strategy, goal, capability, release or participant is adopted only when its
+own acceptance record identifies the approving authority, exact baseline,
+validation and evidence limits, effective scope and rollback. This amendment
+and its PR do not adopt all proposed strategy goals or activate participants.
+If scope, identity or evidence is uncertain, hold the consequential action;
+rollback disables affected privileged automation and restores the prior
+supported policy composition while preserving receipts and historical origin.
+
 ### Organization-wide App installation
 
 One GitHub App registration and one organization installation serve the

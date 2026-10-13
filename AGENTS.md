@@ -4,11 +4,16 @@
 
 This repository is the single architectural authority for the Agentic Delivery
 domain. It contains architecture decisions, principles, bounded contexts,
-models, views, quality requirements, risks, technical debt, and conformance
+models, views, requirements references, risks, technical debt, and conformance
 contracts.
 
 ## Boundaries
 
+- Keep approved factory, shared and product requirements and normative QR
+  scenarios in Requirements Authority. The local QR YAML is a generated
+  projection of `architecture/references/requirements.lock.json`, never a
+  second editable normative catalog. Update the central record and accepted
+  immutable baseline before regenerating; do not edit the projection directly.
 - Keep runtime lifecycle, routing, orchestration, credentials, and GitHub
   mutation in the Delivery Control Plane.
 - Keep reusable agents, skills, hooks, validators, and MCP contracts in

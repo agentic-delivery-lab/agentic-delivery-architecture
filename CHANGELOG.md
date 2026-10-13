@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- W04 adopts an immutable approved Requirements baseline for normative QR
+  ownership. All original QR IDs, scenario text and historical status/evidence
+  remain available through an exact checked projection; direct local edits,
+  draft/withdrawn inputs, origin mismatch and digest tampering fail validation.
+  Five inferred execution obligations remain proposed in Requirements; no
+  strategy-goal adoption, live satisfaction or participant activation is claimed.
+
 - Added ADR-0024 for W03's owner-selected public Requirements Authority.
   Approved requirements and their immutable applicability baselines have one
   owner; Architecture retains organizational decisions and models. W04 owns

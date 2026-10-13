@@ -32,6 +32,18 @@ the exact records, context scope, imported source identities, and provenance.
 The ADR-to-Primitive index is generated from the pinned Primitive catalog and
 resolves every ADR reference to exactly one local Architecture record.
 
+[Requirements Authority](https://github.com/agentic-delivery-lab/agentic-delivery-requirements)
+owns approved requirements and normative QR records under ADR-0024. The selected
+immutable baseline is `architecture/references/requirements.lock.json`; the
+local QR catalog is a checked derived projection, preserving historical IDs,
+text, status and evidence. Approval is not observed satisfaction. Requirement
+changes go to their central owner; `pnpm requirements:project` regenerates the
+projection only after an accepted baseline-pin update. CI rejects local edits,
+drafts, withdrawals, identity mismatch and source-digest changes. Source
+checkout: `sources/requirements`, or `AGENTIC_SOURCE_ROOT_REQUIREMENTS` for a
+trusted local checkout with the pinned Git objects. This cutover does not
+adopt proposed strategy goals or activate runtime participants.
+
 Architecture-owned YAML and JSON source data are parsed and checked against
 per-family JSON Schema Draft 2020-12 schemas under `architecture/contracts/`.
 Separate cross-file checks verify IDs, context references, immutable pins, and

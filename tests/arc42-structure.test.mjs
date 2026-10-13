@@ -54,7 +54,7 @@ test('architecture contracts and aliases are deterministic', async () => {
 });
 
 test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
-  assert.deepEqual(await validateStructuredData(root), { files: 19, schemas: 22 });
+  assert.deepEqual(await validateStructuredData(root), { files: 20, schemas: 23 });
 
   const principleIndex = parseRepositoryYaml(
     await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),
@@ -387,7 +387,8 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
     'organizational strategy test fixture',
   );
   const sourceOfTruthRequirements = [
-    [/strategic goals, principles, ADRs, quality scenarios, and measure definitions/i, /Architecture Authority/],
+    [/strategic goals, principles, ADRs, and measure definitions/i, /Architecture Authority/],
+    [/approved factory, shared and product requirements.*normative quality scenarios/i, /Requirements Authority/],
     [/native Issue Type definitions/i, /Organization Issue Types/],
     [/organization Issue Field definitions/i, /Organization Issue Field/],
     [/Issue-native type value.*labels/i, /Origin repository Issue/],
@@ -401,6 +402,12 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
     const row = strategy.sourceOfTruth.find(({ fact }) => factPattern.test(fact));
     assert.ok(row && ownerPattern.test(row.owner), `source-of-truth map must cover ${factPattern}`);
   }
+  const duplicateQrAuthority = structuredClone(strategy);
+  duplicateQrAuthority.sourceOfTruth.push({ fact: 'local quality scenarios', owner: 'Architecture Authority', rule: 'Editable normative copy' });
+  assert.ok(validateOrganizationalStrategyValue(duplicateQrAuthority).some(error => /sole normative QR owner/.test(error)));
+  const wrongQrOwner = structuredClone(strategy);
+  wrongQrOwner.sourceOfTruth.find(entry => /normative quality scenarios/.test(entry.fact)).owner = 'Architecture Authority';
+  assert.ok(validateOrganizationalStrategyValue(wrongQrOwner).some(error => /sole normative QR owner/.test(error)));
   const operationalGoal = strategy.strategicGoals.find(({ id }) => id === 'SG-03');
   assert.ok(['SM-002', 'SM-010', 'SM-011'].every((id) => operationalGoal.measureIds.includes(id)));
   assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-010' && /budget/i.test(name)));

@@ -184,7 +184,7 @@ valueStreams:
       - Validate the change with automated checks and attributable semantic review. The accountable owner or explicitly delegated interactive operator decides development acceptance under ADR-0018 W02; independent human review is claimed only with its own evidence, and runner agents retain no merge or activation authority.
       - Record outcomes, regressions, operational evidence, and rollback results.
       - Convert a validated finding into a new or updated Issue for portfolio prioritization.
-      - For Milestone A, demonstrate useful active delivery in Architecture, Requirements, Agent Customizations, Distribution, Control Plane, public .github, and private .github-private. Requirements is a proposed new repository and Agent Customizations a proposed identity-preserving rename of Primitives; this scope is a target, not an installed composition.
+      - For Milestone A, demonstrate useful active delivery in Architecture, Requirements, Agent Customizations, Distribution, Control Plane, public .github, and private .github-private. Requirements exists through administrative W03 bootstrap; Agent Customizations remains a proposed identity-preserving rename of Primitives. Active delivery across this scope is a target, not an achieved composition.
       - Each surface must show ordinary source-Issue intake, bounded artifact or code production, exact-tree validation, an attributable pull request, and useful accepted delivery. Retain the Issue, admitted origin and actor, approved context, plan, operation and attempt, tested tree, validation, pull request, and accepting actor with the acceptance record.
       - Milestone A also requires controlled failure or interruption with safe recovery and denied runner attempts to inherit operator privilege, change governance, merge critical work, or promote itself.
       - Administrative bootstrap, repository creation or rename, installation, shadow observations, offline fixtures, passing CI, and pull request publication alone do not count as factory-delivered acceptance evidence.
@@ -639,9 +639,12 @@ sourceOfTruth:
   - fact: organizational purpose, mission, vision, strategy, and review triggers
     owner: Architecture Authority
     rule: One canonical editable source in this repository; other repositories link to the reviewed Architecture release.
-  - fact: strategic goals, principles, ADRs, quality scenarios, and measure definitions
+  - fact: strategic goals, principles, ADRs, and measure definitions
     owner: Architecture Authority
     rule: Stable IDs link these canonical records many-to-many; accepted, proposed, and retired decisions remain distinct, and data sources remain owned by their contexts.
+  - fact: approved factory, shared and product requirements and normative quality scenarios
+    owner: Requirements Authority
+    rule: ADR-0024 selects one central editable normative owner. W04 adopts the exact approved baseline in architecture/references/requirements.lock.json; the local QR catalog is a checked generated projection, not an editable authority. Original QR IDs and historical provenance remain stable; inferred execution obligations stay proposed, and approval never implies live satisfaction.
   - fact: work intent, scope, lineage, and execution authorization
     owner: Origin repository Issue
     rule: A Project item may reference an Issue but cannot replace it or authorize execution.

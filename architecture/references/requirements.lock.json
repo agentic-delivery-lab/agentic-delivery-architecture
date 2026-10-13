@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "repository": "agentic-delivery-lab/agentic-delivery-requirements",
+  "repositoryId": 1416207421,
+  "commit": "9ce017453a23240042f72214b09e3c6c5059854d",
+  "manifestPath": "manifests/requirements-release.json",
+  "contentSha256": "eec84e8ff2b276ef322b9262ede31edad9f4c0f9f30a7527a9607dd9f411a1c4",
+  "version": "1.0.0",
+  "qrIds": [
+    "QR-001",
+    "QR-002",
+    "QR-003",
+    "QR-004",
+    "QR-005",
+    "QR-006",
+    "QR-007",
+    "QR-008",
+    "QR-010",
+    "QR-011",
+    "QR-012",
+    "QR-013",
+    "QR-014",
+    "QR-015",
+    "QR-016",
+    "QR-017",
+    "QR-018",
+    "QR-019"
+  ]
+}

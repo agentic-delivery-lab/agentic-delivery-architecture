@@ -88,9 +88,9 @@ async function snapshot(sourceRoot, revision) {
   return files;
 }
 
-export async function validateRequirementsProjection(directory = root, { write = false } = {}) {
+export async function validateRequirementsProjection(directory = root, { write = false, sourceRoot: selectedSourceRoot } = {}) {
   const lock = JSON.parse(await readFile(path.join(directory, 'architecture/references/requirements.lock.json'), 'utf8'));
-  const sourceRoot = process.env.AGENTIC_SOURCE_ROOT_REQUIREMENTS ?? path.join(directory, 'sources/requirements');
+  const sourceRoot = selectedSourceRoot ?? process.env.AGENTIC_SOURCE_ROOT_REQUIREMENTS ?? path.join(directory, 'sources/requirements');
   const files = await snapshot(sourceRoot, lock.commit);
   const projected = buildQrProjection(lock, files);
   const manifest = parse(files.get(manifestPath));

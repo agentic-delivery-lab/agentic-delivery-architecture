@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { requirementsDigest, buildQrProjection } from '../tools/validate-requirements-projection.mjs';
+import { cp, mkdir, mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { tmpdir } from 'node:os';
+import { requirementsDigest, buildQrProjection, validateRequirementsProjection } from '../tools/validate-requirements-projection.mjs';
 
 function fixture() {
   const source = 'a'.repeat(40);
@@ -55,4 +58,20 @@ test('tampered requirement and nested authority pins cannot match a selected dig
   g.manifest.authorityDecision = { sourceCommit: 'e'.repeat(40) };
   g.files.set('manifests/requirements-release.json', JSON.stringify(g.manifest));
   assert.throws(() => buildQrProjection(g.lock, g.files), /digest/);
+});
+
+test('the actual selected baseline rejects an independently edited local QR projection', async () => {
+  const root = path.resolve(import.meta.dirname, '..');
+  const directory = await mkdtemp(path.join(tmpdir(), 'qr-projection-test-'));
+  const sourceRoot = process.env.AGENTIC_SOURCE_ROOT_REQUIREMENTS ?? path.join(root, 'sources/requirements');
+  try {
+    await mkdir(path.join(directory, 'architecture/references'), { recursive: true });
+    await mkdir(path.join(directory, 'architecture/quality'), { recursive: true });
+    await cp(path.join(root, 'architecture/references/requirements.lock.json'), path.join(directory, 'architecture/references/requirements.lock.json'));
+    const file = path.join(directory, 'architecture/quality/quality-scenarios.yml');
+    await cp(path.join(root, 'architecture/quality/quality-scenarios.yml'), file);
+    assert.equal((await validateRequirementsProjection(directory, { sourceRoot })).qrScenarios, 18);
+    await writeFile(file, (await readFile(file, 'utf8')) + '# local independent edit\n');
+    await assert.rejects(validateRequirementsProjection(directory, { sourceRoot }), /stale or locally edited/);
+  } finally { await rm(directory, { recursive: true, force: true }); }
 });

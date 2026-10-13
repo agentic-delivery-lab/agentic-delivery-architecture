@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { parseRepositoryYaml } from './lib/yaml.mjs';
+import { stewardMatchesAuditEvidence } from './decision-inventory.mjs';
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CONTEXT_IDS = [
@@ -71,10 +72,14 @@ export function validateOrganizationalStrategyTraceabilityValue(strategy, {
 
     if (validateRepositoryReferences) {
       for (const capability of traceability.capabilityRefs ?? []) {
-        const repository = repositoryBySlug.get(capability.repository);
+        const repository = repositoryBySlug.get(capability.repository)
+          ?? (repositories ?? []).find(evidence => stewardMatchesAuditEvidence({ repository: capability.repository, repositoryId: capability.repositoryId }, evidence));
         if (!repository) {
           errors.push(location + ' references an unregistered capability repository ' + capability.repository);
         } else {
+          if (capability.repositoryId !== undefined && capability.repositoryId !== repository.githubRepositoryId) {
+            errors.push(location + ' capability repository ID does not match the audited identity');
+          }
           if (capability.sourceCommit !== repository.mainCommit) {
             errors.push(location + ' capability pin does not match the inventoried main revision for ' + capability.repository);
           }

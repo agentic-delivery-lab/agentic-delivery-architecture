@@ -170,6 +170,23 @@ records:
             record, not implementation authorization; official adoption requires a
             separately authorized review issue and pull request.
           reason: Moved the existing confirmation checks into the shared MADR outcome and kept the historical issue reference intact.
+        - from: |-
+            The projection is never edited in place; a change starts in this repository and
+            is promoted by a reviewed pull request.
+          to: |-
+            The projection is never edited in place; a change starts in this repository and
+            is promoted by a reviewed pull request.
+
+            The owner-selected capability repository location is
+            `agentic-delivery-lab/agentic-delivery-agent-customizations`, retaining GitHub
+            repository ID `1380894656`. Agent Customizations names the repository role;
+            the `agentic-primitives` context, primitive URNs and release IDs remain stable.
+            Decision text remains canonical in Architecture. Historical origin names,
+            source commits and release bytes remain intact. Consumers verify the current
+            name and unchanged ID before checkout; a redirect alone is insufficient.
+            The hosting rename and caller cutover require their own readback evidence and
+            do not activate a participant.
+          reason: Owner-selected W05 location amendment; preserve original imported identity, context and immutable provenance.
   - id: ADD-0001
     path: decisions/ADD-0001-distribution-boundary.md
     domains: [developer-distribution]

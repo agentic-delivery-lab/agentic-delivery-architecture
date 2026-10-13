@@ -18,12 +18,23 @@ const IMPORTED_IDS = ['ADR-0008', 'ADR-0009', 'ADR-0015', 'ADR-0017', 'ADP-0001'
 const VARIANT_IDS = ['ADR-0012', 'ADR-0018', 'ADR-0019'];
 const SOURCE_REPOSITORIES = {
   'agentic-delivery-lab/agentic-delivery': { key: 'control-plane', repositoryId: 1358455028, folder: 'agentic-delivery' },
-  'agentic-delivery-lab/agentic-delivery-primitives': { key: 'primitives', repositoryId: 1380894656, folder: 'agentic-delivery-primitives' },
+  'agentic-delivery-lab/agentic-delivery-primitives': { key: 'primitives', repositoryId: 1380894656, folder: 'agentic-delivery-primitives', currentRepository: 'agentic-delivery-lab/agentic-delivery-agent-customizations' },
   'agentic-delivery-lab/agentic-delivery-distribution': { key: 'distribution', repositoryId: 1380894705, folder: 'agentic-delivery-distribution' },
 };
 
 function sha256(contents) {
   return createHash('sha256').update(contents).digest('hex');
+}
+
+export function stewardMatchesAuditEvidence(route, evidence) {
+  if (typeof route?.repository !== 'string' || !route.repository
+    || typeof evidence?.slug !== 'string' || !evidence.slug
+    || !Number.isSafeInteger(route?.repositoryId) || route.repositoryId < 1
+    || route.repositoryId !== evidence?.githubRepositoryId) return false;
+  if (route.repository === evidence.slug) return true;
+  const historicalSource = SOURCE_REPOSITORIES[evidence.slug];
+  return historicalSource?.repositoryId === route.repositoryId
+    && historicalSource.currentRepository === route.repository;
 }
 
 function idForFilename(filename) {
@@ -222,8 +233,7 @@ export async function validateDecisionInventory(root = repositoryRoot, { invento
       const context = contexts.get(contextId);
       const route = context?.contextStewardRepository;
       const evidenceRepository = evidenceRepositories.get(route?.evidenceRepository);
-      if (!route || !evidenceRepository || route.repository !== evidenceRepository.slug
-        || route.repositoryId !== evidenceRepository.githubRepositoryId
+      if (!stewardMatchesAuditEvidence(route, evidenceRepository)
         || !evidenceRepository.evidencePaths?.includes(route.evidencePath)
         || !SHA1.test(evidenceRepository.mainCommit ?? '')) {
         add(`decision ${record.id} cannot route semantic review for ${contextId} to a repository and source path in the pinned audit evidence`);

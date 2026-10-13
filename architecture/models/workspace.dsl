@@ -23,13 +23,14 @@ workspace "Agentic Delivery" "Organization-wide issue-based delivery architectur
     }
 
     softwareSystem architecture "Architecture Authority" "Cross-context authority for organization ADR, ADP, and ADD text, principles, arc42 architecture description, context map, and conformance; not a bounded context."
+    softwareSystem requirements "Requirements Authority" "Approved factory, shared and product requirements, normative QR scenarios and immutable applicability baselines; authority role, not a bounded context."
     softwareSystem publicAdapter "Public .github repository adapter" "Public community-health, issue-form, and pull-request-template defaults."
     softwareSystem privateAdapter "Private .github-private repository adapter" "Private member-profile and approved agent-publication boundary."
     softwareSystem consumers "Consumer repositories" "Repositories that receive pinned bootstrap and workflow projections."
     softwareSystem vercel "Vercel webhook ingress" "Hosts the Control Plane webhook function and scheduled delivery reconciler; source code is present, production operation is not established by this model."
     softwareSystem neon "Neon replay store" "PostgreSQL-backed delivery claims, controller receipts, and webhook scan checkpoints; deployed database state is not established by this model."
     softwareSystem codex "Codex CLI" "Pinned agent runtime started inside a bounded GitHub Actions runner workspace."
-    softwareSystem productRepositories "Product repositories (unidentified)" "Expected product-owner boundary; the current six-repository inventory identifies no distinct product repository or accountable product steward."
+    softwareSystem productRepositories "Product repositories (unidentified)" "Expected product-owner boundary; the dated six-repository factory inventory identifies no independent product repository or accountable product steward."
 
     maintainer -> issues "creates and reviews origin work"
     maintainer -> projects "prioritizes linked Issues and tracks portfolio progress"
@@ -47,6 +48,7 @@ workspace "Agentic Delivery" "Organization-wide issue-based delivery architectur
     controller -> fieldValues "reads and writes validated per-issue values"
     controller -> projects "target: may read planning context only after revalidating origin Issue gates"
     controller -> actions "dispatches gated execution and review checks"
+    architecture -> requirements "reads the adopted immutable QR baseline and derives a checked projection"
     architecture -> governance "publishes canonical organization decision text and architecture contracts"
     architecture -> control "publishes canonical decision text through a pinned Architecture release"
     architecture -> primitives "publishes canonical ADR text and context references"
@@ -57,7 +59,8 @@ workspace "Agentic Delivery" "Organization-wide issue-based delivery architectur
     control -> distribution "supplies the pinned workflow-bundle source"
     distribution -> consumers "installs versioned bootstrap and consumer projections"
     distribution -> productRepositories "target: bootstrap a product repository after owner discovery and explicit approval"
-    productRepositories -> issues "target: own product requirements, source Issues, and pull requests"
+    productRepositories -> requirements "target: reference approved central product requirements after owner, rights and enrollment admission"
+    productRepositories -> issues "target: own implementation work intent, source Issues, and pull requests"
     productRepositories -> projects "target: link product work for human portfolio planning"
     publicAdapter -> issues "supplies default templates; live form/type binding is unverified"
   }

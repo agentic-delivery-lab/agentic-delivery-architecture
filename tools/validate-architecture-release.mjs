@@ -33,6 +33,16 @@ function sha256(contents) {
   return createHash('sha256').update(contents).digest('hex');
 }
 
+export async function requirePreparedSourceAncestor(root, sourceCommit, revision = 'HEAD') {
+  const target = revision === 'WORKTREE' ? 'HEAD' : revision;
+  if (!SHA.test(sourceCommit) || (target !== 'HEAD' && !SHA.test(target))) throw new Error('Release ancestry requires immutable source and valid target revision');
+  try {
+    await execFileAsync('git', ['-C', root, 'merge-base', '--is-ancestor', sourceCommit, target], { windowsHide: true });
+  } catch {
+    throw new Error(`Prepared release source must be an ancestor reachable from ${target}; available orphan objects are insufficient`);
+  }
+}
+
 export async function validateArchitectureRelease(root = repositoryRoot, expectedRevision = 'WORKTREE') {
   const releasePath = path.join(root, 'architecture/generated/architecture-release.json');
   const release = JSON.parse(await readFile(releasePath, 'utf8'));
@@ -46,7 +56,8 @@ export async function validateArchitectureRelease(root = repositoryRoot, expecte
   if (!SHA.test(release.sourceCommit ?? '')) errors.push('architecture release sourceCommit must be immutable');
   if (!SHA256.test(release.contentSha256 ?? '')) errors.push('architecture release contentSha256 must be a non-null SHA-256 digest');
   if (!['draft', 'released', 'withdrawn'].includes(release.status)) errors.push('architecture release status is invalid');
-  if (release.contractVersions?.architectureRelease !== '4.0.0') errors.push('architecture release contractVersions.architectureRelease must be 4.0.0');
+  if (release.contractVersions?.architectureRelease !== '5.0.0') errors.push('architecture release contractVersions.architectureRelease must be 5.0.0');
+  if (release.contractVersions?.requirementsReference !== '1.0.0') errors.push('architecture release must pin requirementsReference contract 1.0.0');
   if (!Array.isArray(release.principleIds) || release.principleIds.length === 0) errors.push('architecture release must identify principles');
   if (!Array.isArray(release.adrIds) || release.adrIds.length === 0 || new Set(release.adrIds).size !== release.adrIds.length) errors.push('architecture release must identify unique ADRs');
   const expectedAdrUris = inventory.adrIds.map((id) => `urn:agentic-delivery:adr:architecture:${id.slice(4)}`);
@@ -66,6 +77,8 @@ export async function validateArchitectureRelease(root = repositoryRoot, expecte
   if (typeof release.contractVersions !== 'object' || release.contractVersions === null) errors.push('architecture release contract versions are required');
   if (revision !== 'WORKTREE' && revision !== 'HEAD' && !SHA.test(revision)) errors.push('expected architecture revision must be WORKTREE, HEAD, or an immutable commit');
   if (errors.length === 0) {
+    try { await requirePreparedSourceAncestor(root, release.sourceCommit, revision); }
+    catch (error) { errors.push(error.message); }
     for (const sourceRevision of new Set([revision, release.sourceCommit])) {
       try {
         const digest = await architectureContentDigest(root, sourceRevision);

@@ -38,6 +38,23 @@ jobs:
           ref: b69c5710928b47efc4d3ab12ec4d5b596c80720c
           path: sources/distribution
           persist-credentials: false
+      - name: Read admitted Requirements pin
+        id: requirements-pin
+        run: |
+          node --input-type=module <<'JS'
+          import { readFile, appendFile } from 'node:fs/promises';
+          const pin = JSON.parse(await readFile('architecture/references/requirements.lock.json', 'utf8'));
+          if (pin.repository !== 'agentic-delivery-lab/agentic-delivery-requirements' || pin.repositoryId !== 1416207421 || !/^[0-9a-f]{40}$/.test(pin.commit)) throw new Error('Invalid immutable Requirements identity/pin');
+          await appendFile(process.env.GITHUB_OUTPUT, `commit=${pin.commit}\n`);
+          JS
+      - name: Check out exact Requirements baseline source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: agentic-delivery-lab/agentic-delivery-requirements
+          ref: ${{ steps.requirements-pin.outputs.commit }}
+          path: sources/requirements
+          fetch-depth: 0
+          persist-credentials: false
       - name: Set up pnpm
         uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
         with:

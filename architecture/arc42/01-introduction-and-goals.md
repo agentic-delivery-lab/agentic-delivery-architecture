@@ -69,10 +69,12 @@ not establish a second editable requirements catalog.
 | A — governed factory self-development | Useful active delivery across Architecture, Requirements, Agent Customizations, Distribution, Control Plane, `.github`, and `.github-private`, after the safety floor is demonstrated. | Each surface needs ordinary Issue intake, actual artifact or code production, exact-tree validation, an attributable PR, and recorded acceptance. Also demonstrate controlled interruption/recovery and denied runner escalation. Administrative bootstrap is excluded. |
 | B — independent product delivery | Reuse the accepted factory for a real independent owner with an evidenced user need, central product requirements, scoped enrollment, Distribution integration, and actual product-stack validation. | Record product behavior, owner acceptance, observed usefulness, consumer update/rollback, and failure or denial evidence. Product discovery remains with [Architecture #13](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13). |
 
-The seven surfaces describe the proposed target: Requirements has not been
-created and the Primitives-to-Agent-Customizations rename has not occurred.
-These location changes preserve existing domain-context and canonical IDs.
-The six-repository inventory above remains the observed baseline.
+The seven surfaces describe the target. Requirements was created as
+administrative bootstrap in W03 (repository ID `1416207421`); W04 selects its
+approved QR baseline through the immutable Requirements lock. Neither event
+is active factory-delivered acceptance evidence. The Primitives-to-Agent-
+Customizations rename remains pending. These location changes preserve domain
+contexts and canonical IDs; the dated six-repository inventory is historical.
 
 Strategy and goals remain proposed. Active operation requires separately
 admitted authority, constraints, safety evidence, and supported rollback pins;

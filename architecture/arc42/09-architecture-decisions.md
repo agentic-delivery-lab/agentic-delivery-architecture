@@ -33,10 +33,10 @@ authorizes no live configuration.
 
 ADR-0024 selects centralized public Requirements Authority for approved
 factory, shared and product requirements. Architecture retains organizational
-ADRs and the structural model. W04's approved baseline cutover turns the local
-QR catalog into a reference or derived projection; until that cutover the
-existing local catalog remains authoritative and transferred drafts are
-non-normative. The new repository does not create a fifth domain context.
+ADRs and the structural model. W04 adopts the exact approved baseline named by the Requirements lock and
+turns the local QR catalog into a checked projection. Requirements owns the
+editable normative records; historical Architecture source commits remain
+provenance, not another editable catalog. The new repository does not create a fifth domain context.
 
 Bounded-context scope remains on each record. The context registry maps each
 scope to the repository where semantic review is routed: governance and

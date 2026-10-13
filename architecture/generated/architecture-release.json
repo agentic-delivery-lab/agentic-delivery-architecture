@@ -2,10 +2,10 @@
   "$schema": "../contracts/architecture-release.schema.json",
   "schemaVersion": 2,
   "architectureId": "urn:agentic-delivery:architecture:authority",
-  "version": "0.1.0-draft.65",
+  "version": "0.1.0-draft.66",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
-  "sourceCommit": "e309d4e9ad39224b420bca1e137e073971cce39a",
-  "contentSha256": "279863fe3e08f04c44d606283e613c6eae72e2b3da18956ccc91a258a32901dc",
+  "sourceCommit": "95d00dfa26646ca48333f98d381608bbef9b37f7",
+  "contentSha256": "4325fb5cde3b3a5d76005128a9d720355bfcae6a210bfbafb0c192128c7370d6",
   "status": "draft",
   "principleIds": [
     "AP-001",
@@ -78,11 +78,12 @@
     "sha256": "e8811d66793adc4fac82ac3b67dae6b75bc49f6967d4ee96e8e7ddfa8ed83766"
   },
   "contractVersions": {
-    "architectureRelease": "4.0.0",
+    "architectureRelease": "5.0.0",
     "conformance": "1.0.0",
     "adrPrimitiveIndex": "3.0.0",
     "decisionInventory": "1.0.0",
     "architectureArtifacts": "1.0.0",
-    "evaluationReport": "2.0.0"
+    "evaluationReport": "2.0.0",
+    "requirementsReference": "1.0.0"
   }
 }

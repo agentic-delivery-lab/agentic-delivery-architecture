@@ -22,6 +22,7 @@ export const architectureDataContracts = Object.freeze({
   'architecture/risks/technical-debt.yml': 'technical-debt.schema.json',
   'architecture/policies/conformance.yml': 'conformance-policy.schema.json',
   'architecture/harness-review.yml': 'harness-review.schema.json',
+  'architecture/references/requirements.lock.json': 'requirements-reference.schema.json',
   'architecture/references/decision-inventory.yml': 'decision-inventory.schema.json',
   'architecture/references/source-provenance.yml': 'source-provenance.schema.json',
   'architecture/references/primitive-catalog.lock.yml': 'primitive-catalog-lock.schema.json',

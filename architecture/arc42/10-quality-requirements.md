@@ -23,10 +23,18 @@
 
 ## 10.2 Quality scenarios
 
-The detailed scenarios in [`quality-scenarios.yml`](../quality/quality-scenarios.yml)
-state the stimulus, response, and measurable result. They are derived from the
-recovery brief, ADR outcomes, and pinned sources; they are desired acceptance
-criteria, not proof that a current live system has passed them.
+The normative QR records belong to
+[Requirements Authority](https://github.com/agentic-delivery-lab/agentic-delivery-requirements).
+The exact adopted baseline is in
+[`requirements.lock.json`](../references/requirements.lock.json). The local
+[`quality-scenarios.yml`](../quality/quality-scenarios.yml) is a generated,
+read-only projection; CI requires exact reproduction from that approved
+immutable source and rejects direct edits. Its stimulus, response and measure
+are requirements, while historical status/evidence preserve their original
+Architecture provenance. Approval does not establish current live satisfaction.
+This chapter explains applicability and evidence limits; it is not a second
+editable normative catalog. Proposed execution obligations stay outside the
+approved-ID set until separately accepted.
 
 At the 2026-10-09 snapshot, QR-001/QR-002 have code and contract evidence but
 no end-to-end run. QR-003's local decision-set and Primitive-resolution checks

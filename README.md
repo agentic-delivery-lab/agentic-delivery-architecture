@@ -44,6 +44,12 @@ checkout: `sources/requirements`, or `AGENTIC_SOURCE_ROOT_REQUIREMENTS` for a
 trusted local checkout with the pinned Git objects. This cutover does not
 adopt proposed strategy goals or activate runtime participants.
 
+Architecture release contract `5.0.0` requires Requirements reference contract
+`1.0.0` and rejects missing/unsupported pins. Consumers must dispatch by the
+advertised contract version; historical `4.0.0` artifacts retain their original
+immutable readers/schemas. Prepared source commits must be ancestors of the
+reviewed tree, so cleanup cannot strand a release behind unretained objects.
+
 Architecture-owned YAML and JSON source data are parsed and checked against
 per-family JSON Schema Draft 2020-12 schemas under `architecture/contracts/`.
 Separate cross-file checks verify IDs, context references, immutable pins, and

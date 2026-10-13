@@ -75,3 +75,21 @@ test('the actual selected baseline rejects an independently edited local QR proj
     await assert.rejects(validateRequirementsProjection(directory, { sourceRoot }), /stale or locally edited/);
   } finally { await rm(directory, { recursive: true, force: true }); }
 });
+
+test('unselected proposed QRs and approved QRs outside the explicit view do not block selected records', () => {
+  for (const status of ['proposed', 'approved']) {
+    const f = fixture();
+    const added = structuredClone(f.catalog.requirements[0]);
+    added.id = 'QR-002';
+    added.status = status;
+    if (status === 'proposed') delete added.approval;
+    else f.manifest.approvedRequirementIds.push(added.id);
+    f.catalog.requirements.push(added);
+    f.files.set('requirements/factory.yml', JSON.stringify(f.catalog));
+    f.files.set('manifests/requirements-release.json', JSON.stringify(f.manifest));
+    f.lock.contentSha256 = requirementsDigest(f.files);
+    f.manifest.contentSha256 = f.lock.contentSha256;
+    f.files.set('manifests/requirements-release.json', JSON.stringify(f.manifest));
+    assert.deepEqual(buildQrProjection(f.lock, f.files).scenarios.map(record => record.id), ['QR-001']);
+  }
+});

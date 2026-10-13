@@ -638,8 +638,8 @@ test('architecture release identifies the target authority', async () => {
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
   assert.equal(release.contractVersions.evaluationReport, '2.0.0');
-  assert.equal(release.contractVersions.architectureRelease, '4.0.0');
-  assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '4.0.0');
+  assert.equal(release.contractVersions.architectureRelease, '5.0.0');
+  assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '5.0.0');
   assert.match(releaseSchema.description, /consumers to dispatch by version/);
 });
 

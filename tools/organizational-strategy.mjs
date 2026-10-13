@@ -284,7 +284,7 @@ export function validateOrganizationalStrategyValue(strategy, {
   if (duplicates(truthRules.map((entry) => entry.fact)).length) {
     errors.push('each durable source-of-truth fact must have exactly one canonical row');
   }
-  const requirementsAuthorities = truthRules.filter((entry) => /quality scenarios/i.test(entry.fact));
+  const requirementsAuthorities = truthRules.filter((entry) => /quality\s+(?:scenarios|requirements)|\bQR(?:s)?\b/i.test(entry.fact));
   if (requirementsAuthorities.length !== 1 || requirementsAuthorities[0].owner !== 'Requirements Authority'
     || !requirementsAuthorities[0].rule.includes('architecture/references/requirements.lock.json')
     || !/checked generated projection.*not an editable authority/i.test(requirementsAuthorities[0].rule)) {

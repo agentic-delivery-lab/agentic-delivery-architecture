@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Review corrections for W04 require Requirements reference `1.0.0` under
+  Architecture release contract `5.0.0`, reject non-ancestral prepared release
+  sources, honor explicit approved QR selections alongside proposed records,
+  and recognize equivalent QR/quality-requirement authority wording. Regression
+  tests cover each boundary; previous contract artifacts retain immutable
+  historical schemas/readers rather than being silently reinterpreted.
+
 - W04 adopts an immutable approved Requirements baseline for normative QR
   ownership. All original QR IDs, scenario text and historical status/evidence
   remain available through an exact checked projection; direct local edits,

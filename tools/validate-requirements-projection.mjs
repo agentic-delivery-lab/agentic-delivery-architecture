@@ -60,9 +60,11 @@ export function buildQrProjection(lock, files) {
   const approved = records.filter(record => record.status === 'approved');
   if (approved.some(record => !approvalPresent(record.approval))) throw new Error('Approved record lacks acceptance');
   if (JSON.stringify(approved.map(record => record.id).sort()) !== JSON.stringify(manifest.approvedRequirementIds)) throw new Error('Requirements approved-ID coverage mismatch');
-  const qrs = records.filter(record => record.id.startsWith('QR-'));
-  if (qrs.some(record => record.status !== 'approved') || !qrs.length
-    || JSON.stringify(qrs.map(record => record.id).sort()) !== JSON.stringify(lock.qrIds)) throw new Error('QR projection must cover exactly the approved selected identities');
+  if (!Array.isArray(lock.qrIds) || !lock.qrIds.length || new Set(lock.qrIds).size !== lock.qrIds.length
+    || lock.qrIds.some(id => !/^QR-[0-9]{3}$/.test(id)) || JSON.stringify([...lock.qrIds].sort()) !== JSON.stringify(lock.qrIds)) throw new Error('Invalid explicit QR selection');
+  const byId = new Map(records.map(record => [record.id, record]));
+  const qrs = lock.qrIds.map(id => byId.get(id));
+  if (qrs.some(record => !record || record.status !== 'approved' || !manifest.approvedRequirementIds.includes(record.id))) throw new Error('QR projection must cover exactly the approved selected identities');
   const scenarios = qrs.map(record => {
     const q = record.qualityScenario;
     if (!q || record.statement !== q.response || record.verification?.criterion !== q.measure) throw new Error('QR projection does not match its normative statement/criterion');

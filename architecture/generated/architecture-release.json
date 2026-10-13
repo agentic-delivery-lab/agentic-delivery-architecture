@@ -78,7 +78,7 @@
     "sha256": "e8811d66793adc4fac82ac3b67dae6b75bc49f6967d4ee96e8e7ddfa8ed83766"
   },
   "contractVersions": {
-    "architectureRelease": "4.0.0",
+    "architectureRelease": "5.0.0",
     "conformance": "1.0.0",
     "adrPrimitiveIndex": "3.0.0",
     "decisionInventory": "1.0.0",

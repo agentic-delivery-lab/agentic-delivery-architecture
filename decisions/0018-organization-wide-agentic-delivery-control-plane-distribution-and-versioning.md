@@ -190,6 +190,43 @@ If scope, identity or evidence is uncertain, hold the consequential action;
 rollback disables affected privileged automation and restores the prior
 supported policy composition while preserving receipts and historical origin.
 
+### Invocation receipt settlement amendment (W06)
+
+The trusted workflow revision owns invocation receipt finalization. Participant
+controller pins select delivery implementation; they do not supply the trusted
+receipt finalizer. This separation supports older admitted participant pins
+without silently changing their delivery code.
+
+Before delivery, the trusted controller binds the receipt to the originating
+repository name and immutable ID, source Issue, controller commit, workflow run
+and attempt under its active lease. Settlement rechecks the same identity and
+lease. Expiry revokes attribution and settlement even before another run
+reclaims the receipt; a matching token is insufficient. An interrupted or
+superseded run cannot settle another attempt.
+
+Successful transport alone cannot complete a held, missing or unknown route.
+Failed work is retryable only while its existing receipt controller-attempt
+allowance remains; exhaustion is reported from the settlement write. Transport
+retry cannot replenish an operation-wide software allowance. Duplicate settlement
+cannot rewrite a completed receipt. Receipt completion records processing of
+the admitted invocation, including observation or refinement; it does not prove
+software publication, product usefulness or owner acceptance. Those outcomes
+require their own attributable evidence.
+
+The additive attribution migration must be tested in an isolated database and
+applied before deploying any workflow that writes its fields. Deployment and
+rollback require an explicit supported workflow/database composition. Preserve
+existing receipts and evidence during rollback. This amendment does
+not activate a participant or approve a production migration. Its acceptance
+record must identify the exact source, tests, evidence limits and rollout.
+
+The implementation candidate is [Control Plane PR #112](https://github.com/agentic-delivery-lab/agentic-delivery/pull/112)
+at `95e023c38563a4c5e40ea9897bf214b911e736d1`. Its isolated PostgreSQL tests
+and hosted recovery-SQL checks are implementation evidence. They do not prove
+that migration 0008 is installed in the deployed database. The migration-before-
+writer gate remains unresolved; participants remain shadow and no active
+factory acceptance is established by this amendment.
+
 ### Organization-wide App installation
 
 One GitHub App registration and one organization installation serve the

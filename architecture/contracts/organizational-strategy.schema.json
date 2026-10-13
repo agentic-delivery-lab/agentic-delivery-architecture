@@ -177,9 +177,15 @@
                 "items": {
                   "type": "object", "additionalProperties": false,
                   "required": ["capability", "repository", "sourceCommit", "path"],
+                  "allOf": [{
+                    "if": { "properties": { "repository": { "const": "agentic-delivery-lab/agentic-delivery-agent-customizations" } } },
+                    "then": { "required": ["repositoryId"] },
+                    "else": { "not": { "required": ["repositoryId"] } }
+                  }],
                   "properties": {
                     "capability": { "type": "string", "minLength": 1 },
-                    "repository": { "type": "string", "pattern": "^agentic-delivery-lab/(?:agentic-delivery|agentic-delivery-architecture|agentic-delivery-primitives|agentic-delivery-distribution|\\.github|\\.github-private)$" },
+                    "repository": { "type": "string", "pattern": "^agentic-delivery-lab/(?:agentic-delivery|agentic-delivery-architecture|agentic-delivery-primitives|agentic-delivery-agent-customizations|agentic-delivery-distribution|\\.github|\\.github-private)$" },
+                    "repositoryId": { "const": 1380894656 },
                     "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
                     "path": { "type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\s]+$" }
                   }

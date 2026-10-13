@@ -312,7 +312,7 @@ test('canonical inventory has exact record coverage and rejects projections and 
   assert.equal(result.adrIds.length, 22);
   assert.ok(result.recordById.has('ADP-0001'));
   assert.ok(result.recordById.has('ADD-0001'));
-  assert.equal(result.importedTransforms.length, 10);
+  assert.equal(result.importedTransforms.length, 11);
   assert.deepEqual(release.decisionIds, result.decisionIds);
   assert.deepEqual(release.adrIds, result.adrIds.map((id) => `urn:agentic-delivery:adr:architecture:${id.slice(4)}`));
   assert.deepEqual(JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8')).externalAdrs, []);

@@ -325,7 +325,8 @@ strategicGoals:
       decisionIds: [ADR-0011, ADR-0013, ADP-0001]
       capabilityRefs:
         - capability: Versioned reusable primitive catalog
-          repository: agentic-delivery-lab/agentic-delivery-primitives
+          repository: agentic-delivery-lab/agentic-delivery-agent-customizations
+          repositoryId: 1380894656
           sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
           path: manifests/primitive-catalog.yml
       capabilityGaps: []
@@ -360,7 +361,8 @@ strategicGoals:
       decisionIds: [ADR-0018, ADP-0001, ADD-0001]
       capabilityRefs:
         - capability: Versioned reusable primitive catalog
-          repository: agentic-delivery-lab/agentic-delivery-primitives
+          repository: agentic-delivery-lab/agentic-delivery-agent-customizations
+          repositoryId: 1380894656
           sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
           path: manifests/primitive-catalog.yml
         - capability: Pinned consumer workflow bundle

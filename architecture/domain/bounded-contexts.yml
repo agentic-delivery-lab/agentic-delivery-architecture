@@ -26,13 +26,13 @@ contexts:
   - id: agentic-primitives
     name: Agentic Primitives
     definition: The versioned catalog of reusable agent capabilities and contracts, with immutable release and projection rules.
-    repository: agentic-delivery-lab/agentic-delivery-primitives
+    repository: agentic-delivery-lab/agentic-delivery-agent-customizations
     evidence: ADP-0001 and manifests/primitive-catalog.yml at the pinned source revision.
     canonicalLanguageSource:
       repository: agentic-delivery-lab/agentic-delivery-architecture
       path: architecture/domain/ubiquitous-language.yml
     contextStewardRepository:
-      repository: agentic-delivery-lab/agentic-delivery-primitives
+      repository: agentic-delivery-lab/agentic-delivery-agent-customizations
       repositoryId: 1380894656
       evidenceRepository: primitives
       evidencePath: manifests/primitive-catalog.yml

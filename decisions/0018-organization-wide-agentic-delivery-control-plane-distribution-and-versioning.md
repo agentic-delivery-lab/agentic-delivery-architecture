@@ -134,6 +134,18 @@ deterministic authorization, orchestration policy, reusable workflows, runner
 and session control, GitHub Projects projection, evidence and controlled
 write-back.
 
+### Repository-name migration
+
+The capability repository's owner-selected current location is
+`agentic-delivery-lab/agentic-delivery-agent-customizations`, with unchanged
+repository ID `1380894656`. Its bounded context remains `agentic-primitives`.
+Distribution remains a separate repository and responsibility. Current callers
+use the explicit current name and verify the repository ID and immutable tree;
+legacy names in historical origins and frozen releases remain provenance.
+Keep the participant shadow during the coordinated migration. A name redirect,
+repository access or an amended contract does not authorize activation. Record
+hosting readback and known-caller validation before accepting the cutover.
+
 ### Development-phase authority amendment (W02)
 
 Amendment source: [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)

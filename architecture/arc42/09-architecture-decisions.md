@@ -41,7 +41,7 @@ provenance, not another editable catalog. The new repository does not create a f
 Bounded-context scope remains on each record. The context registry maps each
 scope to the repository where semantic review is routed: governance and
 Control Plane to `agentic-delivery`, Primitives to
-`agentic-delivery-primitives`, and Distribution to
+`agentic-delivery-agent-customizations`, and Distribution to
 `agentic-delivery-distribution`. A multi-context record requires reviews from
 all mapped steward roles. This repository mapping does not establish named
 reviewers or GitHub approval. Independent steward approval is currently

@@ -6,6 +6,12 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- W02/W07 clarifies the bounded interactive operator field-canary disposition
+  in ADR-0012 and ADR-0018. Exact identities, reviewed source/private bindings,
+  before/write/restore readbacks and evidence limits are required. Ordinary
+  lifecycle transition gates, runner exclusions and separate active admission
+  remain in force.
+
 - Review corrections for W04 require Requirements reference `1.0.0` under
   Architecture release contract `5.0.0`, reject non-ancestral prepared release
   sources, honor explicit approved QR selections alongside proposed records,

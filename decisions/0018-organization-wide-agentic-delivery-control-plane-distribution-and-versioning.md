@@ -146,6 +146,19 @@ Keep the participant shadow during the coordinated migration. A name redirect,
 repository access or an amended contract does not authorize activation. Record
 hosting readback and known-caller validation before accepting the cutover.
 
+### Operation-bound runtime admission (W08)
+
+New factory runtime compositions must implement the operation-wide allowance
+in [ADR-0009's W08 amendment](0009-run-codex-from-source-issues-with-a-budget-boundary.md#operation-wide-allowance-amendment-w08).
+Admission binds policy, approved authority context, exact participant identity,
+runtime and trusted repository validation profile. Continuation and trusted
+queued recovery retain operation identity and consumption. Missing or changed
+inputs hold; an Issue, Project or model proposal cannot supply new commands,
+widen authority or replenish resources. Policy approval, draft release
+preparation and repository access are separate from live activation. Preserve
+the last supported composition and recovery evidence; never erase consumption
+to make rollback admissible.
+
 ### Development-phase authority amendment (W02)
 
 Amendment source: [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)

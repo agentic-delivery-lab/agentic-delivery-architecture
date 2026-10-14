@@ -26,6 +26,11 @@ function sha256(contents) {
   return createHash('sha256').update(contents).digest('hex');
 }
 
+export function supportsDeclaredAmendmentContracts(records, versions) {
+  return ![...records].some((record) => record.amendments?.length)
+    || (versions?.decisionInventory === '1.1.0' && versions?.architectureRelease === '5.1.0');
+}
+
 // Remove only hash-bound, explicitly attributed additions before comparing an
 // imported record to its immutable origin. The canonical policy stays in Markdown.
 export function withoutDeclaredAmendments(text, amendments = []) {

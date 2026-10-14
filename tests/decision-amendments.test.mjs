@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { test } from 'node:test';
-import { withoutDeclaredAmendments } from '../tools/decision-inventory.mjs';
+import { withoutDeclaredAmendments, supportsDeclaredAmendmentContracts } from '../tools/decision-inventory.mjs';
 
 const section = '### Operation-wide allowance amendment (W08)\n\nNew policy.\n\n';
 const declaration = { heading: 'Operation-wide allowance amendment (W08)', sourceIssue: 'https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11', sha256: createHash('sha256').update(section).digest('hex') };
@@ -22,4 +22,15 @@ test('missing, repeated, tampered or wrongly attributed amendments fail closed',
     [amended, [{ ...declaration, sourceIssue: 'https://github.com/other/repo/issues/11' }]],
     [amended, [{ ...declaration, unexpected: true }]],
   ]) assert.throws(() => withoutDeclaredAmendments(text, declarations), /amendment/i);
+});
+
+
+test('historical contracts remain supported while new amendments require explicit compatible versions', () => {
+  const historical = { architectureRelease: '5.0.0', decisionInventory: '1.0.0' };
+  const current = { architectureRelease: '5.1.0', decisionInventory: '1.1.0' };
+  assert.equal(supportsDeclaredAmendmentContracts([{}], historical), true);
+  assert.equal(supportsDeclaredAmendmentContracts([{ amendments: [declaration] }], current), true);
+  assert.equal(supportsDeclaredAmendmentContracts([{ amendments: [declaration] }], historical), false);
+  assert.equal(supportsDeclaredAmendmentContracts([{ amendments: [declaration] }], { ...current, architectureRelease: '5.0.0' }), false);
+  assert.equal(supportsDeclaredAmendmentContracts([{ amendments: [declaration] }], { ...current, decisionInventory: '1.0.0' }), false);
 });

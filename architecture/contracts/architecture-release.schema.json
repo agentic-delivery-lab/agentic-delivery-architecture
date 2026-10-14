@@ -144,14 +144,14 @@
       ],
       "properties": {
         "architectureRelease": {
-          "const": "5.0.0",
-          "description": "Contract 5.0.0 retains the normalized prepared-source-commit digest algorithm and requires consumers to dispatch by version for artifact family contracts."
+          "enum": ["5.0.0", "5.1.0"],
+          "description": "Contracts 5.0.0 and 5.1.0 retain the normalized prepared-source-commit digest algorithm and requires consumers to dispatch by version for artifact family contracts."
         },
         "adrPrimitiveIndex": {
           "const": "3.0.0"
         },
         "decisionInventory": {
-          "const": "1.0.0"
+          "enum": ["1.0.0", "1.1.0"]
         },
         "architectureArtifacts": {
           "const": "1.0.0"

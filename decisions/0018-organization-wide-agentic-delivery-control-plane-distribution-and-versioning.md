@@ -165,6 +165,13 @@ performed with owner bypass is delegated operator acceptance, not independent
 human review. Neither a green check nor a bot-authored approval supplies the
 missing acceptance evidence.
 
+The bounded W07 native-field verification disposition is recorded in
+[ADR-0012](0012-use-github-as-the-lifecycle-control-plane.md). Its two dedicated
+canaries are administrative acceptance evidence under this interactive authority;
+ordinary lifecycle transitions still use the controller gate. Neither a source
+merge nor an operator canary grants App-scoped write or runner activation
+authority.
+
 Codex executing inside the self-hosted runner cannot inherit this delegation.
 Runner model tools, hooks, child processes, participant code and publication
 credentials remain excluded from owner credentials, administration, direct

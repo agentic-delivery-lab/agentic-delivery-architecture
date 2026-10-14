@@ -129,6 +129,42 @@ implementation-capable. Human users close source issues after review;
 rejected or abandoned work uses GitHub's `not planned` close reason, and Codex
 never closes source issues.
 
+### Operator-controlled field verification
+
+Amendment source: [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11),
+[Control Plane #60](https://github.com/agentic-delivery-lab/agentic-delivery/issues/60),
+and W02/W07 of the owner-selected 2026-10-12 correction plan.
+
+Native API write/readback/restoration must be demonstrated before active field
+mutation is admitted. Read-only inventories and shadow runs cannot prove it.
+For this administrative verification, the owner or owner-authorized interactive
+operator may execute a separately reviewed deterministic canary command against
+the two dedicated W07 Issues: Control Plane #62 and public adapter #11. Its
+controller-owned manifest must bind exact native repository and Issue identities
+and approved low-risk options. This is a bounded verification operation, not
+semantic routing, a lifecycle transition for ordinary delivery, or a runner
+capability. The existing normal-delivery transition validator remains mandatory.
+
+The command must require explicit apply, the authenticated named operator, a
+reviewed clean source commit and reviewed private native bindings. Each selected
+field must differ from its test option. Save the complete original field vector
+before writing; independently read the test result, restore exact prior options
+or original absence, and independently compare the full restored vector. A
+preview must remain non-mutating. Invalid identity/bindings or changed pre-write
+state must prevent mutation. Observed third-party changes must be preserved;
+uncertain writes/restores require readback rather than a repeated mutation.
+Private native bindings and snapshots are operational evidence, not public
+configuration. Checked reads do not provide an atomic concurrency guarantee.
+
+This exception does not grant model/runner tools owner credentials, broaden App
+permissions, change field definitions or types, create child work, publish
+software, or activate a participant. It cannot bypass an ordinary delivery gate
+or establish that software was delivered. New targets, capabilities or activation
+require their own reviewed scope and acceptance. Record the source authorization,
+actor, exact executed commit, operation, before/write/restore readbacks and
+evidence limits under ADR-0018's interactive delegation. Existing-option tests,
+absence tests, operator writes and App-scoped writes remain distinct claims.
+
 ### Consequences
 
 - Good, because a vague issue can be refined through its existing conversation.

@@ -1,6 +1,6 @@
 schemaVersion: 1
 status: proposed
-asOf: '2026-10-12'
+asOf: '2026-10-20'
 sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
 purpose: Make software engineering continuously improvable, explainable, and trustworthy.
 mission: >-
@@ -400,8 +400,8 @@ strategicGoals:
       decisionIds: [ADR-0012, ADR-0019, ADR-0023]
       capabilityRefs: []
       capabilityGaps:
-        - No organization Project exists; the Control Plane planning contract remains provisional pending maintainer review.
-        - The single-item normalizer does not select among multiple Project links; Control Plane #107 owns the deferred selection policy and offline fixtures.
+        - No organization Project was visible in the 2026-10-20 scoped inventory; topology approval and live planning integration remain pending.
+        - 'Control Plane PR #110 merged offline multi-candidate selection; actual candidate collection and approved topology/policy admission remain unproved under #107.'
       contractRefs:
         - architecture/contracts/organizational-strategy.schema.json
         - architecture/contracts/quality-scenarios.schema.json

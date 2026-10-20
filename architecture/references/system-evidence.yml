@@ -1,11 +1,12 @@
 schemaVersion: 1
-snapshotDate: '2026-10-11'
+snapshotDate: '2026-10-20'
 snapshotKind: read-only-live-audit
 purpose: >-
-  Pin current repository revisions and dated live observations used by this
+  Retain scoped repository revisions and dated live observations used by this
   Architecture description. Earlier observations retain their individual
   timestamps and remain historical evidence; snapshotDate is the latest audit
-  date, not a claim that every observation was refreshed then.
+  date, not a claim that every observation was refreshed then. Repository head
+  entries retain the scope of their separately recorded full inventory.
 repositories:
   - id: architecture
     slug: agentic-delivery-lab/agentic-delivery-architecture
@@ -2087,3 +2088,49 @@ observations:
       Issue #15 remains the human decision gate for any topology or
       configuration. No Issue, Project, permission, App, participant, release,
       or runtime setting was changed.
+
+  - id: portfolio-project-issue-association-recheck-20261020-0758
+    observedAt: '2026-10-20T07:58:18Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-agent-customizations
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery-requirements
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Read-only GraphQL recheck as authenticated viewer sjefsharp. Queried
+      viewer and organization Project connections, the seven visible
+      organization repositories, each repository's Project and complete
+      open-and-closed Issue connections, and every Issue's Project items.
+      All pageInfo.hasNextPage values were false. Repository pagination was
+      bounded to 20 after an initial 100-by-100-by-100 query exceeded GitHub's
+      theoretical node cap; no partial result is claimed as complete.
+    result:
+      status: Complete scoped read-only Project and Issue-association inventory.
+      available:
+        - Viewer and organization Project connections each returned totalCount=0.
+        - All seven repository Project connections returned totalCount=0.
+        - Complete Issue connections contained 64 Issues, including 20 open.
+        - Every Issue Project-item connection returned totalCount=0.
+        - >-
+          The additional visible repository is Requirements Authority; the
+          current canonical Customizations name is
+          agentic-delivery-lab/agentic-delivery-agent-customizations.
+      absent:
+        - No Project node in the queried viewer, organization or repository scopes.
+        - No Project item on any of the 64 visible Issues.
+    limitation: >-
+      This observation establishes only the queried scopes at its timestamp.
+      It does not establish Projects owned elsewhere, effective runtime App
+      access, or a topology decision. No Project existed to inspect fields,
+      views, membership, visibility or item contents. Issue Types, Issue Field
+      definitions/values, entitlements, App grants, PR state, release state and
+      repository HEADs were not re-read by this scoped query; earlier full
+      metadata observations retain their own dates. Architecture #15 remains
+      the accountable human topology gate. No Issue, Project, field,
+      permission, participant, release or runtime setting was changed.

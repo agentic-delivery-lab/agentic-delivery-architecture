@@ -6,6 +6,8 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Architecture #12 refreshes scoped Project evidence on 2026-10-20: zero Projects and Issue associations across seven visible repositories and all 64 Issues. Older metadata observations retain their dates; topology and runtime admission remain separate gates.
+
 - W02/W07 clarifies the bounded interactive operator field-canary disposition
   in ADR-0012 and ADR-0018. Exact identities, reviewed source/private bindings,
   before/write/restore readbacks and evidence limits are required. Ordinary

@@ -2092,6 +2092,7 @@ observations:
   - id: portfolio-project-issue-association-recheck-20261020-0758
     observedAt: '2026-10-20T07:58:18Z'
     source: https://api.github.com/graphql
+    sourcePath: architecture/references/project-association-inventory.graphql
     sourceRepositories:
       - agentic-delivery-lab/agentic-delivery
       - agentic-delivery-lab/.github
@@ -2138,6 +2139,7 @@ observations:
   - id: portfolio-repository-head-recheck-20261020-1904
     observedAt: '2026-10-20T19:04:23Z'
     source: https://api.github.com/graphql
+    sourcePath: architecture/references/repository-head-inventory.graphql
     sourceRepositories:
       - agentic-delivery-lab/agentic-delivery
       - agentic-delivery-lab/.github

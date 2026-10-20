@@ -64,6 +64,32 @@ records:
         - from: ../delivery/codex-workflow.md
           to: https://github.com/agentic-delivery-lab/agentic-delivery/blob/c6c891fa937b7db06e3925c3e83ea83656b3d617/docs/delivery/codex-workflow.md
           reason: Link pinned to the immutable Control Plane source because its runtime workflow remains context-owned.
+        - from: "## More Information"
+          to: |-
+            ## More Information
+
+            ### Development-phase authority amendment (W02)
+
+            The original source, date, decision makers and immutable imported-origin pin
+            above remain historical provenance. For current factory correction and
+            development, apply the scoped owner and interactive-operator delegation in
+            [ADR-0018's W02 amendment](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md#development-phase-authority-amendment-w02),
+            tracked by [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)
+            and [Control Plane #59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59).
+            The self-hosted runner receives no approval, merge, administration or owner
+            credential authority from that delegation. Operator acceptance and separate
+            validation are recorded as such; independent human review requires its own
+            evidence. Proposed strategy adoption and live safety remain separate gates.
+          reason: >-
+            Architecture #11 / W02 adds a current canonical authority amendment
+            after the historical imported text. This is a new development-phase
+            clause, not a claim that the pinned Control Plane source contained
+            it; the original source repository, commit, path and digest remain
+            unchanged and the exact addition is reproducible.
+    amendments:
+      - heading: Operation-wide allowance amendment (W08)
+        sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
+        sha256: 85bc6741bf3e271a06b9fb594fa013c56f74f43c9e0daab8bba3480b384a6520
   - id: ADR-0011
     path: decisions/0011-run-layered-harness-architecture-reviews.md
     domains: [agentic-delivery-governance, agentic-delivery-control-plane]
@@ -148,6 +174,23 @@ records:
             record, not implementation authorization; official adoption requires a
             separately authorized review issue and pull request.
           reason: Moved the existing confirmation checks into the shared MADR outcome and kept the historical issue reference intact.
+        - from: |-
+            The projection is never edited in place; a change starts in this repository and
+            is promoted by a reviewed pull request.
+          to: |-
+            The projection is never edited in place; a change starts in this repository and
+            is promoted by a reviewed pull request.
+
+            The owner-selected capability repository location is
+            `agentic-delivery-lab/agentic-delivery-agent-customizations`, retaining GitHub
+            repository ID `1380894656`. Agent Customizations names the repository role;
+            the `agentic-primitives` context, primitive URNs and release IDs remain stable.
+            Decision text remains canonical in Architecture. Historical origin names,
+            source commits and release bytes remain intact. Consumers verify the current
+            name and unchanged ID before checkout; a redirect alone is insufficient.
+            The hosting rename and caller cutover require their own readback evidence and
+            do not activate a participant.
+          reason: Owner-selected W05 location amendment; preserve original imported identity, context and immutable provenance.
   - id: ADD-0001
     path: decisions/ADD-0001-distribution-boundary.md
     domains: [developer-distribution]
@@ -245,6 +288,10 @@ records:
     origin: {type: proposed, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/5}
   - id: ADR-0023
     path: decisions/0023-use-projects-for-planning-and-issues-for-execution-authorization.md
+    domains: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
+    origin: {type: proposed, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11}
+  - id: ADR-0024
+    path: decisions/0024-centralize-approved-requirements-in-requirements-authority.md
     domains: [agentic-delivery-governance, agentic-delivery-control-plane, agentic-primitives, developer-distribution]
     origin: {type: proposed, repository: agentic-delivery-lab/agentic-delivery-architecture, repositoryId: 1380894616, sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11}
 historicalVariants:

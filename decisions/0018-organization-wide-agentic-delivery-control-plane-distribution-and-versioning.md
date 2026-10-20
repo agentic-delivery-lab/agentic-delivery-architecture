@@ -134,6 +134,119 @@ deterministic authorization, orchestration policy, reusable workflows, runner
 and session control, GitHub Projects projection, evidence and controlled
 write-back.
 
+### Repository-name migration
+
+The capability repository's owner-selected current location is
+`agentic-delivery-lab/agentic-delivery-agent-customizations`, with unchanged
+repository ID `1380894656`. Its bounded context remains `agentic-primitives`.
+Distribution remains a separate repository and responsibility. Current callers
+use the explicit current name and verify the repository ID and immutable tree;
+legacy names in historical origins and frozen releases remain provenance.
+Keep the participant shadow during the coordinated migration. A name redirect,
+repository access or an amended contract does not authorize activation. Record
+hosting readback and known-caller validation before accepting the cutover.
+
+### Operation-bound runtime admission (W08)
+
+New factory runtime compositions must implement the operation-wide allowance
+in [ADR-0009's W08 amendment](0009-run-codex-from-source-issues-with-a-budget-boundary.md#operation-wide-allowance-amendment-w08).
+Admission binds policy, approved authority context, exact participant identity,
+runtime and trusted repository validation profile. Continuation and trusted
+queued recovery retain operation identity and consumption. Missing or changed
+inputs hold; an Issue, Project or model proposal cannot supply new commands,
+widen authority or replenish resources. Policy approval, draft release
+preparation and repository access are separate from live activation. Preserve
+the last supported composition and recovery evidence; never erase consumption
+to make rollback admissible.
+
+### Development-phase authority amendment (W02)
+
+Amendment source: [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)
+and the recovery lineage [Control Plane #59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59).
+The owner-selected 2026-10-12 implementation plan delegates the current factory
+correction and development work to `sjefsharp` and the owner-authorized
+interactive Codex CLI. This amendment records that selection; historical
+source Issues, dates, decision makers and review evidence remain unchanged.
+
+The delegation permits the named owner and interactive operator to approve,
+merge and administer this development work within the owner's explicit scope.
+It belongs to the authenticated operator session and its owner instruction,
+not to a repository name, model identity, source Issue, runner login or App
+installation. Record its source, actor, scope, exact candidate head/tree,
+separate validation results, decision and resulting GitHub action. A merge
+performed with owner bypass is delegated operator acceptance, not independent
+human review. Neither a green check nor a bot-authored approval supplies the
+missing acceptance evidence.
+
+The bounded W07 native-field verification disposition is recorded in
+[ADR-0012](0012-use-github-as-the-lifecycle-control-plane.md). Its two dedicated
+canaries are administrative acceptance evidence under this interactive authority;
+ordinary lifecycle transitions still use the controller gate. Neither a source
+merge nor an operator canary grants App-scoped write or runner activation
+authority.
+
+Codex executing inside the self-hosted runner cannot inherit this delegation.
+Runner model tools, hooks, child processes, participant code and publication
+credentials remain excluded from owner credentials, administration, direct
+protected-branch writes, approval/merge authority, governance self-promotion
+and activation. Controller publication creates a review candidate only.
+W13 must prove credential and execution isolation and read back each
+repository's hosting controls before active admission; this documentation
+change does not prove their enforcement or repair unavailable private rulesets.
+
+This exception reconciles references to human review and merge in historical
+ADRs and strategy only for the named, owner-authorized interactive development
+work. Separate deterministic validation and semantic review must still be
+reported accurately. It does not authorize runner self-approval, unattended
+merging, altered policy through runtime output, new billing, or an independent
+review claim. Future deterministic routine merge eligibility, evaluation and
+activation remain separate W26–W28 decisions.
+
+A strategy, goal, capability, release or participant is adopted only when its
+own acceptance record identifies the approving authority, exact baseline,
+validation and evidence limits, effective scope and rollback. This amendment
+and its PR do not adopt all proposed strategy goals or activate participants.
+If scope, identity or evidence is uncertain, hold the consequential action;
+rollback disables affected privileged automation and restores the prior
+supported policy composition while preserving receipts and historical origin.
+
+### Invocation receipt settlement amendment (W06)
+
+The trusted workflow revision owns invocation receipt finalization. Participant
+controller pins select delivery implementation; they do not supply the trusted
+receipt finalizer. This separation supports older admitted participant pins
+without silently changing their delivery code.
+
+Before delivery, the trusted controller binds the receipt to the originating
+repository name and immutable ID, source Issue, controller commit, workflow run
+and attempt under its active lease. Settlement rechecks the same identity and
+lease. Expiry revokes attribution and settlement even before another run
+reclaims the receipt; a matching token is insufficient. An interrupted or
+superseded run cannot settle another attempt.
+
+Successful transport alone cannot complete a held, missing or unknown route.
+Failed work is retryable only while its existing receipt controller-attempt
+allowance remains; exhaustion is reported from the settlement write. Transport
+retry cannot replenish an operation-wide software allowance. Duplicate settlement
+cannot rewrite a completed receipt. Receipt completion records processing of
+the admitted invocation, including observation or refinement; it does not prove
+software publication, product usefulness or owner acceptance. Those outcomes
+require their own attributable evidence.
+
+The additive attribution migration must be tested in an isolated database and
+applied before deploying any workflow that writes its fields. Deployment and
+rollback require an explicit supported workflow/database composition. Preserve
+existing receipts and evidence during rollback. This amendment does
+not activate a participant or approve a production migration. Its acceptance
+record must identify the exact source, tests, evidence limits and rollout.
+
+The implementation candidate is [Control Plane PR #112](https://github.com/agentic-delivery-lab/agentic-delivery/pull/112)
+at `95e023c38563a4c5e40ea9897bf214b911e736d1`. Its isolated PostgreSQL tests
+and hosted recovery-SQL checks are implementation evidence. They do not prove
+that migration 0008 is installed in the deployed database. The migration-before-
+writer gate remains unresolved; participants remain shadow and no active
+factory acceptance is established by this amendment.
+
 ### Organization-wide App installation
 
 One GitHub App registration and one organization installation serve the

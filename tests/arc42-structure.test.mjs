@@ -50,11 +50,11 @@ test('arc42 contract rejects legacy suffixes and non-template headings', async (
 });
 
 test('architecture contracts and aliases are deterministic', async () => {
-  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 7, aliases: 21 });
+  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 7, aliases: 22 });
 });
 
 test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
-  assert.deepEqual(await validateStructuredData(root), { files: 19, schemas: 22 });
+  assert.deepEqual(await validateStructuredData(root), { files: 20, schemas: 23 });
 
   const principleIndex = parseRepositoryYaml(
     await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),
@@ -308,11 +308,11 @@ test('ADR/Primitive traceability resolves only through the canonical Architectur
 test('canonical inventory has exact record coverage and rejects projections and duplicate IDs', async () => {
   const result = await validateDecisionInventory(root);
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
-  assert.equal(result.decisionIds.length, 23);
-  assert.equal(result.adrIds.length, 21);
+  assert.equal(result.decisionIds.length, 24);
+  assert.equal(result.adrIds.length, 22);
   assert.ok(result.recordById.has('ADP-0001'));
   assert.ok(result.recordById.has('ADD-0001'));
-  assert.equal(result.importedTransforms.length, 9);
+  assert.equal(result.importedTransforms.length, 11);
   assert.deepEqual(release.decisionIds, result.decisionIds);
   assert.deepEqual(release.adrIds, result.adrIds.map((id) => `urn:agentic-delivery:adr:architecture:${id.slice(4)}`));
   assert.deepEqual(JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8')).externalAdrs, []);
@@ -362,6 +362,10 @@ test('canonical inventory has exact record coverage and rejects projections and 
   withWrongPath.records[0].path = withWrongPath.records[1].path;
   await assert.rejects(validateDecisionInventory(root, { inventory: withWrongPath }), /canonical decisions file/);
 
+  const withUndeclaredAmendment = structuredClone(result.inventory);
+  withUndeclaredAmendment.records.find((record) => record.id === 'ADR-0009').origin.transformations.pop();
+  await assert.rejects(validateDecisionInventory(root, { inventory: withUndeclaredAmendment }), /canonical file must equal the immutable source text/);
+
   const withChangedOriginHash = structuredClone(result.inventory);
   withChangedOriginHash.records.find((record) => record.id === 'ADR-0008').origin.sha256 = '0'.repeat(64);
   await assert.rejects(validateDecisionInventory(root, { inventory: withChangedOriginHash }), /does not match git show/);
@@ -383,7 +387,8 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
     'organizational strategy test fixture',
   );
   const sourceOfTruthRequirements = [
-    [/strategic goals, principles, ADRs, quality scenarios, and measure definitions/i, /Architecture Authority/],
+    [/strategic goals, principles, ADRs, and measure definitions/i, /Architecture Authority/],
+    [/approved factory, shared and product requirements.*normative quality scenarios/i, /Requirements Authority/],
     [/native Issue Type definitions/i, /Organization Issue Types/],
     [/organization Issue Field definitions/i, /Organization Issue Field/],
     [/Issue-native type value.*labels/i, /Origin repository Issue/],
@@ -397,6 +402,12 @@ test('organizational strategy has stable goals, measurable evidence, and fail-cl
     const row = strategy.sourceOfTruth.find(({ fact }) => factPattern.test(fact));
     assert.ok(row && ownerPattern.test(row.owner), `source-of-truth map must cover ${factPattern}`);
   }
+  const duplicateQrAuthority = structuredClone(strategy);
+  duplicateQrAuthority.sourceOfTruth.push({ fact: 'local quality scenarios', owner: 'Architecture Authority', rule: 'Editable normative copy' });
+  assert.ok(validateOrganizationalStrategyValue(duplicateQrAuthority).some(error => /sole normative QR owner/.test(error)));
+  const wrongQrOwner = structuredClone(strategy);
+  wrongQrOwner.sourceOfTruth.find(entry => /normative quality scenarios/.test(entry.fact)).owner = 'Architecture Authority';
+  assert.ok(validateOrganizationalStrategyValue(wrongQrOwner).some(error => /sole normative QR owner/.test(error)));
   const operationalGoal = strategy.strategicGoals.find(({ id }) => id === 'SG-03');
   assert.ok(['SM-002', 'SM-010', 'SM-011'].every((id) => operationalGoal.measureIds.includes(id)));
   assert.ok(strategy.successMeasures.some(({ id, name }) => id === 'SM-010' && /budget/i.test(name)));
@@ -627,8 +638,9 @@ test('architecture release identifies the target authority', async () => {
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
   assert.equal(result.status, 'draft');
   assert.equal(release.contractVersions.evaluationReport, '2.0.0');
-  assert.equal(release.contractVersions.architectureRelease, '4.0.0');
-  assert.equal(releaseSchema.properties.contractVersions.properties.architectureRelease.const, '4.0.0');
+  assert.equal(release.contractVersions.architectureRelease, '5.1.0');
+  assert.deepEqual(releaseSchema.properties.contractVersions.properties.architectureRelease.enum, ['5.0.0', '5.1.0']);
+  assert.equal(release.contractVersions.decisionInventory, '1.1.0');
   assert.match(releaseSchema.description, /consumers to dispatch by version/);
 });
 

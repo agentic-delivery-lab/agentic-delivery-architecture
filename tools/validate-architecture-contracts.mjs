@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { parseRepositoryYaml } from './lib/yaml.mjs';
-import { validateDecisionInventory } from './decision-inventory.mjs';
+import { validateDecisionInventory, supportsDeclaredAmendmentContracts } from './decision-inventory.mjs';
 import { validateOrganizationalStrategy } from './organizational-strategy.mjs';
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -30,10 +30,12 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   if (JSON.stringify(release.adrIds) !== JSON.stringify(expectedAdrUris)) errors.push('architecture release ADR IDs must exactly match local Architecture ADR records');
   if (JSON.stringify(release.decisionIds) !== JSON.stringify(decisionInventory.decisionIds)) errors.push('architecture release decision IDs must exactly match the canonical decision inventory');
   if (!Array.isArray(release.contextIds) || release.contextIds.length === 0) errors.push('architecture release must identify bounded contexts');
-  if (release.contractVersions?.architectureRelease !== '4.0.0') errors.push('architecture release must pin contract 4.0.0 for digest, exact decision inventory, and artifact-family semantics');
-  if (release.contractVersions?.decisionInventory !== '1.0.0') errors.push('architecture release must pin decision inventory contract 1.0.0');
+  if (!['5.0.0', '5.1.0'].includes(release.contractVersions?.architectureRelease)) errors.push('architecture release must pin contract 5.0.0 or 5.1.0 for digest, exact decision inventory, and artifact-family semantics');
+  if (release.contractVersions?.requirementsReference !== '1.0.0') errors.push('architecture release must pin requirementsReference contract 1.0.0');
+  if (!['1.0.0', '1.1.0'].includes(release.contractVersions?.decisionInventory)) errors.push('architecture release must pin decision inventory contract 1.0.0 or 1.1.0');
   if (release.contractVersions?.architectureArtifacts !== '1.0.0') errors.push('architecture release must pin architecture artifact contract 1.0.0');
   if (release.contractVersions?.evaluationReport !== '2.0.0') errors.push('architecture release must pin evaluation report contract 2.0.0');
+  if (!supportsDeclaredAmendmentContracts(decisionInventory.recordById.values(), release.contractVersions)) errors.push('Declared amendments require decision inventory 1.1.0 and architecture release 5.1.0');
   for (const name of ['conformancePolicy', 'toolingLock']) {
     const reference = release[name];
     if (!reference || typeof reference.path !== 'string' || !/^[0-9a-f]{64}$/.test(reference.sha256 ?? '')) errors.push(`architecture release ${name} integrity reference is required`);
@@ -52,8 +54,9 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   if (generatedIndex.externalAdrs?.length !== 0) errors.push('generated index must not retain external ADR owners or copied-text projections');
   if (release.contractVersions?.adrPrimitiveIndex !== '3.0.0') errors.push('architecture release must pin ADR/Primitive index contract 3.0.0');
   if (releaseSchema.properties?.schemaVersion?.const !== 2 || releaseSchema.title !== 'Architecture release manifest schemaVersion 2') errors.push('Architecture release schema must describe manifest schemaVersion 2');
-  if (releaseSchema.properties?.contractVersions?.properties?.architectureRelease?.const !== '4.0.0') errors.push('Architecture release schema must require contract version 4.0.0');
-  if (releaseSchema.properties?.contractVersions?.properties?.decisionInventory?.const !== '1.0.0') errors.push('Architecture release schema must require decision inventory contract 1.0.0');
+  if (JSON.stringify(releaseSchema.properties?.contractVersions?.properties?.architectureRelease?.enum) !== JSON.stringify(['5.0.0', '5.1.0'])) errors.push('Architecture release schema must support contract versions 5.0.0 and 5.1.0');
+  if (releaseSchema.properties?.contractVersions?.properties?.requirementsReference?.const !== '1.0.0' || !releaseSchema.properties?.contractVersions?.required?.includes('requirementsReference')) errors.push('Architecture release schema must require requirementsReference contract 1.0.0');
+  if (JSON.stringify(releaseSchema.properties?.contractVersions?.properties?.decisionInventory?.enum) !== JSON.stringify(['1.0.0', '1.1.0'])) errors.push('Architecture release schema must support decision inventory contracts 1.0.0 and 1.1.0');
   if (releaseSchema.properties?.contractVersions?.properties?.architectureArtifacts?.const !== '1.0.0') errors.push('Architecture release schema must require artifact-family contract 1.0.0');
   if (releaseSchema.properties?.contractVersions?.properties?.evaluationReport?.const !== '2.0.0'
     || !releaseSchema.properties?.contractVersions?.required?.includes('evaluationReport')) {

@@ -6,6 +6,48 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- W02/W07 clarifies the bounded interactive operator field-canary disposition
+  in ADR-0012 and ADR-0018. Exact identities, reviewed source/private bindings,
+  before/write/restore readbacks and evidence limits are required. Ordinary
+  lifecycle transition gates, runner exclusions and separate active admission
+  remain in force.
+
+- Review corrections for W04 require Requirements reference `1.0.0` under
+  Architecture release contract `5.0.0`, reject non-ancestral prepared release
+  sources, honor explicit approved QR selections alongside proposed records,
+  and recognize equivalent QR/quality-requirement authority wording. Regression
+  tests cover each boundary; previous contract artifacts retain immutable
+  historical schemas/readers rather than being silently reinterpreted.
+
+- W04 adopts an immutable approved Requirements baseline for normative QR
+  ownership. All original QR IDs, scenario text and historical status/evidence
+  remain available through an exact checked projection; direct local edits,
+  draft/withdrawn inputs, origin mismatch and digest tampering fail validation.
+  Five inferred execution obligations remain proposed in Requirements; no
+  strategy-goal adoption, live satisfaction or participant activation is claimed.
+
+- Added ADR-0024 for W03's owner-selected public Requirements Authority.
+  Approved requirements and their immutable applicability baselines have one
+  owner; Architecture retains organizational decisions and models. W04 owns
+  the separate QR cutover, with original IDs and evidence preserved and no
+  automatic adoption of generated drafts or live-satisfaction claims.
+
+- Reconciled W02 development authority in ADR-0009, ADR-0018 and strategy:
+  `sjefsharp` and the owner-authorized interactive Codex CLI may exercise
+  scoped development acceptance and administration; the self-hosted runner
+  receives none of that delegation. Operator acceptance, independent review,
+  separate validation, adoption and activation remain distinct evidence.
+  ADR-0009 retains its immutable historical origin with an exact declared
+  canonical amendment; undeclared additions fail inventory validation.
+
+- Clarified Architecture #11 / W01: the factory is a product and acceptance
+  subject. Proposed Milestone A requires useful governed self-development
+  across seven target surfaces; Milestone B adds real independent-product
+  ownership, reuse, and observed usefulness. Administrative bootstrap and
+  successful checks alone cannot establish either milestone. Strategy and
+  goals remain proposed, with active delivery gated on admitted safety and
+  authority rather than prior independent-product delivery.
+
 - Amended ADR-0004 and ADR-0007 with managed workspace ownership, safe exact-tip cleanup, sibling worktree topology and failure-safe artifact teardown; registered AP-003 and QR-012, with profile rollout retained as implementation debt (Architecture #7).
 
 - Amended ADR-0022 with recovery for ambiguous Neon writes, a scheduled

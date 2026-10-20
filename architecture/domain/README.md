@@ -31,7 +31,7 @@ model boundaries:
 | --- | --- | --- | --- |
 | `agentic-delivery-governance` | Repository delivery governance and reusable rules for proposing, reviewing, validating, and recording work | `agentic-delivery-lab/agentic-delivery` | Defined in the Control Plane register at the audited baseline. The repository-level control plane is a GitHub surface; it is not the executable controller. |
 | `agentic-delivery-control-plane` | The delivery controller, event intake, enrollment, lifecycle contracts, orchestration, and controlled GitHub write-back | `agentic-delivery-lab/agentic-delivery` | Defined in the Control Plane register; runtime implementation remains in `agentic-delivery`. It does not own Architecture or Primitive implementation. |
-| `agentic-primitives` | Versioned agents, skills, instructions, hooks, validators, capabilities, and MCP contracts, with a catalog and release/projection rules | `agentic-delivery-lab/agentic-delivery-primitives` | Distinct catalog and release model in ADP-0001 and `manifests/primitive-catalog.yml` at the pinned Primitive revision. |
+| `agentic-primitives` | Versioned agents, skills, instructions, hooks, validators, capabilities, and MCP contracts, with a catalog and release/projection rules | `agentic-delivery-lab/agentic-delivery-agent-customizations` | Distinct catalog and release model in ADP-0001 and `manifests/primitive-catalog.yml` at the pinned Primitive revision. |
 | `developer-distribution` | Reproducible development-environment and thin consumer integration bundles, bootstrap, and consumer projections | `agentic-delivery-lab/agentic-delivery-distribution` | Distinct bundle/bootstrap model in ADD-0001 and `manifests/workflow-bundle.json` at the pinned Distribution revision. |
 
 The last two are domain contexts because their contracts define different
@@ -85,7 +85,7 @@ Treat language as part of the domain model. Update this register and affected
 artifacts in the same change when a modeled concept is missing, a term changes
 meaning, or a context boundary or translation changes. State the affected
 contexts and terms in decision work. Use the canonical
-[architecture-decision skill](https://github.com/agentic-delivery-lab/agentic-delivery-primitives/blob/e4933566fbf5b0f593830f8933f18fbd21024fa7/skills/architecture-decision/SKILL.md)
+[architecture-decision skill](https://github.com/agentic-delivery-lab/agentic-delivery-agent-customizations/blob/e4933566fbf5b0f593830f8933f18fbd21024fa7/skills/architecture-decision/SKILL.md)
 from the pinned Agentic Primitives baseline for significant or cross-cutting
 changes. Review new context classifications against their authoritative
 contracts instead of assuming that a repository boundary proves a separate

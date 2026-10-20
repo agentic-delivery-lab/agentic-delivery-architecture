@@ -243,6 +243,91 @@ Amendment source: [issue #32](https://github.com/agentic-delivery-lab/agentic-de
 
 ## More Information
 
+### Operation-wide allowance amendment (W08)
+
+Amendment source: [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11),
+[Control Plane #105](https://github.com/agentic-delivery-lab/agentic-delivery/issues/105)
+and its implementation [PR #114](https://github.com/agentic-delivery-lab/agentic-delivery/pull/114).
+For newly admitted compositions, this amendment supersedes the historical
+unlimited-turn-duration statement above. Activity cannot replenish the
+operation allowance; the inactivity watchdog remains a separate safeguard.
+The owner-selected correction plan introduces an operation allowance in
+addition to subscription protection. Quota-led execution alone does not bound
+an active but unproductive operation, and local retry counters do not bound
+repeated continuation. This amendment preserves the original decision's
+source and historical rationale while changing admission for new factory
+operations. It does not activate the current proposed runtime composition.
+
+The Control Plane assigns one operation identity to the admitted source-Issue
+work and retains it across attempts, clarification, retries, queued redelivery
+and exact-session recovery. Admission binds the native origin repository and
+Issue, actor, approved context, immutable policy and runtime composition.
+Operation-wide consumption must be durably reserved before the counted action;
+concurrent admission cannot spend the same remaining allowance twice. An
+attempt, controller restart, subscription reset or new transport delivery does
+not create a fresh software allowance.
+
+Initial admission bounds for this factory composition are:
+
+| Resource | Operation-wide limit |
+| --- | --- |
+| Cumulative active execution time | 30 minutes across attempts and resumes |
+| Model turns | 8 across all participating phases |
+| Validation attempts | 3, including failed or interrupted attempts |
+| Model-exposed tool invocations | 100, including admitted MCP calls |
+| Child implementation operations and recursion depth | 0 |
+| Concurrent implementation | 1 |
+| Transport attempts | At most 8, retaining operation lineage |
+| Controller execution attempts | At most 8; separate from transport attempts |
+| Automatic billing, account or model fallback | None |
+
+The optional initial Structurizr review capability has a further limit of
+three MCP calls per invocation, charged inside the operation allowance.
+Controller validation and publication remain deterministic boundaries; they
+cannot replenish model or transport consumption. Every admitted model tool
+must be intercepted before execution. Reporting tools after completion, an
+advisory hook or a host-local account lock does not prove these limits.
+
+Clarification waiting between settled attempts consumes no active time.
+Duration records an owned start before execution and is settled only after
+confirmed shutdown; missing consumption, an unsettled reservation or uncertain
+ownership holds for inspection. Unknown consumption is conservatively charged
+or held. The remaining active allowance bounds model, command and mutation
+requests, including native Issue Field writes. A client timeout does not prove
+that a server made no change. Reconcile uncertain writes before recovery;
+never retry them merely to obtain a clean response. Required credential
+revocation and owned-process teardown are cleanup, not new delivery work.
+
+Admission and terminal receipts record the operation, origin, actor, selected
+policy/context/runtime references, consumption, outcome and shutdown evidence.
+Publication checkpoints remain separate from terminal receipts, merge
+acceptance and useful delivery. A transport success, green check or model
+parse cannot stand in for these outcomes. A changed policy, origin, source,
+plan or verified tree requires readmission without resetting spent allowance.
+
+Before active admission, the exact composition must demonstrate persistent
+limits across concurrency, retries, restart and resume; hard tool interception;
+bounded child and transport behavior; owned deadline interruption; safe
+mutation/publication reconciliation; and truthful admission/terminal evidence.
+Any unsupported or unproved boundary holds the participant in shadow.
+Approval of this policy does not approve a draft release, promote a runtime
+fingerprint to an approved baseline, authorize runner privileges or enable
+unattended merging. W12 selects the approved immutable context; W13 proves
+isolation; W26–W28 retain their separate merge-policy and activation gates.
+
+### Development-phase authority amendment (W02)
+
+The original source, date, decision makers and immutable imported-origin pin
+above remain historical provenance. For current factory correction and
+development, apply the scoped owner and interactive-operator delegation in
+[ADR-0018's W02 amendment](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md#development-phase-authority-amendment-w02),
+tracked by [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)
+and [Control Plane #59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59).
+The self-hosted runner receives no approval, merge, administration or owner
+credential authority from that delegation. Operator acceptance and separate
+validation are recorded as such; independent human review requires its own
+evidence. Proposed strategy adoption and live safety remain separate gates.
+
 - [Codex app-server](https://learn.chatgpt.com/docs/app-server)
 - [Codex permissions](https://learn.chatgpt.com/docs/permissions)
 - [Codex managed network proxy](https://github.com/openai/codex/blob/rust-v0.153.4/codex-rs/network-proxy/README.md)

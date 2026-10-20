@@ -1,6 +1,6 @@
 schemaVersion: 1
 status: proposed
-asOf: '2026-10-12'
+asOf: '2026-10-20'
 sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
 purpose: Make software engineering continuously improvable, explainable, and trustworthy.
 mission: >-
@@ -220,7 +220,7 @@ strategicGoals:
       capabilityRefs:
         - capability: Issue-originated delivery dispatch
           repository: agentic-delivery-lab/agentic-delivery
-          sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+          sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
           path: .github/workflows/issue-intake.yml
       capabilityGaps: []
       contractRefs:
@@ -288,7 +288,7 @@ strategicGoals:
       capabilityRefs:
         - capability: Issue-originated delivery dispatch
           repository: agentic-delivery-lab/agentic-delivery
-          sourceCommit: 67e5941a9bb594cab5c9cd2da0bead4caa7b6bbf
+          sourceCommit: 9a2e1f3549428bc042d5c59d09beb300ca2d1362
           path: .github/workflows/issue-intake.yml
       capabilityGaps:
         - The pinned controller and runner evidence does not yet prove a per-run budget for duration, turns or invocations, retries, recursion, and exposed runtime quota or spend, with a terminal limit receipt.
@@ -400,8 +400,8 @@ strategicGoals:
       decisionIds: [ADR-0012, ADR-0019, ADR-0023]
       capabilityRefs: []
       capabilityGaps:
-        - No organization Project exists; the Control Plane planning contract remains provisional pending maintainer review.
-        - The single-item normalizer does not select among multiple Project links; Control Plane #107 owns the deferred selection policy and offline fixtures.
+        - No organization Project was visible in the 2026-10-20 scoped inventory; topology approval and live planning integration remain pending.
+        - 'Control Plane PR #110 merged offline multi-candidate selection; actual candidate collection and approved topology/policy admission remain unproved under #107.'
       contractRefs:
         - architecture/contracts/organizational-strategy.schema.json
         - architecture/contracts/quality-scenarios.schema.json
@@ -611,17 +611,17 @@ successMeasures:
     targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-09 19:35 inventory returned no Project while the organization REST API reported both organization and repository Projects available, so creation and configuration still require the separate human decision tracked in Architecture #15.
+  proposedTopology: One organization portfolio Project with separate Factory Evolution and Software Product Delivery views remains a candidate; the complete 2026-10-10 23:53 inventory returned no Project while the organization REST API reported both organization and repository Projects available, so creation and configuration still require the separate human decision tracked in Architecture #15.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: portfolio-issue-project-inventory-20261009-1935
+  projectInventoryEvidenceId: strategy-github-project-issue-inventory-20261010-2353
   inventoryEvidence:
-    observedAt: '2026-10-09T19:35:52Z'
+    observedAt: '2026-10-10T23:53:04Z'
     projectIds: []
     scopeSummary: >-
-      Between 19:34 and 19:35 UTC, complete GraphQL organization,
-      authenticated-user, and six repository Project inventories returned no
+      At 23:53 UTC, complete GraphQL organization, authenticated-user, and six
+      repository Project inventories returned no
       Projects or additional pages; organization and user CLI listings
-      including closed Projects were empty. All 22 open Issues had no Project
+      including closed Projects were empty. All 23 open Issues had no Project
       items, and all per-Issue field-value reads returned empty arrays. The
       active identity had project, admin:org, repo, and workflow scopes and
       organization admin role. The organization REST response reported

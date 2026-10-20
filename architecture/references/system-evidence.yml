@@ -2134,3 +2134,37 @@ observations:
       metadata observations retain their own dates. Architecture #15 remains
       the accountable human topology gate. No Issue, Project, field,
       permission, participant, release or runtime setting was changed.
+
+  - id: portfolio-repository-head-recheck-20261020-1904
+    observedAt: '2026-10-20T19:04:23Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-agent-customizations
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery-requirements
+    request: >-
+      Separately timed read-only GraphQL query as sjefsharp for all visible
+      organization repository IDs, default-branch names and exact commit IDs.
+      The repository connection was complete with no next page. This read
+      supplements the 07:58 Project/Issue-association inventory; it does not
+      claim that all metadata was observed in one atomic snapshot.
+    result:
+      status: Complete default-branch identity read for seven visible repositories.
+      available:
+        - agentic-delivery-lab/agentic-delivery; repository ID 1358455028; main 95fc1289312e0324ac407a2e2372580856291a44.
+        - agentic-delivery-lab/.github; repository ID 1368850419; main af52c92e49616e78f8d6647cf5cf538a7e571d78.
+        - agentic-delivery-lab/agentic-delivery-architecture; repository ID 1380894616; main 6ed5b2b1a0a330cd08f4e00763018f01f3e0a3b7.
+        - agentic-delivery-lab/agentic-delivery-agent-customizations; repository ID 1380894656; main e4933566fbf5b0f593830f8933f18fbd21024fa7.
+        - agentic-delivery-lab/agentic-delivery-distribution; repository ID 1380894705; main 60af09cc764c6bfcf1a6bd1453080a1a3e031bdb.
+        - agentic-delivery-lab/.github-private; repository ID 1380894756; main c2e106034c49419a636f2c67e0d956fc4100e5d4.
+        - agentic-delivery-lab/agentic-delivery-requirements; repository ID 1416207421; main 23046e94652a64090efc2a9fbb2fd69d9691dd34.
+    limitation: >-
+      These commits are exact observed identities at this timestamp, not a
+      guarantee that branches remain unchanged. No Issue, Project, field,
+      permission, App, participant, release or runtime setting was changed.
+      This read does not refresh Issue Types/Fields, App grants, entitlements,
+      deployment evidence or Projects owned outside the previous query scope.

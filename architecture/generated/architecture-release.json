@@ -4,8 +4,8 @@
   "architectureId": "urn:agentic-delivery:architecture:authority",
   "version": "0.1.0-draft.74",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
-  "sourceCommit": "4953c188cb68163407370cd5e61b50286bec2305",
-  "contentSha256": "c720d67022ed498886e3bcf0308058520022ad960ea5a54fbf73af4f5da90c2a",
+  "sourceCommit": "f2fc09d1c3905b62b6e7e0dea23ce585075aaa65",
+  "contentSha256": "c52458190381eb7d3cd34a5b609990cbf0b0d756d39ddc4ce75f8094bd47d49a",
   "status": "draft",
   "principleIds": [
     "AP-001",

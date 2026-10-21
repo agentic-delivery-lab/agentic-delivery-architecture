@@ -28,7 +28,17 @@
 This is the desired logical deployment. It does not imply that every
 participant is active or that each hosting rule has been enabled.
 
-## 7.2 Current inventory snapshot (observations dated per surface)
+## 7.2 Dated inventory snapshots
+
+The current scoped disposition is the
+[2026-10-21 gap matrix](../references/strategy-foundation-gap-matrix.md).
+It records the configured private portfolio, completed offline contracts,
+stock-Codex requirement withdrawal, and remaining runtime and review gates.
+The tables and rechecks below retain the 2026-10-12 historical inventory;
+their Project absence, open-PR states, branch heads and deployment observations
+are not refreshed-current claims. In particular, the organization now has the
+private portfolio recorded in
+[the dated configuration evidence](../references/system-evidence.yml#portfolio-owner-delegated-configuration-20261021).
 
 | Surface | Observed state | Evidence limit |
 | --- | --- | --- |

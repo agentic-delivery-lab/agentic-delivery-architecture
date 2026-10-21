@@ -51,8 +51,8 @@ Native Issue Priority is not exposed and was not duplicated. See the
 `system-evidence.yml#portfolio-owner-delegated-configuration-20261021`.
 Architecture PR #14 merged the QR-015 evaluation-report schema and synthetic
 fixture at `61d99cb`; the schema remains in a draft Architecture release.
-Primitives #3 owns dataset/grader/replay implementation and Control Plane
-#103 owns finding routing. There is no measured baseline or live evaluation.
+Primitives #3 owns dataset/grader/replay implementation. Control Plane #103
+owns finding routing. There is no measured baseline or live evaluation.
 QR-013–QR-016 remain target scenarios; they do not report complete runtime
 integration or achieved outcomes. These are unresolved evidence gaps, not
 satisfied quality goals.

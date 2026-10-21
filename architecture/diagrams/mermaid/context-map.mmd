@@ -1,5 +1,5 @@
 flowchart LR
-  STATUS["Project/Issue recheck 2026-10-12 09:17–09:22 UTC; Issue definitions and values rechecked in the same window; App/Actions inventory 19:14 UTC; production recheck 05:56 UTC<br/>No Project exists in the viewer, organization, or six repository scopes; none of the 62 Issues has a Project item, and all 24 open Issues have zero organization Issue Field Values. The current inventory found six organization Issue Fields and nine Issue Types; the correct field name is Delivery Readiness. Private-Project field visibility remains unverified.<br/>No distinct product repository was identified. The six-repository inventory does not confirm a product steward; external product repositories remain unknown.<br/>Production Vercel deployment is READY on Control Plane main 9a2e1f3. Five Architecture webhook POSTs returned 202, but Actions run 38206400933 failed finalization on a stale participant pin and delivery was skipped; no reconciler request appeared in the seven-day query. HTTP 202 does not prove downstream processing or a terminal receipt, and production Neon was not read. Evidence: system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922; system-evidence.yml#vercel-production-runtime-recheck-20261012-0556; system-evidence.yml#control-plane-invocation-runtime-recheck-20261012-0555."]
+  STATUS["Scoped status 2026-10-21: private portfolio 2 configured; 19 factory Issues, 0 product Issues.<br/>App access, runtime planning context and participant admission remain unproved.<br/>No distinct product repository was identified. W25 onboarding withdrawn; no product delivery claimed.<br/>Current gap matrix and dated system evidence retain the separate source, hosted and runtime limits."]
   subgraph DOMAIN["Domain contexts"]
     GOV["Agentic Delivery Governance"]
     CP["Agentic Delivery Control Plane"]
@@ -8,6 +8,9 @@ flowchart LR
   end
 
   AUTH["Architecture Authority<br/>Cross-context authority, not a bounded context"]
+  REQ["Requirements Authority<br/>Approved normative requirements and QR baseline"]
+  REQ -. "immutable approved baseline and checked QR projection" .-> AUTH
+  REQ -. "applicable approved context; admission required" .-> CP
   AUTH -. "canonical organization ADR/ADP/ADD text, principles, conformance" .-> GOV
   AUTH -. "pinned Architecture release and canonical decision text" .-> CP
   AUTH -. "canonical ADR text and context references" .-> PRIM

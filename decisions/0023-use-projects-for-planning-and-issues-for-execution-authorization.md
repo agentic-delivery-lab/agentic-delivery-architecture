@@ -16,6 +16,32 @@ required-enforcement:
 
 # Use Projects for planning and Issues for execution authorization
 
+## Current configuration disposition — 2026-10-21
+
+Existing Architecture [#15](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15)
+records the owner-delegated topology decision and initial private organization
+[portfolio #2](https://github.com/orgs/agentic-delivery-lab/projects/2), administered
+by `sjefsharp`. The Factory Evolution board and Software Product Delivery roadmap
+have saved value-stream filters. Independent API readback selects 19 factory
+source-Issue items and 0 product items ; 4 completed child Issues were added by GitHub
+Project automation and retained as completed history. W25 product onboarding is
+withdrawn from the current correction program; no product delivery is claimed.
+
+The supported API exposes view layout/filter/visible-field configuration but no
+grouping edits. Explicit board grouping and rendered-browser screenshots are
+withdrawn from initial configuration acceptance; current API readback and the
+owner-scoped query are the recorded alternative. Native Issue Priority is not
+exposed in the current Project fields and was not duplicated. No lifecycle,
+readiness, delivery-state, date or effort field was copied. The optional portfolio
+checkpoint date is omitted.
+
+This records scoped administrative configuration under ADR-0018 W02 delegation.
+Source Issues retain execution authority. App access, runtime planning-context
+consumption, participant admission and production integration remain separate
+requirements. The original dated inventory and decision rationale below remain
+historical context, not a claim that the organization still has no Project.
+See the [dated evidence](../architecture/references/system-evidence.yml#portfolio-owner-delegated-configuration-20261021).
+
 ## Context and Problem Statement
 
 The organizational strategy needs one portfolio surface for prioritization,
@@ -30,19 +56,18 @@ trigger agent execution would bypass the originating repository's Issue
 identity, actor permission, Issue Type, lifecycle, policy, and transition
 checks. Copying Issue-owned fields into separately editable Project fields
 would create conflicting state. The initial read-only audit could not
-inventory Projects because the authenticated CLI did not have `read:project`;
-that is historical evidence, superseded by the complete 2026-10-12
-09:17–09:22 UTC read. With `project`, `admin:org`, and `repo` OAuth scopes,
-the active organization-admin identity's organization, viewer, and all six
-repository Project v2 connections returned no Project nodes or further pages.
-All 62 Issues in those repositories had zero Project items; all 24 open Issues
-had zero organization Issue Field Values. The read confirmed six
-organization-members-only Issue Fields, nine native Issue Types, and a Free
-organization plan with organization and repository Project capability flags.
-No Project exists in the queried scopes to inspect membership, views, fields,
-or visibility, and the human OAuth grants do not establish GitHub App access.
-The exact results and scope limits are in
-`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
+inventory Projects because the authenticated CLI did not have `read:project`.
+The later complete inventory (2026-10-09 10:57 UTC) ran with `project`,
+`admin:org`, and `repo` OAuth scopes and an active organization admin role.
+Organization, personal, and all six repository Projects v2 connections
+returned no Project nodes; all 19 open Issues returned zero Project items.
+The organization REST response reports plan `free` and
+`has_organization_projects=true` plus `has_repository_projects=true`, so no
+Projects feature-entitlement blocker was observed. The six organization Issue
+Fields, including Priority and lifecycle/delivery fields, remain
+organization-members-only. No Project exists in the queried owner scopes to
+inspect membership, views, fields, or visibility. GitHub App access remains
+unknown.
 
 ## Decision Drivers
 
@@ -77,17 +102,14 @@ The exact results and scope limits are in
 
 ## Decision Outcome
 
-Proposed operating model: **Use GitHub Projects for portfolio planning,
-prioritization, coordination, and progress visibility; use origin repository
-Issues for work intent and execution authorization.** The proposed minimum
-topology is one organization portfolio Project with separate Factory Evolution
-and Software Product Delivery views. Architecture #15 asks the accountable
-organization owner to approve, revise, or reject that topology; until that
-human decision is recorded, it remains a proposal. Reuse a suitable existing
-Project only if a separately authorized inventory confirms fit. Otherwise,
-propose creation as a separate authorized task. This draft ADR does not claim
-that a Project exists or authorize any Project, Issue Field, permission, or
-App configuration change.
+Chosen option: **Use GitHub Projects for portfolio planning, prioritization,
+coordination, and progress visibility; use origin repository Issues for work
+intent and execution authorization.** The target topology is one organization
+portfolio Project with separate Factory Evolution and Software Product
+Delivery views. Reuse a suitable existing Project if an authorized inventory
+confirms fit. Otherwise, propose its creation separately. This ADR does not
+claim that a Project exists or authorize any Project, Issue Field, permission,
+or App configuration change.
 
 ### Consequences
 

@@ -1,6 +1,6 @@
 schemaVersion: 1
 status: proposed
-asOf: '2026-10-12'
+asOf: '2026-10-21'
 sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
 purpose: Make software engineering continuously improvable, explainable, and trustworthy.
 mission: >-
@@ -11,7 +11,7 @@ mission: >-
 vision: >-
   Teams can delegate bounded work to capable agents while people retain
   direction and authority. Every change traces to intent, is checked against
-  explicit rules, is independently reviewed, and contributes evidence that
+  explicit rules, has attributable validation and acceptance, and contributes evidence that
   informs the next prioritized improvement.
 researchBasis:
   - source: https://link.springer.com/article/10.1007/s11573-023-01137-9
@@ -130,7 +130,7 @@ marketAndProductContext:
     - The factory's value is lower coordination and setup effort with stronger authorization, provenance, validation, and recovery evidence.
     - Product changes should be selected from evidenced user or operator problems in an identified product repository.
   unknowns:
-    - No distinct product repository, named external customer, market size, willingness-to-pay evidence, or product outcome baseline is confirmed by the current six-repository inventory.
+    - No independent product repository, named external customer, market size, willingness-to-pay evidence, or independent-product outcome baseline is confirmed by the current six-repository inventory; the factory itself is a product and acceptance subject.
     - A product steward, product telemetry policy, and approved user-feedback collection path have not been designated.
 audiences:
   - id: maintainers
@@ -171,23 +171,39 @@ valuePropositions:
     proposition: Product changes address a concrete user or operator need, retain traceability to that need, and are checked against observed behavior after delivery.
 valueStreams:
   - id: factory-evolution
-    outcome: The factory becomes safer, more useful, easier to operate, and better evidenced.
+    outcome: >-
+      The factory is a product and acceptance subject. Governed self-development
+      makes it safer, more useful, easier to operate, and better evidenced.
+      Milestone A demonstrates this value across all seven target repository
+      surfaces; an independent product is not a prerequisite for necessary
+      factory correction and development.
     operatingLoop:
       - Record a factory need or evidence-backed improvement as a source Issue in its owning repository.
       - Prioritize and sequence the Issue in the portfolio Project.
       - Authorize bounded work only from that source Issue after deterministic identity, permission, policy, and contract checks.
-      - Validate the change with automated checks and independent semantic review; humans decide merge and activation.
+      - Validate the change with automated checks and attributable semantic review. The accountable owner or explicitly delegated interactive operator decides development acceptance under ADR-0018 W02; independent human review is claimed only with its own evidence, and runner agents retain no merge or activation authority.
       - Record outcomes, regressions, operational evidence, and rollback results.
       - Convert a validated finding into a new or updated Issue for portfolio prioritization.
+      - For Milestone A, demonstrate useful active delivery in Architecture, Requirements, Agent Customizations, Distribution, Control Plane, public .github, and private .github-private. Requirements exists through administrative W03 bootstrap; Agent Customizations remains a proposed identity-preserving rename of Primitives. Active delivery across this scope is a target, not an achieved composition.
+      - Each surface must show ordinary source-Issue intake, bounded artifact or code production, exact-tree validation, an attributable pull request, and useful accepted delivery. Retain the Issue, admitted origin and actor, approved context, plan, operation and attempt, tested tree, validation, pull request, and accepting actor with the acceptance record.
+      - Milestone A also requires controlled failure or interruption with safe recovery and denied runner attempts to inherit operator privilege, change governance, merge critical work, or promote itself.
+      - Administrative bootstrap, repository creation or rename, installation, shadow observations, offline fixtures, passing CI, and pull request publication alone do not count as factory-delivered acceptance evidence.
+      - Admit the demonstrated safety floor before active delivery and activate one participant at a time with current and supported rollback pins. Reconcile development authority separately; neither this proposed strategy nor milestone wording authorizes execution, merge, release, or activation.
   - id: software-product-delivery
-    outcome: Users receive useful, reliable software changes with evidence of the problem addressed and the result observed.
+    outcome: >-
+      Milestone B tests reuse and generalizability through useful, reliable
+      delivery for a real independent product with an accountable owner and
+      evidenced user need. It follows Milestone A and adds product acceptance
+      and observed usefulness; no fictional product is created to satisfy it.
     operatingLoop:
       - When no steward-owned product repository is confirmed, record product discovery, accountable-owner work, desired outcome, and evidence in an Issue in an existing owning repository; after an approved product repository exists, record product feature work in a typed Issue owned by that repository.
       - Require human approval for product repository creation, access, stewardship, and pinned bootstrap before creating product Issues in a new repository.
       - Prioritize the linked Issue in the portfolio Project.
-      - Deliver through the same authorized Issue, pull request, automated validation, independent review, and human merge boundary.
+      - Deliver through the same authorized Issue, pull request, automated validation, attributable review and accountable acceptance boundary. ADR-0018 W02 delegates current factory development only; independent-product acceptance requires its own owner and authority.
       - Observe product behavior and user feedback against the Issue's stated outcome.
       - Route unmet needs, defects, and capability gaps to Issues in the product or factory owner repository.
+      - Before Milestone B delivery, establish the real independent owner and user need, central approved product requirements suitable for public visibility, rights agreement, explicit enrollment and scoped access, Distribution installation, and a validation profile for the actual product stack.
+      - Retain the same attributable delivery chain as Milestone A, plus actual product behavior, product-owner acceptance, observed usefulness, consumer update and rollback, and controlled failure or denial evidence. Architecture #13 retains the independent-product discovery question; no product or owner is inferred from repository setup.
 strategicGoals:
   - id: SG-01
     title: Deliver authorized work with end-to-end traceability
@@ -310,7 +326,8 @@ strategicGoals:
       decisionIds: [ADR-0011, ADR-0013, ADP-0001]
       capabilityRefs:
         - capability: Versioned reusable primitive catalog
-          repository: agentic-delivery-lab/agentic-delivery-primitives
+          repository: agentic-delivery-lab/agentic-delivery-agent-customizations
+          repositoryId: 1380894656
           sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
           path: manifests/primitive-catalog.yml
       capabilityGaps: []
@@ -345,7 +362,8 @@ strategicGoals:
       decisionIds: [ADR-0018, ADP-0001, ADD-0001]
       capabilityRefs:
         - capability: Versioned reusable primitive catalog
-          repository: agentic-delivery-lab/agentic-delivery-primitives
+          repository: agentic-delivery-lab/agentic-delivery-agent-customizations
+          repositoryId: 1380894656
           sourceCommit: e4933566fbf5b0f593830f8933f18fbd21024fa7
           path: manifests/primitive-catalog.yml
         - capability: Pinned consumer workflow bundle
@@ -383,8 +401,8 @@ strategicGoals:
       decisionIds: [ADR-0012, ADR-0019, ADR-0023]
       capabilityRefs: []
       capabilityGaps:
-        - No organization Project exists; the Control Plane planning contract remains provisional pending maintainer review.
-        - The single-item normalizer does not select among multiple Project links; Control Plane #107 owns the deferred selection policy and offline fixtures.
+        - Private portfolio Project2 and its two filtered views are configured under the owner-delegated Architecture15 decision; App/runtime planning-context admission remains unproved.
+        - 'Control Plane PR #110 supplies the completed offline selector under #107; live candidate collection and runtime policy admission remain separate work under #59/#106.'
       contractRefs:
         - architecture/contracts/organizational-strategy.schema.json
         - architecture/contracts/quality-scenarios.schema.json
@@ -594,59 +612,53 @@ successMeasures:
     targetStatus: set-after-baseline
 projectPlanning:
   primarySurface: GitHub Projects
-  proposedTopology: >-
-    One organization portfolio Project with separate Factory Evolution and
-    Software Product Delivery views remains a candidate. The complete
-    13:25–13:31 UTC recheck found no Project in the authenticated viewer,
-    organization, or six repository scopes and no Project item across all 62
-    Issues. The organization is on the Free plan, with both Projects
-    capability flags enabled. All 24 open Issues had no organization Issue
-    Field Values; the nine Issue Types and six organization Issue Fields were
-    unchanged. Project membership, fields, views, and visibility could not be
-    inspected because no Project existed in the queried scopes. Creation and
-    configuration remain subject to the separate human decision in
-    Architecture #15.
+  proposedTopology: Architecture15 records the owner-delegated decision and initial private
+    organization portfolio configuration. Project2 (PVT_kwDOE4rESM4BoBuZ) has filtered Factory
+    Evolution board and Software Product Delivery roadmap views. The product view is empty after W25
+    was withdrawn from this correction program; this is not a product or runtime admission claim.
   currentInventoryStatus: inventoried
-  projectInventoryEvidenceId: portfolio-current-work-management-pr-refresh-20261012-1331
+  projectInventoryEvidenceId: portfolio-owner-delegated-configuration-20261021
   inventoryEvidence:
-    observedAt: '2026-10-12T13:31:40Z'
-    projectIds: []
-    scopeSummary: >-
-      The 13:25–13:31 UTC recheck returned zero organization, viewer, and
-      repository Projects with no further pages. All 62 Issues across the six
-      visible repositories had zero Project-item associations. All 24 open
-      Issues had no organization Issue Field Values; the complete inventory
-      recorded nine Issue Types, six organization Issue Fields, and the Free
-      plan with organization and repository Projects enabled. No Project IDs
-      or configuration were available to inspect. See
-      portfolio-current-work-management-pr-refresh-20261012-1331 for the
-      complete read-only inventory and its scope limits.
-  planningFieldRule: >-
-    Use the existing Issue-owned Priority field for per-Issue priority wherever
-    the approved Project view can expose it. After human field-ownership review,
-    Project-owned fields may express distinct cross-Issue portfolio priority,
-    grouping, iteration, roadmap, sequencing, or planned dependencies. Give any
-    Project priority an explicitly distinct portfolio meaning; do not duplicate,
-    overwrite, or write it back to Issue Priority, lifecycle, delivery state, or
-    governance metadata. Project membership is a planning association, not
-    execution authority. Multiple candidate Project links remain an explicit
-    gap until the approved topology and selection policy resolve them.
-  executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation never authorizes or blocks execution or authorizes a model call, repository write, issue-field write, pull request, release, or activation.
-  projectReadFailureRule: >-
-    Unavailable or ambiguous Project identity, access, or field data is reported
-    as a planning gap and holds only operations that require that Project
-    context. It never authorizes or redirects execution. An otherwise
-    authorized Issue-first security or recovery operation may proceed without
-    Project access.
-  issueFieldConstraint: The six audited organization Issue Fields, including Priority and lifecycle and delivery fields, are organization-members-only. GitHub documents that organization-only fields do not appear in public or internal Projects. No Project was returned and no visibility model has been selected, so availability in the future portfolio remains unverified and must be checked before view design.
-  projectOnlyCardRule: A Project-only card is planning input. Before agent execution it must be converted to or linked with an authorized source Issue in its owning repository and pass the normal deterministic gates.
+    observedAt: 2026-10-21T18:12:56.394758+00:00
+    projectIds:
+      - PVT_kwDOE4rESM4BoBuZ
+    scopeSummary: Scoped organization Project configuration and independent field/view/item readback as
+      sjefsharp. The private portfolio has19source-Issue items:15explicitly linked Issues
+      and4completed children added by GitHub Project automation. Queries select19Factory Evolution
+      items and0product items. Existing101/107 offline contract scopes and Architecture15
+      configuration scope are closed; current App access and runtime consumption remain unproved.
+  planningFieldRule: Use the existing Issue-owned Priority field for per-Issue priority wherever the
+    approved Project view can expose it. After human field-ownership review, Project-owned fields
+    may express distinct cross-Issue portfolio priority, grouping, iteration, roadmap, sequencing,
+    or planned dependencies. Give any Project priority an explicitly distinct portfolio meaning; do
+    not duplicate, overwrite, or write it back to Issue Priority, lifecycle, delivery state, or
+    governance metadata. Project membership is a planning association, not execution authority.
+    Multiple candidate Project links remain an explicit gap until the approved topology and
+    selection policy resolve them.
+  executionAuthorizationRule: Project membership, status, priority, dependency fields, or automation
+    never authorizes or blocks execution or authorizes a model call, repository write, issue-field
+    write, pull request, release, or activation.
+  projectReadFailureRule: Unavailable or ambiguous Project identity, access, or field data is reported
+    as a planning gap and holds only operations that require that Project context. It never
+    authorizes or redirects execution. An otherwise authorized Issue-first security or recovery
+    operation may proceed without Project access.
+  issueFieldConstraint: Native Issue-owned Priority is not exposed in the current Project field
+    connection and was not duplicated. The private Project has a distinct Value stream field and
+    Project Status. No Issue lifecycle, readiness, delivery state, date or effort field was copied;
+    unavailable field projection remains explicit.
+  projectOnlyCardRule: A Project-only card is planning input. Before agent execution it must be
+    converted to or linked with an authorized source Issue in its owning repository and pass the
+    normal deterministic gates.
 sourceOfTruth:
   - fact: organizational purpose, mission, vision, strategy, and review triggers
     owner: Architecture Authority
     rule: One canonical editable source in this repository; other repositories link to the reviewed Architecture release.
-  - fact: strategic goals, principles, ADRs, quality scenarios, and measure definitions
+  - fact: strategic goals, principles, ADRs, and measure definitions
     owner: Architecture Authority
     rule: Stable IDs link these canonical records many-to-many; accepted, proposed, and retired decisions remain distinct, and data sources remain owned by their contexts.
+  - fact: approved factory, shared and product requirements and normative quality scenarios
+    owner: Requirements Authority
+    rule: ADR-0024 selects one central editable normative owner. W04 adopts the exact approved baseline in architecture/references/requirements.lock.json; the local QR catalog is a checked generated projection, not an editable authority. Original QR IDs and historical provenance remain stable; inferred execution obligations stay proposed, and approval never implies live satisfaction.
   - fact: work intent, scope, lineage, and execution authorization
     owner: Origin repository Issue
     rule: A Project item may reference an Issue but cannot replace it or authorize execution.
@@ -674,12 +686,10 @@ sourceOfTruth:
       authorize or block execution. The source Issue and Control Plane contract
       remain authoritative for work intent, per-Issue priority, authorization,
       and lifecycle. Execution dependency gates remain owned by the source Issue
-      and Control Plane contract. Multiple Project links remain unresolved
-      until the Architecture #15 topology decision and Control Plane #107
-      selection policy are approved; no Project is currently inventoried.
+      and Control Plane contract. Architecture #15 records the delegated private portfolio decision and configuration; Control Plane #107 completed the offline selector. Runtime candidate collection and policy admission remain separate gates under #59/#106.
   - fact: pull request review, approval, merge, and repository release decisions
     owner: Origin repository pull request and named human maintainer
-    rule: Issue or Project state, evaluation results, and agent output cannot impersonate reviewer approval or authorize merge, release, or activation.
+    rule: Issue or Project state, evaluation results, and runner output cannot impersonate reviewer approval or authorize merge, release, or activation. ADR-0018 W02 scopes current development delegation to sjefsharp and the owner-authorized interactive Codex CLI; record operator acceptance and separate validation accurately, without claiming independent human review.
   - fact: runner, session, webhook, and controller operation state
     owner: Agentic Delivery Control Plane
     rule: The controller owns admission budgets and operation/recovery receipts; keep webhook delivery replay, resumable Codex session state, and evaluation replay as separate mechanisms.
@@ -700,13 +710,13 @@ sourceOfTruth:
     rule: Consumers reference immutable source commits and digests; Architecture records shared contracts but does not publish another context's runtime artifact.
   - fact: product behavior and user outcome evidence
     owner: Owning product repository and its designated product steward
-    rule: No product repository or accountable product owner is asserted as confirmed by the current six-repository inventory.
+    rule: No independent product repository or accountable product steward is asserted. W25 onboarding was withdrawn from this correction program; Architecture13 and Distribution3 are closed not_planned without a product delivery claim.
 guardrails:
-  - People retain direction, policy ownership, independent review, merge authority, and release or activation approval.
+  - People retain direction, policy ownership, and accountable acceptance. ADR-0018 W02 permits sjefsharp and the owner-authorized interactive Codex CLI to approve, merge and administer current development within explicit owner scope; this delegation does not transfer to the self-hosted runner.
   - Agents may implement only bounded work authorized by an Issue in its origin repository and deterministic contract checks.
   - Every agentic operation uses a pinned time, turn/invocation, retry, and recursion budget; unavailable quota or spend observations remain explicitly unknown, and hitting a hard limit stops further privileged work.
   - Evaluation findings and agent-generated improvement ideas become Issues; people prioritize them in Projects before new execution.
-  - No agent may edit its own policy, select itself for activation, approve or merge its own changes, or trigger an unbounded recursive run.
+  - Runner agents may not edit their own policy, select themselves for activation, approve or merge their own changes, or trigger an unbounded recursive run. Only the named interactive development delegation in ADR-0018 W02 may exercise owner-authorized acceptance; it cannot be inferred from a model, repository, Issue, App or runner identity.
   - Offline fixtures, hosted CI, and live production observations are reported as separate evidence classes.
   - Ratio measures publish numerator, denominator, reporting window, and evidence source; a zero denominator is reported as undefined, never as a zero outcome.
   - Unknown source-Issue identity, actor permission, participant enrollment, policy pin, or required execution data cannot authorize a run; deterministic Issue-based authorization fails closed.

@@ -43,6 +43,16 @@ commit, content hash, governing ADRs, policy version, and compatibility target.
 The projection is never edited in place; a change starts in this repository and
 is promoted by a reviewed pull request.
 
+The owner-selected capability repository location is
+`agentic-delivery-lab/agentic-delivery-agent-customizations`, retaining GitHub
+repository ID `1380894656`. Agent Customizations names the repository role;
+the `agentic-primitives` context, primitive URNs and release IDs remain stable.
+Decision text remains canonical in Architecture. Historical origin names,
+source commits and release bytes remain intact. Consumers verify the current
+name and unchanged ID before checkout; a redirect alone is insufficient.
+The hosting rename and caller cutover require their own readback evidence and
+do not activate a participant.
+
 Primitive releases use SemVer plus an immutable Git commit. A withdrawn
 release remains identifiable but may not be newly promoted. A compatible
 consumer may remain on an older release until an intentional upgrade or a

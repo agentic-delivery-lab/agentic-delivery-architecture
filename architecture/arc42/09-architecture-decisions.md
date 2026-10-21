@@ -11,7 +11,7 @@ its review pull request is merged.
 
 | Canonical text owner | Decisions |
 | --- | --- |
-| Architecture Authority | 21 ADRs (ADR-0001–0009, ADR-0011–0013, ADR-0015–0023), ADP-0001, ADD-0001 |
+| Architecture Authority | 22 ADRs (ADR-0001–0009, ADR-0011–0013, ADR-0015–0024), ADP-0001, ADD-0001 |
 
 Proposed ADR-0020 makes Architecture Authority the canonical text owner for
 all organization ADR, ADP, and ADD records while preserving each record's
@@ -31,10 +31,17 @@ Project capability under its Free plan. Project membership, views, field
 visibility, and GitHub App access remain unknown; this proposed decision
 authorizes no live configuration.
 
+ADR-0024 selects centralized public Requirements Authority for approved
+factory, shared and product requirements. Architecture retains organizational
+ADRs and the structural model. W04 adopts the exact approved baseline named by the Requirements lock and
+turns the local QR catalog into a checked projection. Requirements owns the
+editable normative records; historical Architecture source commits remain
+provenance, not another editable catalog. The new repository does not create a fifth domain context.
+
 Bounded-context scope remains on each record. The context registry maps each
 scope to the repository where semantic review is routed: governance and
 Control Plane to `agentic-delivery`, Primitives to
-`agentic-delivery-primitives`, and Distribution to
+`agentic-delivery-agent-customizations`, and Distribution to
 `agentic-delivery-distribution`. A multi-context record requires reviews from
 all mapped steward roles. This repository mapping does not establish named
 reviewers or GitHub approval. Independent steward approval is currently
@@ -70,5 +77,5 @@ with this repository's [Architecture issue #3](https://github.com/agentic-delive
 [`decisions/README.md`](../../decisions/README.md); external Control Plane
 records and source variants are pinned in
 [`decision-inventory.yml`](../references/decision-inventory.yml). The release
-lists the exact 23 decision IDs and pins canonical Architecture content by
+lists the exact 24 decision IDs and pins canonical Architecture content by
 source commit and digest.

@@ -1,5 +1,34 @@
 # Implementation Plan: Strategy Foundation, Project Planning, and Evaluation Evidence
 
+## Current reconciliation checkpoint — 2026-10-21
+
+Existing PR17 is reconciled with accepted main 05ff0bf in the clean primary checkout.
+The separate paused locked worktree and its 4 dirty files remain unchanged; private
+preservation hashes and a patch are held by the operator. No branch history is rewritten.
+
+The owner requires stock upstream software, an explicit keep/drop or supported
+alternative for every Wxx item, resolution of existing drafts and no new Issues/PRs
+before existing review work is resolved. Current decisions: withdraw universal 100-tool
+interception; retain supported budget/receipt/profile controls; withdraw W25 product
+onboarding without inventing a product; keep the private portfolio and two filtered
+views using supported API readback. Explicit board grouping and browser screenshots
+are withdrawn from initial configuration acceptance because available supported
+interfaces do not provide them. These are scoped decisions, not runtime admission.
+
+Portfolio 2 is private, has 19 factory source-Issue items and 0 product items, and is
+administered by sjefsharp. Architecture15 is closed for delegated configuration;
+Control Plane101/107 are closed for their original offline-contract scopes.
+Architecture13/Distribution3 are closed not_planned for W25. No App scope,
+participant mode, source-Issue lifecycle field or production setting was changed.
+
+Next: finish exact source validation/review, bind a reproducible Architecture
+candidate, reconcile remaining source 105/106 and compatible-reader/profile/runtime
+gates, and resolve existing Customizations/Distribution work through its actual
+review policy. A passing source subset is not full W01–W29 completion. The dated
+planning/evidence entries below retain their original historical scope.
+
+---
+
 ## Objective
 
 Complete the Architecture #11 strategy foundation and plan its owner-specific
@@ -153,17 +182,11 @@ topology and configuration gates.
 
 - [x] Task 6: Complete strategic alignment, organization context,
   Project/Issue lifecycle, factory evolution, product delivery, and trust
-  boundary diagrams; review the canonical Structurizr/C4 model and update it
-  where a required relationship is missing.
+  boundary diagrams; update the canonical Structurizr/C4 model.
   - Acceptance: Each view distinguishes a target relationship from observed
     operation; context includes GitHub App, Vercel ingress, Neon replay,
     Actions/Codex, both adapters, and the unidentified product-repository
     boundary. Webhook, session, and evaluation replay remain separate.
-  - Evidence: The existing `architecture/models/workspace.dsl` already
-    contains the required Project, Issue, factory-owner, ingress, replay,
-    Actions/Codex, and product-boundary elements. Review found no missing
-    relationship that justified a C4 source change; the six supporting views
-    carry the current evidence and target sequences.
   - Verification: Diagram source tests and `pnpm architecture:check`.
   - Dependencies: Tasks 4–5 and current source inventory.
   - Files likely touched: `architecture/diagrams/`, Structurizr DSL,
@@ -296,7 +319,7 @@ broad OAuth scopes including `admin:org`, `project`, `repo`, and `workflow`.
 The organization CLI Project list still returned no Projects; the six
 repository open-Issue listings still totaled 19. All six current `main`
 commits matched the pins in `system-evidence.yml`. Control Plane PRs #102 and
-#104 remained CLEAN without recorded review decisions, #86 remained DIRTY,
+Issue #104 remained CLEAN without recorded review decisions, #86 remained DIRTY,
 Architecture #14 remained BLOCKED, and Primitives #4 remained draft and
 `REVIEW_REQUIRED`. The limited CLI recheck is recorded separately from the
 complete GraphQL Project inventory. OAuth scopes describe this user's API
@@ -367,7 +390,7 @@ runtime permission was changed.
 At 18:30:42 UTC, the read-only PR/check/Release refresh found five open PRs
 and no Releases in the six visible repositories. Architecture #14 remained
 BLOCKED at `6b0a4eef` with exact-head validation passed; Control Plane #102 and
-#104 were CLEAN with checks passed and no review decisions; Control Plane #86
+Issue #104 were CLEAN with checks passed and no review decisions; Control Plane #86
 was DIRTY; and draft Primitives #4 remained BLOCKED and `REVIEW_REQUIRED`.
 Distribution and both adapters had no open PRs. The open-Issue count remained
 the last observed total of 22 from 18:21:44; no new Issue or Project query was
@@ -412,384 +435,6 @@ below address those local Architecture gaps. Structural validation still does
 not establish semantic adoption, independent approval, runtime operation, or
 measured outcomes.
 
-### 01:12 UTC read-only follow-up
-
-The organization Projects v2 connection returned zero nodes with no next page.
-Default gh project list queries for the organization and authenticated user
-also returned no entries. This identity remains sjefsharp with admin:org,
-project, repo, and workflow scopes. The 00:44 record remains the latest
-complete six-repository, open-Issue field-value, App installation, and release
-inventory; a narrower 01:12 refresh confirmed that all six default-branch
-commits still match that record.
-
-Architecture Issues #11, #13, and #15 are still open, unassigned, and have no
-comments or labels. #13 and #15 remain human ownership/topology gates. Control
-Plane PR #110 is now at ce109c85ba767337c4aee2c755af914d6996984b, clean and
-open with no human review decision; exact-head validation, all required
-quality/portability/recovery checks, Vercel, PR-body validation, and Harness
-review run 38100354177 passed. PR #109 is also clean/open without a human
-review decision. Architecture #16 is blocked pending review; draft #17 is
-clean and stacked on #16; Primitives #4 remains draft, blocked, and
-review-required. Control Plane #86 remains the open PR with a changelog
-conflict. PR #104 is already merged at
-9a2e1f3549428bc042d5c59d09beb300ca2d1362; its merge contains both the #101
-and #103 entries. No GitHub Releases are listed across the six repositories.
-Main agent-observation run 38100356790 passed, but it did not perform
-issue-to-PR delivery. See
-system-evidence.yml#strategy-current-status-recheck-20261011-0112.
-
-### 08:29 UTC read-only status recheck
-
-The complete Projects v2 inventory and all 23 open-Issue Project-item
-associations were refreshed at 08:24 UTC: organization, authenticated user,
-and six repository scopes still return zero Projects and zero Issue links.
-The six repository default-branch commits, open pull requests, releases, and
-human-review decisions were rechecked. Control Plane #110 is now at
-`088a6b02391367f401b687e1873754e38c2a71fc`; its selector regressions are
-fixed, local regression coverage passes, and exact-head validation, quality,
-recovery-SQL, portability, Vercel, body validation, and Harness review pass.
-Control Plane #109 remains open at `4e70c17b970f7500674dacc12a26f2c84cabafdc`
-with hosted checks passing and no human review decision. Architecture #16
-remains review-required; draft #17 is clean, stacked on #16, and has passing
-validation. Primitives #4 remains draft and review-required. Control Plane
-#104 is merged; its `CHANGELOG.md` blob is identical on PR head, merge commit,
-and current `main`, includes the #103 entry, and has no conflict markers.
-No release or live configuration change was observed. Issue Field Values,
-Issue Types, App installation access, and production runtime were not re-read;
-use the earlier dated evidence for those scopes.
-
-### 09:01 UTC PR-status and conflict recheck
-
-The complete Projects and per-Issue association inventory remains the 08:24
-UTC observation; this refresh did not query Project configuration, Issue Field
-Values, Issue Types, App installation access, releases, or production runtime.
-Control Plane #109 is open and clean at
-1180b1559a1e694b12fa95df1f548accb4697344; its validation, quality,
-recovery-SQL, three-platform portability, body validation, Harness review, and
-Vercel checks pass. The calibration-dataset-pin regression is included, but
-human review remains pending; classify_updater was skipped by policy. #110
-is open and clean at 088a6b02391367f401b687e1873754e38c2a71fc with hosted
-checks passing and human review pending. The only current open merge conflict
-is #86: it is 62 commits behind main and conflicts in CHANGELOG.md. PR #104
-is merged; its changelog blob is identical on its head, merge commit, and
-current main, with the #103 entry present and no conflict markers. No PR was
-approved or merged and no live configuration changed during this refresh.
-
-### 19:14 UTC live portfolio and open-work recheck
-
-The complete organization/viewer/six-repository Projects v2 inventory at
-19:09 UTC returned no Projects and no Project associations for any of the 23
-open Issues. The same refresh window found empty Field Values on all 23
-Issues, six organization-members-only Issue Fields, and nine native Issue
-Types; five Issues remain untyped. Three organization App installations are
-visible; the invoker has no Projects permission, and its selected-repository
-endpoint still returns 403. Organization Actions and public rulesets were
-queried, while the private ruleset endpoint remains unavailable on the Free
-plan. No Release exists in the six repositories.
-
-At 19:14 UTC, PR #104 remains merged and its CHANGELOG.md blob is identical on
-the PR head, merge commit, and current main. The open conflict is PR #86,
-which is 62 commits behind main and conflicts only in CHANGELOG.md. Control
-Plane #109/#110 checks pass with human review pending; Architecture #16
-requires review and draft #17 validation passes at 01528d3; Primitives #4
-remains draft/review-required with validation passed. Runtime production
-metadata was not refreshed; the last recorded production observation predates
-current main. No PR, Issue, Project, permission, release, or runtime setting
-was changed. See
-system-evidence.yml#strategy-live-inventory-recheck-20261011-1914.
-
-### 19:33 UTC targeted portfolio and pull-request recheck
-
-The read-only refresh reconfirmed zero Projects in the organization,
-authenticated-user, and six-repository scopes. The 23 open Issues have
-zero Project-item associations and empty Field Value arrays; nine native
-Issue Types remain enabled, with 18 Issues typed Task and five untyped.
-The six main commits and exact Issues are recorded in
-`system-evidence.yml#strategy-live-inventory-recheck-20261011-1933`.
-Architecture PR #14 is merged at `61d99cb`; #16 remains blocked pending
-human review at `9635044`; draft #17 is clean at `979a5bd`, stacked on
-#16, with exact-head validation run 38167634212 passed and no submitted
-reviews. Control Plane #104 was already merged; at this historical checkpoint,
-the CHANGELOG.md conflict belonged to PR #86, not #104. The later
-`system-evidence.yml#control-plane-changelog-state-recheck-20261011-2134`
-supersedes that branch state: it confirms PR #104's conflict-resolution merge
-and PR #86 clean against current main. Control
-Plane #109/#110 remain clean with Codex COMMENTED reviews only; Primitives
-#4 remains draft and review-required. Control Plane #106 remains open with
-no Project item. Its PR #14 review/merge gate is only partly satisfied:
-PR #14 is merged, but its GitHub reviewDecision remains REVIEW_REQUIRED and
-the only submitted review is Codex COMMENTED on an older head. Independent
-human review remains a blocker, and the Issue body was not changed. The broad
-App, Actions, ruleset,
-Release, and production observations remain the 19:14 event and were not
-re-read. No Project or runtime setting was changed.
-
-### 19:50 UTC PR #14 review-state follow-up
-
-The current review connection for merged Architecture PR #14 returns
-`REVIEW_REQUIRED` and only one submitted Codex `COMMENTED` review, against
-older head `da5a33f`; independent human review is not established. This means
-Control Plane #106's merge condition is met but its independent-review
-condition remains open. The Issue body correctly retains that gate and was not
-edited. Evidence: `system-evidence.yml#architecture-pr14-review-recheck-20261011-1950`.
-
-Independent review of Architecture PR #17 at `5b0dfe0542d78e0993b71a4e9ca093108360cc61`
-found this wording error and an optional precision improvement to the PR #109
-offline evidence description. Both documentation corrections are included in
-this follow-up. A second consistency pass aligned the strategy task sequence
-with the actual offline router tests while retaining the limitation on
-composed/live Project-runtime evidence. No runtime or GitHub configuration
-changed.
-
-### 20:07 UTC Projects and Issue metadata refresh
-
-The complete read-only Projects v2 inventory again returned zero nodes for
-the organization, authenticated user, and all six repositories. All 23 open
-Issues had zero Project-item and Issue Field Value connections. The
-organization remains on the Free plan with organization and repository
-Projects enabled; it has nine native Issue Types and six organization-only
-Issue Fields. Eighteen open Issues are typed Task; five are untyped. Exact
-Issue counts, field/type IDs, and all six `main` commit identities are
-recorded in `system-evidence.yml#strategy-live-inventory-recheck-20261011-2007`.
-No Project or Issue metadata was changed. This recheck did not refresh App
-installations, Actions policy, rulesets, releases, or production runtime; those
-surfaces retain their separate timestamped observations.
-
-Architecture PR #17 remains OPEN/DRAFT/MERGEABLE at
-`19dcc691006d93e169f9eb4f76c9456f5c6b46fe`, based on open PR #16, and exact-
-head validation run `38171652069` passes. Its draft Architecture release is
-`0.1.0-draft.39`, pinned to `1101d24ac1d12461080f020783560e0cc3654325` with
-digest `1e3d7fe2586c6fc13b1b9d9dcdc535a24aefc48fd6acb794d1f5197ff5f1a2f4`.
-It is not merged or an approved Architecture release. Control Plane PR #104 is
-already merged; the open Control Plane conflict remains on PR #86. No GitHub
-write occurred during the 20:07 UTC read-only inventory.
-
-### 20:25 UTC Architecture PR recheck
-
-The current GitHub read confirms Architecture PR #16 remains
-OPEN/MERGEABLE/REVIEW_REQUIRED at
-`9635044ab2e7b91c8004ac1cd06241b35b9ec30e`. Draft PR #17 remains
-OPEN/DRAFT/MERGEABLE on #16 at exact head
-`19dcc691006d93e169f9eb4f76c9456f5c6b46fe`; its required `validate` check
-passes on run `38171652069`, and GitHub has no review decision for #17. The
-read is recorded in
-`system-evidence.yml#architecture-pr17-validation-recheck-20261011-2025`.
-Human review of #16 remains the prerequisite to retargeting #17 to `main`.
-No issue, Project, permission, App, release, participant, or runtime setting
-changed.
-
-### 20:29 UTC Architecture PR recheck
-
-The current GitHub read confirms Architecture PR #16 remains
-OPEN/MERGEABLE/REVIEW_REQUIRED at
-`9635044ab2e7b91c8004ac1cd06241b35b9ec30e`. Draft PR #17 remains
-OPEN/DRAFT/MERGEABLE on #16 at exact head
-`64dfc8ea4f2a3438c875f14e88aadc0860d953df`; its required `validate` check
-passed on run [38172355305](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/actions/runs/38172355305),
-and GitHub has no review decision for #17. The read is recorded at
-`2026-10-11T20:29:26Z`. Human review of #16 remains the prerequisite to
-retargeting #17 to `main`. No Issue, Project, permission, App, release,
-participant, or runtime setting changed.
-
-### 21:34 UTC conflict and open-work verification
-
-A fresh read-only GitHub check confirms that the reported PR #104 conflict is
-already resolved and merged. Evidence is recorded at
-architecture/references/system-evidence.yml#control-plane-changelog-state-recheck-20261011-2134.
-
-- Control Plane PR #104 is MERGED at 9a2e1f3549428bc042d5c59d09beb300ca2d1362.
-  Its second parent is the PR head f9a536fee6f6fc436189a55acf3b8180d4144211,
-  which merged current main into the feature branch to resolve CHANGELOG.md.
-  `main` still points at the merge commit, contains both #101 and #103
-  changelog entries, and has no conflict markers. No further #104 edit is needed.
-- The separate Control Plane PR #86 is OPEN/CLEAN at
-  3a0adfb7942c760f4504478c2f47cc6a0624f966; its exact-head hosted checks pass
-  and no human review has been submitted. It proposes Codex CLI 0.160.0, while
-  official upstream latest remains 0.162.1. The release asset and runner
-  compatibility for 0.162.1 are not verified; do not approve or retarget #86
-  solely from the changelog conflict resolution.
-- Control Plane #109/#110 remain open and clean with their required checks
-  passing and no human review. Architecture #16 remains blocked on independent
-  human review; draft #17 is clean on #16 and hosted validation passes. Primitives
-  #4 remains draft/review-required although its validation passes. No review,
-  approval, merge, release, Project, permission, or runtime mutation occurred.
-
-### 06:01 UTC PR #104 and adapter-protection recheck
-
-GitHub still reports Control Plane PR #104 as MERGED at
-`9a2e1f3549428bc042d5c59d09beb300ca2d1362`. Its changed-file record includes
-`CHANGELOG.md` with two additions; current `main` has no conflict-marker lines.
-All executed PR checks report success; `classify_updater` is skipped by policy.
-The `Conflicts: CHANGELOG.md` text is historical merge-commit metadata from the
-conflict-resolution merge on the PR head, not an outstanding GitHub conflict.
-See
-`system-evidence.yml#control-plane-changelog-state-recheck-20261012-0601`.
-
-The active public `.github` ruleset 23698176 requires only the pull-request
-body status check, and the default-branch protection API reports the branch is
-not protected. The private adapter's ruleset API remains inaccessible (403),
-so effective private protection is unknown. See
-`system-evidence.yml#adapter-protection-recheck-20261012-0601`. These were
-read-only checks; no PR, review, approval, or governance setting changed.
-
-### 06:04 UTC Distribution source review
-
-Static review at Distribution `main` commit
-`b69c5710928b47efc4d3ab12ec4d5b596c80720c` found that bootstrap and
-projection-promotion path checks do not inspect parent components for symbolic
-links before file operations. The Dev Container Feature install script checks
-the controller SHA shape and prints a prepared message; it does not install the
-controller. This is a source-based risk inference, not a reproduced exploit or
-live-consumer test. No Distribution file or consumer was changed. See
-`system-evidence.yml#distribution-bootstrap-source-review-20261012-0604`.
-
-### 06:10 UTC PR #17 exact-head verification
-
-Pushed the issue-linked draft branch by fast-forward to
-`1a4dba59d922bbef3fa2b927bc23e618ecaf3d9c` and refreshed PR #17's title and
-description with draft release .44 and the current evidence. GitHub reports
-the PR OPEN, DRAFT, CLEAN, and stacked on #16; exact-head Architecture
-validation run 38211127172 passed. No human review decision exists. Keep the
-draft open pending review of #16 and #17; no merge or release occurred. See
-`system-evidence.yml#architecture-pr17-verified-head-20261012-0610`.
-
-### 06:22 UTC PR #104 and exact-head recheck
-
-The user-reported CHANGELOG conflict was checked again against GitHub and the
-fetched `main` history. PR #104 remains merged; its merge commit is an ancestor
-of current `main`, the PR file listing records two additions to
-`CHANGELOG.md`, and current `main` contains both the #101 and #103 entries
-without conflict-marker lines. GitHub returned Not Found for PR #104 on the
-other five inventoried repository paths. No change to the closed PR or Control Plane
-files was made. See
-`system-evidence.yml#control-plane-changelog-state-recheck-20261012-0622`.
-
-At this observation, Architecture PR #17 remained OPEN/DRAFT/MERGEABLE at
-`9987691b17eaf9a6ced96366f980734d5761b5f8`, stacked on PR #16, with exact-head
-validation run 38211441830 passing and no human review decision. This was the
-head before the current runtime/deployment documentation refresh; the pushed
-documentation revision requires its own hosted validation. See
-`system-evidence.yml#architecture-pr17-exact-head-recheck-20261012-0622`.
-
-### 07:03 UTC Project and open-PR recheck
-
-At 07:00 UTC, a fresh GraphQL query found zero Projects in authenticated-viewer, organization, and all six repository scopes. It found 23 open Issues across the six repositories; none had a Project item. The query returned no next page for any relevant connection. The previous complete 61-Issue association query remains separately dated at 04:59 UTC.
-
-At 07:03 UTC, the six-repository inventory found seven open PRs. Control Plane #86, #109, and #110 are CLEAN with passing named checks and no human review decision. Architecture #16 remains blocked pending human review; all six automated review threads are resolved and exact-head validation passes. Draft #17 is clean and passing exact-head validation at d5f18fc4c8d1ee987ad82dcfc195ad3e726ecd0b, stacked on #16. Primitives #5 is passing exact-head validation with all four Codex threads resolved, but remains blocked pending human review; #4 remains draft and review-required. No open PR exists in the other three repositories.
-
-PR #104 is MERGED at 9a2e1f3549428bc042d5c59d09beb300ca2d1362. Its feature-branch merge commit f9a536fee6f6fc436189a55acf3b8180d4144211 records '# Conflicts: CHANGELOG.md' as historical merge metadata. The resolved PR and current-main changelog contain the #103 and #101 entries and no conflict markers. All three Codex review threads are resolved, and source/tests cover their findings. No PR comment, approval, review, merge, Project, or runtime mutation was made in this recheck. Evidence: architecture/references/system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0700, #portfolio-open-pr-recheck-20261012-0703, and #control-plane-changelog-state-recheck-20261012-0703.
-
-### 09:17–09:23 UTC Project, PR, and changelog recheck
-
-The complete 09:17–09:22 UTC read-only inventory returned zero Projects for the authenticated viewer, organization, and all six repository scopes, with no additional pages. All 62 Issues had zero Project items; all 24 open Issues had zero organization Issue Field Values. Control Plane #111 is a Bug under recovery Issue #105, and five open Issues remain untyped. The read confirmed six organization Issue Fields, nine native Issue Types, and the Free organization plan. There is no organization Issue Field named Delivery State; the actual field is Delivery Readiness. Project fields, views, membership, and visibility remain unknown because no Project exists in the queried scopes. Evidence: `architecture/references/system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
-
-At 09:23 UTC, eight PRs were open across the six repositories. Control Plane #112 is draft and CLEAN with required named checks passing; #86/#109/#110 are CLEAN with named checks passing, though `classify_updater` is skipped by policy for #109/#110/#112. No human review decision exists for these Control Plane PRs. Architecture #16 is BLOCKED/REVIEW_REQUIRED; draft #17 is CLEAN and exact-head validation passes, but it remains stacked on #16 and has no human review decision. Primitives #4 is draft and #5 is open; both are BLOCKED/REVIEW_REQUIRED with validation passing. Distribution, public `.github`, and private `.github-private` have no open PRs. Passing automation does not establish human approval. Evidence: `architecture/references/system-evidence.yml#portfolio-open-pr-recheck-20261012-0923`.
-
-PR #104 remains merged at `9a2e1f3549428bc042d5c59d09beb300ca2d1362`, the current Control Plane `main` head. Its PR-head merge commit records a historical `CHANGELOG.md` conflict, but both final lowercase `CHANGELOG.md` files contain #103 and #101 with no conflict markers; all three Codex review threads are resolved. The uppercase `CHANGELOG.MD` path does not exist. No new change is needed on the closed PR. Evidence: `architecture/references/system-evidence.yml#control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0923`.
-
-After the user reiterated the conflict report, a 09:34 UTC live API recheck confirmed PR #104 is still MERGED and current remote `main` is the merge commit. The `main` Contents API returns lowercase `CHANGELOG.md` with both Issue #103 and #101 entries and no conflict markers; uppercase `CHANGELOG.MD` returns 404. The historical conflict note is in a commit message only, and a merged PR cannot receive a conflict-resolution commit. Evidence: `architecture/references/system-evidence.yml#control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0934`.
-
-### 10:34 UTC open-PR refresh
-
-The six-repository refresh found the same eight open PRs. Control Plane #112
-advanced to `996e9bf2254c23de288dd21612b213f7780bdb4c`; it remains draft and
-CLEAN, with required checks passing except `classify_updater`, skipped by
-policy, and no human review decision. The other Control Plane heads and review
-states are unchanged from the 09:23 snapshot. Architecture #17 is draft/CLEAN
-at `7c3fffcfa35946100df71d818a0e05a3c225b338`, still stacked on #16 at
-`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; exact-head validation passes and
-no human review decision is recorded. Architecture #16 and Primitives #4/#5
-remain blocked on required human review. Distribution and both `.github`
-repositories have no open PRs. Evidence:
-`architecture/references/system-evidence.yml#portfolio-open-pr-recheck-20261012-1034`.
-
-### 10:47 UTC Architecture #17 exact-head validation
-
-After the 10:34 inventory, Architecture PR #17 advanced to
-`505111e2bc9c06b2dfe5b7f2b88d0a70785c0742`. It remains OPEN/DRAFT/CLEAN on
-Architecture PR #16 at `c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`, with no
-human review decision. Hosted exact-head validation run 38238355151 passed in
-32 seconds. Local `pnpm architecture:check` passed with the three sibling
-source roots configured; `pnpm migration:check` passed for 143 commit
-mappings; `pnpm test` passed all 16 tests. Draft release `.52` pins source
-commit `09d8cc23646c54e2395933f7723b18ed70e96901` and digest
-`df5093a653b33f8f2921f6bc58af784c057402516b7be69978ce876ae9f9644e`. No
-topology decision, Project mutation, merge, or release occurred.
-
-### 11:03 UTC Architecture #17 strategy-source and PR #104 recheck
-
-The repeated PR #104 changelog-conflict report was rechecked against GitHub:
-PR #104 is already merged at `9a2e1f3549428bc042d5c59d09beb300ca2d1362`,
-its head is in current `main`, lowercase `CHANGELOG.md` retains Issues #101
-and #103 without conflict markers, and uppercase `CHANGELOG.MD` returns 404.
-See `architecture/references/system-evidence.yml#control-plane-pr104-changelog-confirmation-20261012-1057`.
-
-The read-only 10:50 Projects recheck found no Project nodes and no Project
-items across all 62 Issues. The six-repository publication scan found only
-Architecture's `organizational-strategy.yml`; repository/directory-scoped
-AGENTS.md mission sections and public/private profiles do not create a second
-organizational strategy source. Added a regression test for the canonical
-Architecture source and recorded the point-in-time cross-repository scan.
-The draft release advances to `.53`, pins source commit
-`c72c7fdedfbf49dd875d6932ad7c44d4c33f3ff4`, and records digest
-`4ce2f3d4a279b948017a8928c4433e035ebf4d6e3b6bff7993a30f821bdea15f`.
-With the Control Plane, Primitives, and Distribution source roots configured,
-`pnpm architecture:check` passed, `pnpm migration:check` passed all 143 source
-mappings, and `pnpm test` passed all 17 tests. The final branch push and
-exact-head hosted validation are pending; PR #17 remains draft and stacked on
-#16. No Project, repository configuration, participant, merge, or published
-release changed.
-
-### 11:20 UTC Architecture #17 exact-head validation follow-up
-
-The 11:03 checkpoint's pending push and hosted validation are now superseded.
-Architecture PR #17 is OPEN/DRAFT/CLEAN at exact head
-`b529f1c834fe78986d942eb6636d5eb8175eab4b`, stacked on PR #16 at
-`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`. Hosted `architecture-quality`
-run `38240266195` passed on that exact head; local `pnpm architecture:check`,
-`pnpm migration:check` (143 source mappings), and `pnpm test` (17 passed, 0
-failed) also passed. The draft `.53` release still pins source commit
-`c72c7fdedfbf49dd875d6932ad7c44d4c33f3ff4` and digest
-`4ce2f3d4a279b948017a8928c4433e035ebf4d6e3b6bff7993a30f821bdea15f`.
-PR #17 has no human review decision and remains stacked on #16; #15 and #13
-remain separate human topology and product-ownership gates. No Project,
-permission, runtime, participant, release, or repository configuration was
-changed.
-
-### 12:04 UTC Architecture #17 evidence and runtime refresh
-
-The 11:48–11:56 UTC read-only refresh is recorded at
-`architecture/references/system-evidence.yml#portfolio-runtime-and-pr17-recheck-20261012-1156`.
-It reconfirmed no Projects or Issue associations across the six repositories
-and all 62 Issues. Architecture PR #17 was OPEN/DRAFT/CLEAN at
-`c241997ca864fd1842ba0c2d79bcec9b8cfffb91`, stacked on #16 at
-`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; exact-head run `38243930448`
-passed. The latest Control Plane `main` invocation run `38227232599` passed
-authorization, classification, and finalization at 09:01 UTC, then skipped
-delivery because the participant remained in shadow mode. The two 08:14 UTC
-runs failed explicit-invocation validation and skipped finalization/delivery.
-Control Plane #112 remains draft with unresolved held-receipt retry semantics
-and an unverified live migration prerequisite.
-
-PR #104 remains merged, with its historical lowercase `CHANGELOG.md` conflict
-already resolved in the merge commit. Current `main` contains #101 and #103
-entries without conflict markers; uppercase `CHANGELOG.MD` does not exist. All
-three Codex review threads are resolved and covered by current code/tests, but
-their COMMENTED review remains distinct from independent human approval.
-Evidence is recorded at
-`architecture/references/system-evidence.yml#control-plane-pr104-review-thread-recheck-20261012-1156`.
-
-The local Architecture #17 worktree now has its inventory, runtime, and
-review-evidence refresh on top of the previously validated head. Draft release
-`.54` pins authored source commit
-`bed7af9b38744ae58f91502dcc896273eeb17ea7` with digest
-`a16971f3ff70140b7658b90a080931d70b266240728810bffb11fa8642e943fa`.
-With the Control Plane, Primitives, and Distribution source roots configured,
-`pnpm architecture:check`, `pnpm migration:check` (143 mappings), and
-`pnpm test` (17 passed, 0 failed) pass locally. Push and exact-head hosted
-validation are pending; keep PR #17 draft and stacked on #16. No Project,
-permission, runtime, participant, merge, or published release changed.
-
 ### Architecture decisions and invariants
 
 - Architecture Authority owns canonical strategy, goals, principles, ADRs,
@@ -822,7 +467,7 @@ permission, runtime, participant, merge, or published release changed.
 ### Ordered owner work and dependency map
 
 Tasks remain in the existing GitHub Issues listed above and in Architecture
-#11; this section is their ordered index, not a second task checklist. The
+Issue #11; this section is their ordered index, not a second task checklist. The
 Architecture #11 body already links Control Plane #59 as the recovery-lineage
 root with its own acceptance criteria and related-context-only boundary; a
 fresh read confirms #59 remains open, so do not reopen or expand it. The
@@ -832,41 +477,38 @@ tracks that slice. Control Plane #107 separately tracks multi-Project planning
 context selection. Both are native child Tasks under Architecture #11 and have
 no Project association because no eligible Project is inventoried.
 
-| Order | Owner Issue / related PR status (evidence dates stated per row) | Work and acceptance boundary | Dependency / verification | Likely files / scope |
+| Order | Owner Issue / current PR | Work and acceptance boundary | Dependency / verification | Likely files / scope |
 | --- | --- | --- | --- | --- |
-| 1 | Architecture #11 / PR #14 (merged; source-of-truth follow-up on this issue-linked branch) | Add stable many-to-many trace links from each strategy goal to quality goals, principles, ADRs, capabilities/contracts, implementation Issues, Project planning context, and evaluation evidence. Complete `sourceOfTruth` for every assignment fact: Issue Type, lifecycle/delivery/governance metadata, source lineage, Issue priority, Project priority, iteration, roadmap, membership/sequencing/dependencies, Actions/Codex/session/webhook state, PR state, decisions, strategy, and evaluation results. Assess ADR-0012/0018/0019 against ADR-0023 and AP-004; retain their Issue lifecycle, authorization, and projection restrictions while keeping Project topology and field semantics provisional until #15. Validate one owner per fact, resolved references, and no inferred links. | Depends on the current strategy proposal. Run Architecture, migration, and full tests; retain negative fixtures for unresolved, duplicated, and multiply-owned references. | `organizational-strategy.yml`, strategy schema/validator, relevant ADRs, tests; M. |
-| 2 | Architecture #11 / PR #14 (merged; diagram follow-up on this issue-linked branch) | Complete all six required architecture views: strategic alignment through evaluation evidence; organization context including Projects, Issues, all factory owners, GitHub App, Vercel, Neon, Actions/Codex, and products; Project/Issue lifecycle; factory improvement sequence; correctly ordered product bootstrap/delivery; and trust boundaries. Update the Structurizr/C4 model where relevant. Keep webhook replay, session continuation, and evaluation replay distinct. | Depends on Task 1 trace terms and current arc42 boundaries. Run diagram validation and review all six views against the assignment and arc42. | Mermaid sources and `workspace.dsl`; M. |
-| 3 | Architecture #11 / PR #14 (merged) | Extend the portable evaluation contract and reusable validation/tests with case task/stimulus/expected outcome, deterministic evaluator identity and independence, failure classification, improvement hypothesis, and comparable unit/window checks. Cover multiple fixtures, not only the current example. | Depends on the shared report model. Run architecture, migration, and full tests; prove invalid/improvement-without-baseline and incomparable metric cases fail. | evaluation schema, README, fixture, validator, tests; M. |
-| 3a | Architecture #11 / PR #14 (merged) | Complete the source-backed research register across strategy, architecture, GitHub work management, Codex CLI in Actions, evaluation, and Markdown conventions. For each source record exact URL or repository commit/path, date/version, supported claim, limits, and architectural implication; distinguish verified facts from hypotheses. Refreshed Codex research on 2026-10-11: Context7 still has no 0.159.3 docs version (latest listed 0.155.1); the `rust-v0.159.3` tag resolves to exact commit `01fc69f4026735edfdf6789820549727a4867b11`, which GitHub reports unsigned/unverified. Its loader source and root-to-cwd test were inspected, along with app-server thread protocol fields. | Depends on the existing register and the source-driven research already recorded in the strategy proposal. Check each claim against its primary source and retain scope/version caveats. | `strategy-research-register.md`, strategy references; M. |
-| 4 | Architecture #12 / PR #16 (open; human review required) | Preserve the complete dated inventory and the separation between Project planning and Issue-owned execution. | The latest 09:17–09:22 UTC read found no Project in authenticated-viewer, organization, or any of the six repository scopes; all 62 Issues have zero Project items and all 24 open Issues have zero organization Issue Field Values. PR #16 remains OPEN/BLOCKED/REVIEW_REQUIRED at c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f, with exact-head validation passing. | system-evidence.yml, gap matrix, generated release; M. |
-| 4a | Architecture #11 / PR #17 (draft; stacked on #16) | Refresh the dated Project and Issue evidence, current open-PR state, production and runtime evidence, and the strategy/gap analysis without converting planning context into execution authority. The 10:50 UTC query found no Projects in organization/viewer/six-repository scopes and no Project items across 62 Issues; the 09:17–09:22 UTC full inventory found that all 24 open Issues had no organization Issue Field Values. The 10:54 six-repository scan found Architecture's strategy YAML as the sole organizational source and no competing mission/vision/charter files. This issue-linked update advances the draft Architecture release to 0.1.0-draft.53; its generated manifest pins source commit c72c7fdedfbf49dd875d6932ad7c44d4c33f3ff4 and digest 4ce2f3d4a279b948017a8928c4433e035ebf4d6e3b6bff7993a30f821bdea15f. | Before this refresh, PR #17 was OPEN/DRAFT/CLEAN at 27dd11c914636b6a22f390b3c50f0d9526adc427, stacked on open PR #16 at c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f; exact-head validation run 38238595911 passed, with no human review decision. The new source update requires a fresh exact-head hosted run. Keep #17 stacked until #16 receives human review, then repin if its base merge changes its source. Architecture #15 remains the topology gate and #13 the product-owner gate. No live Project, runtime, or repository configuration changed. | system-evidence.yml, gap matrix, task plan, generated release; architecture, migration, full test suite, and exact-head hosted validation; M. |
-| 5 | Primitives #3 / PR #4 (draft; blocked pending human review) | Supply versioned offline evaluation cases, deterministic graders, reproducible replay, immutable source pins, and reviewer-ready evidence for agent capability and factory behavior. The draft `.8` manifest pins content commit `1984bcdc2a9749da202cd52f74f9b169ff4be87e` with digest `02a6645085f0b125bbb88722ea86e2a21a935a75f69fc0fb8251b9b7e0b31748`; hosted PR CI retains the schema-valid synthetic report as `offline-evaluation-report` for 14 days. Keep the manual semantic rubric distinct; synthetic `no-change` is not a measured baseline or product outcome. | Depends on the revised Architecture report contract. Local `pnpm primitive:check`, `pnpm migration:check` (143 mappings), `pnpm evaluation:check` (four synthetic cases; contract 2.0.0), and `pnpm test` (8/8) pass. Exact-head hosted validation [run 38243438137](https://github.com/agentic-delivery-lab/agentic-delivery-primitives/actions/runs/38243438137) passes on `951433b2be5f0c3ada8144926f5b2cc69e7d6c95` and uploaded the 3,828-byte artifact, expiring 2026-10-26. PR #4 remains draft pending Primitives #2 ADR-0023 impact mapping and independent semantic review. | Primitives dataset/grader/replay files, manifest, CI/tests; M. |
-| 6 | Control Plane [#101](https://github.com/agentic-delivery-lab/agentic-delivery/issues/101) / [PR #102 (merged)](https://github.com/agentic-delivery-lab/agentic-delivery/pull/102) | Keep Project context as planning input in the single-item offline normalizer. Existing fixtures cover Project-only cards, foreign repository identities, same-number cross-repository Issues, access failures, inaccessible or mismatched Projects, unsupported/stale fields, and dependency-only cards. The positive fixture re-fetches the origin repository and Issue and checks the actor gate, but not lifecycle, readiness, plan, or downstream authorization. Multi-candidate selection is excluded from #101/PR #102 and tracked separately in Control Plane #107. | Depends on AP-004 and ADR-0023. Run focused planning-contract tests and the Control Plane quality, migration, portability, and hosted checks. Prove normalization cannot turn Project membership into authorization. No live Project integration is implied. | Planning-context module, schema, tests; M. |
-| 6a | Control Plane [#107](https://github.com/agentic-delivery-lab/agentic-delivery/issues/107) / [PR #110 (open; no human review decision)](https://github.com/agentic-delivery-lab/agentic-delivery/pull/110) | Define deterministic selection when a source Issue has multiple candidate Project links. Use stable Project/item/repository/Issue identities and an approved topology policy; never select by API order or silently merge candidates. Treat ambiguity, missing policy, or inaccessible/unapproved Projects as explicit planning-context gaps, while preserving Issue-owned authorization and recovery behavior. Add offline fixtures for unique, multiple, ambiguous, inaccessible, conflicting-field, cross-repository same-number, duplicate, and out-of-order cases. | Depends on Architecture #15's human topology decision, merged Architecture PR #14, and Control Plane #101 planning contract (PR #102 is merged; Issue #101 remains open). Implementation is delivered at exact head `088a6b02391367f401b687e1873754e38c2a71fc`; regression tests and all required exact-head hosted checks pass (classify_updater was skipped by policy), but human review is pending. Any live read or runtime connection requires separate Project identity, permission, and configuration approval. | Project-context selector, policy contract, tests; M. |
-| 7 | Control Plane [#106](https://github.com/agentic-delivery-lab/agentic-delivery/issues/106), child of Architecture #11 | Add a compact trusted strategy context to eligible Codex runs, pinned to an approved Architecture release and digest, selecting only relevant goals, principles, ADRs, contexts, and quality/evaluation criteria. Bind it to the exact authorized source Issue and repository identity, applicable role/capabilities, enforcement policy, and required validation; Project facts remain optional read-only context. Keep Issue and Project text untrusted and unable to alter deterministic authorization. | Block implementation on an approved Architecture release pin, Control Plane #60/#66 metadata contracts, and #101's planning boundary. Static review at current main commit `9a2e1f3549428bc042d5c59d09beb300ca2d1362` confirms the app-server starts at `controllerRoot`; each new/resumed thread receives the isolated Issue workspace and `.agents/codex-delivery.md` as developer instructions; apps and plugins are disabled. The exact `0.159.3` source tag supports root-to-cwd instruction discovery, but GitHub reports it unsigned/unverified. Current `codex-client.test.mjs` exercises start/resume without asserting `cwd` or developer-instruction values. Add those assertions and test the real Actions runner workspace, supported distributed customizations, missing/incompatible pins, injection attempts, and no moving-branch fallback. No Project permission is inferred for the App. | Strategy-context selector/envelope, runtime instructions, tests; M. |
-| 8 | Control Plane #103 / PR #104 (merged) | Keep the offline evaluation router fail-closed: preserve evidence and hold report-asserted owner Issues as non-actionable dispositions until canonical ownership is established. | PR #104 merged at 9a2e1f3549428bc042d5c59d09beb300ca2d1362. Its source merge commit records historical conflict metadata for lowercase `CHANGELOG.md`, while current `main` contains both #101 and #103 entries with no conflict markers; uppercase `CHANGELOG.MD` does not exist. GitHub marks all three Codex review threads resolved: self-target identity casing, participant/owner identity ambiguity (kept non-actionable while the owner map is absent), and measured-claim direction. Current code and regression tests cover these behaviors. No active conflict remains on the merged PR; any further code change needs a separate review PR. Evidence: system-evidence.yml#control-plane-pr104-changelog-confirmation-20261012-1057 and #control-plane-pr104-review-thread-recheck-20261012-1156. | Evaluation router, owner-map contract, retained evidence/tests; M. |
-| 8a | Control Plane #105 | Enforce pinned per-run duration, turn/invocation, retry, and recursion limits; record admission and terminal usage/stop receipts; distinguish webhook delivery replay, Codex continuation, and evaluation replay; preserve safe recovered-or-held dispositions and zero duplicate protected writes. | Depends on the approved Architecture release pin and the required Control Plane metadata contracts. Associate with the approved Factory Evolution Project only after Architecture #15 and Project provisioning; currently #105 has no Project item. Keep all participants in existing modes until separate review/authorization. | Control Plane admission/receipt/recovery path and fixtures; M. |
-| 9 | Control Plane #60 (active local branch; preserved changes) | Complete the canonical Issue Field and lifecycle contract using stable field identities, supported values, and the legacy Delivery Readiness compatibility rule. Keep native Issue Type separate from lifecycle, delivery readiness, runner, and PR states. | Coordinate with the existing active #60 worktree and inspect its dirty files before resuming; #62 is its canary. Run migration, field-contract, issue-intake, and scoped live evidence only as already authorized there. | `config/issue-metadata.yml`, issue-field API/tests, audit docs; M. |
+| 1 | Architecture #11 / PR #14 | Add stable many-to-many trace links from each strategy goal to quality goals, principles, ADRs, capabilities/contracts, implementation Issues, Project planning context, and evaluation evidence. Complete `sourceOfTruth` for every assignment fact: Issue Type, lifecycle/delivery/governance metadata, source lineage, Issue priority, Project iteration/roadmap/membership/sequencing/dependencies, Actions/Codex/session/webhook state, PR state, decisions, strategy, and evaluation results. Assess ADR-0012/0018/0019 against ADR-0023 and AP-004; retain their Issue lifecycle, authorization, and projection restrictions while making clear that Projects remain the required planning surface. Validate one owner per fact, resolved references, and no inferred links. | Depends on current strategy proposal. Run Architecture, migration, and full tests; add negative fixtures for unresolved, duplicated, and multiply-owned references. | `organizational-strategy.yml`, strategy schema/validator, relevant ADRs, tests; M. |
+| 2 | Architecture #11 / PR #14 | Complete all six required architecture views: strategic alignment through eval evidence; organization context including Projects, Issues, all factory owners, GitHub App, Vercel, Neon, Actions/Codex, and products; Project/Issue lifecycle; factory improvement sequence; gated product bootstrap/delivery; and trust boundaries. Update the Structurizr/C4 model where relevant. Keep webhook replay, session continuation, and evaluation replay distinct. | Depends on Task 1 trace terms and current arc42 boundaries. Run diagram validation and review all six views against the assignment and arc42. | Mermaid sources and `workspace.dsl`; M. |
+| 3 | Architecture #11 / PR #14 | Extend the portable evaluation contract and reusable validation/tests with case task/stimulus/expected outcome, deterministic evaluator identity and independence, failure classification, improvement hypothesis, and comparable unit/window checks. Cover multiple fixtures, not only the current example. | Depends on the shared report model. Run architecture, migration, and full tests; prove invalid/improvement-without-baseline and incomparable metric cases fail. | evaluation schema, README, fixture, validator, tests; M. |
+| 3a | Architecture #11 / PR #14 | Complete the source-backed research register across strategy, architecture, GitHub work management, Codex CLI in Actions, evaluation, and Markdown conventions. For each source record exact URL or repository commit/path, date/version, supported claim, limits, and architectural implication; distinguish verified facts from hypotheses. Context7 currently returns Codex instruction-discovery guidance from unversioned `main` and versioned docs only through `0.155.1`, so verify `0.159.3` behavior against the exact pinned runner rather than extrapolating. | Depends on the existing register and the source-driven research already recorded in the strategy proposal. Check each claim against its primary source and retain scope/version caveats. | `strategy-research-register.md`, strategy references; M. |
+| 4 | Architecture #11 / PR #14 | Preserve the pinned 15:56 live evidence snapshot: complete Project/Issue inventory, empty values on 19 open Issues, nine Issue Types, six member-only fields, release/tag state, and execution/participant evidence. Append the 16:13 UTC recheck that the organization CLI Project list is still empty and PR #14/#102/#104 remain open without review decisions while PR #4 remains draft and review-required. Label observation times and historical data precisely. | Depends on exact API/Actions reads and immutable main commits. Run the evidence/schema checks and verify the Architecture release digest. | `system-evidence.yml`, gap matrix, generated release; M. |
+| 5 | Primitives #3 / PR #4 | Supply versioned offline evaluation cases, deterministic graders, reproducible replay, immutable source pins, and reviewer-ready evidence for agent capability and factory behavior. Reconcile the manifest digest with the PR's reported digest; make replay output retainable as an artifact. Keep the manual semantic rubric distinct and product outcomes unclaimed. | Depends on the revised Architecture report contract. Run `pnpm primitive:check`, `pnpm migration:check`, and `pnpm test`; verify replay digests and second-run match. Do not describe synthetic cases as a measured baseline. | Primitives dataset/grader/replay files, manifest, CI/tests; M. |
+| 6 | Control Plane [#101](https://github.com/agentic-delivery-lab/agentic-delivery/issues/101) / [PR #102](https://github.com/agentic-delivery-lab/agentic-delivery/pull/102) | Keep Project context as planning input in the single-item offline normalizer. Existing fixtures cover Project-only cards, foreign repository identities, same-number cross-repository Issues, access failures, inaccessible or mismatched Projects, unsupported/stale fields, and dependency-only cards. The positive fixture re-fetches the origin repository and Issue and checks the actor gate, but not lifecycle, readiness, plan, or downstream authorization. Multi-candidate selection is excluded from #101/PR #102 and tracked separately in Control Plane #107. | Depends on AP-004 and ADR-0023. Run focused planning-contract tests and the Control Plane quality, migration, portability, and hosted checks. Prove normalization cannot turn Project membership into authorization. No live Project integration is implied. | Planning-context module, schema, tests; M. |
+| 6a | Control Plane [#107](https://github.com/agentic-delivery-lab/agentic-delivery/issues/107) | Define deterministic selection when a source Issue has multiple candidate Project links. Use stable Project/item/repository/Issue identities and an approved topology policy; never select by API order or silently merge candidates. Treat ambiguity, missing policy, or inaccessible/unapproved Projects as explicit planning-context gaps, while preserving Issue-owned authorization and recovery behavior. Add offline fixtures for unique, multiple, ambiguous, inaccessible, conflicting-field, cross-repository same-number, duplicate, and out-of-order cases. | Depends on Architecture #15's human topology decision and review/adoption of Architecture #14 and Control Plane #101. Any live read or runtime connection requires separate Project identity, permission, and configuration approval. | Project-context selector, policy contract, tests; M. |
+| 7 | Control Plane [#106](https://github.com/agentic-delivery-lab/agentic-delivery/issues/106), child of Architecture #11 | Add a compact trusted strategy context to eligible Codex runs, pinned to an approved Architecture release and digest, selecting only relevant goals, principles, ADRs, contexts, and quality/evaluation criteria. Bind it to the exact authorized source Issue and repository identity, applicable role/capabilities, enforcement policy, and required validation; Project facts remain optional read-only context. Keep Issue and Project text untrusted and unable to alter deterministic authorization. | Block implementation on Architecture #14 review/merge and an approved release pin, Control Plane #60/#66 metadata contracts, and #101's planning boundary. Static review at exact `main` commit `67e5941` confirms the app-server starts at `controllerRoot`, each thread starts/resumes at the isolated Issue workspace, `.agents/codex-delivery.md` is passed as developer instructions, and plugins/apps are disabled; the exact `0.159.3` CLI's root-to-cwd discovery and project-root boundary passed an isolated prompt-input test. Existing tests do not assert the thread `cwd` payload. Add that assertion and test the real Actions runner workspace, distributed customizations that remain supported with plugins disabled, missing/incompatible pins, injection attempts, and no moving-branch strategy fallback. No Project permission is inferred for the App. | Strategy-context selector/envelope, runtime instructions, tests; M. |
+| 8 | Control Plane #103 / PR #104 | Route only validated, pinned findings with an unambiguous canonical owner to a reviewable Issue proposal or a bounded create/update operation authorized by a separate source Issue. The proposed Issue must carry the observed problem/evidence, affected goals and capability, cause hypothesis, alternatives, risk, acceptance/eval criteria, baseline, authorization needs, and rollback. The finding cannot set priority or initiate execution. | Depends on the revised report contract and verified owner-routing evidence; end-to-end replay also depends on Primitives #3. Test owner ambiguity, self-targets, malformed/unpinned evidence, recursion depth, invocation/time budget, actor limits, idempotency, and event provenance; run focused routing tests and full Control Plane checks. | Evaluation router, owner map contract, retained result evidence/tests; M. |
+| 8a | Control Plane #105 | Enforce pinned per-run duration, turn/invocation, retry, and recursion limits; record admission and terminal usage/stop receipts; distinguish webhook delivery replay, Codex continuation, and evaluation replay; preserve safe recovered-or-held dispositions and zero duplicate protected writes. | Depends on Architecture #14 review/merge. Associate with the approved Factory Evolution Project only after Architecture #15 and Project provisioning; currently #105 has no Project item. Keep all participants in existing modes until separate review/authorization. | Control Plane admission/receipt/recovery path and fixtures; M. |
+| 9 | Control Plane #60 | Complete the canonical Issue Field and lifecycle contract using stable field identities, supported values, and the legacy Delivery Readiness compatibility rule. Keep native Issue Type separate from lifecycle, delivery readiness, runner, and PR states. | Coordinate with the existing active #60 worktree and inspect its dirty files before resuming; #62 is its canary. Run migration, field-contract, issue-intake, and scoped live evidence only as already authorized there. | `config/issue-metadata.yml`, issue-field API/tests, audit docs; M. |
 | 10 | Architecture #15 | Record the accountable human's decision on the one-Project/two-view proposal, including owner, visibility, membership, and field semantics. If approved in principle, track actual configuration separately with explicit authorization; if rejected, record the alternative. | Human decision gate. Do not create or configure a Project, change field visibility, or add/move Issue items in this task. | Issue decision record only; XS. |
 | 11 | Architecture #13 | Identify a real product repository, accountable steward, users/operators, approved evidence path, outcome signals, and observation windows. Keep product metrics and baselines unknown until evidence exists. | Requires human/product-owner input. Do not create a product repository or infer one from the six factory repositories. | Issue decision record only; XS. |
-| 12 | Primitives #2 / PR #5 (open; human review required) | Complete owner-specific capability/catalog work only against reviewed Architecture and Control Plane contracts, preserving immutable source identity and release provenance. | PR #5 is OPEN/BLOCKED/REVIEW_REQUIRED at 035547fc1c7885e96cf9a8f8295c94a26f269847; exact-head run 38214454926 passes and all four Codex threads are resolved, but independent human review remains pending. PR #4 remains OPEN/DRAFT/BLOCKED/REVIEW_REQUIRED. Writer work remains gated on the canonical Architecture decisions. | Primitive catalog/ADR and tests; M. |
+| 12 | Primitives #2 | Complete the existing owner-specific capability/catalog work in Agentic Primitives, including only strategy-alignment, evaluation, independent-review, or improvement-analysis primitives justified by the accepted Architecture and Control Plane contracts. Preserve source identity and release provenance. | Follow the Issue's pinned sources and `AGENTS.md`; writer work waits for the canonical Architecture decisions to be reviewed/merged. Run `pnpm primitive:check`, `pnpm migration:check`, and `pnpm test` as applicable. | Primitive catalog/ADR and tests; M. |
 | 13 | Distribution #2 | Complete the existing pinned distribution work and provide a tested rollback path that restores the exact prior managed files and provenance, including explicit conflict behavior. | Follow the Issue's source pins and reviewed Architecture/Control Plane/Primitive contracts; run `pnpm distribution:check` and `pnpm test`; verify plan/apply/rollback against disposable consumer fixtures. | Source lock/bundle/bootstrap/rollback and tests; M. |
 | 14 | `.github` #10 | Complete public GitHub governance and consumer-template work, including full-SHA and content-digest pins and planning-role language consistent with the Architecture decision. | Follow the Issue's acceptance conditions and repository checks; preserve the active dirty Issue #52 worktree and coordinate separately before any same-repository write. | Governance templates/docs and starter; M. |
 | 15 | `.github-private` #2 | Complete private organization publication as a reviewed, generated projection from its canonical source; record the actual inactive/empty publication state and entitlement limits. | Follow the Issue's pinned source and checks; do not author a second primitive source or infer live protection from desired ruleset JSON. | Projection/lock/workflow and tests; M. |
 | 16 | Distribution #3 | Onboard a confirmed product/consumer repository using a pinned, conflict-aware, opt-in plan/apply flow with source hashes and tested rollback. Validate repository naming, accountable owner/access, Project association, contribution/security policy, independent CI and branch/PR expectations, bootstrap compatibility, and recovery. | Depends on Architecture #13 and the relevant owner-approved integration contracts; no consumer is selected while product ownership remains unknown. | Consumer integration and provenance lock; M. |
 | 17 | Future Project configuration and runtime integration | After #15 and separate explicit authorization, verify Project ID, owner, membership, visibility, field availability, and App/runtime access; then implement a reversible adapter and link eligible Issues. Keep offline fixtures separate from live evidence. Cover an authorized Issue with no Project, Project-only cards, same-number Issues across repositories, multiple links, closed/transferred/inaccessible source Issues, conflicting Project and Issue fields, Project read-scope failure, duplicate/out-of-order events, and prove a Project failure cannot block an otherwise authorized security or recovery Issue. | Blocked until topology and configuration gates are satisfied. Organization-members-only Issue Fields are unavailable to public/internal Projects; verify the chosen model before view design. Add tests that Project failure is non-authoritative and replay is idempotent. | New scoped Control Plane adapter, permission contract, live tests; L. Split into its own Issue before implementation. |
-| 18 | Architecture #11 acceptance checkpoint (Control Plane #108 / PR #109 open; human review pending) | Verify traceability from strategy through goals, principles/ADRs, contracts, owner Issues, PRs, evaluations, and improvement recommendations. Report architecture, offline fixture, hosted CI, live configuration, and production-operation evidence separately. Cross-repository fixtures must cover a factory improvement planned in a Project but executed from its Issue, a product feature with its source Issue, eval failure becoming a triaged Issue without execution, Project permission failure, untrusted Issue/Project input, and idempotent replay. | Depends on owner slices above. At head `1180b1559a1e694b12fa95df1f548accb4697344`, PR #109's validation, quality, recovery-SQL, three-platform portability, body-validation, Vercel, and latest Harness review passed; `classify_updater` was skipped by policy and human review remains absent. Its derived evidence now includes optional grader-calibration dataset pins while preserving the full report. Operational completion also requires actual Project visibility/association, authorized runner behavior, evaluation replay and independent review, and product evidence where claimed. Project state must not replace canonical Issue authorization. | Evidence rollup; M. |
+| 18 | Architecture #11 acceptance checkpoint | Verify traceability from strategy through goals, principles/ADRs, contracts, owner Issues, PRs, evaluations, and improvement recommendations. Report architecture, offline fixture, hosted CI, live configuration, and production-operation evidence separately. Cross-repository fixtures must cover a factory improvement planned in a Project but executed from its Issue, a product feature with its source Issue, eval failure becoming a triaged Issue without execution, Project permission failure, untrusted Issue/Project input, and idempotent replay. | Depends on owner slices above. Operational completion also requires actual Project visibility/association, authorized runner behavior, evaluation replay and independent review, and product evidence where claimed. Project state must not replace canonical Issue authorization. | Evidence rollup; M. |
 
 ### Implementation and governance boundary
 
 The assignment authorizes local, reversible Architecture changes and their
-validation on an issue-linked feature branch for Architecture #11; a separate
-approval of this plan is not a prerequisite. Cross-repository changes remain
-assigned to their owner Issues and repositories. Independent semantic review is still
+validation on the existing Architecture #11 branch; a separate approval of
+this plan is not a prerequisite. Cross-repository changes remain assigned to
+their owner Issues and repositories. Independent semantic review is still
 required before merge. No Project, Issue Field, App, permission, product
-repository, published GitHub Release, or participant was changed by this local
-implementation. The Architecture draft release manifest was updated and
-remains draft; no runtime consumer adopts it.
+repository, release, or participant was changed by this local implementation.
 Broad `gh` OAuth scopes establish the authenticated account's API capability;
 they do not grant Projects permission to the runtime GitHub App or substitute
 for the separate human decisions recorded in Architecture #13 and #15.
@@ -909,178 +551,3 @@ for the separate human decisions recorded in Architecture #13 and #15.
   meaningful cross-repository contract?
 - Which evaluation cases, deterministic graders, and replay environment can be
   used without paid external infrastructure?
-
-### 12:30 UTC Control Plane #112 hold-retry revalidation
-
-The earlier 11:56 observation remains the historical state of that PR head.
-At the current Control Plane head `61f0565e4208eeb7c7b7477032e9a023592be757`,
-PR #112 adds the missing empty/`hold` route guard: the workflow-revision
-finalizer receives failure when delivery is skipped for an unresolved hold,
-so the existing attributed receipt remains retryable. Successful non-hold
-shadow/read-only skips retain their prior completion behavior. The focused
-workflow regression passed; the full local suite reported 561 tests, 528
-passed, 0 failed, 33 environment-gated skips. Exact-head hosted quality,
-recovery-SQL, Ubuntu/macOS/Windows portability, ADR validation, PR-body
-validation, Vercel, and Harness review checks passed. `classify_updater` was
-skipped by policy. PR #112 remains OPEN/DRAFT/CLEAN with no human review
-decision. Control Plane `main` remains `9a2e1f3549428bc042d5c59d09beb300ca2d1362`.
-Migration 0008 remains unverified: the PR body states it has not been applied
-to a live database, and no Neon read was part of this recheck. Do not enable the
-workflow revision until migration application and live verification pass the
-separate approval gate. Evidence: `system-evidence.yml#control-plane-pr112-hold-retry-validation-20261012-1230`.
-
-
-### 12:57 UTC Project, runtime, and release-chain refresh
-
-A fresh authenticated GraphQL inventory found zero ProjectsV2 in the viewer,
-organization, or any of the six repositories. All 62 Issues remain unassociated
-with a Project; no queried connection had another page. Architecture PR #17 is
-OPEN/DRAFT/CLEAN and mergeable at exact head
-a96a877b0005f72a5b9671d613105e866d93cd7f, stacked on PR #16 at
-c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f, with no human review decision. Its
-exact-head hosted validate check passed as run 38250330307.
-
-The Control Plane PR #112 candidate release-chain check failed. Distribution's
-bundle, Agent Plugin, and Automation projections disagree with the candidate's
-Control Plane and Architecture pins; this was not a check of Control Plane
-main. Exact expected/got values and the later scope recheck are recorded in
-architecture/references/system-evidence.yml#architecture-release-chain-runtime-recheck-20261012-1257
-and #architecture-release-chain-pr112-candidate-recheck-20261012-1341.
-Distribution Issue #2 remains OPEN and explicitly gates implementation on
-review of coordinating Issue #59, Architecture #3, Control Plane #60,
-Primitives #2, and Architecture #11. #59, #60, Primitives #2, and Architecture
-#11 are OPEN; Architecture #3 is CLOSED. No pins were changed because these
-dependencies remain open.
-
-The two newest successful 12:40 repository-dispatch runs validated signed
-observation events and immutable controller pins in an observation-only job.
-The latest agent-invocation, run 38227232599 at 09:01 UTC, completed
-authorization, classification, and finalization but skipped delivery in
-shadow mode; the two 08:14 invocation runs failed explicit-invocation
-validation. These events do not prove an end-to-end delivery or eval-feedback
-loop. No live Projects, workflow, participant, permission, release, or
-production configuration was changed.
-
-
-### 13:07 UTC open-PR and release inventory
-
-The six-repository read found eight open PRs: Control Plane #112 (draft/clean),
-#110 (clean), #109 (clean), and #86 (clean); Architecture #17
-(draft/clean, stacked on #16) and #16 (blocked/review required); Primitives #4
-(draft/blocked/review required) and #5 (blocked/review required). No human
-review decision is recorded for Control Plane #109/#110/#112 or Architecture
-#17. Distribution, .github, and .github-private have no open PRs. All six
-repositories returned an empty GitHub Release list. Exact heads and review
-states are in
-architecture/references/system-evidence.yml#portfolio-pr-release-recheck-20261012-1307.
-The inventory does not treat clean checks as human review and made no approval,
-merge, or publication.
-
-
-### 13:12 UTC Architecture PR #17 exact-head refresh
-
-GitHub reports PR #17 OPEN/DRAFT/CLEAN at
-5934a7f7e29c1c14872a9db253579a777d3beb1c, stacked on PR #16 at
-c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f, with no human review decision.
-Exact-head architecture-quality run 38253715469 passed. At that observed head,
-the draft release was 0.1.0-draft.57 with source commit
-3fa7dfb88d8184e75e70dbf47add1f6189ba832a and digest
-0ec44bcbe0d8b3cbe37ebe251ca30d9a0fb2843e882005464580bc49cbdd6641.
-This refresh also corrected stale matrix references to the prior PR head and
-draft version. The local Architecture draft advances to .58 for the updated
-evidence; it remains unpublished and unadopted. Evidence:
-architecture/references/system-evidence.yml#architecture-pr17-head-recheck-20261012-1312.
-
-### Mandatory final self-review — 2026-10-12 13:16 UTC
-
-This is a requirement-level review of the original assignment's final checklist,
-not a claim of operational acceptance. Current evidence is classified below;
-unresolved items remain explicit.
-
-| Self-review concern | Current finding and evidence |
-| --- | --- |
-| Missing scope or either value stream | The strategy defines factory evolution and product delivery, with cross-stream synthetic fixtures in Control Plane #109. Product ownership and outcome evidence are still unknown under Architecture #13; no real product delivery has been demonstrated. |
-| Conflicting mission, vision, goal, and principle semantics | There is one canonical proposed strategy source with distinct purpose/mission/vision and eight traceable goals. Structural validation passes. Semantic adoption still requires independent human review of Architecture #17 and its blocked base PR #16. |
-| Duplicate sources of truth or redundant artifacts | The six-repository scan found one organizational strategy source and no competing mission/vision/charter files at its observation time. The scan is point-in-time and has no cross-repository drift guard. |
-| Projects/Issues confusion or duplicated lifecycle | ADR-0023, the source-of-truth matrix, and offline #109/#110 cases preserve Issue authorization and lifecycle ownership while treating Project data as planning context. No live Project exists in the queried scopes, so live behavior is not demonstrated. |
-| Bounded-context leakage or repository-ownership violations | The Architecture model retains four existing bounded contexts and assigns runtime, primitives, distribution, and adapter ownership to their existing repositories. Structural validation passes; cross-repository compatibility and independent review remain open. |
-| Incompatible schemas/pins or unreviewed decision divergence | At the 13:16 review, Architecture contracts, ADRs, 143 source mappings, and the draft .59 digest validated locally. The 13:41 refresh validated draft .61; its reproduced release-chain failure is scoped to Control Plane PR #112 at draft .66 and does not establish a Control Plane `main` failure. Distribution #2 gates pin repairs on open owner reviews; PR #16 remains review-required. The 13:53 refresh updates the strategy inventory pointer and advances the local draft to .62. |
-| Untrusted instruction injection or privilege escalation | Project/Issue content is modeled as untrusted and non-authorizing, with static and offline checks. No adversarial test of injected strategy context in a real Codex Actions invocation exists; Control Plane #106 remains open. |
-| Recursive loops, bot self-invocation, quota, or permission changes | Existing policies and #105 define bounded execution and recovery. The latest invocation finalized in shadow mode and skipped delivery; resource-limit and terminal-receipt behavior are not proven end to end. |
-| Self-grading, metric gaming, or eval contamination | The evaluation contract requires pinned baselines, case selection, dataset-integrity assessment, calibrated independent graders, and evidence. Available replays are synthetic; there is no representative baseline or independent outcome review. |
-| Negative evidence, rollback, or user-value measures | The contract retains negative evidence and the matrix distinguishes gaps. Distribution #2 has no completed consumer rollback; no product steward, user-value baseline, or authorized product outcome source has been identified. |
-| Scope creep, premature infrastructure, or documentation/runtime drift | No Project, permission, participant, production configuration, product repository, or published release was changed. The documented target is ahead of live behavior: no Project association or end-to-end Issue-to-PR/evaluation-feedback loop is evidenced. |
-
-**Disposition:** the architecture foundation is reviewable as a draft, but several
-criteria are partial, blocked, or gaps. Operational completion is not achieved.
-The evidence and exact owner gates remain in the strategy gap matrix and
-architecture/references/system-evidence.yml.
-
-
-### 13:18 UTC Project and human-gate recheck
-
-A fresh GraphQL read still finds zero Projects in the authenticated-viewer,
-organization, and six repository scopes, and zero Project items among the 62
-Issues. Architecture #15 and #13 remain open, unassigned, and without comments;
-there is no new topology decision, product owner, or outcome-evidence path in
-GitHub. PR #17 is OPEN/DRAFT/CLEAN at
-da9e673af7b5d9d22b2645fa6d5a618f33aad6f4, based on #16 at
-c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f; exact-head run 38254582397 passed.
-The .58 draft at that head is valid; this evidence update advances the local
-draft manifest to .59, still unpublished and unadopted. Evidence:
-architecture/references/system-evidence.yml#architecture-project-gate-recheck-20261012-1318.
-No live Project, repository, permission, release, participant, or production
-setting changed.
-
-### 13:25–13:31 UTC complete work-management and PR refresh
-
-The authenticated read-only recheck returned zero ProjectsV2 for the viewer,
-organization, and each of the six repositories; all 62 Issues have zero Project
-items and no connection has another page. All 24 open Issues have zero Issue
-Field Values; only closed Control Plane #44/#46/#47/#48 have two values each.
-The organization remains Free with both Project capability flags true, nine
-native Issue Types, and six organization-only Issue Fields. The six `main`
-commits are unchanged; eight PRs remain open and all six GitHub Release lists
-are empty. Architecture #13 and #15 remain OPEN, unassigned, and without
-comments. PR #17 is OPEN/DRAFT/MERGEABLE at
-`bbd87f4135be529b7b5fe3cdb77e9ce4e89b1df0`, based on #16 at
-`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; its exact-head `validate` run
-38254966187 passed. The draft release is .59, source
-`e7ea6f2c140a59b5635b9c47154371a4979e154c`, digest
-`4a2fa6c1b5f8fa904ec47fb780951bc5ddcb6c1831864431471a919a6f6d14c4`.
-Evidence: `system-evidence.yml#portfolio-current-work-management-pr-refresh-20261012-1331`.
-No Project, field, permission, release, participant, review, or production
-mutation was made.
-
-
-### 13:41 UTC release-chain scope clarification
-
-Reproduced the static release-chain failure from the exact Control Plane PR
-#112 worktree at `61f0565e4208eeb7c7b7477032e9a023592be757` (draft `.66`). It
-reports pin differences against the supplied Distribution checkout at
-`b69c5710928b47efc4d3ab12ec4d5b596c80720c` and its Agent Plugin/Automation
-projections. This candidate check did not use Control Plane `main`, so it does
-not establish a `main` failure. Exact repository roots and mismatch values are
-recorded at
-`architecture/references/system-evidence.yml#architecture-release-chain-pr112-candidate-recheck-20261012-1341`.
-No release pin, Project, or live setting changed.
-
-
-### 13:53 UTC Architecture PR #16 review and current inventory pointer
-
-Architecture PR #16 is OPEN, non-draft, mergeable, and REVIEW_REQUIRED at
-`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; exact-head hosted validate run
-38206340047 passed. Its six-file change is documentation, evidence, changelog,
-and draft-manifest work; no runtime or permission code changes. The PR #16
-strategy record still points at the 2026-10-10 23:53 Project inventory, while
-the 2026-10-11 22:57 and 2026-10-12 13:31 full inventories are newer. The
-canonical `projectPlanning` record in this PR #17 branch now points to the
-complete 13:31 inventory for all 62 Issues. PR #17 remains OPEN/DRAFT at
-`7ddb2f40f3e9f9e40ecfbcd4b89aecbfd12b8a41` on #16, with exact-head validate
-run 38258170867 passed and no human review decision. The read-only review
-record is at
-`architecture/references/system-evidence.yml#architecture-pr16-review-and-strategy-inventory-refresh-20261012-1353`.
-The exact PR #16 object ID was verified as
-`c11164c1cb387ca3b36706c6da3a1a1d6bdd5a5f`; 17 earlier 39-character
-references were corrected in this evidence, matrix, and task plan. No review,
-approval, Project, or live setting was submitted or changed.

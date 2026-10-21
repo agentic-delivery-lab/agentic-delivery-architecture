@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | Agentic Delivery Governance | Repository rules and reusable delivery policies for proposing, reviewing, validating, and recording work | Domain context `agentic-delivery-governance`; GitHub is its work-state control plane. |
 | Agentic Delivery Control Plane | Event intake, repository enrollment, semantic routing, deterministic authorization, orchestration, and controlled write-back | Domain context `agentic-delivery-control-plane`; executable source remains in `agentic-delivery`. |
-| Agentic Primitives | Reusable agents, skills, instructions, hooks, validators, capabilities, and MCP contracts; catalog, releases, and projections | Domain context `agentic-primitives`; source remains in `agentic-delivery-primitives`. |
+| Agentic Primitives | Reusable agents, skills, instructions, hooks, validators, capabilities, and MCP contracts; catalog, releases, and projections | Domain context `agentic-primitives`; source remains in `agentic-delivery-agent-customizations`. |
 | Developer Distribution | Reproducible development environment, bootstrap, bundles, and thin consumer integrations | Domain context `developer-distribution`; source remains in `agentic-delivery-distribution`. |
 | Architecture Authority | Canonical organization ADR, ADP, and ADD text; principles, architecture description, context map, and conformance | Cross-context authority and canonical decision-text owner, not a bounded context. |
 | Public `.github` adapter | Public profile, community-health files, issue-form artifacts, and pull-request template | GitHub repository adapter, not a bounded context. Whether each artifact is inherited by every repository is a separate live check. |

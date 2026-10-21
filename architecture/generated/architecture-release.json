@@ -2,10 +2,10 @@
   "$schema": "../contracts/architecture-release.schema.json",
   "schemaVersion": 2,
   "architectureId": "urn:agentic-delivery:architecture:authority",
-  "version": "0.1.0-draft.62",
+  "version": "0.1.0-draft.74",
   "sourceRepository": "agentic-delivery-lab/agentic-delivery-architecture",
-  "sourceCommit": "73b3667f1ac5e9d4f42663cc3407819a65441e55",
-  "contentSha256": "38a4eddb764c3192ae992e7a88181a1ae8a70cb4413f462d2f3bb4fd4a795c9e",
+  "sourceCommit": "2487e7e528e751c8c77e0052d877e20c4c9db2af",
+  "contentSha256": "c720d67022ed498886e3bcf0308058520022ad960ea5a54fbf73af4f5da90c2a",
   "status": "draft",
   "principleIds": [
     "AP-001",
@@ -34,7 +34,8 @@
     "urn:agentic-delivery:adr:architecture:0020",
     "urn:agentic-delivery:adr:architecture:0021",
     "urn:agentic-delivery:adr:architecture:0022",
-    "urn:agentic-delivery:adr:architecture:0023"
+    "urn:agentic-delivery:adr:architecture:0023",
+    "urn:agentic-delivery:adr:architecture:0024"
   ],
   "decisionIds": [
     "ADR-0001",
@@ -59,7 +60,8 @@
     "ADR-0020",
     "ADR-0021",
     "ADR-0022",
-    "ADR-0023"
+    "ADR-0023",
+    "ADR-0024"
   ],
   "contextIds": [
     "agentic-delivery-governance",
@@ -76,11 +78,12 @@
     "sha256": "e8811d66793adc4fac82ac3b67dae6b75bc49f6967d4ee96e8e7ddfa8ed83766"
   },
   "contractVersions": {
-    "architectureRelease": "4.0.0",
+    "architectureRelease": "5.1.0",
     "conformance": "1.0.0",
     "adrPrimitiveIndex": "3.0.0",
-    "decisionInventory": "1.0.0",
+    "decisionInventory": "1.1.0",
     "architectureArtifacts": "1.0.0",
-    "evaluationReport": "2.0.0"
+    "evaluationReport": "2.0.0",
+    "requirementsReference": "1.0.0"
   }
 }

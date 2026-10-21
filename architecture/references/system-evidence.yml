@@ -1,11 +1,12 @@
 schemaVersion: 1
-snapshotDate: '2026-10-12'
-snapshotKind: read-only-live-audit
+snapshotDate: '2026-10-21'
+snapshotKind: scoped-live-audit-and-owner-delegated-configuration
 purpose: >-
-  Pin current repository revisions and dated live observations used by this
+  Retain scoped repository revisions and dated live observations used by this
   Architecture description. Earlier observations retain their individual
   timestamps and remain historical evidence; snapshotDate is the latest audit
-  date, not a claim that every observation was refreshed then.
+  date, not a claim that every observation was refreshed then. Repository head
+  entries retain the scope of their separately recorded full inventory.
 repositories:
   - id: architecture
     slug: agentic-delivery-lab/agentic-delivery-architecture
@@ -1906,6 +1907,270 @@ observations:
       Harness is automated review evidence, not a human approval. Passing
       checks do not establish live Project access, runtime adoption, or
       production behavior. No Project or other live configuration changed.
+  - id: portfolio-issue-project-inventory-20261011-2257
+    observedAt: '2026-10-11T22:57:00Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Read-only recheck completed 2026-10-11 22:57–23:02 UTC as authenticated
+      organization administrator sjefsharp. Queried gh project list for the
+      organization and viewer; GraphQL organization.projectsV2, viewer.projectsV2,
+      and repository.projectsV2 for all six repositories; Project item
+      connections for all 61 repository Issues; organization and inherited
+      repository Issue Types; organization Issue Fields and values; repository
+      open/closed Issue and Pull Request counts; all six main branch identities;
+      organization plan and Project entitlement flags; and GitHub Releases.
+      No mutation or Project write was attempted.
+    result:
+      status: >-
+        Complete read-only inventory for the authenticated viewer, organization,
+        and six visible repositories. No Project v2 item or organization/user
+        Project was returned in the queried scopes.
+      available:
+        - >-
+          Organization and viewer Project lists returned totalCount=0. The
+          organization and all six repository ProjectV2 connections returned
+          totalCount=0 with no additional pages. All 61 Issues across those
+          repositories returned empty Project-item connections; no Project-only
+          card was present in the queried scope.
+        - >-
+          The organization is on the Free plan; its API reports
+          has_organization_projects=true and has_repository_projects=true.
+          The authenticated user is an organization administrator, and the
+          human CLI has the project scope. No entitlement blocker was observed;
+          Project write access and the GitHub App's effective Project grant were
+          not tested by this read-only inventory.
+        - >-
+          Current main HEADs: agentic-delivery
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362;
+          agentic-delivery-architecture
+          61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c;
+          agentic-delivery-primitives
+          e4933566fbf5b0f593830f8933f18fbd21024fa7;
+          agentic-delivery-distribution
+          b69c5710928b47efc4d3ab12ec4d5b596c80720c;
+          .github af52c92e49616e78f8d6647cf5cf538a7e571d78; and
+          .github-private f9e6589b65c71da9e7b35d8e026f3d4a91dab78f.
+        - >-
+          The six repositories contain 61 Issues: Control Plane 11 open/31
+          closed; Architecture 5/3; Primitives 2/0; Distribution 2/0; public
+          adapter 2/4; private adapter 1/0. All 23 open Issues have empty
+          organization Issue Field Values; 18 have native Issue Types and five
+          do not (Control Plane #62/#103, Architecture #7/#15, and public
+          .github #11). Among closed Issues, only Control Plane #44/#46/#47/#48
+          have Issue Field Values, each for Lifecycle Stage and legacy Delivery
+          Readiness.
+        - >-
+          Nine organization Issue Types are enabled and inherited by all six
+          repositories: Task (866469117), Bug (866469118), Feature (866469119),
+          Idea (868968825), Research (868969150), Requirements (868969391),
+          Architecture Decision (868969683), Implementation (868969915), and
+          Validation (868970249).
+        - >-
+          Six organization Issue Fields are organization_members_only:
+          Priority (46797139; Urgent/High/Medium/Low), Start date (46797140),
+          Target date (46797141), Effort (46797142; High/Medium/Low), Lifecycle
+          Stage (46888816; Intake, Discovery, Definition, Decision, Planning,
+          Execution, Validation, Acceptance, Done, Parked), and Delivery
+          Readiness (46888965; Not ready, Needs information, Ready, Working,
+          Waiting, Awaiting human, Blocked). No `Delivery State` field exists;
+          Delivery Readiness remains the existing live field name for that
+          concept.
+        - >-
+          Seven PRs are open: Control Plane #86/#109/#110; Architecture #16/#17;
+          and Primitives #4/#5. PR #104 is merged at
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362; its CHANGELOG.md patch
+          contains both #101 and #103 entries. `gh release list` returned no
+          releases for any of the six repositories.
+        - >-
+          Open PR heads and merge states: Control Plane #86
+          3a0adfb7942c760f4504478c2f47cc6a0624f966 (CLEAN, mergeable), #109
+          1180b1559a1e694b12fa95df1f548accb4697344 (CLEAN, mergeable), and
+          #110 088a6b02391367f401b687e1873754e38c2a71fc (CLEAN, mergeable);
+          Architecture #16 9635044ab2e7b91c8004ac1cd06241b35b9ec30e
+          (BLOCKED pending review, mergeable) and #17
+          1b137e65ddf2480ede2c0ec6788149415f2a5f66 (Draft, CLEAN, mergeable);
+          Primitives #4 6e4a2ab89e664d5472071546737778a780595754 (Draft,
+          BLOCKED, mergeable) and #5
+          c69904ffdd7a68091b5788893f4ff2de831fdf1d (BLOCKED, mergeable).
+          The review API has no human approval decision for these open PRs.
+      absent:
+        - No organization-owned, viewer-owned, or repository-linked Project v2
+          node in the queried scopes.
+        - No Project item on any of the 61 Issues in the six repositories.
+        - No organization Issue Field Values on any of the 23 open Issues.
+        - No GitHub Release in any of the six repositories.
+    limitation: >-
+      The complete empty Project inventory covers the authenticated viewer,
+      organization, and six visible repository scopes only. It does not prove
+      absence of Projects owned elsewhere or shared through unqueried accounts.
+      No Project existed to inspect views, fields, visibility, membership, or
+      item contents. The CLI scopes and human organization-admin role do not
+      establish the GitHub App's effective grants or a runtime Project read.
+      Project write access was not tested. Five currently open Issues lack an
+      Issue Type; no field or lifecycle value was changed. Issue #15 remains the
+      human decision gate for any portfolio Project topology or configuration.
+      No Issue, Project, field, permission, App, participant, release, or
+      runtime setting was changed.
+  - id: portfolio-project-issue-association-recheck-20261012-0459
+    observedAt: '2026-10-12T04:59:52Z'
+    source: https://api.github.com/graphql
+    sourceRepositories:
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery-primitives
+    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Read-only GraphQL recheck started at 2026-10-12 04:59:52 UTC as
+      authenticated viewer sjefsharp. Queried organization.projectsV2,
+      viewer.projectsV2, repository.projectsV2 for all six visible
+      repositories, complete open-and-closed Issue connections, and each
+      Issue's Project-item connection. All connections had no next page. No
+      mutation or Project write was attempted.
+    result:
+      status: >-
+        Complete read-only recheck of Project existence and Issue association
+        across the authenticated viewer, organization, and six visible
+        repositories.
+      available:
+        - >-
+          Organization and viewer Project v2 connections returned
+          totalCount=0 with no next page. All six repository Project v2
+          connections also returned totalCount=0 with no next page.
+        - >-
+          The complete Issue connections returned 61 Issues in total and no
+          next pages. Every Issue's Project-item connection returned
+          totalCount=0 with no next page.
+        - >-
+          Current main HEADs: agentic-delivery
+          9a2e1f3549428bc042d5c59d09beb300ca2d1362;
+          agentic-delivery-architecture
+          61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c;
+          agentic-delivery-primitives
+          e4933566fbf5b0f593830f8933f18fbd21024fa7;
+          agentic-delivery-distribution
+          b69c5710928b47efc4d3ab12ec4d5b596c80720c; .github
+          af52c92e49616e78f8d6647cf5cf538a7e571d78; and .github-private
+          f9e6589b65c71da9e7b35d8e026f3d4a91dab78f.
+        - >-
+          Issue counts remain: Control Plane 11 open/31 closed; Architecture
+          5/3; Primitives 2/0; Distribution 2/0; public adapter 2/4; and
+          private adapter 1/0.
+      absent:
+        - No organization-owned or viewer-owned Project v2 node in the queried
+          scopes.
+        - No repository-linked Project v2 node in the six queried repositories.
+        - No Project item on any of the 61 Issues in the six queried
+          repositories.
+    limitation: >-
+      This recheck covers only the authenticated viewer, organization, and six
+      visible repositories. It does not prove absence of Projects owned
+      elsewhere or shared through unqueried accounts. Issue Types, Issue Field
+      definitions and values, organization entitlements, App permissions, PR
+      state, and release state were not re-read; use the separately timed
+      complete inventory at
+      portfolio-issue-project-inventory-20261011-2257 for those observations.
+      No Project existed to inspect views, fields, visibility, or membership.
+      Issue #15 remains the human decision gate for any topology or
+      configuration. No Issue, Project, permission, App, participant, release,
+      or runtime setting was changed.
+
+  - id: portfolio-project-issue-association-recheck-20261020-0758
+    observedAt: '2026-10-20T07:58:18Z'
+    source: https://api.github.com/graphql
+    sourcePath: architecture/references/project-association-inventory.graphql
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-agent-customizations
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery-requirements
+    projectInventoryComplete: true
+    projectIds: []
+    request: >-
+      Read-only GraphQL recheck as authenticated viewer sjefsharp. Queried
+      viewer and organization Project connections, the seven visible
+      organization repositories, each repository's Project and complete
+      open-and-closed Issue connections, and every Issue's Project items.
+      All pageInfo.hasNextPage values were false. Repository pagination was
+      bounded to 20 after an initial 100-by-100-by-100 query exceeded GitHub's
+      theoretical node cap; no partial result is claimed as complete.
+    result:
+      status: Complete scoped read-only Project and Issue-association inventory.
+      available:
+        - Viewer and organization Project connections each returned totalCount=0.
+        - All seven repository Project connections returned totalCount=0.
+        - Complete Issue connections contained 64 Issues, including 20 open.
+        - Every Issue Project-item connection returned totalCount=0.
+        - >-
+          The additional visible repository is Requirements Authority; the
+          current canonical Customizations name is
+          agentic-delivery-lab/agentic-delivery-agent-customizations.
+      absent:
+        - No Project node in the queried viewer, organization or repository scopes.
+        - No Project item on any of the 64 visible Issues.
+    limitation: >-
+      This observation establishes only the queried scopes at its timestamp.
+      It does not establish Projects owned elsewhere, effective runtime App
+      access, or a topology decision. No Project existed to inspect fields,
+      views, membership, visibility or item contents. Issue Types, Issue Field
+      definitions/values, entitlements, App grants, PR state, release state and
+      repository HEADs were not re-read by this scoped query; earlier full
+      metadata observations retain their own dates. Architecture #15 remains
+      the accountable human topology gate. No Issue, Project, field,
+      permission, participant, release or runtime setting was changed.
+
+  - id: portfolio-repository-head-recheck-20261020-1904
+    observedAt: '2026-10-20T19:04:23Z'
+    source: https://api.github.com/graphql
+    sourcePath: architecture/references/repository-head-inventory.graphql
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/.github
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-agent-customizations
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/.github-private
+      - agentic-delivery-lab/agentic-delivery-requirements
+    request: >-
+      Separately timed read-only GraphQL query as sjefsharp for all visible
+      organization repository IDs, default-branch names and exact commit IDs.
+      The repository connection was complete with no next page. This read
+      supplements the 07:58 Project/Issue-association inventory; it does not
+      claim that all metadata was observed in one atomic snapshot.
+    result:
+      status: Complete default-branch identity read for seven visible repositories.
+      available:
+        - agentic-delivery-lab/agentic-delivery; repository ID 1358455028; main 95fc1289312e0324ac407a2e2372580856291a44.
+        - agentic-delivery-lab/.github; repository ID 1368850419; main af52c92e49616e78f8d6647cf5cf538a7e571d78.
+        - agentic-delivery-lab/agentic-delivery-architecture; repository ID 1380894616; main 6ed5b2b1a0a330cd08f4e00763018f01f3e0a3b7.
+        - agentic-delivery-lab/agentic-delivery-agent-customizations; repository ID 1380894656; main e4933566fbf5b0f593830f8933f18fbd21024fa7.
+        - agentic-delivery-lab/agentic-delivery-distribution; repository ID 1380894705; main 60af09cc764c6bfcf1a6bd1453080a1a3e031bdb.
+        - agentic-delivery-lab/.github-private; repository ID 1380894756; main c2e106034c49419a636f2c67e0d956fc4100e5d4.
+        - agentic-delivery-lab/agentic-delivery-requirements; repository ID 1416207421; main 23046e94652a64090efc2a9fbb2fd69d9691dd34.
+    limitation: >-
+      These commits are exact observed identities at this timestamp, not a
+      guarantee that branches remain unchanged. No Issue, Project, field,
+      permission, App, participant, release or runtime setting was changed.
+      This read does not refresh Issue Types/Fields, App grants, entitlements,
+      deployment evidence or Projects owned outside the previous query scope.
+
   - id: strategy-and-open-work-recheck-20261011-0044
     observedAt: '2026-10-11T00:44:06Z'
     source: https://api.github.com/graphql
@@ -2007,6 +2272,7 @@ observations:
       Project access, a live issue-to-PR flow, production webhook delivery, or
       product outcomes. No Issue, Project, field, App, permission, release,
       participant, or runtime setting was changed.
+
   - id: strategy-current-status-recheck-20261011-0112
     observedAt: '2026-10-11T01:12:05Z'
     source: https://api.github.com/graphql
@@ -2083,6 +2349,7 @@ observations:
       results do not identify a maintainer-approved topology. No Issue,
       Project, field, App, permission, release, participant, or runtime
       setting was changed.
+
   - id: strategy-current-status-recheck-20261011-0627
     observedAt: '2026-10-11T06:27:45Z'
     source: https://api.github.com/graphql
@@ -2174,6 +2441,7 @@ observations:
       release, Project configuration, runtime adoption, webhook health, or
       product outcomes. No Issue, Project, field, App, permission, release,
       participant, or runtime setting was changed.
+
   - id: strategy-current-status-recheck-20261011-0646
     observedAt: '2026-10-11T06:46:24Z'
     source: https://api.github.com/graphql
@@ -2262,6 +2530,7 @@ observations:
       Project configuration, runtime adoption, webhook health, or product
       outcomes. No Issue, Project, field, App, permission, release,
       participant, or runtime setting was changed.
+
   - id: architecture-pr-review-recheck-20261011-0717
     observedAt: '2026-10-11T07:17:00Z'
     source: https://api.github.com/repos/agentic-delivery-lab/agentic-delivery-architecture/pulls/17
@@ -2309,6 +2578,7 @@ observations:
       pin and successful main validation before release. The latest complete
       Project and Issue inventory remains the separate 06:46 UTC event; this
       recheck did not repeat those API queries.
+
   - id: strategy-project-pr-status-recheck-20261011-0745
     observedAt: '2026-10-11T07:45:29Z'
     source: https://api.github.com/graphql
@@ -2406,6 +2676,7 @@ observations:
       independent human review, release adoption, Project configuration,
       runtime behavior, webhook health, or product outcomes. No live
       configuration was changed.
+
   - id: strategy-current-status-recheck-20261011-0824
     observedAt: '2026-10-11T08:24:55Z'
     source: https://api.github.com/graphql
@@ -2496,6 +2767,7 @@ observations:
       dated events for those observations. Hosted checks do not establish
       independent human review, release adoption, runtime behavior, webhook
       health, or product outcomes. No live configuration was changed.
+
   - id: strategy-pr-check-recheck-20261011-0829
     observedAt: '2026-10-11T08:29:02Z'
     source: GitHub API via gh CLI
@@ -2561,6 +2833,7 @@ observations:
       08:24 and earlier dated events for those scopes. Passing checks do not
       establish independent human review, release adoption, runtime behavior,
       webhook health, or product outcomes.
+
   - id: strategy-pr-status-recheck-20261011-0901
     observedAt: '2026-10-11T09:01:24Z'
     source: GitHub API via gh CLI and local Git merge-tree
@@ -3131,6 +3404,7 @@ observations:
       verified and no Actions runner was tested with that version. Upstream
       release metadata alone does not establish runtime compatibility or
       authorize replacing the version-specific scope of issue #85 and PR #86.
+
   - id: control-plane-changelog-state-recheck-20261011-2134
     observedAt: '2026-10-11T21:34:00Z'
     source: >-
@@ -3167,187 +3441,7 @@ observations:
       The 0.162.1 release asset, package-tree digest, and runner compatibility
       were not verified. No PR approval, merge, repository change, or runtime
       setting was performed by this recheck; PR #104 had already been merged.
-  - id: portfolio-issue-project-inventory-20261011-2257
-    observedAt: '2026-10-11T22:57:00Z'
-    source: https://api.github.com/graphql
-    sourceRepositories:
-      - agentic-delivery-lab/.github
-      - agentic-delivery-lab/.github-private
-      - agentic-delivery-lab/agentic-delivery
-      - agentic-delivery-lab/agentic-delivery-architecture
-      - agentic-delivery-lab/agentic-delivery-distribution
-      - agentic-delivery-lab/agentic-delivery-primitives
-    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
-    projectInventoryComplete: true
-    projectIds: []
-    request: >-
-      Read-only recheck completed 2026-10-11 22:57–23:02 UTC as authenticated
-      organization administrator sjefsharp. Queried gh project list for the
-      organization and viewer; GraphQL organization.projectsV2, viewer.projectsV2,
-      and repository.projectsV2 for all six repositories; Project item
-      connections for all 61 repository Issues; organization and inherited
-      repository Issue Types; organization Issue Fields and values; repository
-      open/closed Issue and Pull Request counts; all six main branch identities;
-      organization plan and Project entitlement flags; and GitHub Releases.
-      No mutation or Project write was attempted.
-    result:
-      status: >-
-        Complete read-only inventory for the authenticated viewer, organization,
-        and six visible repositories. No Project v2 item or organization/user
-        Project was returned in the queried scopes.
-      available:
-        - >-
-          Organization and viewer Project lists returned totalCount=0. The
-          organization and all six repository ProjectV2 connections returned
-          totalCount=0 with no additional pages. All 61 Issues across those
-          repositories returned empty Project-item connections; no Project-only
-          card was present in the queried scope.
-        - >-
-          The organization is on the Free plan; its API reports
-          has_organization_projects=true and has_repository_projects=true.
-          The authenticated user is an organization administrator, and the
-          human CLI has the project scope. No entitlement blocker was observed;
-          Project write access and the GitHub App's effective Project grant were
-          not tested by this read-only inventory.
-        - >-
-          Current main HEADs: agentic-delivery
-          9a2e1f3549428bc042d5c59d09beb300ca2d1362;
-          agentic-delivery-architecture
-          61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c;
-          agentic-delivery-primitives
-          e4933566fbf5b0f593830f8933f18fbd21024fa7;
-          agentic-delivery-distribution
-          b69c5710928b47efc4d3ab12ec4d5b596c80720c;
-          .github af52c92e49616e78f8d6647cf5cf538a7e571d78; and
-          .github-private f9e6589b65c71da9e7b35d8e026f3d4a91dab78f.
-        - >-
-          The six repositories contain 61 Issues: Control Plane 11 open/31
-          closed; Architecture 5/3; Primitives 2/0; Distribution 2/0; public
-          adapter 2/4; private adapter 1/0. All 23 open Issues have empty
-          organization Issue Field Values; 18 have native Issue Types and five
-          do not (Control Plane #62/#103, Architecture #7/#15, and public
-          .github #11). Among closed Issues, only Control Plane #44/#46/#47/#48
-          have Issue Field Values, each for Lifecycle Stage and legacy Delivery
-          Readiness.
-        - >-
-          Nine organization Issue Types are enabled and inherited by all six
-          repositories: Task (866469117), Bug (866469118), Feature (866469119),
-          Idea (868968825), Research (868969150), Requirements (868969391),
-          Architecture Decision (868969683), Implementation (868969915), and
-          Validation (868970249).
-        - >-
-          Six organization Issue Fields are organization_members_only:
-          Priority (46797139; Urgent/High/Medium/Low), Start date (46797140),
-          Target date (46797141), Effort (46797142; High/Medium/Low), Lifecycle
-          Stage (46888816; Intake, Discovery, Definition, Decision, Planning,
-          Execution, Validation, Acceptance, Done, Parked), and Delivery
-          Readiness (46888965; Not ready, Needs information, Ready, Working,
-          Waiting, Awaiting human, Blocked). No `Delivery State` field exists;
-          Delivery Readiness remains the existing live field name for that
-          concept.
-        - >-
-          Seven PRs are open: Control Plane #86/#109/#110; Architecture #16/#17;
-          and Primitives #4/#5. PR #104 is merged at
-          9a2e1f3549428bc042d5c59d09beb300ca2d1362; its CHANGELOG.md patch
-          contains both #101 and #103 entries. `gh release list` returned no
-          releases for any of the six repositories.
-        - >-
-          Open PR heads and merge states: Control Plane #86
-          3a0adfb7942c760f4504478c2f47cc6a0624f966 (CLEAN, mergeable), #109
-          1180b1559a1e694b12fa95df1f548accb4697344 (CLEAN, mergeable), and
-          #110 088a6b02391367f401b687e1873754e38c2a71fc (CLEAN, mergeable);
-          Architecture #16 9635044ab2e7b91c8004ac1cd06241b35b9ec30e
-          (BLOCKED pending review, mergeable) and #17
-          1b137e65ddf2480ede2c0ec6788149415f2a5f66 (Draft, CLEAN, mergeable);
-          Primitives #4 6e4a2ab89e664d5472071546737778a780595754 (Draft,
-          BLOCKED, mergeable) and #5
-          c69904ffdd7a68091b5788893f4ff2de831fdf1d (BLOCKED, mergeable).
-          The review API has no human approval decision for these open PRs.
-      absent:
-        - No organization-owned, viewer-owned, or repository-linked Project v2
-          node in the queried scopes.
-        - No Project item on any of the 61 Issues in the six repositories.
-        - No organization Issue Field Values on any of the 23 open Issues.
-        - No GitHub Release in any of the six repositories.
-    limitation: >-
-      The complete empty Project inventory covers the authenticated viewer,
-      organization, and six visible repository scopes only. It does not prove
-      absence of Projects owned elsewhere or shared through unqueried accounts.
-      No Project existed to inspect views, fields, visibility, membership, or
-      item contents. The CLI scopes and human organization-admin role do not
-      establish the GitHub App's effective grants or a runtime Project read.
-      Project write access was not tested. Five currently open Issues lack an
-      Issue Type; no field or lifecycle value was changed. Issue #15 remains the
-      human decision gate for any portfolio Project topology or configuration.
-      No Issue, Project, field, permission, App, participant, release, or
-      runtime setting was changed.
-  - id: portfolio-project-issue-association-recheck-20261012-0459
-    observedAt: '2026-10-12T04:59:52Z'
-    source: https://api.github.com/graphql
-    sourceRepositories:
-      - agentic-delivery-lab/.github
-      - agentic-delivery-lab/.github-private
-      - agentic-delivery-lab/agentic-delivery
-      - agentic-delivery-lab/agentic-delivery-architecture
-      - agentic-delivery-lab/agentic-delivery-distribution
-      - agentic-delivery-lab/agentic-delivery-primitives
-    sourceCommit: 61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c
-    projectInventoryComplete: true
-    projectIds: []
-    request: >-
-      Read-only GraphQL recheck started at 2026-10-12 04:59:52 UTC as
-      authenticated viewer sjefsharp. Queried organization.projectsV2,
-      viewer.projectsV2, repository.projectsV2 for all six visible
-      repositories, complete open-and-closed Issue connections, and each
-      Issue's Project-item connection. All connections had no next page. No
-      mutation or Project write was attempted.
-    result:
-      status: >-
-        Complete read-only recheck of Project existence and Issue association
-        across the authenticated viewer, organization, and six visible
-        repositories.
-      available:
-        - >-
-          Organization and viewer Project v2 connections returned
-          totalCount=0 with no next page. All six repository Project v2
-          connections also returned totalCount=0 with no next page.
-        - >-
-          The complete Issue connections returned 61 Issues in total and no
-          next pages. Every Issue's Project-item connection returned
-          totalCount=0 with no next page.
-        - >-
-          Current main HEADs: agentic-delivery
-          9a2e1f3549428bc042d5c59d09beb300ca2d1362;
-          agentic-delivery-architecture
-          61d99cbcca175f5bb5de4277d21f2ce4d56cbd0c;
-          agentic-delivery-primitives
-          e4933566fbf5b0f593830f8933f18fbd21024fa7;
-          agentic-delivery-distribution
-          b69c5710928b47efc4d3ab12ec4d5b596c80720c; .github
-          af52c92e49616e78f8d6647cf5cf538a7e571d78; and .github-private
-          f9e6589b65c71da9e7b35d8e026f3d4a91dab78f.
-        - >-
-          Issue counts remain: Control Plane 11 open/31 closed; Architecture
-          5/3; Primitives 2/0; Distribution 2/0; public adapter 2/4; and
-          private adapter 1/0.
-      absent:
-        - No organization-owned or viewer-owned Project v2 node in the queried
-          scopes.
-        - No repository-linked Project v2 node in the six queried repositories.
-        - No Project item on any of the 61 Issues in the six queried
-          repositories.
-    limitation: >-
-      This recheck covers only the authenticated viewer, organization, and six
-      visible repositories. It does not prove absence of Projects owned
-      elsewhere or shared through unqueried accounts. Issue Types, Issue Field
-      definitions and values, organization entitlements, App permissions, PR
-      state, and release state were not re-read; use the separately timed
-      complete inventory at
-      portfolio-issue-project-inventory-20261011-2257 for those observations.
-      No Project existed to inspect views, fields, visibility, or membership.
-      Issue #15 remains the human decision gate for any topology or
-      configuration. No Issue, Project, permission, App, participant, release,
-      or runtime setting was changed.
+
   - id: control-plane-invocation-runtime-recheck-20261012-0555
     observedAt: '2026-10-12T05:55:17Z'
     source: >-
@@ -3378,6 +3472,7 @@ observations:
       participants fail in the same way, and it does not authorize changing
       the participant pin or mode. Repair and bounded acceptance belong in a
       reviewed Control Plane change.
+
   - id: primitive-distribution-release-pin-recheck-20261012-0555
     observedAt: '2026-10-12T05:55:17Z'
     source: >-
@@ -3409,6 +3504,7 @@ observations:
       The Primitive and Distribution artifacts are drafts, not published
       releases. Passing validation checks do not establish resolvable
       cross-repository pins or deployment.
+
   - id: vercel-production-runtime-recheck-20261012-0556
     observedAt: '2026-10-12T05:56:35Z'
     source: >-
@@ -3440,6 +3536,7 @@ observations:
       correlation that proves which webhook produced Actions run 38206400933.
       The scheduled configuration does not establish that a cron execution
       occurred; no reconciler execution was observed in the seven-day query.
+
   - id: control-plane-changelog-state-recheck-20261012-0601
     observedAt: '2026-10-12T06:01:29Z'
     source: >-
@@ -3466,6 +3563,7 @@ observations:
       This recheck concerns PR #104 and current main only. It does not assess a
       conflict on another pull request. No review, approval, merge, or file
       mutation was performed during this recheck.
+
   - id: adapter-protection-recheck-20261012-0601
     observedAt: '2026-10-12T06:01:29Z'
     source: GitHub REST repository ruleset and branch protection APIs.
@@ -3487,6 +3585,7 @@ observations:
       request through the observed rules. The private API denial is not
       evidence that private protection is absent. No governance setting was
       changed.
+
   - id: distribution-bootstrap-source-review-20261012-0604
     observedAt: '2026-10-12T06:04:40Z'
     source: GitHub tree and raw content APIs at an immutable Distribution commit.
@@ -3514,6 +3613,7 @@ observations:
       b69c5710928b47efc4d3ab12ec4d5b596c80720c. No symlink exploit or live
       consumer operation was executed; the finding does not establish that an
       unintended symlink exists in a consumer repository.
+
   - id: architecture-pr17-verified-head-20261012-0610
     observedAt: '2026-10-12T06:10:31Z'
     source: GitHub pull request and Actions run APIs.
@@ -3537,6 +3637,7 @@ observations:
       A passing exact-head validation does not establish independent human
       review, adoption, or release approval. PR #17 remains stacked on PR #16;
       no merge or release was performed.
+
   - id: control-plane-changelog-state-recheck-20261012-0622
     observedAt: '2026-10-12T06:22:50Z'
     source: >-
@@ -3567,6 +3668,7 @@ observations:
       default branches; it does not identify a different PR #104 in an
       unqueried repository or organization. No PR, review, approval, merge, or
       file mutation was performed.
+
   - id: architecture-pr17-exact-head-recheck-20261012-0622
     observedAt: '2026-10-12T06:22:50Z'
     source: GitHub pull-request, pull-request-body, and Actions run APIs.
@@ -3592,6 +3694,7 @@ observations:
       validation pass does not establish independent review, adoption, or
       release approval. PR #17 remains stacked on #16; no merge or release was
       performed.
+
   - id: portfolio-project-issue-association-recheck-20261012-0700
     observedAt: '2026-10-12T07:00:40Z'
     source: >-
@@ -3620,6 +3723,7 @@ observations:
       organization, and six repository scopes, and only open Issues in those
       repositories for item associations. It does not establish absence of
       Projects outside the queried scopes or describe Project fields or views.
+
   - id: portfolio-open-pr-recheck-20261012-0703
     observedAt: '2026-10-12T07:03:04Z'
     source: >-
@@ -3662,6 +3766,7 @@ observations:
       Passing checks and resolved Codex threads do not establish independent
       human review, approval, merge, Architecture release adoption, or runtime
       activation. Review state may change after this snapshot.
+
   - id: control-plane-changelog-state-recheck-20261012-0703
     observedAt: '2026-10-12T07:03:04Z'
     source: >-
@@ -3702,6 +3807,7 @@ observations:
       This read covers the six inventoried repositories. A closed and merged PR
       cannot be amended; any new change would require a separate authorized PR.
       No review, approval, merge, or repository mutation was performed.
+
   - id: portfolio-project-issue-association-recheck-20261012-0827
     observedAt: '2026-10-12T08:27:20Z'
     source: https://api.github.com/graphql
@@ -3758,6 +3864,7 @@ observations:
       definitions, plan entitlements, App permissions, and PR/release state
       remain tied to their separately timed observations. No topology decision
       was inferred and no configuration was changed.
+
   - id: control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0833
     observedAt: '2026-10-12T08:33:58Z'
     source: >-
@@ -3797,6 +3904,7 @@ observations:
       was merged; no unresolved conflict remains on this merged PR. A further
       change would need a new PR. If PR #104 refers to a repository outside the
       six visible organization repositories, its URL was not provided.
+
   - id: portfolio-project-issue-association-recheck-20261012-0922
     observedAt: '2026-10-12T09:22:00Z'
     source: >-
@@ -3851,6 +3959,7 @@ observations:
       Project-field availability or runtime App access. The OAuth identity's
       scopes do not establish the installed GitHub App's grants. No topology
       decision or configuration change was made.
+
   - id: portfolio-open-pr-recheck-20261012-0923
     observedAt: '2026-10-12T09:23:47Z'
     source: >-
@@ -3907,6 +4016,7 @@ observations:
       review; Architecture #17 remains draft and stacked on #16. The earlier
       seven-PR snapshots are historical. Review, check, and merge state may
       change after this observation.
+
   - id: control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0923
     observedAt: '2026-10-12T09:23:47Z'
     source: >-
@@ -3940,6 +4050,7 @@ observations:
       different repository's PR #104 was not identified among the six visible
       organization repositories. Any further change would require a separate
       PR.
+
   - id: control-plane-pr104-changelog-conflict-resolution-recheck-20261012-0934
     observedAt: '2026-10-12T09:34:56Z'
     source: >-
@@ -3966,6 +4077,7 @@ observations:
       A merged pull request cannot receive a new conflict-resolution commit.
       The earlier six-repository inventory found no other PR #104. If the user
       means a repository outside that inventory, its identity was not supplied.
+
   - id: portfolio-open-pr-recheck-20261012-1034
     observedAt: '2026-10-12T10:34:36Z'
     source: >-
@@ -4008,6 +4120,7 @@ observations:
       Machine checks and review do not establish human approval. Architecture
       #17 remains draft and stacked on #16; all required human review decisions
       remain separate. PR state may change after this observation.
+
   - id: strategy-publication-surface-and-project-recheck-20261012-1054
     observedAt: '2026-10-12T10:54:40Z'
     source: >-
@@ -4063,6 +4176,7 @@ observations:
       drift check exists. Repository-local AGENTS.md Mission sections are
       explicitly scoped responsibilities, not alternate organizational
       strategy authority.
+
   - id: control-plane-pr104-changelog-confirmation-20261012-1057
     observedAt: '2026-10-12T10:57:55Z'
     source: >-
@@ -4099,6 +4213,7 @@ observations:
       PR #104 was already merged before this check, so it has no active merge
       conflict to resolve. This read does not identify any PR #104 outside the
       six visible organization repositories; no repository change was made.
+
   - id: control-plane-pr104-review-thread-recheck-20261012-1156
     observedAt: '2026-10-12T11:56:42Z'
     source: >-
@@ -4126,6 +4241,7 @@ observations:
       Resolved automated review threads do not establish independent human
       review or authorize runtime use. PR #104 is already merged, so later
       changes would require a separate reviewed PR.
+
   - id: portfolio-runtime-and-pr17-recheck-20261012-1156
     observedAt: '2026-10-12T11:56:42Z'
     source: >-
@@ -4174,6 +4290,7 @@ observations:
       successful authorization/classification/finalization run with delivery
       skipped does not prove end-to-end delivery, live database migration, or
       acceptance. PR #17 remains a draft stacked on a PR requiring human review.
+
   - id: control-plane-pr112-hold-retry-validation-20261012-1230
     observedAt: '2026-10-12T12:30:46Z'
     source: >-
@@ -4213,6 +4330,7 @@ observations:
       a live database; this recheck did not query Neon. Do not enable the
       workflow revision until the migration is applied and verified under the
       existing approval gate.
+
   - id: control-plane-pr104-conflict-recheck-20261012-1234
     observedAt: '2026-10-12T12:34:44Z'
     source: >-
@@ -4242,6 +4360,7 @@ observations:
       GitHub does not expose mergeability as meaningful for this merged PR.
       This observation does not infer or change any other repository's local
       worktree state.
+
   - id: architecture-release-chain-runtime-recheck-20261012-1257
     observedAt: '2026-10-12T12:57:59Z'
     source: >-
@@ -4304,6 +4423,7 @@ observations:
       end-to-end issue-to-PR delivery or evaluation-to-Issue feedback. No
       Projects, permissions, releases, participant state, or production setting
       changed in this check.
+
   - id: portfolio-pr-release-recheck-20261012-1307
     observedAt: '2026-10-12T13:07:06Z'
     source: >-
@@ -4342,6 +4462,7 @@ observations:
       An empty GitHub Release list does not establish that no untagged or
       external deployment exists. No pull request was approved or merged and no
       release was published.
+
   - id: architecture-pr17-head-recheck-20261012-1312
     observedAt: '2026-10-12T13:12:54Z'
     source: >-
@@ -4368,6 +4489,7 @@ observations:
       A clean branch and passing hosted validation do not establish human
       review, approval, merge, or consumer adoption. PR #17 remains draft and
       stacked on PR #16, which is blocked and requires human review.
+
   - id: architecture-project-gate-recheck-20261012-1318
     observedAt: '2026-10-12T13:18:12Z'
     source: >-
@@ -4403,6 +4525,7 @@ observations:
       Empty Project inventory and Issue threads do not supply the human
       topology/product decisions. No Project, repository, permission, release,
       participant, or production setting was changed.
+
   - id: portfolio-current-work-management-pr-refresh-20261012-1331
     observedAt: '2026-10-12T13:31:40Z'
     source: >-
@@ -4475,6 +4598,7 @@ observations:
       review, merge, release adoption, runtime activation, or end-to-end
       issue-to-PR and evaluation-feedback operation. No settings or work items
       were changed.
+
   - id: architecture-release-chain-pr112-candidate-recheck-20261012-1341
     observedAt: '2026-10-12T13:41:37Z'
     source: >-
@@ -4513,6 +4637,7 @@ observations:
       supplied local roots. It does not establish a Control Plane main failure,
       consumer activation, or production behavior. No pin or live setting was
       changed.
+
   - id: architecture-pr16-review-and-strategy-inventory-refresh-20261012-1353
     observedAt: '2026-10-12T13:53:05Z'
     source: >-
@@ -4551,3 +4676,75 @@ observations:
       for PR #16; it is not a human approval or a review of live Project
       behavior. Historical inventory observations remain dated evidence. No
       Project, Issue, field, permission, release, or runtime state changed.
+  - id: portfolio-owner-delegated-configuration-20261021
+    observedAt: 2026-10-21T18:12:56.394758+00:00
+    source: https://api.github.com/graphql
+    sourcePath: architecture/references/portfolio-configuration-readback.graphql
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery
+    projectInventoryComplete: true
+    projectIds:
+      - PVT_kwDOE4rESM4BoBuZ
+    request: Under the owner instruction to resolve all Wxx work through keep/drop or supported
+      alternatives, the delegated interactive operator recorded the topology decision in existing
+      Architecture15, created the private organization portfolio, configured two filtered views and
+      linked existing source Issues. No new Issue/PR, App permission, OAuth scope or participant mode
+      was created or changed.
+    result: Private organization Project2 (PVT_kwDOE4rESM4BoBuZ) is Agentic Delivery Portfolio. Factory
+      Evolution is BOARD_LAYOUT with value-stream:"Factory Evolution"; Software Product Delivery is
+      ROADMAP_LAYOUT with value-stream:"Software Product Delivery". Independent API readback
+      returns19factory items and0product items. Fifteen existing open source Issues were explicitly
+      linked; github-project-automation added4completed child Issues, whose creator, parent and native
+      completed state were checked. Those4remain completed lineage history. The organization member
+      and admin inventories each contain only sjefsharp; no collaborator/team grant was added.
+      Architecture15 was subsequently closed for its recorded decision/configuration scope.
+    limitation: This is owner-delegated operator configuration, not independent human review, runtime
+      App admission, live model-context consumption or milestoneA. Native Issue Priority is not
+      exposed in current Project fields and was not duplicated. The supported API does not expose
+      grouping edits; explicit board grouping and rendered-browser screenshots were withdrawn from
+      initial acceptance. The approved browser returned no surfaces and Browser is not available:iab.
+      No UI rendering is claimed. Earlier empty inventories remain dated historical observations.
+  - id: owner-stock-codex-scope-withdrawal-20261021
+    observedAt: 2026-10-21T18:31:31.267Z
+    source: https://github.com/agentic-delivery-lab/agentic-delivery/issues/105
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+    request: Record the owner direction to retain unmodified Codex, withdraw unsupported
+      universal100-tool enforcement and surgically remove only its dedicated changes while preserving
+      the separate unreadable-checkpoint receipt fix and unrelated Wxx work.
+    result: Control Plane commits59e24e6 and9c6f6c1 remove the configured universal tool ceiling and
+      source-only SQL tool resource. The experimental native patch and build probe were already
+      reverted byb490540, the owner-authorized message-only replacement for75c2f93, without changing
+      the source tree. Published candidatecfc41d3 preserves a saved admission snapshot through common
+      cleanup; its full local suite passed726total/708pass/0fail/18skip and exact-head hosted quality,
+      PostgreSQL, ADR and body checks passed. A subsequent profile-input early-exit snapshot gap is
+      being corrected separately in existing114. Native tool telemetry remains unknown, not zero or a
+      configured limit.
+    limitation: This amendment withdraws only universal100-tool interception. Other
+      time/model/validation/controller/child/transport/concurrency, durable admission,
+      compatible-reader and trusted-profile gates remain required. A source merge, local suite, hosted
+      SQL fixture or passing semantic workflow does not prove runtime admission. Requirements FR003 is
+      proposed and still needs its separately reviewed owner-amendment reconciliation; its canonical
+      checkout is unchanged.
+  - id: owner-w25-retirement-and-project-contract-disposition-20261021
+    observedAt: 2026-10-21T18:31:31.269Z
+    source: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery-architecture
+      - agentic-delivery-lab/agentic-delivery-distribution
+      - agentic-delivery-lab/agentic-delivery
+    request: Resolve unsupported product-first work and completed offline planning tasks under the owner
+      instruction to decide keep/drop and clean stale work without creating new Issues or PRs.
+    result: W25 independent-product delivery is withdrawn from the current correction program because no
+      confirmed independent product repository/steward is identified. Architecture13 and Distribution3
+      are closed not_planned; their original bodies and discovery evidence remain. Control Plane101
+      and107 are closed completed for their original offline-contract scopes after verifying merged
+      PR102/c0536ea and PR110/95fc128 are ancestors of current main and all44named contract tests
+      passed in retained full output. Live Project/App integration was explicitly outside those source
+      scopes.
+    limitation: No independent product, user outcome, product repository, telemetry, participant
+      activation or milestoneB is claimed. Broader runtime/authority work remains with existing59/106
+      and Architecture11. Contract-task completion does not establish live source-Issue authorization
+      or a Project-to-delivery loop.

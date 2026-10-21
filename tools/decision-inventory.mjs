@@ -18,12 +18,53 @@ const IMPORTED_IDS = ['ADR-0008', 'ADR-0009', 'ADR-0015', 'ADR-0017', 'ADP-0001'
 const VARIANT_IDS = ['ADR-0012', 'ADR-0018', 'ADR-0019'];
 const SOURCE_REPOSITORIES = {
   'agentic-delivery-lab/agentic-delivery': { key: 'control-plane', repositoryId: 1358455028, folder: 'agentic-delivery' },
-  'agentic-delivery-lab/agentic-delivery-primitives': { key: 'primitives', repositoryId: 1380894656, folder: 'agentic-delivery-primitives' },
+  'agentic-delivery-lab/agentic-delivery-primitives': { key: 'primitives', repositoryId: 1380894656, folder: 'agentic-delivery-primitives', currentRepository: 'agentic-delivery-lab/agentic-delivery-agent-customizations' },
   'agentic-delivery-lab/agentic-delivery-distribution': { key: 'distribution', repositoryId: 1380894705, folder: 'agentic-delivery-distribution' },
 };
 
 function sha256(contents) {
   return createHash('sha256').update(contents).digest('hex');
+}
+
+export function supportsDeclaredAmendmentContracts(records, versions) {
+  return ![...records].some((record) => record.amendments?.length)
+    || (versions?.decisionInventory === '1.1.0' && versions?.architectureRelease === '5.1.0');
+}
+
+// Remove only hash-bound, explicitly attributed additions before comparing an
+// imported record to its immutable origin. The canonical policy stays in Markdown.
+export function withoutDeclaredAmendments(text, amendments = []) {
+  if (!Array.isArray(amendments)) throw new Error('Decision amendments must be an array.');
+  const headings = new Set();
+  for (const amendment of amendments) {
+    if (!isObject(amendment) || Object.keys(amendment).length !== 3
+      || !Object.hasOwn(amendment, 'heading') || !Object.hasOwn(amendment, 'sourceIssue') || !Object.hasOwn(amendment, 'sha256')
+      || !/^[A-Za-z0-9][A-Za-z0-9 ()-]*$/.test(amendment.heading ?? '')
+      || !ARCHITECTURE_ISSUE_URL.test(amendment.sourceIssue ?? '') || !SHA256.test(amendment.sha256 ?? '')
+      || headings.has(amendment.heading)) throw new Error('Decision amendment declaration is invalid or repeated.');
+    headings.add(amendment.heading);
+    const heading = `### ${amendment.heading}\n`;
+    const starts = [...text.matchAll(/^### .+\n/gm)].filter((match) => match[0] === heading);
+    if (starts.length !== 1) throw new Error('Decision amendment heading must occur exactly once.');
+    const start = starts[0].index;
+    const remainder = text.slice(start + heading.length);
+    const boundary = /^#{1,3} /m.exec(remainder);
+    const end = boundary ? start + heading.length + boundary.index : text.length;
+    if (sha256(text.slice(start, end)) !== amendment.sha256) throw new Error('Decision amendment content does not match its declared hash.');
+    text = text.slice(0, start) + text.slice(end);
+  }
+  return text;
+}
+
+export function stewardMatchesAuditEvidence(route, evidence) {
+  if (typeof route?.repository !== 'string' || !route.repository
+    || typeof evidence?.slug !== 'string' || !evidence.slug
+    || !Number.isSafeInteger(route?.repositoryId) || route.repositoryId < 1
+    || route.repositoryId !== evidence?.githubRepositoryId) return false;
+  if (route.repository === evidence.slug) return true;
+  const historicalSource = SOURCE_REPOSITORIES[evidence.slug];
+  return historicalSource?.repositoryId === route.repositoryId
+    && historicalSource.currentRepository === route.repository;
 }
 
 function idForFilename(filename) {
@@ -118,7 +159,7 @@ export async function validateDecisionInventory(root = repositoryRoot, { invento
   for (const [index, record] of records.entries()) {
     const location = `decision inventory records[${index}]`;
     if (!isObject(record)) { add(`${location} must be an object`); continue; }
-    validateObjectShape(record, ['id', 'path', 'domains', 'origin'], ['id', 'path', 'domains', 'origin'], location, add);
+    validateObjectShape(record, ['id', 'path', 'domains', 'origin'], ['id', 'path', 'domains', 'origin', 'amendments'], location, add);
     const { id, path: recordPath, domains, origin } = record;
     if (!/^(ADR|ADP|ADD)-[0-9]{4}$/.test(id ?? '') || recordById.has(id)) add(`${location}.id must be a unique ADR, ADP, or ADD identifier`);
     else recordById.set(id, record);
@@ -145,6 +186,7 @@ export async function validateDecisionInventory(root = repositoryRoot, { invento
         catch (error) { add(`${location}.Architecture baseline source pin failed: ${error.message}`); }
       }
     }
+    if (record.amendments !== undefined && origin.type !== 'imported-text') add(`${location}.amendments require an imported historical origin`);
     if (origin.type === 'imported-text') {
       if (Object.hasOwn(origin, 'reviewEvidence') || Object.hasOwn(origin, 'sourceIssue')) add(`${location}.imported origin cannot claim Architecture review evidence or a source issue`);
       if (origin.repository === ARCH_REPOSITORY || origin.repositoryId === ARCH_REPOSITORY_ID) add(`${location}.imported origin must identify a source repository other than Architecture`);
@@ -166,7 +208,7 @@ export async function validateDecisionInventory(root = repositoryRoot, { invento
           if (occurrences !== 1) add(`${transformLocation}.from must occur exactly once in the immutable source text`);
           else canonicalText = canonicalText.replace(transformation.from, transformation.to);
         }
-        const currentText = await readFile(path.join(root, recordPath), 'utf8');
+        const currentText = withoutDeclaredAmendments(await readFile(path.join(root, recordPath), 'utf8'), record.amendments);
         if (currentText !== canonicalText) add(`${location}.canonical file must equal the immutable source text after only its declared link transformations`);
         importedTransforms.push(...transformations.map((transformation) => ({ id, ...transformation })));
       } catch (error) {
@@ -222,8 +264,7 @@ export async function validateDecisionInventory(root = repositoryRoot, { invento
       const context = contexts.get(contextId);
       const route = context?.contextStewardRepository;
       const evidenceRepository = evidenceRepositories.get(route?.evidenceRepository);
-      if (!route || !evidenceRepository || route.repository !== evidenceRepository.slug
-        || route.repositoryId !== evidenceRepository.githubRepositoryId
+      if (!stewardMatchesAuditEvidence(route, evidenceRepository)
         || !evidenceRepository.evidencePaths?.includes(route.evidencePath)
         || !SHA1.test(evidenceRepository.mainCommit ?? '')) {
         add(`decision ${record.id} cannot route semantic review for ${contextId} to a repository and source path in the pinned audit evidence`);

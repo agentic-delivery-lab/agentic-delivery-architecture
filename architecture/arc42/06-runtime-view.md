@@ -79,7 +79,13 @@ repository and prioritized in the portfolio Project. It cannot edit its own
 policy, activate its own participant, approve or merge its change, or trigger
 an unbounded follow-up run.
 
-## 6.5 Current runtime evidence and gaps
+## 6.5 Historical runtime observations and current gap route
+
+The table retains the dated 2026-10-09–12 observations and their original
+limits. Its open PRs, empty Project inventory and prerequisite status are
+historical. The [2026-10-21 gap matrix](../references/strategy-foundation-gap-matrix.md)
+records current scoped dispositions, including portfolio configuration, merged
+recovery and offline contracts, and the remaining runtime gates.
 
 | Observation | Evidence | Limit |
 | --- | --- | --- |

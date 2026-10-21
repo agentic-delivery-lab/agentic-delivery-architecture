@@ -123,14 +123,14 @@ researchBasis:
       no OpenAI Evals or Agent Builder dependency is assumed by this proposal.
 marketAndProductContext:
   currentEvidence:
-    - The six inventoried repositories are the software-factory architecture, controller, capability, distribution, and GitHub-adapter surfaces.
+    - The seven factory repositories include Requirements Authority, Architecture Authority, Control Plane, Agent Customizations, Distribution and two GitHub adapters.
     - Their issues, pull requests, version pins, tests, and operational runs provide evidence about factory needs and constraints.
   workingHypotheses:
     - The initial user segment is GitHub-centered engineering teams adopting coding agents for bounded software work; this is a hypothesis, not market research.
     - The factory's value is lower coordination and setup effort with stronger authorization, provenance, validation, and recovery evidence.
     - Product changes should be selected from evidenced user or operator problems in an identified product repository.
   unknowns:
-    - No independent product repository, named external customer, market size, willingness-to-pay evidence, or independent-product outcome baseline is confirmed by the current six-repository inventory; the factory itself is a product and acceptance subject.
+    - No independent product repository, named external customer, market size, willingness-to-pay evidence, or independent-product outcome baseline is confirmed by the recorded factory inventory; the factory itself is a product and acceptance subject.
     - A product steward, product telemetry policy, and approved user-feedback collection path have not been designated.
 audiences:
   - id: maintainers
@@ -203,7 +203,7 @@ valueStreams:
       - Observe product behavior and user feedback against the Issue's stated outcome.
       - Route unmet needs, defects, and capability gaps to Issues in the product or factory owner repository.
       - Before Milestone B delivery, establish the real independent owner and user need, central approved product requirements suitable for public visibility, rights agreement, explicit enrollment and scoped access, Distribution installation, and a validation profile for the actual product stack.
-      - Retain the same attributable delivery chain as Milestone A, plus actual product behavior, product-owner acceptance, observed usefulness, consumer update and rollback, and controlled failure or denial evidence. Architecture #13 retains the independent-product discovery question; no product or owner is inferred from repository setup.
+      - Retain the same attributable delivery chain as Milestone A, plus actual product behavior, product-owner acceptance, observed usefulness, consumer update and rollback, and controlled failure or denial evidence. Architecture #13 and Distribution #3 were closed not_planned after W25 was withdrawn from this correction program; no product or owner is inferred from repository setup.
 strategicGoals:
   - id: SG-01
     title: Deliver authorized work with end-to-end traceability
@@ -267,7 +267,7 @@ strategicGoals:
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
       evaluationEvidenceRefs:
-        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13, status: pending}
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13, status: observed}
     reviewTriggers:
       - A product repository or accountable product owner is identified.
       - A delivered change has no observable outcome or user-feedback path.
@@ -380,7 +380,7 @@ strategicGoals:
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
       evaluationEvidenceRefs:
-        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-distribution/issues/3, status: pending}
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-distribution/issues/3, status: observed}
     reviewTriggers:
       - A supported consumer surface or distribution channel changes.
       - A rollout cannot be reproduced from exact source pins or restored to its previous state.
@@ -419,7 +419,7 @@ strategicGoals:
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/107
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/108
       evaluationEvidenceRefs:
-        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12, status: pending}
+        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12, status: observed}
     reviewTriggers:
       - A Project item is missing a canonical source Issue or has ambiguous ownership.
       - Project access, field visibility, organization entitlement, or portfolio topology changes.

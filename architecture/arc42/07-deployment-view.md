@@ -28,7 +28,7 @@
 This is the desired logical deployment. It does not imply that every
 participant is active or that each hosting rule has been enabled.
 
-## 7.2 Dated inventory snapshots
+## 7.2 Current inventory snapshot and dated history
 
 The current scoped disposition is the
 [2026-10-21 gap matrix](../references/strategy-foundation-gap-matrix.md).

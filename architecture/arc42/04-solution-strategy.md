@@ -21,18 +21,12 @@ The current owner and provenance inventory is in
 ## 4.2 Portfolio planning and authorized work
 
 GitHub Projects is the primary portfolio surface for both value streams. The
-proposed minimum topology is one organization portfolio Project with separate
-Factory Evolution and Software Product Delivery views, reusing a suitable
-existing Project if an authorized inventory confirms fit. The latest complete
-read-only recheck, completed 2026-10-12 09:17–09:22 UTC, found no Project in the
-authenticated-viewer, organization, or six repository scopes and no Project
-association across all 62 Issues. All 24 open Issues had zero organization
-Issue Field Values. The same inventory found six organization Issue Fields,
-nine native Issue Types, and Free organization plan support; Project-specific
-ownership, fields, views, and visibility could not be inspected because no
-Project existed. A Project-only card can be discussed and prioritized but
-cannot authorize execution. See
-`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
+configured topology is private organization portfolio #2 with separate
+Factory Evolution and Software Product Delivery views. The dated 2026-10-21
+API readback and source query establish initial configuration and Issue
+associations; they do not establish App access or live runtime consumption.
+A Project-only card can be discussed and prioritized but cannot authorize
+execution. See the [current gap matrix](../references/strategy-foundation-gap-matrix.md).
 
 Every executable unit of work has a source Issue in its owning repository.
 The Project links that Issue and may own distinct portfolio planning facts.
@@ -43,7 +37,8 @@ Readiness`; the live inventory returned no field named `Delivery State`. Use
 the existing Issue-owned Priority value for per-Issue priority
 where the approved Project view can expose it; a Project field must not
 silently duplicate that value. The issue-field catalog is currently
-organization-members-only and Project-view suitability has not been verified.
+organization-members-only; native Issue Priority was not exposed in the private
+Project field readback and was not duplicated.
 
 The intended operating loop is source Issue → Project prioritization →
 deterministic authorization → bounded implementation → pull request →
@@ -51,9 +46,9 @@ independent validation and evaluation → human review and merge → outcome
 evidence → improvement Issue → Project prioritization. The diagrams under
 [architecture diagrams](../diagrams/README.md) show the value streams,
 strategic alignment, portfolio lifecycle, factory evolution, product delivery,
-and trust boundaries. Project planning remains a proposed integration because
-the latest read-only recheck found no Project in the queried scopes; see the
-evidence events above.
+and trust boundaries. Initial planning configuration and offline selection contracts are complete
+within their recorded scopes. Runtime integration remains unproved; see the
+current gap matrix.
 
 ## 4.3 Proposal and enforcement
 
@@ -67,7 +62,7 @@ dependencies, and allowed orchestration patterns. Only a valid proposal may
 write to the originating repository. A failed or unavailable gate leaves work
 state unchanged and records bounded evidence.
 
-This strategy is a desired contract. The current issue-intake workflow failed
+This strategy is a desired contract. The historical issue-intake runs failed
 for recovery issues #59 and #60 before dependency installation; the relevant
 Actions runs are linked in
 [`system-evidence.yml`](../references/system-evidence.yml). Passing unit

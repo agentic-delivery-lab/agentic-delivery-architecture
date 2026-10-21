@@ -63,14 +63,15 @@ risks:
     evidence: [architecture/domain/bounded-contexts.yml, system-evidence.yml#repositories, "recovery issue #59"]
     mitigation: Keep repository mapping as review routing only; an authorized maintainer must resolve the one-member/CODEOWNERS limitation and verify actual human reviews before claiming enforcement.
   - id: R-012
-    title: No Project is visible despite reported organization Projects capability
+    title: Configured private portfolio has unproved App access and runtime integration
     status: open
     owner: organization-operator
     relatedQualityScenario: QR-014
     evidence:
       - system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459
       - system-evidence.yml#portfolio-issue-project-inventory-20261011-2257
-    mitigation: Use the complete empty inventory and positive feature-capability flags to support the human topology decision; verify Project ownership, access, and field visibility before configuration. Keep App access separately unverified before any write integration.
+      - system-evidence.yml#portfolio-owner-delegated-configuration-20261021
+    mitigation: Initial private portfolio configuration and API readback resolved Project absence. Verify App access and admitted runtime context separately; retain unavailable native Issue Priority projection and browser evidence limits.
   - id: R-013
     title: Organization Actions policy does not require immutable action pins and App access is unverified
     status: open

@@ -6,16 +6,14 @@ The maintained risk register is [`../risks/risks.yml`](../risks/risks.yml);
 technical debt and exit conditions are in
 [`../risks/technical-debt.yml`](../risks/technical-debt.yml).
 
-The highest current risks include no Project visible in the authenticated
-organization, user, or repository inventories despite positive organization
-and repository capability flags, unverified Project field visibility and
-organization field pinning, mismatch between the App
-installation and the Control Plane contract, lack of completed end-to-end
-delivery evidence, and repository-by-repository gaps in live protection
-evidence. The Primitive main release manifest also contains a source commit
-that did not resolve in the live repository, although the digest reproduced
-at the valid commit pinned by Architecture. Each item has an owner and source
-in the register.
+The current risks include unproved App access to the configured private
+portfolio, unavailable native Issue Priority projection, unverified field
+pinning, mismatch between installation selection and the Control Plane
+contract, incomplete end-to-end delivery evidence, and repository-specific
+protection gaps. Initial portfolio configuration resolved the historical
+absence of a Project; it did not resolve runtime integration. Source anomalies
+and their dated evidence remain in the registers and the
+[current gap matrix](../references/strategy-foundation-gap-matrix.md).
 
 Evaluation integrity and bounded operation are additional open risks: no
 representative holdout corpus, grader calibration evidence, or independent

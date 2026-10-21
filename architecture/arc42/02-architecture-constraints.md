@@ -4,8 +4,9 @@
 
 ## 2.1 Organization and repository constraints
 
-- The system spans six repositories with distinct owners. The source commits
-  observed in the complete inventory on 2026-10-09 are listed in
+- The system now spans seven factory repositories with distinct owners,
+  including Requirements Authority. The historical six-repository source commits
+  observed on 2026-10-09 and later scoped updates are listed in
   [system evidence](../references/system-evidence.yml).
 - Architecture Authority owns principles, terminology, architecture
   descriptions, and organization-wide decision text, including context-local

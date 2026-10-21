@@ -30,17 +30,13 @@ because they have separate repositories. The machine-readable context map is
 - **GitHub Projects:** required primary planning, prioritization,
   coordination, and progress-visibility surface for Factory Evolution and
   Software Product Delivery. Origin repository Issues remain canonical work
-  records and the only source of execution authorization. The latest complete
-  Project and Issue recheck, completed 2026-10-12 09:17–09:22 UTC, found no
-  Project in the authenticated-viewer, organization, or six repository scopes;
-  none of the 62 Issues had a Project-item association, and all 24 open Issues
-  had zero organization Issue Field Values. The same inventory found six
-  organization Issue Fields and nine native Issue Types; five open Issues
-  remain untyped, while Control Plane #111 is typed Bug under recovery Issue
-  #105. The organization plan is Free. No Project existed to inspect views,
-  membership, custom fields, or visibility. External repositories and Projects
-  outside the queried scopes remain unknown. No live configuration is claimed;
-  see `system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
+  records and the only source of execution authorization. On 2026-10-21,
+  owner-delegated configuration established private portfolio #2 with two
+  saved value-stream filters. API readback selected 19 factory Issues and no
+  product Issues. Native Issue Priority is not exposed and was not copied.
+  App access and runtime context consumption remain unproved; see the
+  [current gap matrix](../references/strategy-foundation-gap-matrix.md) and
+  `system-evidence.yml#portfolio-owner-delegated-configuration-20261021`.
 - **GitHub App:** installation access, permissions, and subscribed event
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.

@@ -42,16 +42,13 @@ are introduced by this proposal; Primitive impact review automation remains
 open. QR-011's repository routing is validated, but independent human steward
 approval is blocked by the one-member/CODEOWNERS gate. Issue-field pinning is
 unverified. The recovery intake runs failed before dependency installation.
-Participants remain in shadow mode. The latest complete Projects and Issue
-inventory, read on 2026-10-12 09:17–09:22 UTC, returned no organization,
-viewer, or repository Project in the queried scopes and no Project-item
-association on any of the 62 Issues; all 24 open Issues had zero organization
-Issue Field Values. It confirmed six organization-members-only Issue Fields,
-nine native Issue Types, and Free-plan organization/repository Project
-capability. Project field visibility and runtime App access remain unknown
-because no Project exists in the queried scopes. The earlier 2026-10-09
-counts are historical; see
-`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
+The 2026-10-12 empty Project and Issue-field inventory is historical.
+The 2026-10-21 scoped disposition records initial private portfolio
+configuration and completed offline contracts, while App access, runtime
+planning-context consumption and participant admission remain unproved.
+Native Issue Priority is not exposed and was not duplicated. See the
+[current gap matrix](../references/strategy-foundation-gap-matrix.md) and
+`system-evidence.yml#portfolio-owner-delegated-configuration-20261021`.
 Architecture PR #14 merged the QR-015 evaluation-report schema and synthetic
 fixture at `61d99cb`; the schema remains in a draft Architecture release.
 Primitives #3 owns dataset/grader/replay implementation and Control Plane

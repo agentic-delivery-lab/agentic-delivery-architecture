@@ -37,20 +37,15 @@ the platform supports in-place change, compare old/new projections in shadow,
 and preserve rollback. The current architecture change does not mutate a
 field.
 
-The initial 2026-10-09 read failed because Project access was unavailable. The
-latest complete read-only inventory, completed 2026-10-12 09:17–09:22 UTC,
-found no Project in the authenticated-viewer, organization, or six repository
-scopes; all 62 Issues had zero Project-item associations, and all 24 open
-Issues had zero organization Issue Field Values. The same read found six
-organization Issue Fields and nine native Issue Types. GitHub documents that
-organization-only Issue Fields do not appear in public or internal Projects;
-no Project existed to inspect for Project-specific fields, membership, or
-private-Project visibility. The 19:14 UTC App inventory reports no Projects
-permission for the selected-repository invoker, but its exact repository
-membership and deployed credential binding remain unverified. Projects owned
-outside the queried scopes also remain unknown. The proposed one-Project/two-
-view topology awaits a human decision in Architecture #15. See
-`system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0922`.
+The historical 2026-10-09–12 empty inventories and access limits remain in
+system evidence. Architecture #15 now records owner-delegated configuration
+of private portfolio #2, with independent API field/view/Issue readback and
+a reproducible query. Native Issue Priority is not exposed and was not
+copied. Initial configuration is distinct from live runtime integration;
+App access, effective repository membership and deployed credential binding
+remain unproved. See the
+[current gap matrix](../references/strategy-foundation-gap-matrix.md) and
+`system-evidence.yml#portfolio-owner-delegated-configuration-20261021`.
 
 ## 8.3 Semantic proposals and deterministic authorization
 

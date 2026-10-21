@@ -267,7 +267,7 @@ strategicGoals:
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
       evaluationEvidenceRefs:
-        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/13, status: observed}
+        - {reference: architecture/references/system-evidence.yml#owner-w25-retirement-and-project-contract-disposition-20261021, status: observed}
     reviewTriggers:
       - A product repository or accountable product owner is identified.
       - A delivered change has no observable outcome or user-feedback path.
@@ -380,7 +380,7 @@ strategicGoals:
       projectPlanningRefs:
         - https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15
       evaluationEvidenceRefs:
-        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-distribution/issues/3, status: observed}
+        - {reference: architecture/references/system-evidence.yml#owner-w25-retirement-and-project-contract-disposition-20261021, status: observed}
     reviewTriggers:
       - A supported consumer surface or distribution channel changes.
       - A rollout cannot be reproduced from exact source pins or restored to its previous state.
@@ -419,7 +419,7 @@ strategicGoals:
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/107
         - https://github.com/agentic-delivery-lab/agentic-delivery/issues/108
       evaluationEvidenceRefs:
-        - {reference: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12, status: observed}
+        - {reference: architecture/references/system-evidence.yml#portfolio-owner-delegated-configuration-20261021, status: observed}
     reviewTriggers:
       - A Project item is missing a canonical source Issue or has ambiguous ownership.
       - Project access, field visibility, organization entitlement, or portfolio topology changes.

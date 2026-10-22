@@ -276,18 +276,26 @@ Initial admission bounds for this factory composition are:
 | Validation attempts | 3, including failed or interrupted attempts |
 | Child implementation operations and recursion depth | 0 |
 | Concurrent implementation | 1 |
-| Transport attempts | At most 8, retaining operation lineage |
-| Controller execution attempts | At most 8; separate from transport attempts |
+| Controller execution attempts | At most 8 across retries and resumes |
 | Automatic billing, account or model fallback | None |
 
 The optional initial Structurizr review capability has a further limit of
 three MCP calls per invocation, enforced at its admitted capability boundary.
 Controller validation and publication remain deterministic boundaries; they
-cannot replenish model or transport consumption. On 2026-10-21 the owner
+cannot replenish model or controller consumption. On 2026-10-21 the owner
 withdrew the universal 100-tool hard-limit requirement because supported
 stock-Codex interfaces do not establish that enforcement boundary. Keep stock
 Codex; do not introduce a native patch or substitute an advisory counter.
 Unknown tool telemetry is not a configured allowance or a zero-use claim.
+
+On 2026-10-22, the operator applied the owner's keep/drop direction to withdraw
+also the unsupported operation-wide eight-transport-attempt ceiling. Stock
+Codex's documented provider retry settings apply per failed request or stream
+reconnection; they do not establish the aggregate number of native transport
+attempts across an operation. The eight-controller-attempt ceiling remains.
+No proxy, native patch, provider switch or fabricated counter substitutes for
+that withdrawn guarantee. See the
+[official retry configuration source](https://github.com/openai/codex/blob/main/codex-rs/model-provider-info/src/lib.rs).
 
 Clarification waiting between settled attempts consumes no active time.
 Duration records an owned start before execution and is settled only after
@@ -308,7 +316,7 @@ plan or verified tree requires readmission without resetting spent allowance.
 
 Before active admission, the exact composition must demonstrate persistent
 limits across concurrency, retries, restart and resume;
-bounded child and transport behavior; owned deadline interruption; safe
+bounded child behavior; owned deadline interruption; safe
 mutation/publication reconciliation; and truthful admission/terminal evidence.
 Any unsupported or unproved boundary holds the participant in shadow.
 Approval of this policy does not approve a draft release, promote a runtime
@@ -316,7 +324,7 @@ fingerprint to an approved baseline, authorize runner privileges or enable
 unattended merging. W12 selects the approved immutable context; W13 proves
 isolation; W26–W28 retain their separate merge-policy and activation gates.
 
-Owner amendment source: [Control Plane issue #105](https://github.com/agentic-delivery-lab/agentic-delivery/issues/105), owner scope amendment dated 2026-10-21. All other W08 limits and admission gates remain in scope.
+Owner amendment source: [Control Plane issue #105](https://github.com/agentic-delivery-lab/agentic-delivery/issues/105), owner scope amendment dated 2026-10-21 and delegated keep/drop disposition dated 2026-10-22. All retained W08 limits and admission gates remain in scope.
 
 ### Development-phase authority amendment (W02)
 

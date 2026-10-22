@@ -1,5 +1,5 @@
 schemaVersion: 1
-snapshotDate: '2026-10-21'
+snapshotDate: '2026-10-22'
 snapshotKind: scoped-live-audit-and-owner-delegated-configuration
 purpose: >-
   Retain scoped repository revisions and dated live observations used by this
@@ -4748,3 +4748,21 @@ observations:
       activation or milestoneB is claimed. Broader runtime/authority work remains with existing59/106
       and Architecture11. Contract-task completion does not establish live source-Issue authorization
       or a Project-to-delivery loop.
+  - id: owner-stock-codex-transport-limit-disposition-20261022
+    observedAt: '2026-10-22T01:20:05Z'
+    source: https://github.com/agentic-delivery-lab/agentic-delivery/issues/105
+    sourceRepositories:
+      - agentic-delivery-lab/agentic-delivery
+      - agentic-delivery-lab/agentic-delivery-architecture
+    request: Apply the owner's direction to keep stock software and decide keep/drop for unsupported
+      requirements without adding a fork, patch, custom execution host or new Issue/PR.
+    result: Withdraw the unsupported aggregate eight-native-transport-attempt ceiling. Official Codex
+      documentation defines request_max_retries per failed HTTP request and stream_max_retries per
+      dropped stream reconnection; these do not establish a whole-operation transport-attempt ledger.
+      Control Plane policy proposed.3 and its source-only SQL/receipt shape remove that unused resource.
+      The eight-controller-attempt bound, existing saved consumption and separate receipt fix remain.
+    limitation: This is a delegated scope decision and source proposal, not runtime admission or a
+      database deployment. It does not disable or count every internal provider retry. Other retained
+      time/model/validation/controller/child/concurrency, durable recovery, profile and isolation
+      requirements remain. Earlier dated observations retain their original scope. Existing17/114
+      carry reconciliation; Requirements FR003 remains proposed and its checkout is unchanged.

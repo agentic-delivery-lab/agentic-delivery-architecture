@@ -52,6 +52,8 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Withdraw the unsupported operation-wide native transport ceiling under the owner's stock-software keep/drop direction. Retain the eight-controller-attempt bound, saved consumption and all other retained admission gates.
+
 - Reconcile the existing strategy/evidence proposal with accepted Requirements ownership and current authority contracts while retaining 50 dated branch-only observations.
 - Record the owner-directed stock-Codex tool-limit withdrawal and the private two-view portfolio configuration. Keep source-Issue authorization, unproved runtime admission and unknown native tool consumption explicit.
 - Retire unsupported independent-product delivery from this correction program and close completed offline planning scopes without claiming live App integration or milestone outcomes.

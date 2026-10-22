@@ -9,7 +9,7 @@ preservation hashes and a patch are held by the operator. No branch history is r
 The owner requires stock upstream software, an explicit keep/drop or supported
 alternative for every Wxx item, resolution of existing drafts and no new Issues/PRs
 before existing review work is resolved. Current decisions: withdraw universal 100-tool
-interception; retain supported budget/receipt/profile controls; withdraw W25 product
+interception and the unsupported aggregate eight-native-transport-attempt ceiling; retain supported budget/receipt/profile controls; withdraw W25 product
 onboarding without inventing a product; keep the private portfolio and two filtered
 views using supported API readback. Explicit board grouping and browser screenshots
 are withdrawn from initial configuration acceptance because available supported

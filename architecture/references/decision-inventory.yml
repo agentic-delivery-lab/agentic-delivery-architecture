@@ -89,7 +89,7 @@ records:
     amendments:
       - heading: Operation-wide allowance amendment (W08)
         sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
-        sha256: 8753fad56627e18d0265821a018e17766f313f215429e2977370f8e4efeee318
+        sha256: cde27a8379d5e046ac6cb062ddbe7aca2e8adc4b6badbb789532508758ff3d26
   - id: ADR-0011
     path: decisions/0011-run-layered-harness-architecture-reviews.md
     domains: [agentic-delivery-governance, agentic-delivery-control-plane]

@@ -25,11 +25,13 @@ handling; runtime provisioning and activation remain separate work.
 Proposed ADR-0023 makes GitHub Projects the required portfolio planning,
 prioritization, coordination, and progress-visibility surface while preserving
 origin Issues as the sole work and execution-authorization records. The
-current inventory found no Project in organization, user, or repository
-connections, while the organization API reports organization and repository
-Project capability under its Free plan. Project membership, views, field
-visibility, and GitHub App access remain unknown; this proposed decision
-authorizes no live configuration.
+original empty inventory is historical. Architecture #15 now records the
+owner-delegated configuration of private portfolio #2 and its two filtered
+views, with dated API readback. Native Issue Priority is not exposed and was
+not duplicated. Browser rendering, GitHub App access and runtime planning-context
+admission remain separate evidence gaps. The decision record alone grants no
+live configuration or execution authority; see the
+[current gap matrix](../references/strategy-foundation-gap-matrix.md).
 
 ADR-0024 selects centralized public Requirements Authority for approved
 factory, shared and product requirements. Architecture retains organizational

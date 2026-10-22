@@ -16,6 +16,32 @@ required-enforcement:
 
 # Use Projects for planning and Issues for execution authorization
 
+## Current configuration disposition — 2026-10-21
+
+Existing Architecture [#15](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/15)
+records the owner-delegated topology decision and initial private organization
+[portfolio #2](https://github.com/orgs/agentic-delivery-lab/projects/2), administered
+by `sjefsharp`. The Factory Evolution board and Software Product Delivery roadmap
+have saved value-stream filters. Independent API readback selects 19 factory
+source-Issue items and 0 product items ; 4 completed child Issues were added by GitHub
+Project automation and retained as completed history. W25 product onboarding is
+withdrawn from the current correction program; no product delivery is claimed.
+
+The supported API exposes view layout/filter/visible-field configuration but no
+grouping edits. Explicit board grouping and rendered-browser screenshots are
+withdrawn from initial configuration acceptance; current API readback and the
+owner-scoped query are the recorded alternative. Native Issue Priority is not
+exposed in the current Project fields and was not duplicated. No lifecycle,
+readiness, delivery-state, date or effort field was copied. The optional portfolio
+checkpoint date is omitted.
+
+This records scoped administrative configuration under ADR-0018 W02 delegation.
+Source Issues retain execution authority. App access, runtime planning-context
+consumption, participant admission and production integration remain separate
+requirements. The original dated inventory and decision rationale below remain
+historical context, not a claim that the organization still has no Project.
+See the [dated evidence](../architecture/references/system-evidence.yml#portfolio-owner-delegated-configuration-20261021).
+
 ## Context and Problem Statement
 
 The organizational strategy needs one portfolio surface for prioritization,

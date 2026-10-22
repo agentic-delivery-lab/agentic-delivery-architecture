@@ -4,7 +4,7 @@
   "architecture": "urn:agentic-delivery:architecture:authority",
   "decisionInventory": {
     "path": "architecture/references/decision-inventory.yml",
-    "sha256": "4a893b44a4e8cea3742f26cc4f0af520b05bbd42e60b48d1ee60e0118b78e4ae",
+    "sha256": "9aad2877bbb89589d704eeebbeaef9e4a1850d70429125cf1d1041b2b106f59b",
     "schemaVersion": 1
   },
   "primitiveRelease": {

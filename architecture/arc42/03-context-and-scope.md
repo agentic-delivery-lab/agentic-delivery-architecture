@@ -30,12 +30,13 @@ because they have separate repositories. The machine-readable context map is
 - **GitHub Projects:** required primary planning, prioritization,
   coordination, and progress-visibility surface for Factory Evolution and
   Software Product Delivery. Origin repository Issues remain canonical work
-  records and the only source of execution authorization. The 2026-10-09
-  inventory found no organization, user, or repository Project, while the
-  organization API reports Project capability under its Free plan. The
-  authenticated user has an active organization admin role, but Project views,
-  fields, per-Project access, GitHub App access, and live lifecycle integration
-  remain unverified. No live configuration is claimed.
+  records and the only source of execution authorization. On 2026-10-21,
+  owner-delegated configuration established private portfolio #2 with two
+  saved value-stream filters. API readback selected 19 factory Issues and no
+  product Issues. Native Issue Priority is not exposed and was not copied.
+  App access and runtime context consumption remain unproved; see the
+  [current gap matrix](../references/strategy-foundation-gap-matrix.md) and
+  `system-evidence.yml#portfolio-owner-delegated-configuration-20261021`.
 - **GitHub App:** installation access, permissions, and subscribed event
   delivery. It grants access and supplies events; it does not distribute
   generic issue forms or templates.
@@ -54,8 +55,11 @@ because they have separate repositories. The machine-readable context map is
 - **Consumer repositories:** receive thin, version-pinned integration from
   Distribution and reviewed Primitive projections from their canonical source.
 - **Product repositories:** the expected owner boundary for product Issues and
-  product outcome evidence; no distinct product repository or steward was
-  identified in the six-repository inventory.
+  product outcome evidence; the 2026-10-11 19:33 UTC repository mapping
+  identified no distinct product repository or steward among the six
+  organization repositories. The 2026-10-12 09:22 UTC recheck covered those
+  same six repositories, not external repositories; an external product
+  repository remains unknown.
 
 ## 3.3 Scope exclusions
 

@@ -1,0 +1,71 @@
+# Owner-scoped readback for Architecture15 / W23. Supply the recorded Project ID.
+# Requires the caller's own authorized Project/repository access; grants no authority.
+query PortfolioConfigurationReadback($projectId: ID!) {
+  viewer { login }
+  organization(login: "agentic-delivery-lab") {
+    projectsV2(first: 100) {
+      totalCount
+      pageInfo { hasNextPage endCursor }
+      nodes { id number title public closed url }
+    }
+  }
+  node(id: $projectId) {
+    ... on ProjectV2 {
+      id
+      number
+      title
+      public
+      closed
+      url
+      viewerCanUpdate
+      fields(first: 100) {
+        pageInfo { hasNextPage endCursor }
+        nodes {
+          ... on ProjectV2FieldCommon { id name dataType }
+          ... on ProjectV2SingleSelectField { options { id name } }
+        }
+      }
+      views(first: 100) {
+        pageInfo { hasNextPage endCursor }
+        nodes {
+          id
+          name
+          layout
+          filter
+          groupByFields(first: 20) {
+            nodes { ... on ProjectV2FieldCommon { id name } }
+          }
+        }
+      }
+      items(first: 100) {
+        totalCount
+        pageInfo { hasNextPage endCursor }
+        nodes {
+          id
+          creator { login }
+          content {
+            ... on Issue {
+              id
+              number
+              state
+              stateReason
+              repository { id databaseId nameWithOwner }
+              parent { id }
+            }
+          }
+          valueStream: fieldValueByName(name: "Value stream") {
+            ... on ProjectV2ItemFieldSingleSelectValue { name optionId }
+          }
+        }
+      }
+      factory: items(first: 100, query: "value-stream:\"Factory Evolution\"") {
+        totalCount
+        pageInfo { hasNextPage endCursor }
+      }
+      product: items(first: 100, query: "value-stream:\"Software Product Delivery\"") {
+        totalCount
+        pageInfo { hasNextPage endCursor }
+      }
+    }
+  }
+}

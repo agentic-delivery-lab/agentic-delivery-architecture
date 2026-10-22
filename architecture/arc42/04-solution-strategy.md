@@ -21,24 +21,24 @@ The current owner and provenance inventory is in
 ## 4.2 Portfolio planning and authorized work
 
 GitHub Projects is the primary portfolio surface for both value streams. The
-proposed minimum topology is one organization portfolio Project with separate
-Factory Evolution and Software Product Delivery views, reusing a suitable
-existing Project if an authorized inventory confirms fit. The 2026-10-09
-inventory found no Project within the queried organization, user, or
-repository scopes; the organization REST API reports Project capability
-available under its Free plan. Project-specific ownership, fields, views, and
-visibility must be reviewed before selecting or configuring a Project. A
-Project-only card can be discussed and prioritized but cannot authorize
-execution.
+configured topology is private organization portfolio #2 with separate
+Factory Evolution and Software Product Delivery views. The dated 2026-10-21
+API readback and source query establish initial configuration and Issue
+associations; they do not establish App access or live runtime consumption.
+A Project-only card can be discussed and prioritized but cannot authorize
+execution. See the [current gap matrix](../references/strategy-foundation-gap-matrix.md).
 
 Every executable unit of work has a source Issue in its owning repository.
 The Project links that Issue and may own distinct portfolio planning facts.
-Issue intent, Issue Type, Priority, Lifecycle Stage, Delivery State, and
-authorization remain with the source Issue and organization Issue Field
-contracts. Use the existing Issue-owned Priority value for per-Issue priority
+Issue intent, Issue Type, Priority, Lifecycle Stage, the delivery-readiness
+value, and authorization remain with the source Issue and organization Issue
+Field contracts. The current organization Issue Field is named `Delivery
+Readiness`; the live inventory returned no field named `Delivery State`. Use
+the existing Issue-owned Priority value for per-Issue priority
 where the approved Project view can expose it; a Project field must not
 silently duplicate that value. The issue-field catalog is currently
-organization-members-only and Project-view suitability has not been verified.
+organization-members-only; native Issue Priority was not exposed in the private
+Project field readback and was not duplicated.
 
 The intended operating loop is source Issue → Project prioritization →
 deterministic authorization → bounded implementation → pull request →
@@ -46,8 +46,9 @@ independent validation and evaluation → human review and merge → outcome
 evidence → improvement Issue → Project prioritization. The diagrams under
 [architecture diagrams](../diagrams/README.md) show the value streams,
 strategic alignment, portfolio lifecycle, factory evolution, product delivery,
-and trust boundaries. Project planning remains a proposed integration because
-the dated read-only inventory found no Project.
+and trust boundaries. Initial planning configuration and offline selection contracts are complete
+within their recorded scopes. Runtime integration remains unproved; see the
+current gap matrix.
 
 ## 4.3 Proposal and enforcement
 
@@ -61,7 +62,7 @@ dependencies, and allowed orchestration patterns. Only a valid proposal may
 write to the originating repository. A failed or unavailable gate leaves work
 state unchanged and records bounded evidence.
 
-This strategy is a desired contract. The current issue-intake workflow failed
+This strategy is a desired contract. The historical issue-intake runs failed
 for recovery issues #59 and #60 before dependency installation; the relevant
 Actions runs are linked in
 [`system-evidence.yml`](../references/system-evidence.yml). Passing unit
@@ -79,14 +80,19 @@ observed Control Plane baseline.
 
 ## 4.5 Three delivery paths
 
-1. **Product delivery loop:** a user or operator need becomes requirements and
-   an Issue in an identified, authorized product repository, is prioritized in
-   Projects, and is interpreted;
-   deterministic gates authorize one bounded writer; a Validator checks the
-   change; a pull request is independently reviewed and merged by a human.
-   Product evidence after delivery informs the next Issue. Repository creation,
-   product stewardship, and bootstrap remain approval-gated and no product
-   repository is currently identified.
+1. **Product delivery loop:** when a steward-owned product repository exists,
+   product work starts from a typed Issue in that repository. When no
+   steward-owned product repository is confirmed, record requirements,
+   ownership discovery, and the intended user or operator outcome in an Issue
+   in an existing owning repository. A human must approve the repository
+   choice, access, stewardship, and feedback path; creating a repository and its
+   pinned bootstrap require explicit approval. Only an owned, onboarded
+   repository can own product Issues. Link the product Issue to the approved
+   Project for prioritization and progress visibility. Deterministic gates
+   authorize one bounded writer; a Validator checks the change; a pull request
+   is independently reviewed and merged by a human. Product evidence after delivery informs the
+   next Issue. No product repository or accountable steward is currently
+   identified.
 2. **Factory evolution loop:** a factory defect, capability gap, or measured
    improvement becomes an Issue in its owning factory repository, is
    prioritized in Projects, and follows the same authorized delivery and

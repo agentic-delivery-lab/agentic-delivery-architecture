@@ -1,6 +1,6 @@
 flowchart TD
-  STATUS["PROPOSED TARGET CONTRACT<br/>2026-10-09 inventory found no organization or user Project and no Project associations; no end-to-end delivery is proved"]
-  PROJECT["GitHub Projects<br/>portfolio planning and progress visibility"]
+  STATUS["Configuration readback 2026-10-21: private portfolio 2 has two saved value-stream filters and 19 factory source-Issue items; 0 product items.<br/>App access, runtime planning context and end-to-end delivery remain unproved. The flow below is an authorization contract.<br/>Dated evidence: system-evidence.yml#portfolio-owner-delegated-configuration-20261021"]
+  PROJECT["GitHub Projects<br/>item membership, portfolio planning, and progress visibility"]
   CARD["Project-only card"]
   HUMAN["Maintainer creates or links an Issue"]
   ISSUE["Source Issue in the owning repository"]
@@ -25,7 +25,7 @@ flowchart TD
   CARD -->|"planning input only"| PROJECT
   PROJECT -->|"must link or convert before execution"| HUMAN
   HUMAN --> ISSUE
-  ISSUE --> PROJECT
+  ISSUE -->|"Project item membership for planning; not authorization"| PROJECT
   PROJECT -. "never an execution trigger" .-> IDENTITY
   ISSUE --> EVENT --> APP --> INGRESS --> CONTROL --> IDENTITY --> CONTRACT
   IDENTITY -->|"identity or permission fails"| HOLD

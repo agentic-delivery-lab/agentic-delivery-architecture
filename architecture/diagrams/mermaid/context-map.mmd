@@ -1,5 +1,5 @@
 flowchart LR
-  STATUS["Source snapshot 2026-10-09<br/>Vercel reports a READY production deployment on Control Plane main; webhook delivery and Neon runtime state are unverified.<br/>No distinct product repository was identified."]
+  STATUS["Scoped status 2026-10-21: private portfolio 2 configured; 19 factory Issues, 0 product Issues.<br/>App access, runtime planning context and participant admission remain unproved.<br/>No distinct product repository was identified. W25 onboarding withdrawn; no product delivery claimed.<br/>Current gap matrix and dated system evidence retain the separate source, hosted and runtime limits."]
   subgraph DOMAIN["Domain contexts"]
     GOV["Agentic Delivery Governance"]
     CP["Agentic Delivery Control Plane"]
@@ -8,6 +8,9 @@ flowchart LR
   end
 
   AUTH["Architecture Authority<br/>Cross-context authority, not a bounded context"]
+  REQ["Requirements Authority<br/>Approved normative requirements and QR baseline"]
+  REQ -. "immutable approved baseline and checked QR projection" .-> AUTH
+  REQ -. "applicable approved context; admission required" .-> CP
   AUTH -. "canonical organization ADR/ADP/ADD text, principles, conformance" .-> GOV
   AUTH -. "pinned Architecture release and canonical decision text" .-> CP
   AUTH -. "canonical ADR text and context references" .-> PRIM
@@ -15,7 +18,7 @@ flowchart LR
 
   subgraph GHORG["GitHub organization surfaces"]
     TYPE["Native Issue Types"]
-    DEFINITIONS["Organization issue-field definitions<br/>Lifecycle Stage + Delivery State<br/>(currently displayed as Delivery Readiness)"]
+    DEFINITIONS["Organization issue-field definitions<br/>Lifecycle Stage + Delivery Readiness"]
     APP["GitHub App<br/>installation access + subscribed events"]
   end
   WORK["Repository Issues and pull requests"]

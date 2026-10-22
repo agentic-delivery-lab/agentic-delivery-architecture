@@ -42,19 +42,20 @@ are introduced by this proposal; Primitive impact review automation remains
 open. QR-011's repository routing is validated, but independent human steward
 approval is blocked by the one-member/CODEOWNERS gate. Issue-field pinning is
 unverified. The recovery intake runs failed before dependency installation.
-Participants remain in shadow mode. The refreshed authorized Projects
-inventory returned no organization, personal, or repository Project visible
-to the queried identity, and all 19 open Issues in the six visible
-repositories had zero Project item associations. The organization REST response reports
-organization and repository Projects available under the Free plan, and the
-identity has an active organization admin role. The six organization Issue
-Fields are organization-members-only.
-Architecture PR #14 proposes the QR-015 evaluation-report schema and synthetic
-fixture, while Primitives #3 owns dataset/grader/replay implementation and
-Control Plane #103 owns finding routing. There is no measured baseline or live
-evaluation. QR-013–QR-016 remain target scenarios; they do not report complete
-runtime integration or achieved outcomes. These are unresolved evidence gaps,
-not satisfied quality goals.
+The 2026-10-12 empty Project and Issue-field inventory is historical.
+The 2026-10-21 scoped disposition records initial private portfolio
+configuration and completed offline contracts, while App access, runtime
+planning-context consumption and participant admission remain unproved.
+Native Issue Priority is not exposed and was not duplicated. See the
+[current gap matrix](../references/strategy-foundation-gap-matrix.md) and
+`system-evidence.yml#portfolio-owner-delegated-configuration-20261021`.
+Architecture PR #14 merged the QR-015 evaluation-report schema and synthetic
+fixture at `61d99cb`; the schema remains in a draft Architecture release.
+Primitives #3 owns dataset/grader/replay implementation. Control Plane #103
+owns finding routing. There is no measured baseline or live evaluation.
+QR-013–QR-016 remain target scenarios; they do not report complete runtime
+integration or achieved outcomes. These are unresolved evidence gaps, not
+satisfied quality goals.
 
 The proposed report contract 2.0.0 requires each case to state its task,
 stimulus, expected outcome, and acceptance criteria; the case set must match

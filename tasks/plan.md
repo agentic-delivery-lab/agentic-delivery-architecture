@@ -1,5 +1,34 @@
 # Implementation Plan: Strategy Foundation, Project Planning, and Evaluation Evidence
 
+## Current reconciliation checkpoint — 2026-10-21
+
+Existing PR17 is reconciled with accepted main 05ff0bf in the clean primary checkout.
+The separate paused locked worktree and its 4 dirty files remain unchanged; private
+preservation hashes and a patch are held by the operator. No branch history is rewritten.
+
+The owner requires stock upstream software, an explicit keep/drop or supported
+alternative for every Wxx item, resolution of existing drafts and no new Issues/PRs
+before existing review work is resolved. Current decisions: withdraw universal 100-tool
+interception and the unsupported aggregate eight-native-transport-attempt ceiling; retain supported budget/receipt/profile controls; withdraw W25 product
+onboarding without inventing a product; keep the private portfolio and two filtered
+views using supported API readback. Explicit board grouping and browser screenshots
+are withdrawn from initial configuration acceptance because available supported
+interfaces do not provide them. These are scoped decisions, not runtime admission.
+
+Portfolio 2 is private, has 19 factory source-Issue items and 0 product items, and is
+administered by sjefsharp. Architecture15 is closed for delegated configuration;
+Control Plane101/107 are closed for their original offline-contract scopes.
+Architecture13/Distribution3 are closed not_planned for W25. No App scope,
+participant mode, source-Issue lifecycle field or production setting was changed.
+
+Next: finish exact source validation/review, bind a reproducible Architecture
+candidate, reconcile remaining source 105/106 and compatible-reader/profile/runtime
+gates, and resolve existing Customizations/Distribution work through its actual
+review policy. A passing source subset is not full W01–W29 completion. The dated
+planning/evidence entries below retain their original historical scope.
+
+---
+
 ## Objective
 
 Complete the Architecture #11 strategy foundation and plan its owner-specific
@@ -290,7 +319,7 @@ broad OAuth scopes including `admin:org`, `project`, `repo`, and `workflow`.
 The organization CLI Project list still returned no Projects; the six
 repository open-Issue listings still totaled 19. All six current `main`
 commits matched the pins in `system-evidence.yml`. Control Plane PRs #102 and
-#104 remained CLEAN without recorded review decisions, #86 remained DIRTY,
+Issue #104 remained CLEAN without recorded review decisions, #86 remained DIRTY,
 Architecture #14 remained BLOCKED, and Primitives #4 remained draft and
 `REVIEW_REQUIRED`. The limited CLI recheck is recorded separately from the
 complete GraphQL Project inventory. OAuth scopes describe this user's API
@@ -361,7 +390,7 @@ runtime permission was changed.
 At 18:30:42 UTC, the read-only PR/check/Release refresh found five open PRs
 and no Releases in the six visible repositories. Architecture #14 remained
 BLOCKED at `6b0a4eef` with exact-head validation passed; Control Plane #102 and
-#104 were CLEAN with checks passed and no review decisions; Control Plane #86
+Issue #104 were CLEAN with checks passed and no review decisions; Control Plane #86
 was DIRTY; and draft Primitives #4 remained BLOCKED and `REVIEW_REQUIRED`.
 Distribution and both adapters had no open PRs. The open-Issue count remained
 the last observed total of 22 from 18:21:44; no new Issue or Project query was
@@ -438,7 +467,7 @@ measured outcomes.
 ### Ordered owner work and dependency map
 
 Tasks remain in the existing GitHub Issues listed above and in Architecture
-#11; this section is their ordered index, not a second task checklist. The
+Issue #11; this section is their ordered index, not a second task checklist. The
 Architecture #11 body already links Control Plane #59 as the recovery-lineage
 root with its own acceptance criteria and related-context-only boundary; a
 fresh read confirms #59 remains open, so do not reopen or expand it. The

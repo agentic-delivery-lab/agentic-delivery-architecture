@@ -23,7 +23,7 @@ App installation, or GitHub enforcement.
 
 Manifest schemaVersion 2 adds `decisionIds`, which must exactly match the
 Architecture inventory, while `adrIds` must exactly match local ADR files.
-`contractVersions.architectureRelease` is `5.0.0`: it retains the normalized
+`contractVersions.architectureRelease` is `5.1.0`: it retains the normalized
 digest algorithm, which excludes only `sourceCommit` and `contentSha256` from
 the digest input, and pins the per-family Architecture artifact contract as
 `architectureArtifacts` `1.0.0`. The prepared source commit contains the
@@ -37,7 +37,9 @@ An older consumer retains its current contract until its owner reviews and
 validates an update in its own issue and pull request. This draft does not
 activate a consumer migration or publish a release.
 
-Contract 5.0.0 additionally requires `requirementsReference: 1.0.0`. The selected
+Contract 5.0.0 introduced `requirementsReference: 1.0.0`; 5.1.0 also binds
+declared amendments through decision inventory 1.1.0 without changing imported
+historical source identities. The selected
 Requirements lock and checked QR projection bind the single normative owner.
 Historical 4.0.0 artifacts keep their immutable reader/schema; consumers must
 explicitly admit the new family. Prepared source pins must remain ancestors of

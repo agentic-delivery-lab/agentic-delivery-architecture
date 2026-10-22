@@ -21,9 +21,10 @@ their own reviewed follow-up changes.
 
 ## 8.2 Work state and execution state
 
-The GitHub control plane owns native Issue Type, Lifecycle Stage, Delivery
-State, governance metadata, and source-issue lineage. The current live Delivery
-State field name is Delivery Readiness; the logical `readiness` key remains a
+The GitHub control plane owns native Issue Type, Lifecycle Stage, delivery-
+readiness metadata, governance metadata, and source-issue lineage. The current
+organization Issue Field is named `Delivery Readiness`; the live inventory
+returned no field named `Delivery State`. The logical `readiness` key remains a
 versioned compatibility alias until an explicit migration. Runner state is
 separate and describes one resumable operation. GitHub Projects is the primary
 portfolio planning and coordination surface, while Issues remain canonical
@@ -36,20 +37,15 @@ the platform supports in-place change, compare old/new projections in shadow,
 and preserve rollback. The current architecture change does not mutate a
 field.
 
-The initial 2026-10-09 read failed because Project access was unavailable. The
-refreshed complete query under `project`, `admin:org`, and `repo` scopes
-returned no organization, personal, or repository Projects and no next page;
-all 19 open Issues in the six visible organization repositories also had no
-Project associations. The organization REST response reports both organization
-and repository Projects available under the Free plan, and the authenticated
-user's active organization role is `admin`. No Project field, membership, or
-visibility could be inspected. The selected-repository invoker installation
-declares no organization- or repository-Projects permission; its exact
-repository membership remains unverified. Projects owned outside the queried
-scopes also remain unknown. The proposed one-Project/two-view topology awaits
-a human decision in Architecture #15. All six organization Issue Fields
-have `organization_members_only` visibility, which remains a view-design
-constraint for any future Project.
+The historical 2026-10-09–12 empty inventories and access limits remain in
+system evidence. Architecture #15 now records owner-delegated configuration
+of private portfolio #2, with independent API field/view/Issue readback and
+a reproducible query. Native Issue Priority is not exposed and was not
+copied. Initial configuration is distinct from live runtime integration;
+App access, effective repository membership and deployed credential binding
+remain unproved. See the
+[current gap matrix](../references/strategy-foundation-gap-matrix.md) and
+`system-evidence.yml#portfolio-owner-delegated-configuration-20261021`.
 
 ## 8.3 Semantic proposals and deterministic authorization
 

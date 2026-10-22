@@ -29,12 +29,10 @@ Factory Evolution and Software Product Delivery.
 - Project dependency fields express portfolio planning intent only. Execution
   dependency gates remain owned by the source Issue and Control Plane
   contract.
-- One organization portfolio Project with separate views for the two value
-  streams is the proposed minimum topology. The current inventory found no
-  Project, while the organization API reports organization and repository
-  Project capability. Project ownership, field visibility, and any required
-  access configuration must be reviewed before a specific Project is selected
-  or configured.
+- Private organization portfolio #2 now has separate value-stream views under
+  the owner-delegated configuration recorded by Architecture #15. Its API
+  readback proves the initial configuration scope; App access and runtime
+  planning-context admission remain separate gates.
 - Evaluation findings and factory-improvement suggestions become Issues.
   People prioritize those Issues in Projects before any new execution begins.
 - Project automation, App permissions, and Project configuration require
@@ -44,12 +42,12 @@ Factory Evolution and Software Product Delivery.
 ## Evidence and current limits
 
 The organizational strategy is a proposal linked to Architecture Issue #11.
-The initial 2026-10-09 live audit lacked Project access. A later complete
-read-only inventory under an active organization admin identity reporting
-`project`, `admin:org`, and `repo` returned no organization, personal, or
-repository Project and no associations for the 19 open Issues in the six
-visible repositories. The organization REST response reports Project features
-available. This does not cover Projects owned outside those scopes or GitHub
-App access. The organization Issue Field catalog reports member-only
-visibility, and suitability for a future Project has not been verified. The
-principle does not claim an implemented or passing live integration.
+The historical empty inventories remain in system evidence. On 2026-10-21,
+private portfolio #2 was configured and independently read back with 19 factory
+Issue items and no product items. Native Issue Priority is not exposed in its
+field connection and was not duplicated. Browser rendering and explicit board
+grouping were withdrawn from initial configuration acceptance; the supported
+API query records the alternative. No App access or passing live delivery
+integration is inferred. See the
+[current gap matrix](../references/strategy-foundation-gap-matrix.md) and
+`system-evidence.yml#portfolio-owner-delegated-configuration-20261021`.

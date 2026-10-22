@@ -4,7 +4,61 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Rechecked Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s Project existence and Issue associations at 2026-10-12 04:59 UTC. Organization, viewer, and all six repository Project v2 connections returned zero Projects; all 61 Issues had no Project items. Issue Fields, Issue Types, entitlements, and App grants remain separately timed evidence from 2026-10-11. No Project or live configuration was changed; Architecture #15 remains the human topology decision. See `architecture/references/system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459`.
+
+- Refreshed Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s read-only inventory at 2026-10-11 22:57–23:02 UTC. The organization, viewer, and all six repository Project v2 inventories returned no Projects, and all 61 Issues had no Project item. The audit also records enabled GitHub Projects entitlements, current Issue Types/Fields, open Issue/PR and release state, and the limits of the observed access. No Project or live configuration was changed; Architecture #15 remains the human topology decision. See `architecture/references/system-evidence.yml#portfolio-issue-project-inventory-20261011-2257`.
+
+- Refreshed Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s read-only GitHub Projects and Issue inventory at 2026-10-10 23:53 UTC, including current repository refs, open pull requests, release state, organization Issue Fields, and App permission limits. No Project or live configuration was changed.
+
+- Proposed ADR-0022 to use Neon Postgres for durable webhook replay claims.
+  The decision records the provider and replay-store constraints only; it does
+  not provision a database or activate the webhook.
+- Allowed each proposed inventory record to link its own Architecture tracking
+  issue, separate from the issue that introduced the canonical inventory.
+- Proposed per-family Architecture naming, template, and structured-data
+  contracts with pinned schema validation.
+
+- Added Architecture draft release `0.1.0-draft.8`, documenting the separate
+  HMAC authentication boundary for the webhook-to-controller dispatch hop.
+
+- Added Architecture draft release `0.1.0-draft.7`, rebinding the generated
+  Primitive traceability projection to the filtered main-snapshot Primitive
+  candidate and updating the reproducible Architecture content digest; draft6
+  remains the explicit rollback release.
+
+- Added Architecture draft release `0.1.0-draft.6` with a non-null,
+  reproducible content digest, explicit ADR and bounded-context identifiers,
+  and integrity pins for the conformance policy and tooling lock. Draft5
+  remains the explicit rollback release.
+
+- Added Architecture draft release `0.1.0-draft.4`, updating the generated
+  Primitive traceability index to Primitive release `0.1.0-draft.4`.
+
+- Added Architecture draft release `0.1.0-draft.3`, updating the generated
+  Primitive traceability index to Primitive release `0.1.0-draft.3`.
+
+- Added Architecture draft release `0.1.0-draft.2`, whose generated
+  Primitive traceability index pins Primitive release `0.1.0-draft.2` and its
+  canonical content digest.
+
+- Added a deterministic SHA-256 Architecture content digest and made the
+  conformance request require that digest for the pinned Architecture tree.
+
+- Added the history-preserving Architecture Authority extraction, arc42
+  chapter structure, principles, bounded-context model, contracts, diagrams,
+  risks, and deterministic validation scaffold.
+
 ### Changed
+
+- Align current building-block, decision and standalone planning views with the configured private portfolio. Keep dated empty inventories historical and App/runtime admission unproved.
+
+- Withdraw the unsupported operation-wide native transport ceiling under the owner's stock-software keep/drop direction. Retain the eight-controller-attempt bound, saved consumption and all other retained admission gates.
+
+- Reconcile the existing strategy/evidence proposal with accepted Requirements ownership and current authority contracts while retaining 50 dated branch-only observations.
+- Record the owner-directed stock-Codex tool-limit withdrawal and the private two-view portfolio configuration. Keep source-Issue authorization, unproved runtime admission and unknown native tool consumption explicit.
+- Retire unsupported independent-product delivery from this correction program and close completed offline planning scopes without claiming live App integration or milestone outcomes.
 
 - Architecture #12 refreshes scoped Project evidence on 2026-10-20: zero Projects and Issue associations across seven visible repositories and all 64 Issues. Older metadata observations retain their dates; topology and runtime admission remain separate gates.
 
@@ -57,34 +111,9 @@ All notable changes to this repository are documented here.
   GitHub does not automatically redeliver failed webhook deliveries; the
   amendment keeps event bodies and credentials out of Neon.
 
-### Added
-
-- Rechecked Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s Project existence and Issue associations at 2026-10-12 04:59 UTC. Organization, viewer, and all six repository Project v2 connections returned zero Projects; all 61 Issues had no Project items. Issue Fields, Issue Types, entitlements, and App grants remain separately timed evidence from 2026-10-11. No Project or live configuration was changed; Architecture #15 remains the human topology decision. See `architecture/references/system-evidence.yml#portfolio-project-issue-association-recheck-20261012-0459`.
-
-- Refreshed Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s read-only inventory at 2026-10-11 22:57–23:02 UTC. The organization, viewer, and all six repository Project v2 inventories returned no Projects, and all 61 Issues had no Project item. The audit also records enabled GitHub Projects entitlements, current Issue Types/Fields, open Issue/PR and release state, and the limits of the observed access. No Project or live configuration was changed; Architecture #15 remains the human topology decision. See `architecture/references/system-evidence.yml#portfolio-issue-project-inventory-20261011-2257`.
-
-- Refreshed Architecture [Issue #12](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/12)'s read-only GitHub Projects and Issue inventory at 2026-10-10 23:53 UTC, including current repository refs, open pull requests, release state, organization Issue Fields, and App permission limits. No Project or live configuration was changed.
-
-- Proposed ADR-0022 to use Neon Postgres for durable webhook replay claims.
-  The decision records the provider and replay-store constraints only; it does
-  not provision a database or activate the webhook.
-- Allowed each proposed inventory record to link its own Architecture tracking
-  issue, separate from the issue that introduced the canonical inventory.
-- Proposed per-family Architecture naming, template, and structured-data
-  contracts with pinned schema validation.
-
-### Changed
-
 - Renamed the twelve arc42 chapter files to the documented `NN-title.md`
   pattern and routed all Architecture decision families through the shared
   MADR base structure.
-
-### Removed
-
-- Removed the copied Control Plane evidence schema and the unreferenced
-  duplicate bounded-context UML model.
-
-### Changed
 
 - Centralized all 19 active ADRs, ADP-0001, and ADD-0001 in Architecture
   Authority as the proposed canonical text set. Preserved
@@ -115,6 +144,11 @@ All notable changes to this repository are documented here.
 - Marked the history-preserving Architecture extraction as published after
   verifying its public `main`, merged import, and active branch ruleset.
 
+### Removed
+
+- Removed the copied Control Plane evidence schema and the unreferenced
+  duplicate bounded-context UML model.
+
 ### Fixed
 
 - Verified imported source bytes with `git show` at pinned source commits and
@@ -122,35 +156,3 @@ All notable changes to this repository are documented here.
   and ADR-0009 into the Architecture decision directory.
 - Replaced the missing local architecture-decision skill link with the
   immutable canonical Primitive skill source.
-
-### Added
-
-- Added Architecture draft release `0.1.0-draft.8`, documenting the separate
-  HMAC authentication boundary for the webhook-to-controller dispatch hop.
-
-- Added Architecture draft release `0.1.0-draft.7`, rebinding the generated
-  Primitive traceability projection to the filtered main-snapshot Primitive
-  candidate and updating the reproducible Architecture content digest; draft6
-  remains the explicit rollback release.
-
-- Added Architecture draft release `0.1.0-draft.6` with a non-null,
-  reproducible content digest, explicit ADR and bounded-context identifiers,
-  and integrity pins for the conformance policy and tooling lock. Draft5
-  remains the explicit rollback release.
-
-- Added Architecture draft release `0.1.0-draft.4`, updating the generated
-  Primitive traceability index to Primitive release `0.1.0-draft.4`.
-
-- Added Architecture draft release `0.1.0-draft.3`, updating the generated
-  Primitive traceability index to Primitive release `0.1.0-draft.3`.
-
-- Added Architecture draft release `0.1.0-draft.2`, whose generated
-  Primitive traceability index pins Primitive release `0.1.0-draft.2` and its
-  canonical content digest.
-
-- Added a deterministic SHA-256 Architecture content digest and made the
-  conformance request require that digest for the pinned Architecture tree.
-
-- Added the history-preserving Architecture Authority extraction, arc42
-  chapter structure, principles, bounded-context model, contracts, diagrams,
-  risks, and deterministic validation scaffold.

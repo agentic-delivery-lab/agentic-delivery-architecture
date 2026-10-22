@@ -5,7 +5,7 @@ flowchart LR
   PRINCIPLES --> ADRS["Accepted and proposed ADRs<br/>decision inventory preserves status"]
   ADRS --> CAPABILITIES["Owner-context capabilities and contracts<br/>pinned source revisions"]
   CAPABILITIES --> ISSUES["Typed source Issues<br/>in the owning repositories"]
-  ISSUES --> PROJECTS["GitHub Projects<br/>proposed planning and progress surface"]
+  ISSUES --> PROJECTS["GitHub Projects<br/>configured planning surface; runtime integration unproved"]
   GOALS --> QUALITY["Quality scenarios and measures<br/>baselines remain unmeasured until evidenced"]
   QUALITY --> EVALUATION["Evaluation evidence<br/>synthetic, pending, or observed"]
   ISSUES --> EVALUATION
@@ -14,6 +14,6 @@ flowchart LR
   PROJECTS -. "prioritizes; never authorizes execution" .-> ISSUES
   AUTHORITY["Maintainers retain adoption, priority, review, merge, release, and activation authority"]
   AUTHORITY -. "reviews proposals and evidence" .-> GOALS
-  STATUS["Proposal status: no Project or product repository is confirmed; fixture evidence is synthetic"]
+  STATUS["Private portfolio 2 is configured with dated API readback; no independent product is identified and W25 onboarding is withdrawn.<br/>Strategy outcomes and runtime integration remain unproved; fixture evidence remains synthetic."]
   STATUS -.-> PROJECTS
   STATUS -.-> EVALUATION

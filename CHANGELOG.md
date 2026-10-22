@@ -52,6 +52,8 @@ All notable changes to this repository are documented here.
 
 ### Changed
 
+- Align current building-block, decision and standalone planning views with the configured private portfolio. Keep dated empty inventories historical and App/runtime admission unproved.
+
 - Withdraw the unsupported operation-wide native transport ceiling under the owner's stock-software keep/drop direction. Retain the eight-controller-attempt bound, saved consumption and all other retained admission gates.
 
 - Reconcile the existing strategy/evidence proposal with accepted Requirements ownership and current authority contracts while retaining 50 dated branch-only observations.

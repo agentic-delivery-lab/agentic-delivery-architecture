@@ -21,6 +21,15 @@
         },
         "semanticReviewIsAdvisory": {
           "type": "boolean"
+        },
+        "structurizrInspections": {
+          "const": "advisory"
+        },
+        "structurizrInspectionOverrides": {
+          "const": "rejected"
+        },
+        "structurizrBlockingRuleProfile": {
+          "const": "none"
         }
       },
       "required": [
@@ -29,7 +38,10 @@
         "consumerWriteAccess",
         "deterministicFindingsAreBlocking",
         "renderedImagesMayNotBeSoleSource",
-        "semanticReviewIsAdvisory"
+        "semanticReviewIsAdvisory",
+        "structurizrInspections",
+        "structurizrInspectionOverrides",
+        "structurizrBlockingRuleProfile"
       ],
       "additionalProperties": false
     },

@@ -394,7 +394,10 @@ test('canonical inventory has exact record coverage and rejects projections and 
 });
 
 test('diagram sources remain model-first and structurally valid', async () => {
-  assert.deepEqual(await validateDiagrams(root), { structurizr: 1, mermaid: 8, requiredMermaid: 6, plantuml: 1 });
+  const { structurizrReport, ...counts } = await validateDiagrams(root);
+  assert.deepEqual(counts, { structurizr: 1, mermaid: 8, requiredMermaid: 6, plantuml: 1 });
+  assert.equal(structurizrReport.inspection.policy, 'advisory');
+  assert.deepEqual(structurizrReport.selectedViews.map(({ key }) => key), ['system-context', 'organization-context', 'github-containers']);
 });
 
 test('organizational strategy has stable goals, measurable evidence, and fail-closed Project boundaries', async () => {

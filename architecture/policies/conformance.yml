@@ -6,6 +6,9 @@ policy:
   deterministicFindingsAreBlocking: true
   renderedImagesMayNotBeSoleSource: true
   consumerWriteAccess: false
+  structurizrInspections: advisory
+  structurizrInspectionOverrides: rejected
+  structurizrBlockingRuleProfile: none
 sections:
   - 03-context-and-scope
   - 05-building-block-view

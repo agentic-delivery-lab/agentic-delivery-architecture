@@ -57,6 +57,13 @@ async function inputDigest(modelPath, limit) {
   return hash.digest('hex');
 }
 
+export async function runWithStableRuntime(runtimePath, run) {
+  const runtimeSha256 = sha256(await readFile(runtimePath));
+  const result = await run();
+  if (runtimeSha256 !== sha256(await readFile(runtimePath))) throw new Error('Runtime source changed during validation');
+  return { result, runtimeSha256 };
+}
+
 export async function validateStructurizr(modelPath, viewKeys) {
   const lockBytes = await readFile(path.join(root, 'architecture/references/tooling-lock.json'));
   const pin = JSON.parse(lockBytes).diagramRenderers.structurizr;
@@ -64,9 +71,11 @@ export async function validateStructurizr(modelPath, viewKeys) {
   if (!Array.isArray(keys) || keys.length > pin.views.length || !keys.length || new Set(keys).size !== keys.length
     || keys.some((key) => !pin.views.includes(key))) throw new Error('Unapproved Structurizr view key');
   const before = await inputDigest(modelPath, pin.maxInputBytes);
-  const { stdout } = await execute('python3', [path.join(root, 'tools/structurizr/runtime.py'), modelPath], {
-    timeout: 120_000, maxBuffer: pin.maxReportBytes, env: { PATH: '/usr/bin:/bin' },
-  });
+  const runtimePath = path.join(root, 'tools/structurizr/runtime.py');
+  const { result: { stdout }, runtimeSha256 } = await runWithStableRuntime(runtimePath, () =>
+    execute('python3', [runtimePath, modelPath], {
+      timeout: 120_000, maxBuffer: pin.maxReportBytes, env: { PATH: '/usr/bin:/bin' },
+    }));
   if (before !== await inputDigest(modelPath, pin.maxInputBytes)) throw new Error('Canonical DSL changed during validation');
   const report = JSON.parse(stdout);
   if (report.inputSha256 !== before || report.toolingLockSha256 !== sha256(lockBytes)) {
@@ -87,6 +96,6 @@ export async function validateStructurizr(modelPath, viewKeys) {
   return { inputSha256: before, version: pin.version, sdkVersion: pin.sdkVersion,
     archiveSha256: pin.archive.sha256, javaArchiveSha256: pin.java.sha256,
     adapterSha256: report.adapterSha256, toolingLockSha256: report.toolingLockSha256,
-    runtimeAdapterSha256: sha256(await readFile(path.join(root, 'tools/structurizr/runtime.py'))),
+    runtimeAdapterSha256: runtimeSha256,
     libraries: pin.libraries, inspection: report.inspection, selectedViews: selected };
 }

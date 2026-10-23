@@ -63,51 +63,50 @@ def run_bounded(command, stdout, stderr, env):
     try:
         return process.wait(timeout=PIN['wallSeconds'])
     except BaseException as error:
-        # Hold pidfds so a reused numeric PID cannot target another session.
+        # Only Popen.kill() signals a process. Its unreaped child cannot have
+        # its PID reused. Stock bwrap --die-with-parent and the private PID
+        # namespace stop descendants; direct-child pidfds only observe this.
         handles = []
         changed = []
-        def retain_tree(pid, expected_parent=None):
-            try:
-                stat = pathlib.Path(f'/proc/{pid}/stat')
-                before = stat.read_text().rsplit(')', 1)[1].split()
-                if expected_parent is not None and int(before[1]) != expected_parent:
-                    changed.append(pid)
-                    return
-                birth = before[19]
-                handle = os.pidfd_open(pid)
-                try:
-                    after = stat.read_text().rsplit(')', 1)[1].split()
-                    if after[19] != birth or (expected_parent is not None and int(after[1]) != expected_parent):
-                        changed.append(pid)
-                        os.close(handle)
-                        return
-                except FileNotFoundError:
-                    os.close(handle)
-                    return
-                handles.append(handle)
-                children = pathlib.Path(f'/proc/{pid}/task/{pid}/children').read_text().split()
-                for child in children:
-                    retain_tree(int(child), pid)
-            except (FileNotFoundError, ProcessLookupError):
-                pass
-        retain_tree(process.pid)
         try:
-            for handle in reversed(handles):
+            try:
+                children = pathlib.Path(f'/proc/{process.pid}/task/{process.pid}/children').read_text().split()
+            except FileNotFoundError:
+                children = []
+            for child in children:
+                pid = int(child)
                 try:
-                    signal.pidfd_send_signal(handle, signal.SIGKILL)
-                except ProcessLookupError:
+                    stat = pathlib.Path(f'/proc/{pid}/stat')
+                    before = stat.read_text().rsplit(')', 1)[1].split()
+                    if int(before[1]) != process.pid:
+                        changed.append(pid)
+                        continue
+                    handle = os.pidfd_open(pid)
+                    try:
+                        after = stat.read_text().rsplit(')', 1)[1].split()
+                        if after[19] != before[19] or int(after[1]) != process.pid:
+                            changed.append(pid)
+                            os.close(handle)
+                            continue
+                    except FileNotFoundError:
+                        os.close(handle)
+                        continue
+                    handles.append(handle)
+                except (FileNotFoundError, ProcessLookupError):
                     pass
-            process.kill()
-            process.wait(timeout=5)
-            deadline = time.monotonic() + 5
-            for handle in handles:
-                poll = select.poll()
-                poll.register(handle, select.POLLIN)
-                if not poll.poll(max(0, int((deadline - time.monotonic()) * 1000))):
-                    raise RuntimeError('Sandbox cleanup uncertain after deadline; process admission failed')
         finally:
-            for handle in handles:
-                os.close(handle)
+            try:
+                process.kill()
+                process.wait(timeout=5)
+                deadline = time.monotonic() + 5
+                for handle in handles:
+                    poll = select.poll()
+                    poll.register(handle, select.POLLIN)
+                    if not poll.poll(max(0, int((deadline - time.monotonic()) * 1000))):
+                        raise RuntimeError('Sandbox cleanup uncertain after deadline; process admission failed')
+            finally:
+                for handle in handles:
+                    os.close(handle)
         if changed:
             raise RuntimeError('Sandbox child identity changed; unverified PID was not signalled') from error
         if isinstance(error, subprocess.TimeoutExpired):

@@ -32,8 +32,42 @@ class ProcessOwnershipTest(unittest.TestCase):
              patch.object(runtime.select, 'poll', return_value=poll):
             with self.assertRaisesRegex(RuntimeError, 'identity changed'):
                 runtime.run_bounded(['sandbox'], None, None, {})
-            self.assertEqual([call.args[0] for call in opened.call_args_list], [100])
-            self.assertEqual([call.args[0] for call in signal.call_args_list], [10])
+            self.assertEqual([call.args[0] for call in opened.call_args_list], [])
+            signal.assert_not_called()
+            process.kill.assert_called_once()
+
+
+    def test_discovered_processes_are_observed_without_being_signalled(self):
+        process = Mock(pid=100)
+        process.wait.side_effect = [subprocess.TimeoutExpired('sandbox', 60), 0]
+        replaced_parent = False
+        def read_text(path, *args, **kwargs):
+            nonlocal replaced_parent
+            name = str(path)
+            if name == '/proc/100/task/100/children':
+                return '200'
+            if name == '/proc/200/task/200/children':
+                replaced_parent = True
+                return '300'  # Child of the replacement, not our original parent.
+            if name.endswith('/children'):
+                return ''
+            pid = int(name.split('/')[2])
+            parent = {100: 99, 200: 100, 300: 200}[pid]
+            birth = '67890' if pid == 200 and replaced_parent else '12345'
+            return f'{pid} (process) ' + ' '.join(['S', str(parent)] + ['0'] * 17 + [birth])
+        poll = Mock()
+        poll.poll.return_value = [(20, 1)]
+        with patch.object(runtime.subprocess, 'Popen', return_value=process), \
+             patch.object(runtime.pathlib.Path, 'read_text', read_text), \
+             patch.object(runtime.os, 'pidfd_open', side_effect=lambda pid: pid // 10) as opened, \
+             patch.object(runtime.os, 'close'), \
+             patch.object(runtime.signal, 'pidfd_send_signal') as signal, \
+             patch.object(runtime.select, 'poll', return_value=poll):
+            with self.assertRaisesRegex(TimeoutError, 'descendants stopped'):
+                runtime.run_bounded(['sandbox'], None, None, {})
+            signal.assert_not_called()
+            self.assertEqual([call.args[0] for call in opened.call_args_list], [200])
+            self.assertFalse(replaced_parent, 'cleanup must not recursively follow a replaceable parent')
             process.kill.assert_called_once()
 
 

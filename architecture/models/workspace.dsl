@@ -1,36 +1,36 @@
 workspace "Agentic Delivery" "Organization-wide issue-based delivery architecture" {
   model {
-    person maintainer "Maintainer" "Reviews issues, pull requests, and architecture changes."
+    maintainer = person "Maintainer" "Reviews issues, pull requests, and architecture changes."
 
-    softwareSystem github "GitHub organization" "Repository work state and organization-managed settings." {
-      container issues "Repository Issues and pull requests" "GitHub" "Origin-scoped work intent, native issue type, discussion, and review records."
-      container issueTypes "Native Issue Types" "GitHub organization settings" "Native issue classification; not a lifecycle field."
-      container orgFields "Organization issue-field definitions" "GitHub organization issue-field API" "Definitions and option identities for Lifecycle Stage and Delivery State; the latter is currently displayed as Delivery Readiness."
-      container fieldValues "Per-issue field values API" "GitHub issue API" "Repository-scoped values, distinct from organization field definitions."
-      container projects "GitHub Projects portfolio" "GitHub Projects API" "Primary planning and coordination surface; Project fields own distinct portfolio facts and never authorize execution."
-      container app "GitHub App installation" "GitHub App" "Installation access and delivery of subscribed events; it does not distribute templates."
-      container actions "Actions" "GitHub Actions" "Repository-scoped deterministic execution and review checks."
+    github = softwareSystem "GitHub organization" "Repository work state and organization-managed settings." {
+      issues = container "Repository Issues and pull requests" "Origin-scoped work intent, native issue type, discussion, and review records." "GitHub"
+      issueTypes = container "Native Issue Types" "Native issue classification; not a lifecycle field." "GitHub organization settings"
+      orgFields = container "Organization issue-field definitions" "Definitions and option identities for Lifecycle Stage and Delivery State; the latter is currently displayed as Delivery Readiness." "GitHub organization issue-field API"
+      fieldValues = container "Per-issue field values API" "Repository-scoped values, distinct from organization field definitions." "GitHub issue API"
+      projects = container "GitHub Projects portfolio" "Primary planning and coordination surface; Project fields own distinct portfolio facts and never authorize execution." "GitHub Projects API"
+      app = container "GitHub App installation" "Installation access and delivery of subscribed events; it does not distribute templates." "GitHub App"
+      actions = container "Actions" "Repository-scoped deterministic execution and review checks." "GitHub Actions"
     }
 
     group "Domain contexts" {
-      softwareSystem governance "Agentic Delivery Governance" "Repository delivery governance and reusable review rules."
-      softwareSystem control "Agentic Delivery Control Plane" "Runtime lifecycle, routing, orchestration, GitHub access, runner/session handling, and controlled write-back." {
-        container controller "Delivery controller" "Versioned runtime" "Consumes eligible events and checks deterministic contracts before writes."
-        container participants "Participant contracts" "Versioned Control Plane configuration" "Selected repository identities, pins, modes, and contract versions; separate from App installation access."
+      governance = softwareSystem "Agentic Delivery Governance" "Repository delivery governance and reusable review rules."
+      control = softwareSystem "Agentic Delivery Control Plane" "Runtime lifecycle, routing, orchestration, GitHub access, runner/session handling, and controlled write-back." {
+        controller = container "Delivery controller" "Consumes eligible events and checks deterministic contracts before writes." "Versioned runtime"
+        participants = container "Participant contracts" "Selected repository identities, pins, modes, and contract versions; separate from App installation access." "Versioned Control Plane configuration"
       }
-      softwareSystem primitives "Agentic Primitives" "Versioned catalog, reusable agent capabilities, contracts, releases, and projections."
-      softwareSystem distribution "Developer Distribution" "Versioned bootstrap, bundle, and thin consumer integration."
+      primitives = softwareSystem "Agentic Primitives" "Versioned catalog, reusable agent capabilities, contracts, releases, and projections."
+      distribution = softwareSystem "Developer Distribution" "Versioned bootstrap, bundle, and thin consumer integration."
     }
 
-    softwareSystem architecture "Architecture Authority" "Cross-context authority for organization ADR, ADP, and ADD text, principles, arc42 architecture description, context map, and conformance; not a bounded context."
-    softwareSystem requirements "Requirements Authority" "Approved factory, shared and product requirements, normative QR scenarios and immutable applicability baselines; authority role, not a bounded context."
-    softwareSystem publicAdapter "Public .github repository adapter" "Public community-health, issue-form, and pull-request-template defaults."
-    softwareSystem privateAdapter "Private .github-private repository adapter" "Private member-profile and approved agent-publication boundary."
-    softwareSystem consumers "Consumer repositories" "Repositories that receive pinned bootstrap and workflow projections."
-    softwareSystem vercel "Vercel webhook ingress" "Hosts the Control Plane webhook function and scheduled delivery reconciler; source code is present, production operation is not established by this model."
-    softwareSystem neon "Neon replay store" "PostgreSQL-backed delivery claims, controller receipts, and webhook scan checkpoints; deployed database state is not established by this model."
-    softwareSystem codex "Codex CLI" "Pinned agent runtime started inside a bounded GitHub Actions runner workspace."
-    softwareSystem productRepositories "Product repositories (unidentified)" "Expected product-owner boundary; the dated six-repository factory inventory identifies no independent product repository or accountable product steward."
+    architecture = softwareSystem "Architecture Authority" "Cross-context authority for organization ADR, ADP, and ADD text, principles, arc42 architecture description, context map, and conformance; not a bounded context."
+    requirements = softwareSystem "Requirements Authority" "Approved factory, shared and product requirements, normative QR scenarios and immutable applicability baselines; authority role, not a bounded context."
+    publicAdapter = softwareSystem "Public .github repository adapter" "Public community-health, issue-form, and pull-request-template defaults."
+    privateAdapter = softwareSystem "Private .github-private repository adapter" "Private member-profile and approved agent-publication boundary."
+    consumers = softwareSystem "Consumer repositories" "Repositories that receive pinned bootstrap and workflow projections."
+    vercel = softwareSystem "Vercel webhook ingress" "Hosts the Control Plane webhook function and scheduled delivery reconciler; source code is present, production operation is not established by this model."
+    neon = softwareSystem "Neon replay store" "PostgreSQL-backed delivery claims, controller receipts, and webhook scan checkpoints; deployed database state is not established by this model."
+    codex = softwareSystem "Codex CLI" "Pinned agent runtime started inside a bounded GitHub Actions runner workspace."
+    productRepositories = softwareSystem "Product repositories (unidentified)" "Expected product-owner boundary; the dated six-repository factory inventory identifies no independent product repository or accountable product steward."
 
     maintainer -> issues "creates and reviews origin work"
     maintainer -> projects "prioritizes linked Issues and tracks portfolio progress"
@@ -78,6 +78,5 @@ workspace "Agentic Delivery" "Organization-wide issue-based delivery architectur
       include *
       autolayout lr
     }
-    theme default
   }
 }

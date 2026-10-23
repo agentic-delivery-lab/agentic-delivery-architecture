@@ -13,7 +13,17 @@
     "version": "0.24.0",
     "integrity": "sha512-xYR4GszhJ+JIXsGDG7DpVxMfVt3yRiNsxjU1O5S/lz73cZlIVZOiLBxIkl6ynju+i2SfFcMs/Fe8fj1+/4X7vg==",
     "source": "https://github.com/docToolchain/arc42-language",
-    "testedCommands": ["validate", "get", "coverage", "rules", "explain", "guide", "diff", "serve", "build"],
+    "testedCommands": [
+      "validate",
+      "get",
+      "coverage",
+      "rules",
+      "explain",
+      "guide",
+      "diff",
+      "serve",
+      "build"
+    ],
     "upgradePolicy": "pin a tested release or immutable commit before activation"
   },
   "structuredData": {
@@ -35,9 +45,105 @@
     "coverage": "authoritative and generated Architecture YAML and JSON sources"
   },
   "diagramRenderers": {
-    "structurizr": { "status": "supporting", "version": null },
-    "plantuml": { "status": "supporting", "version": null },
-    "mermaid": { "status": "supporting", "version": null }
+    "structurizr": {
+      "status": "candidate",
+      "version": "2026.09.19",
+      "sdkVersion": "6.2.3",
+      "sourceCommit": "f828a297dc693e08115b7e5b51dba4a83d8148c2",
+      "platform": "linux-x64",
+      "archive": {
+        "url": "https://download.structurizr.com/structurizr-2026.09.19.war",
+        "size": 220836070,
+        "sha256": "ac1a2806e246364b88261a542a36ca7f3006ef48e5de68830afa8672f58690f1"
+      },
+      "java": {
+        "url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz",
+        "size": 207858352,
+        "sha256": "d7f5d5cf865a2902b70ff549b97586a7d3f234e016f041ab447ea740c7d66d1c"
+      },
+      "libraries": [
+        {
+          "name": "httpclient5-5.6.4.jar",
+          "sha256": "bdef5f8841145cd76c4c605ff301bc840eea0d5292332b7b892a93316c0d8ee1",
+          "size": 1057058
+        },
+        {
+          "name": "httpcore5-5.4.3.jar",
+          "sha256": "18bfbbabb478dfb67f31aeaf428c387f3c3df654582e1309f708ee1f3086830a",
+          "size": 955121
+        },
+        {
+          "name": "jackson-annotations-2.21.jar",
+          "sha256": "53ca085f4a150f703f49e1aabd935bd03b43e1ea3d55d135438292af22cef56b",
+          "size": 82104
+        },
+        {
+          "name": "jackson-core-2.21.4.jar",
+          "sha256": "4b40a06396f239f8de2da57419adde6e94e5edc18a2171d471ea05eeed4e5c2d",
+          "size": 594183
+        },
+        {
+          "name": "jackson-databind-2.21.4.jar",
+          "sha256": "3888e9e69ab66fbacaacc9aea0e9ffbf15368288e4aca468b024dba11c09fbf9",
+          "size": 1702879
+        },
+        {
+          "name": "jsr305-3.0.2.jar",
+          "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+          "size": 19936
+        },
+        {
+          "name": "slf4j-api-2.0.18.jar",
+          "sha256": "44508fd1576500688c790b190acdd16fec4f8c79a3e0b900afd70503cf055f55",
+          "size": 69982
+        },
+        {
+          "name": "spring-jcl-6.2.19.jar",
+          "sha256": "9994478bcea1423b8892d4eb0db942c94da0090167c3c684050c1eaef04491d0",
+          "size": 24495
+        },
+        {
+          "name": "structurizr-client-6.2.3.jar",
+          "sha256": "4b2a41a895f890ebe70f72830db01d2f2a9842a6aa17193d5faadd042e5d7c3b",
+          "size": 46912
+        },
+        {
+          "name": "structurizr-core-6.2.3.jar",
+          "sha256": "201432f1e2256dbb2783746956bcdcf7b0f76baf393ba4688923bd42bf9c61cb",
+          "size": 206157
+        },
+        {
+          "name": "structurizr-dsl-6.2.3.jar",
+          "sha256": "f0662aa82815384e5af766bf0c6c8aeda574a765041e3a675e40b29271dcf8b0",
+          "size": 259839
+        },
+        {
+          "name": "structurizr-inspection-6.2.3.jar",
+          "sha256": "c44651b9d3e7c7ddd7436573ed736d6abdb8feb18e6c15d1d9cc38f0d1b4f04c",
+          "size": 58077
+        }
+      ],
+      "inspectionPolicy": "advisory; overrides rejected; no approved blocking rule profile",
+      "views": [
+        "system-context",
+        "organization-context",
+        "github-containers"
+      ],
+      "maxInputBytes": 262144,
+      "maxReportBytes": 8388608,
+      "wallSeconds": 60,
+      "cpuSeconds": 40,
+      "addressSpaceBytes": 4294967296,
+      "heapMiB": 256
+    },
+    "plantuml": {
+      "status": "supporting",
+      "version": null
+    },
+    "mermaid": {
+      "status": "supporting",
+      "version": null
+    }
   },
   "externalRendering": "not required"
 }

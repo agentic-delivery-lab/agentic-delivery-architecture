@@ -1,20 +1,70 @@
 """Real OS negative controls for the same sandbox command used by validation."""
 import json
+import ctypes
+from contextlib import contextmanager
 import os
 import pathlib
 import socket
+import signal
 import sys
 import tarfile
 import tempfile
 import time
+from unittest.mock import patch
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / 'tools/structurizr'))
 import runtime
 
+runtime.require_supported_platform()
+signal.signal(signal.SIGTERM, runtime.cancelled)
 
 
-with tempfile.TemporaryDirectory(prefix='architecture-isolation-test-') as directory:
+def own_children():
+    parent = os.getpid()
+    return [int(pid) for pid in pathlib.Path(f'/proc/{parent}/task/{parent}/children').read_text().split()]
+
+
+def assert_no_survivors():
+    live = []
+    for pid in own_children():
+        fields = pathlib.Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()
+        if fields[0] not in ('Z', 'X'):
+            live.append(pid)
+        else:
+            os.waitpid(pid, 0)
+    assert not live, f'Owned sandbox survivors after cancellation: {live}'
+
+
+@contextmanager
+def observe_orphans():
+    # Test-only kernel observation independent of the wrapper's group scanner.
+    libc = ctypes.CDLL(None, use_errno=True)
+    libc.prctl.argtypes = [ctypes.c_int] + [ctypes.c_ulong] * 4
+    libc.prctl.restype = ctypes.c_int
+    previous = ctypes.c_int()
+    assert libc.prctl(37, ctypes.addressof(previous), 0, 0, 0) == 0  # PR_GET_CHILD_SUBREAPER
+    assert libc.prctl(36, 1, 0, 0, 0) == 0  # PR_SET_CHILD_SUBREAPER
+    try:
+        yield
+    finally:
+        deadline = time.monotonic() + 5
+        # Every listed PID is our own unreaped child; no unrelated process is targeted.
+        while own_children():
+            for pid in own_children():
+                fields = pathlib.Path(f'/proc/{pid}/stat').read_text().rsplit(')', 1)[1].split()
+                if fields[0] in ('Z', 'X'):
+                    os.waitpid(pid, 0)
+                else:
+                    os.kill(pid, signal.SIGKILL)
+            if time.monotonic() >= deadline:
+                raise AssertionError('Test could not stop its owned children')
+            time.sleep(0.01)
+        assert libc.prctl(36, previous.value, 0, 0, 0) == 0
+
+
+
+with tempfile.TemporaryDirectory(prefix='architecture-isolation-test-') as directory, observe_orphans():
     root = pathlib.Path(directory)
     jdk, _ = list(runtime.archives())
     with tarfile.open(jdk) as archive:
@@ -60,9 +110,50 @@ public class ValidateWorkspace {
             assert 'descendants stopped' in str(error)
         else:
             raise AssertionError('Probe exited before wall bound: ' + (output / 'stderr').read_text()[:4096])
+    assert_no_survivors()
+    normal_wall = time.monotonic() - started
+    early = []
+    for seconds in (0.001, 0.01, 0.05, 0.1, 0.5):
+        with patch.dict(runtime.PIN, {'wallSeconds': seconds}):
+            with (output / 'early-stdout').open('wb') as stdout, (output / 'early-stderr').open('wb') as stderr:
+                try:
+                    runtime.run_bounded(command, stdout, stderr, env)
+                except TimeoutError as error:
+                    assert 'descendants stopped' in str(error)
+                    assert_no_survivors()
+                    early.append(seconds)
+                else:
+                    raise AssertionError('Early-cancellation fixture unexpectedly completed')
+    # Deliver a real cancellation after fork/exec but before Popen hands
+    # ownership back to run_bounded. No thread or upstream modification needed.
+    started_processes = []
+    real_start = runtime.subprocess.Popen
+    def spawn_then_cancel(*args, **kwargs):
+        process = real_start(*args, **kwargs)
+        started_processes.append(process)
+        os.kill(os.getpid(), signal.SIGTERM)
+        return process
+    previous_handler = signal.signal(signal.SIGTERM, runtime.cancelled)
+    try:
+        with patch.object(runtime.subprocess, 'Popen', side_effect=spawn_then_cancel):
+            with (output / 'spawn-stdout').open('wb') as stdout, (output / 'spawn-stderr').open('wb') as stderr:
+                try:
+                    runtime.run_bounded(command, stdout, stderr, env)
+                except InterruptedError:
+                    pass
+                else:
+                    raise AssertionError('Cancellation at spawn was not delivered')
+        assert started_processes and all(p.returncode is not None for p in started_processes)
+        assert_no_survivors()
+    finally:
+        for process in started_processes:
+            if process.returncode is None:
+                runtime.stop_owned_group(process.pid)
+                process.wait(timeout=5)
+        signal.signal(signal.SIGTERM, previous_handler)
     listener.close()
     report = json.loads((output / 'report.json').read_text())
     assert all(value is False for value in report.values())
     assert model.read_text() == 'read-only input'
-    print(json.dumps({'guards': report, 'wallSeconds': round(time.monotonic() - started, 2),
-                      'descendantsStopped': True, 'canonicalInputUnchanged': True}))
+    print(json.dumps({'guards': report, 'wallSeconds': round(normal_wall, 2),
+                      'descendantsStopped': True, 'earlyCancellationSeconds': early, 'spawnCancellationStopped': True, 'orphanSurvivors': 0, 'canonicalInputUnchanged': True}))

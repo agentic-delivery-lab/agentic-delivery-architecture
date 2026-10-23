@@ -1,5 +1,6 @@
-"""A stale /proc children entry must never authorize killing a reused PID."""
+"""Retain the Popen child identity until its entire owned group is stopped."""
 import pathlib
+import signal
 import subprocess
 import sys
 import unittest
@@ -11,64 +12,87 @@ import runtime
 
 
 class ProcessOwnershipTest(unittest.TestCase):
-    def test_reused_child_pid_with_unrelated_parent_is_never_signalled(self):
+    def test_root_is_reaped_only_after_owned_group_cleanup(self):
+        events = []
         process = Mock(pid=100)
-        process.wait.side_effect = [subprocess.TimeoutExpired('sandbox', 60), 0]
-        def read_text(path, *args, **kwargs):
-            name = str(path)
-            if name.endswith('/children'):
-                return '200' if name.startswith('/proc/100/') else ''
-            pid = int(name.split('/')[2])
-            parent = 99 if pid == 100 else 999  # 200 was reused by an unrelated session.
-            fields = ['S', str(parent)] + ['0'] * 17 + ['12345']
-            return f'{pid} (process) ' + ' '.join(fields)
-        poll = Mock()
-        poll.poll.return_value = [(10, 1)]
-        with patch.object(runtime.subprocess, 'Popen', return_value=process), \
-             patch.object(runtime.pathlib.Path, 'read_text', read_text), \
-             patch.object(runtime.os, 'pidfd_open', side_effect=lambda pid: pid // 10) as opened, \
-             patch.object(runtime.os, 'close'), \
-             patch.object(runtime.signal, 'pidfd_send_signal') as signal, \
-             patch.object(runtime.select, 'poll', return_value=poll):
-            with self.assertRaisesRegex(RuntimeError, 'identity changed'):
-                runtime.run_bounded(['sandbox'], None, None, {})
-            self.assertEqual([call.args[0] for call in opened.call_args_list], [])
-            signal.assert_not_called()
-            process.kill.assert_called_once()
+        process.wait.side_effect = lambda **kwargs: events.append('reap') or 0
+        with patch.object(runtime.subprocess, 'Popen', return_value=process) as start, \
+             patch.object(runtime.os, 'waitid', return_value=object()) as observe, \
+             patch.object(runtime.os, 'killpg', side_effect=lambda pgid, sig: events.append(('group', pgid))), \
+             patch.object(runtime, 'live_group_members', return_value=[], create=True):
+            self.assertEqual(runtime.run_bounded(['sandbox'], None, None, {}), 0)
+            self.assertEqual(events, [('group', 100), 'reap'])
+            self.assertTrue(observe.call_args.args[2] & runtime.os.WNOWAIT)
+            self.assertTrue(start.call_args.kwargs['start_new_session'])
+            self.assertEqual(start.call_args.kwargs['stdin'], subprocess.DEVNULL)
+            process.kill.assert_not_called()
+            process.poll.assert_not_called()
 
-
-    def test_discovered_processes_are_observed_without_being_signalled(self):
+    def test_startup_timeout_signals_only_reserved_group_before_reaping(self):
         process = Mock(pid=100)
-        process.wait.side_effect = [subprocess.TimeoutExpired('sandbox', 60), 0]
-        replaced_parent = False
-        def read_text(path, *args, **kwargs):
-            nonlocal replaced_parent
-            name = str(path)
-            if name == '/proc/100/task/100/children':
-                return '200'
-            if name == '/proc/200/task/200/children':
-                replaced_parent = True
-                return '300'  # Child of the replacement, not our original parent.
-            if name.endswith('/children'):
-                return ''
-            pid = int(name.split('/')[2])
-            parent = {100: 99, 200: 100, 300: 200}[pid]
-            birth = '67890' if pid == 200 and replaced_parent else '12345'
-            return f'{pid} (process) ' + ' '.join(['S', str(parent)] + ['0'] * 17 + [birth])
-        poll = Mock()
-        poll.poll.return_value = [(20, 1)]
-        with patch.object(runtime.subprocess, 'Popen', return_value=process), \
-             patch.object(runtime.pathlib.Path, 'read_text', read_text), \
-             patch.object(runtime.os, 'pidfd_open', side_effect=lambda pid: pid // 10) as opened, \
-             patch.object(runtime.os, 'close'), \
-             patch.object(runtime.signal, 'pidfd_send_signal') as signal, \
-             patch.object(runtime.select, 'poll', return_value=poll):
+        process.wait.return_value = 0
+        with patch.dict(runtime.PIN, {'wallSeconds': 0}), \
+             patch.object(runtime.subprocess, 'Popen', return_value=process), \
+             patch.object(runtime.os, 'waitid', return_value=None), \
+             patch.object(runtime.os, 'killpg') as stop, \
+             patch.object(runtime, 'live_group_members', return_value=[], create=True):
             with self.assertRaisesRegex(TimeoutError, 'descendants stopped'):
                 runtime.run_bounded(['sandbox'], None, None, {})
-            signal.assert_not_called()
-            self.assertEqual([call.args[0] for call in opened.call_args_list], [200])
-            self.assertFalse(replaced_parent, 'cleanup must not recursively follow a replaceable parent')
-            process.kill.assert_called_once()
+            stop.assert_called_once_with(100, signal.SIGKILL)
+            process.wait.assert_called_once()
+            process.kill.assert_not_called()
+
+    def test_lost_child_ownership_never_signals_a_potentially_reused_group(self):
+        process = Mock(pid=100)
+        with patch.object(runtime.subprocess, 'Popen', return_value=process), \
+             patch.object(runtime.os, 'waitid', side_effect=ChildProcessError), \
+             patch.object(runtime.os, 'killpg') as stop:
+            with self.assertRaisesRegex(RuntimeError, 'ownership lost'):
+                runtime.run_bounded(['sandbox'], None, None, {})
+            stop.assert_not_called()
+
+
+    def test_pending_cancellation_is_delivered_only_after_spawn_ownership_is_guarded(self):
+        process = Mock(pid=100)
+        process.wait.return_value = -9
+        delivered = False
+        masked = set()
+        def change_mask(how, signals):
+            nonlocal delivered, masked
+            previous = masked.copy()
+            masked = masked | set(signals) if how == signal.SIG_BLOCK else set(signals)
+            if how == signal.SIG_SETMASK and not masked and not delivered:
+                delivered = True
+                raise InterruptedError('pending cancellation at handoff')
+            return previous
+        def spawn(*args, **kwargs):
+            self.assertTrue({signal.SIGINT, signal.SIGTERM} <= masked)
+            return process
+        with patch.object(runtime.subprocess, 'Popen', side_effect=spawn), \
+             patch.object(runtime.signal, 'pthread_sigmask', side_effect=change_mask), \
+             patch.object(runtime.os, 'waitid', return_value=None), \
+             patch.object(runtime.os, 'killpg') as stop, \
+             patch.object(runtime, 'live_group_members', return_value=[], create=True):
+            with self.assertRaisesRegex(InterruptedError, 'handoff'):
+                runtime.run_bounded(['sandbox'], None, None, {})
+            stop.assert_called_once_with(100, signal.SIGKILL)
+            process.wait.assert_called_once()
+
+
+    def test_child_restores_the_original_signal_mask_before_exec(self):
+        process = Mock(pid=100)
+        process.wait.return_value = 0
+        with patch.object(runtime.subprocess, 'Popen', return_value=process) as start, \
+             patch.object(runtime.os, 'waitid', return_value=object()), \
+             patch.object(runtime.os, 'killpg'), \
+             patch.object(runtime, 'live_group_members', return_value=[]), \
+             patch.object(runtime.signal, 'pthread_sigmask', return_value={signal.SIGUSR1}) as mask, \
+             patch.object(runtime, 'limits') as limits:
+            runtime.run_bounded(['sandbox'], None, None, {})
+            mask.reset_mock()
+            start.call_args.kwargs['preexec_fn']()
+            limits.assert_called_once()
+            mask.assert_called_once_with(signal.SIG_SETMASK, {signal.SIGUSR1})
 
 
 if __name__ == '__main__':

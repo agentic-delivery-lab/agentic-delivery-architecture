@@ -1,5 +1,6 @@
 import { readdir, readFile, mkdir, writeFile } from 'node:fs/promises';
-import { validateStructurizr } from './lib/structurizr.mjs';
+import { createHash } from 'node:crypto';
+import { readModelInput, validateStructurizr } from './lib/structurizr.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -12,7 +13,9 @@ function requireIncludes(source, file, values, errors) {
 export async function validateDiagrams(root = repositoryRoot) {
   const errors = [];
   const modelPath = path.join(root, 'architecture/models/workspace.dsl');
-  const model = await readFile(modelPath, 'utf8');
+  const tooling = JSON.parse(await readFile(path.join(root, 'architecture/references/tooling-lock.json'), 'utf8'));
+  const modelBytes = await readModelInput(modelPath, tooling.diagramRenderers.structurizr.maxInputBytes);
+  const model = modelBytes.toString('utf8');
   requireIncludes(model, 'architecture/models/workspace.dsl', [
     'workspace ', 'model {', 'views {', 'Architecture Authority', 'Agentic Delivery Control Plane',
     'Agentic Primitives', 'Developer Distribution', 'Vercel webhook ingress', 'Neon replay store',
@@ -65,14 +68,18 @@ export async function validateDiagrams(root = repositoryRoot) {
     if (file !== 'README.md') errors.push(`generated diagram output must not be committed without an explicit release rule: ${file}`);
   }
   if (errors.length) throw new Error(`diagram validation failed:\n${errors.join('\n')}`);
-  const structurizrReport = await validateStructurizr(modelPath);
+  const structurizrReport = await validateStructurizr(modelPath, undefined, root);
+  if (structurizrReport.inputSha256 !== createHash('sha256').update(modelBytes).digest('hex')) {
+    throw new Error('Canonical DSL changed between marker and parser validation');
+  }
   return { structurizr: 1, mermaid: mermaidFiles.length, requiredMermaid: requiredViews.size, plantuml: plantumlFiles.length, structurizrReport };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    const result = await validateDiagrams(process.argv[2] ?? repositoryRoot);
-    const output = path.join(repositoryRoot, '.cache/structurizr');
+    const selectedRoot = path.resolve(process.argv[2] ?? repositoryRoot);
+    const result = await validateDiagrams(selectedRoot);
+    const output = path.join(selectedRoot, '.cache/structurizr');
     await mkdir(output, { recursive: true });
     await writeFile(path.join(output, 'last-report.json'), JSON.stringify(result.structurizrReport, null, 2) + '\n');
     process.stdout.write(`Structurizr inspections: ${result.structurizrReport.inspection.findings.length} advisory finding(s); selected JSON exports verified.\n`);

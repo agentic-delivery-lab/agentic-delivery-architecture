@@ -81,8 +81,8 @@ jobs:
           python3 --version
           sha256sum /usr/bin/bwrap /usr/bin/python3
           pnpm architecture:prepare
-      - name: Verify sandbox process ownership
-        run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_structurizr_process_ownership.py
+      - name: Verify sandbox ownership and platform boundaries
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_structurizr_*.py'
       - name: Verify actual host isolation and deadline cleanup
         run: python3 tests/structurizr-isolation.py
       - name: Validate arc42 and architecture contracts

@@ -4,12 +4,15 @@ import json
 import os
 import pathlib
 import platform
-import resource
+try:
+    import resource
+except ImportError:
+    resource = None
 import signal
-import select
 import time
 import subprocess
 import sys
+import stat
 import tarfile
 import tempfile
 import zipfile
@@ -33,7 +36,14 @@ def archives():
         yield path
 
 
+def require_supported_platform():
+    if (platform.system() != 'Linux' or platform.machine() not in ('x86_64', 'AMD64')
+            or sys.version_info < (3, 12) or resource is None):
+        raise ValueError('Unsupported host: Linux x64 and Python 3.12+ are required')
+
+
 def prepare():
+    require_supported_platform()
     CACHE.mkdir(parents=True, exist_ok=True)
     for name, pin in [('jdk.tar.gz', PIN['java']), ('structurizr.war', PIN['archive'])]:
         destination = CACHE / name
@@ -57,65 +67,81 @@ def limits():
     resource.setrlimit(resource.RLIMIT_FSIZE, (PIN['maxReportBytes'], PIN['maxReportBytes']))
 
 
-def run_bounded(command, stdout, stderr, env):
-    process = subprocess.Popen(command, stdout=stdout, stderr=stderr, preexec_fn=limits,
-                               env=env, start_new_session=True)
-    try:
-        return process.wait(timeout=PIN['wallSeconds'])
-    except BaseException as error:
-        # Only Popen.kill() signals a process. Its unreaped child cannot have
-        # its PID reused. Stock bwrap --die-with-parent and the private PID
-        # namespace stop descendants; direct-child pidfds only observe this.
-        handles = []
-        changed = []
+def live_group_members(group):
+    live = []
+    for entry in pathlib.Path('/proc').iterdir():
+        if not entry.name.isdigit():
+            continue
         try:
-            try:
-                children = pathlib.Path(f'/proc/{process.pid}/task/{process.pid}/children').read_text().split()
-            except FileNotFoundError:
-                children = []
-            for child in children:
-                pid = int(child)
-                try:
-                    stat = pathlib.Path(f'/proc/{pid}/stat')
-                    before = stat.read_text().rsplit(')', 1)[1].split()
-                    if int(before[1]) != process.pid:
-                        changed.append(pid)
-                        continue
-                    handle = os.pidfd_open(pid)
-                    try:
-                        after = stat.read_text().rsplit(')', 1)[1].split()
-                        if after[19] != before[19] or int(after[1]) != process.pid:
-                            changed.append(pid)
-                            os.close(handle)
-                            continue
-                    except FileNotFoundError:
-                        os.close(handle)
-                        continue
-                    handles.append(handle)
-                except (FileNotFoundError, ProcessLookupError):
-                    pass
+            fields = (entry / 'stat').read_text().rsplit(')', 1)[1].split()
+            if int(fields[2]) == group and fields[0] not in ('Z', 'X'):
+                live.append(int(entry.name))
+        except (FileNotFoundError, ProcessLookupError):
+            pass
+    return live
+
+
+def stop_owned_group(group):
+    deadline = time.monotonic() + 5
+    while True:
+        try:
+            os.killpg(group, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        if not live_group_members(group):
+            return
+        if time.monotonic() >= deadline:
+            raise RuntimeError('Sandbox process-group cleanup uncertain; request failed')
+        time.sleep(0.01)
+
+
+def run_bounded(command, stdout, stderr, env):
+    if signal.getsignal(signal.SIGCHLD) != signal.SIG_DFL:
+        raise ValueError('Sandbox requires exclusive child-reaping ownership')
+    process = None
+    owned = True
+    timed_out = False
+    pending = None
+    blocked = {signal.SIGTERM, signal.SIGINT}
+    previous = signal.pthread_sigmask(signal.SIG_BLOCK, blocked)
+    def child_setup():
+        limits()
+        signal.pthread_sigmask(signal.SIG_SETMASK, previous)
+    try:
+        process = subprocess.Popen(command, stdin=subprocess.DEVNULL, stdout=stdout, stderr=stderr,
+                                   preexec_fn=child_setup, env=env, start_new_session=True)
+        # Deliver pending cancellation only after process ownership is protected.
+        signal.pthread_sigmask(signal.SIG_SETMASK, previous)
+        deadline = time.monotonic() + PIN['wallSeconds']
+        # WNOWAIT reserves the root PID/group identity even if bwrap exits
+        # before its parent-death handler is installed. Never poll/reap early.
+        while os.waitid(os.P_PID, process.pid, os.WEXITED | os.WNOWAIT | os.WNOHANG) is None:
+            if time.monotonic() >= deadline:
+                timed_out = True
+                break
+            time.sleep(0.01)
+    except ChildProcessError as error:
+        owned = False
+        raise RuntimeError('Sandbox root ownership lost; no unverified group signalled') from error
+    except BaseException as error:
+        pending = error
+    finally:
+        signal.pthread_sigmask(signal.SIG_BLOCK, blocked)
+        try:
+            if process is not None and owned:
+                stop_owned_group(process.pid)
+                returncode = process.wait(timeout=5)  # Reap after the reserved group is stopped.
         finally:
-            try:
-                process.kill()
-                process.wait(timeout=5)
-                deadline = time.monotonic() + 5
-                for handle in handles:
-                    poll = select.poll()
-                    poll.register(handle, select.POLLIN)
-                    if not poll.poll(max(0, int((deadline - time.monotonic()) * 1000))):
-                        raise RuntimeError('Sandbox cleanup uncertain after deadline; process admission failed')
-            finally:
-                for handle in handles:
-                    os.close(handle)
-        if changed:
-            raise RuntimeError('Sandbox child identity changed; unverified PID was not signalled') from error
-        if isinstance(error, subprocess.TimeoutExpired):
-            raise TimeoutError('Parser exceeded wall bound; owned sandbox descendants stopped') from error
-        raise
+            signal.pthread_sigmask(signal.SIG_SETMASK, previous)
+    if pending is not None:
+        raise pending
+    if timed_out:
+        raise TimeoutError('Parser exceeded wall bound; owned sandbox descendants stopped')
+    return returncode
 
 
 def sandbox_command(java_home, sdk, model, adapter, output):
-    command = ['bwrap', '--unshare-all', '--die-with-parent', '--new-session', '--clearenv']
+    command = ['bwrap', '--unshare-all', '--die-with-parent', '--clearenv']
     for directory in ['/usr', '/lib', '/lib64']:
         command += ['--ro-bind', directory, directory]
     command += ['--proc', '/proc', '--dev', '/dev', '--tmpfs', '/tmp']
@@ -129,11 +155,28 @@ def sandbox_command(java_home, sdk, model, adapter, output):
     return command
 
 
+def read_model_input(source):
+    parts = pathlib.Path(os.path.abspath(source)).parts
+    directory = os.open(parts[0], os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        for part in parts[1:-1]:
+            next_directory = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=directory)
+            os.close(directory)
+            directory = next_directory
+        descriptor = os.open(parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=directory)
+        with os.fdopen(descriptor, 'rb') as stream:
+            if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+                raise ValueError('Model input must be a regular file without symbolic links')
+            return stream.read(PIN['maxInputBytes'] + 1)
+    except OSError as error:
+        raise ValueError('Model input must be a regular file without symbolic links') from error
+    finally:
+        os.close(directory)
+
+
 def validate(source):
-    if platform.system() != 'Linux' or platform.machine() not in ('x86_64', 'AMD64'):
-        raise ValueError('This admitted artifact candidate is Linux x64 only')
-    with pathlib.Path(source).open('rb') as stream:
-        contents = stream.read(PIN['maxInputBytes'] + 1)
+    require_supported_platform()
+    contents = read_model_input(source)
     if not contents or len(contents) > PIN['maxInputBytes']:
         raise ValueError('DSL input is empty or exceeds the pinned byte limit')
     jdk, war = list(archives())

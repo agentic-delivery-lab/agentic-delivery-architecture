@@ -115,6 +115,13 @@ input (256 KiB) and per-file output (8 MiB) are bounded. The host wrapper has a
 120-second overall cancellation deadline with bounded descendant cleanup. Kernel, Python, bubblewrap and host libraries are
 recorded execution prerequisites, not a fully pinned hermetic operating system.
 This profile must pass on the actual execution host; there is no unsafe fallback.
+The wrapper starts its own session before exec, closes stdin and keeps the root
+child waitable with WNOWAIT until its owned process group is stopped. This also
+covers cancellation before bubblewrap installs its parent-death handler; the
+flag alone has a documented startup race. No discovered PID number authorizes a
+signal, and unrelated process groups are never selected. The extra bubblewrap
+new-session flag is intentionally absent so startup children stay in that
+already isolated group; output descriptors are files rather than terminals.
 
 Supported parser feature controls disable scripts, plugins, component discovery,
 includes, documentation/decision imports, environment interpolation, filesystem
@@ -137,3 +144,17 @@ Rollback restores the previous validator, model, policy and tooling lock togethe
 and prepares a new release digest; it must state that the previous marker check
 cannot prove DSL validity. Neither this check nor its report activates the
 factory controller, MCP, external rendering or an approved runtime context.
+
+The optional checkout-root argument selects the entire trusted Architecture
+tooling checkout: model, tooling lock, runtime, adapter, cache and report path.
+It is an operator/profile input, never a value selected by DSL or Issue text.
+Callers must admit that tooling checkout before executing it; this argument is
+not a data-only interface for running arbitrary untrusted repository code.
+Unsupported OS, architecture or Python versions fail before preparation creates
+a cache or downloads artifacts.
+
+Model inputs are read through regular-file descriptors without following file
+or directory links, before the private snapshot is created. Use canonical
+input paths. Special files are rejected without a blocking read. The trusted
+tooling checkout is separate from the model input; a factory profile must pin
+that tooling root instead of deriving it from candidate content.

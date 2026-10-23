@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
-import { readFile } from 'node:fs/promises';
-import { createReadStream } from 'node:fs';
+import { open, readFile } from 'node:fs/promises';
+import { constants } from 'node:fs';
 import path from 'node:path';
 import { promisify, isDeepStrictEqual } from 'node:util';
 import { fileURLToPath } from 'node:url';
@@ -46,15 +46,47 @@ export function selectView(workspace, key) {
   return { key, elements, relationships };
 }
 
-async function inputDigest(modelPath, limit) {
-  const hash = createHash('sha256');
-  let bytes = 0;
-  for await (const chunk of createReadStream(modelPath, { highWaterMark: 65_536 })) {
-    bytes += chunk.length;
-    if (bytes > limit) throw new Error('DSL input exceeds the pinned byte limit');
-    hash.update(chunk);
+export async function readModelInput(modelPath, limit) {
+  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 262_144) throw new Error('Invalid DSL input byte limit');
+  if (process.platform !== 'linux' || process.arch !== 'x64') throw new Error('Model validation requires Linux x64');
+  const absolute = path.resolve(modelPath);
+  const parts = absolute.split(path.sep).filter(Boolean);
+  let directory;
+  let file;
+  try {
+    const directoryFlags = constants.O_RDONLY | constants.O_DIRECTORY | constants.O_NOFOLLOW;
+    directory = await open(path.parse(absolute).root, directoryFlags);
+    for (const part of parts.slice(0, -1)) {
+      const next = await open(`/proc/self/fd/${directory.fd}/${part}`, directoryFlags);
+      await directory.close();
+      directory = next;
+    }
+    file = await open(`/proc/self/fd/${directory.fd}/${parts.at(-1)}`,
+      constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK);
+    const metadata = await file.stat();
+    if (!metadata.isFile()) throw new Error('Model input must be a regular file without symbolic links');
+    if (metadata.size > limit) throw new Error('DSL input exceeds the pinned byte limit');
+    const chunks = [];
+    let bytes = 0;
+    for await (const chunk of file.createReadStream({ autoClose: false, highWaterMark: 65_536 })) {
+      bytes += chunk.length;
+      if (bytes > limit) throw new Error('DSL input exceeds the pinned byte limit');
+      chunks.push(chunk);
+    }
+    return Buffer.concat(chunks);
+  } catch (error) {
+    if (['ELOOP', 'ENOTDIR', 'ENXIO', 'EISDIR'].includes(error.code)) {
+      throw new Error('Model input must be a regular file without symbolic links', { cause: error });
+    }
+    throw error;
+  } finally {
+    await file?.close();
+    await directory?.close();
   }
-  return hash.digest('hex');
+}
+
+export async function modelInputDigest(modelPath, limit) {
+  return sha256(await readModelInput(modelPath, limit));
 }
 
 export async function runWithStableRuntime(runtimePath, run) {
@@ -64,19 +96,20 @@ export async function runWithStableRuntime(runtimePath, run) {
   return { result, runtimeSha256 };
 }
 
-export async function validateStructurizr(modelPath, viewKeys) {
-  const lockBytes = await readFile(path.join(root, 'architecture/references/tooling-lock.json'));
+export async function validateStructurizr(modelPath, viewKeys, toolingRoot = root) {
+  const selectedRoot = path.resolve(toolingRoot);
+  const lockBytes = await readFile(path.join(selectedRoot, 'architecture/references/tooling-lock.json'));
   const pin = JSON.parse(lockBytes).diagramRenderers.structurizr;
   const keys = viewKeys ?? pin.views;
   if (!Array.isArray(keys) || keys.length > pin.views.length || !keys.length || new Set(keys).size !== keys.length
     || keys.some((key) => !pin.views.includes(key))) throw new Error('Unapproved Structurizr view key');
-  const before = await inputDigest(modelPath, pin.maxInputBytes);
-  const runtimePath = path.join(root, 'tools/structurizr/runtime.py');
+  const before = await modelInputDigest(modelPath, pin.maxInputBytes);
+  const runtimePath = path.join(selectedRoot, 'tools/structurizr/runtime.py');
   const { result: { stdout }, runtimeSha256 } = await runWithStableRuntime(runtimePath, () =>
     execute('python3', [runtimePath, modelPath], {
       timeout: 120_000, maxBuffer: pin.maxReportBytes, env: { PATH: '/usr/bin:/bin' },
     }));
-  if (before !== await inputDigest(modelPath, pin.maxInputBytes)) throw new Error('Canonical DSL changed during validation');
+  if (before !== await modelInputDigest(modelPath, pin.maxInputBytes)) throw new Error('Canonical DSL changed during validation');
   const report = JSON.parse(stdout);
   if (report.inputSha256 !== before || report.toolingLockSha256 !== sha256(lockBytes)) {
     throw new Error('Isolated request input/tooling snapshot differs from the declared hashes');

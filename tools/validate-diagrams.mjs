@@ -1,4 +1,5 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir, readFile, mkdir, writeFile } from 'node:fs/promises';
+import { validateStructurizr } from './lib/structurizr.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -64,12 +65,17 @@ export async function validateDiagrams(root = repositoryRoot) {
     if (file !== 'README.md') errors.push(`generated diagram output must not be committed without an explicit release rule: ${file}`);
   }
   if (errors.length) throw new Error(`diagram validation failed:\n${errors.join('\n')}`);
-  return { structurizr: 1, mermaid: mermaidFiles.length, requiredMermaid: requiredViews.size, plantuml: plantumlFiles.length };
+  const structurizrReport = await validateStructurizr(modelPath);
+  return { structurizr: 1, mermaid: mermaidFiles.length, requiredMermaid: requiredViews.size, plantuml: plantumlFiles.length, structurizrReport };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const result = await validateDiagrams(process.argv[2] ?? repositoryRoot);
+    const output = path.join(repositoryRoot, '.cache/structurizr');
+    await mkdir(output, { recursive: true });
+    await writeFile(path.join(output, 'last-report.json'), JSON.stringify(result.structurizrReport, null, 2) + '\n');
+    process.stdout.write(`Structurizr inspections: ${result.structurizrReport.inspection.findings.length} advisory finding(s); selected JSON exports verified.\n`);
     process.stdout.write(`diagram validation passed: ${result.structurizr} Structurizr, ${result.mermaid} Mermaid, ${result.plantuml} PlantUML source(s).\n`);
   } catch (error) {
     process.stderr.write(`${error.message}\n`);

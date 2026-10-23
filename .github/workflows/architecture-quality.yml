@@ -10,7 +10,8 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-24.04
+    # Use the current GA image; Ubuntu24 rejected the required private-loopback setup.
+    runs-on: ubuntu-26.04
     timeout-minutes: 30
     steps:
       - name: Check out architecture
@@ -76,6 +77,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends bubblewrap
+          bwrap --version
+          python3 --version
+          sha256sum /usr/bin/bwrap /usr/bin/python3
           pnpm architecture:prepare
       - name: Verify sandbox process ownership
         run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p test_structurizr_process_ownership.py

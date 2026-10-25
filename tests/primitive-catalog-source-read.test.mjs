@@ -34,7 +34,7 @@ test('the generator CLI can load source verification and check the selected inde
   const { stdout } = await promisify(execFile)(process.execPath, ['tools/generate-adr-primitive-index.mjs', '--check'], {
     cwd: root, env: { ...process.env, AGENTIC_SOURCE_ROOT_PRIMITIVES: sourceRoot }, timeout: 120_000,
   });
-  assert.match(stdout, /index v3 check passed/);
+  assert.match(stdout, /index v4 check passed/);
 });
 
 test('real Git fixtures hold on forged digests, unsupported tooling and nonancestral prepared sources', async (t) => {

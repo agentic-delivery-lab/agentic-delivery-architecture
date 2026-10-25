@@ -148,7 +148,7 @@
           "description": "Contracts 5.0.0 and 5.1.0 retain the normalized prepared-source-commit digest algorithm and requires consumers to dispatch by version for artifact family contracts."
         },
         "adrPrimitiveIndex": {
-          "const": "3.0.0"
+          "enum": ["3.0.0", "4.0.0"]
         },
         "decisionInventory": {
           "enum": ["1.0.0", "1.1.0"]

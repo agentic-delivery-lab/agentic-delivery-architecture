@@ -8,7 +8,8 @@ All notable changes to this repository are documented here.
 
 - Add a versioned current Customizations catalog projection, bound to native
   repository identity and an immutable manifest commit, while preserving the
-  historical schema-1 locator and the schema-3 index format. Check exact source
+  historical schema-1 locator and unchanged schema-3 index contract. Emit the
+  current locator and native IDs under explicit index contract 4.0.0. Check exact source
   rows and reproduce the pinned source digest; keep the original extraction
   checkout and draft/nonactivation boundaries. Refs Architecture #7.
 

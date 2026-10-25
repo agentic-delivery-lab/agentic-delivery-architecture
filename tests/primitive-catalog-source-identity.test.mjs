@@ -133,14 +133,43 @@ for (const [name, validate] of Object.entries(validators)) {
   });
 }
 
-test('the generated ADR/Primitive index retains schema 3 without emitted native identity fields', async () => {
+test('the current ADR/Primitive index explicitly selects schema 4 with native identity fields', async () => {
   const indexPath = 'architecture/generated/adr-primitive-index.json';
   const index = JSON.parse(await readFile(path.join(root, indexPath), 'utf8'));
   await validateStructuredValue(root, indexPath, index);
-  assert.equal(index.schemaVersion, 3);
+  assert.equal(index.schemaVersion, 4);
+  assert.equal(index.primitiveRelease.repositoryId, repositoryId);
   assert.deepEqual(Object.keys(index).sort(), ['adrs', 'architecture', 'decisionInventory', 'domains', 'externalAdrs', 'primitiveRelease', 'primitives', 'schemaVersion', 'source', 'uncoveredAdrs'].sort());
-  assert.deepEqual(Object.keys(index.primitiveRelease).sort(), ['repository', 'releaseId', 'version', 'sourceCommit', 'contentSha256', 'status'].sort());
+  assert.deepEqual(Object.keys(index.primitiveRelease).sort(), ['repository', 'repositoryId', 'releaseId', 'version', 'sourceCommit', 'contentSha256', 'status'].sort());
   for (const primitive of index.primitives) {
-    assert.deepEqual(Object.keys(primitive).sort(), ['id', 'kind', 'version', 'sourceRepository', 'sourceCommit', 'sourcePath', 'enforcement', 'adrs', 'localAdrs', 'externalAdrs', 'domains'].sort());
+    assert.equal(primitive.sourceRepositoryId, repositoryId);
+    assert.deepEqual(Object.keys(primitive).sort(), ['id', 'kind', 'version', 'sourceRepository', 'sourceRepositoryId', 'sourceCommit', 'sourcePath', 'enforcement', 'adrs', 'localAdrs', 'externalAdrs', 'domains'].sort());
+  }
+});
+
+
+test('actual historical schema-3 index and its schema remain accepted without identity rewriting', async () => {
+  const indexPath = 'architecture/generated/adr-primitive-index.json';
+  const git = async (file) => (await promisify(execFile)('git', ['--no-lazy-fetch', '--no-replace-objects', 'show', `${historicalCommit}:${file}`], {cwd: root, encoding: 'utf8'})).stdout;
+  const index = JSON.parse(await git(indexPath));
+  assert.equal(index.schemaVersion, 3);
+  assert.equal(index.primitiveRelease.repository, oldRepository);
+  await validateStructuredValue(root, indexPath, index);
+  assert.equal(await readFile(path.join(root, 'architecture/contracts/adr-primitive-index.schema.json'), 'utf8'), await git('architecture/contracts/adr-primitive-index.schema.json'));
+});
+
+test('index contracts reject mixed versions, missing or wrong current native IDs and unknown versions', async () => {
+  const indexPath = 'architecture/generated/adr-primitive-index.json';
+  const current = JSON.parse(await readFile(path.join(root, indexPath), 'utf8'));
+  for (const change of ['downgrade', 'unknown', 'missing ID', 'wrong ID', 'wrong row ID', 'old release name', 'old row name']) {
+    const index = structuredClone(current);
+    if (change === 'downgrade') index.schemaVersion = 3;
+    if (change === 'unknown') index.schemaVersion = 5;
+    if (change === 'missing ID') delete index.primitiveRelease.repositoryId;
+    if (change === 'wrong ID') index.primitiveRelease.repositoryId += 1;
+    if (change === 'wrong row ID') index.primitives[0].sourceRepositoryId += 1;
+    if (change === 'old release name') index.primitiveRelease.repository = oldRepository;
+    if (change === 'old row name') index.primitives[0].sourceRepository = oldRepository;
+    await assert.rejects(validateStructuredValue(root, indexPath, index), change);
   }
 });

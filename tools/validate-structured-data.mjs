@@ -148,8 +148,13 @@ function validateCrossFieldConstraints(schemaName, relativePath, value) {
   }
 }
 
+function schemaForValue(relativePath, value) {
+  if (relativePath === 'architecture/generated/adr-primitive-index.json' && value?.schemaVersion !== 3) return 'adr-primitive-index-v4.schema.json';
+  return architectureDataContracts[relativePath];
+}
+
 export async function validateStructuredValue(root, relativePath, value) {
-  const schemaName = architectureDataContracts[relativePath];
+  const schemaName = schemaForValue(relativePath, value);
   if (!schemaName) throw new Error(`${relativePath} has no architecture data contract`);
   const { validators } = await loadSchemas(root);
   const validate = validators.get(schemaName);
@@ -170,10 +175,11 @@ export async function validateStructuredData(root = repositoryRoot) {
     const stale = mappedFiles.filter((file) => !discoveredFiles.includes(file));
     throw new Error(`Architecture structured-data coverage map is incomplete; unmapped=${missing.join(',') || 'none'}; missing=${stale.join(',') || 'none'}`);
   }
-  for (const [relativePath, schemaName] of Object.entries(architectureDataContracts)) {
+  for (const relativePath of Object.keys(architectureDataContracts)) {
+    const value = await readData(root, relativePath);
+    const schemaName = schemaForValue(relativePath, value);
     const validate = validators.get(schemaName);
     if (!validate) throw new Error(`missing schema architecture/contracts/${schemaName} for ${relativePath}`);
-    const value = await readData(root, relativePath);
     if (!validate(value)) {
       throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
     }

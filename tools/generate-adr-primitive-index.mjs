@@ -79,6 +79,7 @@ async function buildIndex(root) {
       kind: primitive.kind,
       version: primitive.version,
       sourceRepository: lock.source.repository,
+      ...(lock.schemaVersion === 2 ? { sourceRepositoryId: lock.source.repositoryId } : {}),
       sourceCommit: lock.source.sourceCommit,
       sourcePath: primitive.sourcePath,
       enforcement: primitive.enforcement,
@@ -94,7 +95,7 @@ async function buildIndex(root) {
   }));
   const uncoveredAdrs = adrRows.filter((adr) => adr.primitives.length === 0).map((adr) => adr.id);
   return {
-    schemaVersion: 3,
+    schemaVersion: lock.schemaVersion === 2 ? 4 : 3,
     source: 'released-primitive-catalog',
     architecture: 'urn:agentic-delivery:architecture:authority',
     decisionInventory: {
@@ -104,6 +105,7 @@ async function buildIndex(root) {
     },
     primitiveRelease: {
       repository: lock.source.repository,
+      ...(lock.schemaVersion === 2 ? { repositoryId: lock.source.repositoryId } : {}),
       releaseId: lock.source.releaseId,
       version: lock.source.releaseVersion,
       sourceCommit: lock.source.sourceCommit,
@@ -142,8 +144,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const root = args.find((argument) => argument !== '--check') ?? repositoryRoot;
     const index = await generateAdrPrimitiveIndex({ checkOnly, root });
     process.stdout.write(checkOnly
-      ? `ADR/Primitive index v3 check passed: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`
-      : `ADR/Primitive index v3 generated: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+      ? `ADR/Primitive index v${index.schemaVersion} check passed: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`
+      : `ADR/Primitive index v${index.schemaVersion} generated: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`);
   } catch (error) {
     process.stderr.write(`${error.message}\n`);
     process.exitCode = 1;

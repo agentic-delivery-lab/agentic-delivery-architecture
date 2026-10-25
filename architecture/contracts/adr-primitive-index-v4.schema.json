@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/agentic-delivery-lab/agentic-delivery-architecture/blob/main/architecture/contracts/adr-primitive-index-v4.schema.json",
+  "title": "Architecture ADR to Primitive index v4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "source", "architecture", "decisionInventory", "primitiveRelease", "domains", "adrs", "externalAdrs", "uncoveredAdrs", "primitives"],
+  "properties": {
+    "schemaVersion": { "const": 4 },
+    "source": { "const": "released-primitive-catalog" },
+    "architecture": { "const": "urn:agentic-delivery:architecture:authority" },
+    "decisionInventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "schemaVersion"],
+      "properties": {
+        "path": { "const": "architecture/references/decision-inventory.yml" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "schemaVersion": { "const": 1 }
+      }
+    },
+    "primitiveRelease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "repositoryId", "releaseId", "version", "sourceCommit", "contentSha256", "status"],
+      "properties": {
+        "repository": { "const": "agentic-delivery-lab/agentic-delivery-agent-customizations" },
+        "repositoryId": { "type": "integer", "const": 1380894656 },
+        "releaseId": { "type": "string", "pattern": "^urn:agentic-delivery:primitive-release:" },
+        "version": { "type": "string", "minLength": 1 },
+        "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "contentSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+        "status": { "enum": ["draft", "released", "withdrawn"] }
+      }
+    },
+    "domains": { "type": "array", "items": { "type": "string", "enum": ["agentic-delivery-governance", "agentic-delivery-control-plane", "agentic-primitives", "developer-distribution"] } },
+    "adrs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "file", "domains", "requiredEnforcement", "primitives"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ADR-[0-9]{4}$" },
+          "file": { "type": "string", "pattern": "^decisions/" },
+          "domains": { "type": "array", "items": { "type": "string", "enum": ["agentic-delivery-governance", "agentic-delivery-control-plane", "agentic-primitives", "developer-distribution"] } },
+          "requiredEnforcement": { "type": "array", "items": { "type": "string" } },
+          "primitives": { "type": "array", "items": { "type": "string" } },
+          "supersedes": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } }
+        }
+      }
+    },
+    "externalAdrs": {
+      "type": "array",
+      "maxItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "owner"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ADR-[0-9]{4}$" },
+          "owner": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repository", "repositoryId", "sourceCommit", "canonicalPath", "sha256", "url"],
+            "properties": {
+              "repository": { "const": "agentic-delivery-lab/agentic-delivery" },
+              "repositoryId": { "const": 1358455028 },
+              "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+              "canonicalPath": { "type": "string", "pattern": "^docs/decisions/[0-9]{4}-[a-z0-9-]+\\.md$" },
+              "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "url": { "type": "string", "format": "uri" }
+            }
+          }
+        }
+      }
+    },
+    "uncoveredAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
+    "primitives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "version", "sourceRepository", "sourceRepositoryId", "sourceCommit", "sourcePath", "enforcement", "adrs", "localAdrs", "externalAdrs", "domains"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "kind": { "enum": ["agent", "skill", "instruction", "hook", "validator", "capability", "mcp-contract"] },
+          "version": { "type": "string", "minLength": 1 },
+          "sourceRepository": { "const": "agentic-delivery-lab/agentic-delivery-agent-customizations" },
+          "sourceRepositoryId": { "type": "integer", "const": 1380894656 },
+          "sourceCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+          "sourcePath": { "type": "string", "minLength": 1 },
+          "enforcement": { "enum": ["instructional", "deterministic", "semantic"] },
+          "adrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
+          "localAdrs": { "type": "array", "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
+          "externalAdrs": { "type": "array", "maxItems": 0, "items": { "type": "string", "pattern": "^ADR-[0-9]{4}$" } },
+          "domains": { "type": "array", "items": { "type": "string", "enum": ["agentic-delivery-governance", "agentic-delivery-control-plane", "agentic-primitives", "developer-distribution"] } }
+        }
+      }
+    }
+  }
+}

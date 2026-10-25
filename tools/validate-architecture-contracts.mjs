@@ -50,9 +50,11 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   const indexSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/adr-primitive-index.schema.json'), 'utf8'));
   const generatedIndex = JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8'));
   if (indexSchema.title !== 'Architecture ADR to Primitive index v3' || indexSchema.properties?.schemaVersion?.const !== 3) errors.push('ADR/Primitive index schema must be version 3');
-  if (generatedIndex.schemaVersion !== 3) errors.push('generated ADR/Primitive index must implement schemaVersion 3');
+  const currentIndexSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/adr-primitive-index-v4.schema.json'), 'utf8'));
+  if (currentIndexSchema.title !== 'Architecture ADR to Primitive index v4' || currentIndexSchema.properties?.schemaVersion?.const !== 4) errors.push('current ADR/Primitive index schema must be version 4');
+  if (![3, 4].includes(generatedIndex.schemaVersion)) errors.push('generated ADR/Primitive index must implement a supported contract');
   if (generatedIndex.externalAdrs?.length !== 0) errors.push('generated index must not retain external ADR owners or copied-text projections');
-  if (release.contractVersions?.adrPrimitiveIndex !== '3.0.0') errors.push('architecture release must pin ADR/Primitive index contract 3.0.0');
+  if (release.contractVersions?.adrPrimitiveIndex !== `${generatedIndex.schemaVersion}.0.0`) errors.push('architecture release must pin the exact generated ADR/Primitive index contract');
   if (releaseSchema.properties?.schemaVersion?.const !== 2 || releaseSchema.title !== 'Architecture release manifest schemaVersion 2') errors.push('Architecture release schema must describe manifest schemaVersion 2');
   if (JSON.stringify(releaseSchema.properties?.contractVersions?.properties?.architectureRelease?.enum) !== JSON.stringify(['5.0.0', '5.1.0'])) errors.push('Architecture release schema must support contract versions 5.0.0 and 5.1.0');
   if (releaseSchema.properties?.contractVersions?.properties?.requirementsReference?.const !== '1.0.0' || !releaseSchema.properties?.contractVersions?.required?.includes('requirementsReference')) errors.push('Architecture release schema must require requirementsReference contract 1.0.0');
@@ -151,6 +153,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   for (const file of [
     'architecture/contracts/architecture-release.schema.json',
     'architecture/contracts/adr-primitive-index.schema.json',
+    'architecture/contracts/adr-primitive-index-v4.schema.json',
     'architecture/contracts/decision-inventory.schema.json',
     'architecture/contracts/primitive-reference.schema.json',
     'architecture/contracts/conformance-request.schema.json',
@@ -161,7 +164,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
     if (schema.$schema !== 'https://json-schema.org/draft/2020-12/schema') errors.push(`${file} must use JSON Schema 2020-12`);
   }
   if (errors.length > 0) throw new Error(`architecture contract check failed:\n${errors.join('\n')}`);
-  return { schemas: 7, aliases: aliasValues.length };
+  return { schemas: 8, aliases: aliasValues.length };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -65,7 +65,7 @@ export async function validateArchitectureRelease(root = repositoryRoot, expecte
   if (!Array.isArray(release.decisionIds) || new Set(release.decisionIds).size !== release.decisionIds.length
     || JSON.stringify(release.decisionIds) !== JSON.stringify(inventory.decisionIds)) errors.push('architecture release decision IDs must exactly match the canonical inventory');
   if (!Array.isArray(release.contextIds) || release.contextIds.length === 0 || new Set(release.contextIds).size !== release.contextIds.length) errors.push('architecture release must identify unique bounded contexts');
-  if (release.contractVersions?.adrPrimitiveIndex !== '3.0.0') errors.push('architecture release must pin ADR/Primitive index contract 3.0.0');
+  if (!['3.0.0', '4.0.0'].includes(release.contractVersions?.adrPrimitiveIndex)) errors.push('architecture release must pin a supported ADR/Primitive index contract');
   if (!['1.0.0', '1.1.0'].includes(release.contractVersions?.decisionInventory)) errors.push('architecture release must pin decision inventory contract 1.0.0 or 1.1.0');
   if (release.contractVersions?.architectureArtifacts !== '1.0.0') errors.push('architecture release must pin architecture artifact contract 1.0.0');
   if (release.contractVersions?.evaluationReport !== '2.0.0') errors.push('architecture release must pin evaluation report contract 2.0.0');

@@ -72,11 +72,11 @@ test('Architecture Authority has one canonical organizational strategy source', 
 });
 
 test('architecture contracts and aliases are deterministic', async () => {
-  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 7, aliases: 22 });
+  assert.deepEqual(await validateArchitectureContracts(root), { schemas: 8, aliases: 22 });
 });
 
 test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
-  assert.deepEqual(await validateStructuredData(root), { files: 20, schemas: 23 });
+  assert.deepEqual(await validateStructuredData(root), { files: 20, schemas: 24 });
 
   const principleIndex = parseRepositoryYaml(
     await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),
@@ -308,17 +308,17 @@ test('structured-data check rejects an invalid schema definition', async () => {
 
 test('ADR/Primitive traceability resolves only through the canonical Architecture inventory', async () => {
   const index = JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8'));
-  const indexSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/adr-primitive-index.schema.json'), 'utf8'));
+  const indexSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/adr-primitive-index-v4.schema.json'), 'utf8'));
   const release = JSON.parse(await readFile(path.join(root, 'architecture/generated/architecture-release.json'), 'utf8'));
   const inventory = await validateDecisionInventory(root);
-  assert.equal(index.schemaVersion, 3);
-  assert.equal(indexSchema.title, 'Architecture ADR to Primitive index v3');
-  assert.equal(indexSchema.properties.schemaVersion.const, 3);
-  assert.equal(release.contractVersions.adrPrimitiveIndex, '3.0.0');
+  assert.equal(index.schemaVersion, 4);
+  assert.equal(indexSchema.title, 'Architecture ADR to Primitive index v4');
+  assert.equal(indexSchema.properties.schemaVersion.const, 4);
+  assert.equal(release.contractVersions.adrPrimitiveIndex, '4.0.0');
   assert.equal(index.source, 'released-primitive-catalog');
   assert.match(index.primitiveRelease.sourceCommit, /^[0-9a-f]{40}$/);
   assert.ok(index.primitives.length > 0);
-  assert.ok(index.primitives.every((primitive) => primitive.sourceRepository === 'agentic-delivery-lab/agentic-delivery-primitives'));
+  assert.ok(index.primitives.every((primitive) => primitive.sourceRepository === 'agentic-delivery-lab/agentic-delivery-agent-customizations' && primitive.sourceRepositoryId === 1380894656));
   assert.ok(index.primitives.every((primitive) => !primitive.sourcePath.startsWith('docs/')));
   assert.deepEqual(index.externalAdrs, []);
   assert.ok(index.primitives.every((primitive) => primitive.externalAdrs.length === 0 && primitive.adrs.every((id) => primitive.localAdrs.includes(id))));

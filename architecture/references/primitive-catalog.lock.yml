@@ -1,108 +1,170 @@
-schemaVersion: 1
+schemaVersion: 2
 source:
-  repository: agentic-delivery-lab/agentic-delivery-primitives
-  releaseId: urn:agentic-delivery:primitive-release:0.1.0-draft.4
-  releaseVersion: 0.1.0-draft.4
-  sourceCommit: 01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e
-  contentSha256: 36a7e7e95a89ee00288f08a30ac41e4166e11516165e93af47b342026ce894d0
+  repository: agentic-delivery-lab/agentic-delivery-agent-customizations
+  repositoryId: 1380894656
+  releaseId: urn:agentic-delivery:primitive-release:0.1.0-draft.15
+  releaseVersion: 0.1.0-draft.15
+  sourceCommit: 69beab027d8b28fc082fa6054f4def5ba0146e3c
+  contentSha256: 4b6c07deb6f7be8f495244e3c50a528054528db1fdec5a5a14ea4cfdda5bb34e
   status: draft
 architectureId: urn:agentic-delivery:architecture:authority
 primitives:
   - id: codex-delivery
     kind: agent
-    version: 0.1.0
+    version: 0.2.0
     sourcePath: agents/codex/codex-delivery.md
     enforcement: instructional
-    adrs: [ADR-0009, ADR-0012, ADR-0015, ADR-0017]
-    domains: [agentic-delivery-control-plane]
+    adrs:
+      - ADR-0009
+      - ADR-0012
+      - ADR-0015
+      - ADR-0017
+      - ADR-0018
+      - ADR-0023
+      - ADR-0024
+    domains:
+      - agentic-delivery-control-plane
   - id: architecture-decision
     kind: skill
     version: 0.1.0
     sourcePath: skills/architecture-decision/SKILL.md
     enforcement: instructional
-    adrs: [ADR-0001]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0001
+      - ADR-0020
+      - ADR-0021
+    domains:
+      - agentic-delivery-governance
   - id: delivery-workflow
     kind: skill
-    version: 0.1.0
+    version: 0.2.0
     sourcePath: skills/delivery-workflow/SKILL.md
     enforcement: instructional
-    adrs: [ADR-0004, ADR-0005, ADR-0006, ADR-0007, ADR-0008]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0004
+      - ADR-0005
+      - ADR-0006
+      - ADR-0007
+      - ADR-0008
+    domains:
+      - agentic-delivery-governance
+  - id: workspace-lifecycle-guard
+    kind: validator
+    version: 0.1.0
+    sourcePath: validators/workspace-lifecycle/workspace_guard.py
+    enforcement: deterministic
+    adrs:
+      - ADR-0004
+      - ADR-0007
+    domains:
+      - agentic-delivery-governance
   - id: plain-language-communication
     kind: skill
     version: 0.1.0
     sourcePath: skills/plain-language-communication/SKILL.md
     enforcement: instructional
-    adrs: [ADR-0002]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0002
+    domains:
+      - agentic-delivery-governance
   - id: ubiquitous-language
     kind: skill
     version: 0.1.0
     sourcePath: skills/ubiquitous-language/SKILL.md
     enforcement: instructional
-    adrs: [ADR-0003]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0003
+    domains:
+      - agentic-delivery-governance
   - id: issue-branch-name-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/validate-branch-name.mjs
     enforcement: deterministic
-    adrs: [ADR-0007]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0007
+    domains:
+      - agentic-delivery-governance
   - id: commit-range-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/validate-commit-range.mjs
     enforcement: deterministic
-    adrs: [ADR-0004, ADR-0005]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0004
+      - ADR-0005
+    domains:
+      - agentic-delivery-governance
   - id: changelog-structure-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/validate-changelog.mjs
     enforcement: deterministic
-    adrs: [ADR-0006]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0006
+    domains:
+      - agentic-delivery-governance
   - id: gitmoji-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/validate-gitmoji.mjs
     enforcement: deterministic
-    adrs: [ADR-0005]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0005
+    domains:
+      - agentic-delivery-governance
   - id: pull-request-body-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/validate-pull-request-body.mjs
     enforcement: deterministic
-    adrs: [ADR-0016]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0016
+    domains:
+      - agentic-delivery-governance
   - id: pull-request-branch-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/validate-pull-request-branch.mjs
     enforcement: deterministic
-    adrs: [ADR-0007]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0007
+    domains:
+      - agentic-delivery-governance
   - id: pull-request-title-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/validate-pull-request-title.mjs
     enforcement: deterministic
-    adrs: [ADR-0005]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0005
+    domains:
+      - agentic-delivery-governance
   - id: source-issue-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/validate-source-issue.mjs
     enforcement: deterministic
-    adrs: [ADR-0007]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0007
+    domains:
+      - agentic-delivery-governance
   - id: toolchain-policy-validator
     kind: validator
     version: 0.1.0
     sourcePath: validators/repository-delivery/lib/toolchain.mjs
     enforcement: deterministic
-    adrs: [ADR-0008]
-    domains: [agentic-delivery-governance]
+    adrs:
+      - ADR-0008
+    domains:
+      - agentic-delivery-governance
+  - id: primitive-catalog-validator
+    kind: validator
+    version: 0.1.0
+    sourcePath: validators/primitive-metadata/validate-catalog.mjs
+    enforcement: deterministic
+    adrs:
+      - ADR-0013
+      - ADR-0018
+    domains:
+      - agentic-primitives

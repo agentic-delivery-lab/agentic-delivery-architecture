@@ -5,12 +5,10 @@ import { fileURLToPath } from 'node:url';
 
 import { parseRepositoryYaml } from './lib/yaml.mjs';
 import { validateDecisionInventory } from './decision-inventory.mjs';
+import { validatePrimitiveCatalogLock } from './lib/primitive-catalog-lock.mjs';
+export { validatePrimitiveCatalogLock } from './lib/primitive-catalog-lock.mjs';
 
 const ADR_FILE = /^(\d{4})-[a-z0-9-]+\.md$/;
-const SHA1 = /^[0-9a-f]{40}$/;
-const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const KINDS = new Set(['agent', 'skill', 'instruction', 'hook', 'validator', 'capability', 'mcp-contract']);
-const ENFORCEMENTS = new Set(['instructional', 'deterministic', 'semantic']);
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -46,29 +44,6 @@ async function loadAdrs(root) {
   return records;
 }
 
-function validateLock(lock) {
-  const errors = [];
-  if (lock?.schemaVersion !== 1) errors.push('primitive catalog lock schemaVersion must be 1');
-  if (lock?.source?.repository !== 'agentic-delivery-lab/agentic-delivery-primitives') errors.push('primitive catalog lock source repository is invalid');
-  if (!SHA1.test(lock?.source?.sourceCommit ?? '')) errors.push('primitive catalog lock source commit must be an immutable SHA');
-  if (lock?.architectureId !== 'urn:agentic-delivery:architecture:authority') errors.push('primitive catalog lock architectureId is invalid');
-  if (!Array.isArray(lock?.primitives) || lock.primitives.length === 0) errors.push('primitive catalog lock must contain primitives');
-  const ids = new Set();
-  for (const [index, primitive] of (lock?.primitives ?? []).entries()) {
-    const location = `primitives[${index}]`;
-    if (!primitive || typeof primitive !== 'object' || Array.isArray(primitive)) { errors.push(`${location} must be an object`); continue; }
-    if (!ID.test(primitive.id ?? '') || ids.has(primitive.id)) errors.push(`${location}.id must be unique kebab-case`);
-    ids.add(primitive.id);
-    if (!KINDS.has(primitive.kind)) errors.push(`${location}.kind is unsupported`);
-    if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(primitive.version ?? '')) errors.push(`${location}.version must be SemVer`);
-    if (typeof primitive.sourcePath !== 'string' || primitive.sourcePath.length === 0) errors.push(`${location}.sourcePath is required`);
-    if (!ENFORCEMENTS.has(primitive.enforcement)) errors.push(`${location}.enforcement is unsupported`);
-    for (const field of ['adrs', 'domains']) {
-      if (!Array.isArray(primitive[field]) || primitive[field].length === 0 || primitive[field].some((item) => typeof item !== 'string')) errors.push(`${location}.${field} must be a non-empty string array`);
-    }
-  }
-  if (errors.length) throw new Error(`primitive catalog lock validation failed:\n${errors.join('\n')}`);
-}
 
 async function loadDomains(root) {
   const registry = parseRepositoryYaml(await readFile(path.join(root, 'architecture/domain/ubiquitous-language.yml'), 'utf8'), 'domain register');
@@ -85,7 +60,12 @@ async function buildIndex(root) {
     validateDecisionInventory(root),
     readFile(inventoryPath),
   ]);
-  validateLock(lock);
+  validatePrimitiveCatalogLock(lock);
+  if (lock.schemaVersion === 2) {
+    const { assertPrimitiveCatalogProjection, readPrimitiveCatalogSource } = await import('./primitive-catalog-source.mjs');
+    const sourceRoot = process.env.AGENTIC_SOURCE_ROOT_PRIMITIVES ?? path.join(root, 'sources/primitives');
+    assertPrimitiveCatalogProjection(lock, await readPrimitiveCatalogSource({ sourceRoot, manifestCommit: lock.source.sourceCommit }));
+  }
   const adrById = new Map(adrs.map((adr) => [adr.id, adr]));
   const primitiveByAdr = new Map(adrs.map((adr) => [adr.id, []]));
   for (const primitive of lock.primitives) {
@@ -99,6 +79,7 @@ async function buildIndex(root) {
       kind: primitive.kind,
       version: primitive.version,
       sourceRepository: lock.source.repository,
+      ...(lock.schemaVersion === 2 ? { sourceRepositoryId: lock.source.repositoryId } : {}),
       sourceCommit: lock.source.sourceCommit,
       sourcePath: primitive.sourcePath,
       enforcement: primitive.enforcement,
@@ -114,7 +95,7 @@ async function buildIndex(root) {
   }));
   const uncoveredAdrs = adrRows.filter((adr) => adr.primitives.length === 0).map((adr) => adr.id);
   return {
-    schemaVersion: 3,
+    schemaVersion: lock.schemaVersion === 2 ? 4 : 3,
     source: 'released-primitive-catalog',
     architecture: 'urn:agentic-delivery:architecture:authority',
     decisionInventory: {
@@ -124,6 +105,7 @@ async function buildIndex(root) {
     },
     primitiveRelease: {
       repository: lock.source.repository,
+      ...(lock.schemaVersion === 2 ? { repositoryId: lock.source.repositoryId } : {}),
       releaseId: lock.source.releaseId,
       version: lock.source.releaseVersion,
       sourceCommit: lock.source.sourceCommit,
@@ -162,8 +144,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const root = args.find((argument) => argument !== '--check') ?? repositoryRoot;
     const index = await generateAdrPrimitiveIndex({ checkOnly, root });
     process.stdout.write(checkOnly
-      ? `ADR/Primitive index v3 check passed: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`
-      : `ADR/Primitive index v3 generated: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`);
+      ? `ADR/Primitive index v${index.schemaVersion} check passed: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`
+      : `ADR/Primitive index v${index.schemaVersion} generated: ${index.adrs.length} canonical Architecture ADR(s), ${index.primitives.length} primitive reference(s).\n`);
   } catch (error) {
     process.stderr.write(`${error.message}\n`);
     process.exitCode = 1;

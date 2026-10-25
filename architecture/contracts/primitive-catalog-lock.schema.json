@@ -57,14 +57,19 @@
       }
     },
     "schemaVersion": {
-      "const": 1
+      "enum": [
+        1,
+        2
+      ]
     },
     "source": {
       "type": "object",
       "properties": {
         "contentSha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "releaseId": {
           "type": "string"
@@ -77,7 +82,9 @@
         },
         "sourceCommit": {
           "type": "string",
-          "pattern": "^[0-9a-f]{40}$"
+          "pattern": "^[0-9a-f]{40}$",
+          "minLength": 40,
+          "maxLength": 40
         },
         "status": {
           "enum": [
@@ -85,6 +92,10 @@
             "released",
             "withdrawn"
           ]
+        },
+        "repositoryId": {
+          "type": "integer",
+          "const": 1380894656
         }
       },
       "required": [
@@ -108,5 +119,69 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentic-delivery-lab.github.io/architecture/contracts/primitive-catalog-lock.schema.json",
   "title": "primitive-catalog-lock",
-  "description": "Closed structural contract for architecture/references/primitive-catalog.lock.yml; semantic and cross-file meaning is checked separately."
+  "description": "Closed catalog-source contracts: historical schema 1 keeps its original repository locator without a native ID; schema 2 binds the current Customizations locator to native repository ID 1380894656. Both retain immutable source/digest metadata. This declaration does not replace live hosting or release admission.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "source": {
+            "properties": {
+              "repository": {
+                "const": "agentic-delivery-lab/agentic-delivery-primitives"
+              },
+              "repositoryId": {
+                "type": "integer",
+                "const": 1380894656
+              }
+            },
+            "not": {
+              "required": [
+                "repositoryId"
+              ],
+              "type": "object",
+              "properties": {
+                "repositoryId": {}
+              }
+            },
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": 2
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "source": {
+            "properties": {
+              "repository": {
+                "const": "agentic-delivery-lab/agentic-delivery-agent-customizations"
+              },
+              "repositoryId": {
+                "type": "integer",
+                "const": 1380894656
+              }
+            },
+            "required": [
+              "repositoryId"
+            ],
+            "type": "object"
+          }
+        }
+      }
+    }
+  ]
 }

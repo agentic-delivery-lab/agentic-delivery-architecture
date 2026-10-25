@@ -40,6 +40,9 @@ jobs:
           repository: agentic-delivery-lab/agentic-delivery-agent-customizations
           ref: e4933566fbf5b0f593830f8933f18fbd21024fa7
           path: sources/primitives
+          # Keep the original extraction checkout, with immutable current
+          # catalog objects available for the separate schema-2 projection.
+          fetch-depth: 0
           persist-credentials: false
       - name: Check out pinned Distribution decision source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5

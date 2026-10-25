@@ -6,6 +6,12 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Add a versioned current Customizations catalog projection, bound to native
+  repository identity and an immutable manifest commit, while preserving the
+  historical schema-1 locator and the schema-3 index format. Check exact source
+  rows and reproduce the pinned source digest; keep the original extraction
+  checkout and draft/nonactivation boundaries. Refs Architecture #7.
+
 - Replace marker-only C4 assurance with a pinned stock Structurizr parser,
   advisory inspections and checked JSON view exports in the existing validator.
   Explicit preparation downloads unchanged artifacts; Linux isolation denies

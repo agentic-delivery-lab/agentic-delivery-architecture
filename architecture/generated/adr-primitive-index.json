@@ -8,11 +8,11 @@
     "schemaVersion": 1
   },
   "primitiveRelease": {
-    "repository": "agentic-delivery-lab/agentic-delivery-primitives",
-    "releaseId": "urn:agentic-delivery:primitive-release:0.1.0-draft.4",
-    "version": "0.1.0-draft.4",
-    "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
-    "contentSha256": "36a7e7e95a89ee00288f08a30ac41e4166e11516165e93af47b342026ce894d0",
+    "repository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+    "releaseId": "urn:agentic-delivery:primitive-release:0.1.0-draft.15",
+    "version": "0.1.0-draft.15",
+    "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+    "contentSha256": "4b6c07deb6f7be8f495244e3c50a528054528db1fdec5a5a14ea4cfdda5bb34e",
     "status": "draft"
   },
   "domains": [
@@ -78,7 +78,8 @@
       ],
       "primitives": [
         "commit-range-validator",
-        "delivery-workflow"
+        "delivery-workflow",
+        "workspace-lifecycle-guard"
       ]
     },
     {
@@ -126,7 +127,8 @@
         "delivery-workflow",
         "issue-branch-name-validator",
         "pull-request-branch-validator",
-        "source-issue-validator"
+        "source-issue-validator",
+        "workspace-lifecycle-guard"
       ]
     },
     {
@@ -195,7 +197,9 @@
       "requiredEnforcement": [
         "deterministic"
       ],
-      "primitives": []
+      "primitives": [
+        "primitive-catalog-validator"
+      ]
     },
     {
       "id": "ADR-0015",
@@ -252,7 +256,10 @@
       "supersedes": [
         "ADR-0014"
       ],
-      "primitives": []
+      "primitives": [
+        "codex-delivery",
+        "primitive-catalog-validator"
+      ]
     },
     {
       "id": "ADR-0019",
@@ -280,7 +287,9 @@
         "deterministic",
         "semantic"
       ],
-      "primitives": []
+      "primitives": [
+        "architecture-decision"
+      ]
     },
     {
       "id": "ADR-0021",
@@ -296,7 +305,9 @@
         "instructional",
         "semantic"
       ],
-      "primitives": []
+      "primitives": [
+        "architecture-decision"
+      ]
     },
     {
       "id": "ADR-0022",
@@ -323,7 +334,9 @@
         "deterministic",
         "semantic"
       ],
-      "primitives": []
+      "primitives": [
+        "codex-delivery"
+      ]
     },
     {
       "id": "ADR-0024",
@@ -338,35 +351,35 @@
         "deterministic",
         "semantic"
       ],
-      "primitives": []
+      "primitives": [
+        "codex-delivery"
+      ]
     }
   ],
   "externalAdrs": [],
   "uncoveredAdrs": [
     "ADR-0011",
-    "ADR-0013",
-    "ADR-0018",
     "ADR-0019",
-    "ADR-0020",
-    "ADR-0021",
-    "ADR-0022",
-    "ADR-0023",
-    "ADR-0024"
+    "ADR-0022"
   ],
   "primitives": [
     {
       "id": "architecture-decision",
       "kind": "skill",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "skills/architecture-decision/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
-        "ADR-0001"
+        "ADR-0001",
+        "ADR-0020",
+        "ADR-0021"
       ],
       "localAdrs": [
-        "ADR-0001"
+        "ADR-0001",
+        "ADR-0020",
+        "ADR-0021"
       ],
       "externalAdrs": [],
       "domains": [
@@ -377,8 +390,8 @@
       "id": "changelog-structure-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/validate-changelog.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -395,22 +408,28 @@
     {
       "id": "codex-delivery",
       "kind": "agent",
-      "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "version": "0.2.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "agents/codex/codex-delivery.md",
       "enforcement": "instructional",
       "adrs": [
         "ADR-0009",
         "ADR-0012",
         "ADR-0015",
-        "ADR-0017"
+        "ADR-0017",
+        "ADR-0018",
+        "ADR-0023",
+        "ADR-0024"
       ],
       "localAdrs": [
         "ADR-0009",
         "ADR-0012",
         "ADR-0015",
-        "ADR-0017"
+        "ADR-0017",
+        "ADR-0018",
+        "ADR-0023",
+        "ADR-0024"
       ],
       "externalAdrs": [],
       "domains": [
@@ -421,8 +440,8 @@
       "id": "commit-range-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/validate-commit-range.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -441,9 +460,9 @@
     {
       "id": "delivery-workflow",
       "kind": "skill",
-      "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "version": "0.2.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "skills/delivery-workflow/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -469,8 +488,8 @@
       "id": "gitmoji-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/validate-gitmoji.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -488,8 +507,8 @@
       "id": "issue-branch-name-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/validate-branch-name.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -507,8 +526,8 @@
       "id": "plain-language-communication",
       "kind": "skill",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "skills/plain-language-communication/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -523,11 +542,32 @@
       ]
     },
     {
+      "id": "primitive-catalog-validator",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourcePath": "validators/primitive-metadata/validate-catalog.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0013",
+        "ADR-0018"
+      ],
+      "localAdrs": [
+        "ADR-0013",
+        "ADR-0018"
+      ],
+      "externalAdrs": [],
+      "domains": [
+        "agentic-primitives"
+      ]
+    },
+    {
       "id": "pull-request-body-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/validate-pull-request-body.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -545,8 +585,8 @@
       "id": "pull-request-branch-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/validate-pull-request-branch.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -564,8 +604,8 @@
       "id": "pull-request-title-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/validate-pull-request-title.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -583,8 +623,8 @@
       "id": "source-issue-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/validate-source-issue.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -602,8 +642,8 @@
       "id": "toolchain-policy-validator",
       "kind": "validator",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "validators/repository-delivery/lib/toolchain.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -621,8 +661,8 @@
       "id": "ubiquitous-language",
       "kind": "skill",
       "version": "0.1.0",
-      "sourceRepository": "agentic-delivery-lab/agentic-delivery-primitives",
-      "sourceCommit": "01dc8df9eae5ee8394d05246dbf9ccdcddaa7c9e",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
       "sourcePath": "skills/ubiquitous-language/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -630,6 +670,27 @@
       ],
       "localAdrs": [
         "ADR-0003"
+      ],
+      "externalAdrs": [],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "workspace-lifecycle-guard",
+      "kind": "validator",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourcePath": "validators/workspace-lifecycle/workspace_guard.py",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0004",
+        "ADR-0007"
+      ],
+      "localAdrs": [
+        "ADR-0004",
+        "ADR-0007"
       ],
       "externalAdrs": [],
       "domains": [

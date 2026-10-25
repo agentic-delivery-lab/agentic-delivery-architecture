@@ -16,6 +16,33 @@ The generator fails when a Primitive ADR reference has no local Architecture
 record. The generated index is checked for exact reproducibility in
 `pnpm architecture:check`.
 
+The catalog lock retains schema 1 for historical Primitive releases, including
+their original repository locator. Schema 2 binds the current Agent
+Customizations locator to native repository ID `1380894656`. Its `sourceCommit`
+is the immutable commit containing the release manifest, distinct from that
+manifest's prepared source commit. The v3 index wire format is unchanged.
+Both lock versions remain readable; current locks cannot be downgraded by
+mixing their identity fields with the historical shape.
+
+For schema 2, generation and checking read the manifest and catalog from Git
+objects and reproduce the content digest at both the selected manifest commit
+and its ancestral prepared source. The reviewed dependency-free digest tool
+is read from that same commit and checked against its admitted tool hash.
+Unknown tool implementations and contract versions fail closed. No moving
+refs, replacement objects, lazy fetching or worktree source bytes participate.
+The lock must match every projected source row and provenance field exactly.
+Provide `sources/primitives` or set `AGENTIC_SOURCE_ROOT_PRIMITIVES` to the
+explicit local checkout. CI retains the historical extraction checkout while
+fetching its history for the separate current catalog projection. Its native
+hosting identity check remains separate from local Git integrity.
+
+The schema-2 projection is generated with `projectPrimitiveCatalog` in
+`tools/primitive-catalog-source.mjs`, after `readPrimitiveCatalogSource`
+verifies the immutable source. It copies catalog metadata only; it does not
+import Primitive implementations or ADR prose. Draft status and provisional
+decision impacts remain unchanged. Consumer compatibility, release eligibility,
+runtime admission and activation require their own evidence.
+
 `architecture-release.json` is a draft release interface. It carries an
 immutable source commit, content digest, context IDs, ADR identifiers, and
 integrity references. A draft does not prove live deployment, field pinning,

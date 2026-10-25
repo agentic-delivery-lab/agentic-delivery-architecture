@@ -44,4 +44,3 @@ export function validatePrimitiveCatalogLock(lock) {
   if (errors.length) throw new Error(`primitive catalog lock validation failed:\n${errors.join('\n')}`);
   return lock;
 }
-

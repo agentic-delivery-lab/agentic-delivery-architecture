@@ -63,7 +63,17 @@ the architecture snapshot is updated.
 
 ## Checks
 
+Use the pinned Node/pnpm toolchain and stock Git supporting both
+`--no-lazy-fetch` and `--no-replace-objects`. Current catalog generation probes
+these capabilities before reading source objects and reports an actionable
+prerequisite failure when they are unavailable. Git 2.43 does not meet this
+profile; upgrade the unmodified Git installation before running these checks.
+The [Git documentation](https://github.com/git/htmldocs/blob/gh-pages/git.adoc)
+defines `--no-lazy-fetch` as disabling demand fetching from promisor remotes.
+An unsupported Git must not silently fall back to fetching missing objects.
+
 ```text
+git --no-lazy-fetch --no-replace-objects version # required offline object-read capabilities
 pnpm architecture:prepare # explicit networked download of the two exact pinned archives
 pnpm architecture:check # offline after preparation
 pnpm migration:check

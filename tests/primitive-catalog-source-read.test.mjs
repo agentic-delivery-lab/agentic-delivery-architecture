@@ -37,6 +37,25 @@ test('the generator CLI can load source verification and check the selected inde
   assert.match(stdout, /index v4 check passed/);
 });
 
+test('an unsupported Git host gets an actionable prerequisite hold before any source read', async () => {
+  // Synthetic host capability fixture, not a patched Git installation.
+  const directory = await mkdtemp(path.join(tmpdir(), 'architecture-old-git-test-'));
+  try {
+    const marker = path.join(directory, 'source-read-attempted');
+    const shim = '#!/bin/sh\nif [ "$1" = "--no-lazy-fetch" ] && [ "$2" = "--no-replace-objects" ] && [ "$3" = "version" ]; then\n  echo "unknown option: --no-lazy-fetch" >&2\n  exit 129\nfi\nprintf attempted > "$OLD_GIT_TEST_MARKER"\necho "unknown option: --no-lazy-fetch" >&2\nexit 129\n';
+    await writeFile(path.join(directory, 'git'), shim, { mode: 0o700 });
+    const moduleUrl = new URL('../tools/primitive-catalog-source.mjs', import.meta.url).href;
+    const program = `import {readPrimitiveCatalogSource} from ${JSON.stringify(moduleUrl)};\ntry { await readPrimitiveCatalogSource({sourceRoot:${JSON.stringify(sourceRoot)},manifestCommit:${JSON.stringify(manifestCommit)}}); process.exitCode=1; } catch(error) { if (!/Git prerequisite.*--no-lazy-fetch.*upgrade.*stock Git/s.test(error.message)) throw error; console.log(error.message); }`;
+    const { stdout } = await promisify(execFile)(process.execPath, ['--input-type=module', '-e', program], {
+      cwd: root, env: { ...process.env, PATH: directory, OLD_GIT_TEST_MARKER: marker }, timeout: 10_000,
+    });
+    assert.match(stdout, /Git prerequisite/);
+    await assert.rejects(readFile(marker), { code: 'ENOENT' });
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test('real Git fixtures hold on forged digests, unsupported tooling and nonancestral prepared sources', async (t) => {
   const { readPrimitiveCatalogSource } = await import('../tools/primitive-catalog-source.mjs');
   const exec = promisify(execFile);

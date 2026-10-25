@@ -34,6 +34,9 @@ and its ancestral prepared source. The reviewed dependency-free digest tool
 is read from that same commit and checked against its pinned tool hash.
 Unknown tool implementations and contract versions fail closed. No moving
 refs, replacement objects, lazy fetching or worktree source bytes participate.
+Stock Git must accept `git --no-lazy-fetch --no-replace-objects version`;
+the reader probes this before inspecting objects. Unsupported hosts receive
+an explicit upgrade prerequisite, preserving the offline-read guarantee.
 The lock must match every projected source row and provenance field exactly.
 Provide `sources/primitives` or set `AGENTIC_SOURCE_ROOT_PRIMITIVES` to the
 explicit local checkout. CI retains the historical extraction checkout while

@@ -12,6 +12,8 @@ All notable changes to this repository are documented here.
   current locator and native IDs under explicit index contract 4.0.0. Check exact source
   rows and reproduce the pinned source digest; keep the original extraction
   checkout and draft/nonactivation boundaries. Refs Architecture #7.
+  Declare and probe the required stock Git offline-read capabilities before
+  inspecting source objects, with an actionable upgrade prerequisite.
 
 - Replace marker-only C4 assurance with a pinned stock Structurizr parser,
   advisory inspections and checked JSON view exports in the existing validator.

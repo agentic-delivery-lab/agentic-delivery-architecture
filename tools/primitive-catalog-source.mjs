@@ -50,6 +50,15 @@ export async function readPrimitiveCatalogSource({ sourceRoot, manifestCommit })
     ...Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith('GIT_'))),
     GIT_TERMINAL_PROMPT: '0', GIT_OPTIONAL_LOCKS: '0',
   };
+  try {
+    // Probe the required behavior rather than trusting a version string or
+    // letting older Git silently ignore an unsupported environment variable.
+    await execFileAsync('git', ['--no-lazy-fetch', '--no-replace-objects', 'version'], {
+      env, encoding: 'utf8', timeout: 10_000, maxBuffer: 1024 * 1024,
+    });
+  } catch (cause) {
+    throw new Error('Git prerequisite: current catalog generation requires --no-lazy-fetch and --no-replace-objects; install or upgrade to stock Git supporting both options before retrying. Offline source reads have not started.', { cause });
+  }
   const git = async (...args) => (await execFileAsync('git', ['--no-lazy-fetch', '--no-replace-objects', '-C', sourceRoot, ...args], {
     encoding: 'utf8', env, timeout: 30_000, maxBuffer: 4 * 1024 * 1024,
   })).stdout;

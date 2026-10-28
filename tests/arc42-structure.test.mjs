@@ -76,7 +76,7 @@ test('architecture contracts and aliases are deterministic', async () => {
 });
 
 test('all authoritative structured data uses closed Draft 2020-12 contracts', async () => {
-  assert.deepEqual(await validateStructuredData(root), { files: 20, schemas: 24 });
+  assert.deepEqual(await validateStructuredData(root), { files: 21, schemas: 25 });
 
   const principleIndex = parseRepositoryYaml(
     await readFile(path.join(root, 'architecture/principles/index.yml'), 'utf8'),

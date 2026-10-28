@@ -323,3 +323,6 @@ terms:
   - context: "agentic-delivery-control-plane"
     term: "resource reservation"
     definition: "Capacity or consumption reserved before a controlled action starts; duration records an owned start and is settled only after confirmed shutdown. Failed actions remain charged, and uncertain or missing consumption requires a hold rather than a fresh allowance."
+  - context: "agentic-delivery-control-plane"
+    term: "evaluation ownership mapping"
+    definition: "An explicit Architecture-owned, immutable mapping from an evaluation layer, exact subject ID and native repository/source path to the repository that reviews proposed follow-up. It supports offline Issue proposals only and does not authorize mutation, prioritize work, or prove observed outcomes."

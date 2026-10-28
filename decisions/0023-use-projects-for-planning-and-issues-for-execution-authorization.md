@@ -111,6 +111,53 @@ confirms fit. Otherwise, propose its creation separately. This ADR does not
 claim that a Project exists or authorize any Project, Issue Field, permission,
 or App configuration change.
 
+### Offline evaluation ownership amendment (W24)
+
+Existing Architecture [#11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)
+and Control Plane [#103](https://github.com/agentic-delivery-lab/agentic-delivery/issues/103)
+require evaluation findings to reach an owning repository for human review and
+prioritization. `recommendation.ownerIssue` is a report assertion, not ownership
+evidence. Participant enrollment and the domain context-steward map cannot
+establish evaluation ownership: the latter routes semantic review only.
+
+Architecture maintains the explicit [evaluation ownership mapping](../architecture/evaluation/owners.json)
+under closed contract `1.0.0`. Match the exact report layer, subject ID and
+source repository/path, bound to its native repository identity. Each mapping
+names the owner repository and native ID, its existing source Issue and a
+rationale. There are no inferred defaults, wildcard subjects, path prefixes,
+model-selected owners, or product owners inferred from the factory. Missing,
+duplicate, conflicting, unknown or changed identities must remain unresolved.
+The initial declarations cover the existing Customizations repository-delivery
+validation capability and the Control Plane finding router. No product owner
+or empirical result is declared. Subject source pins still need their own
+integrity checks; a mapping does not verify referenced report evidence.
+
+A consumer must bind the mapping and schema to an immutable Architecture
+commit and exact content digests. It must preserve their provenance alongside
+the source report, uncertainty and review status. A report-provided owner
+candidate cannot override the mapping. Synthetic reports cannot expose an
+actionable target even if a mapping exists. A matched observed report can
+produce an offline proposal for owner review; its classification, calibration,
+comparability and empirical evidence do not become verified through routing.
+The mapping's source Issue explains the assignment; it is not a command or an
+authorization token, and it is not an implicitly verified mutation target.
+
+An offline proposal does not create an Issue, update an existing Issue,
+prioritize itself, change policy, mutate a Project, start execution or activate
+a participant. Before any later mutation, the operator must re-fetch and
+verify the native target identity and current Issue, obtain separately bounded
+source authorization, and apply existing actor, policy, lifecycle, readiness
+and downstream gates. Human prioritization remains required before execution.
+This amendment adds no live consumer, credential, permission or activation.
+
+Alternatives considered were trusting each report's owner assertion, reusing
+participant/context-steward records, or keeping every finding permanently
+unresolved. The explicit map preserves a reviewable positive path without
+turning unrelated records into ownership or execution authority. Its cost is
+that new subjects and changed ownership require a reviewed mapping update.
+Rollback restores the prior mapping pin; unmatched reports remain held, and
+existing Issue history and evidence are retained.
+
 ### Consequences
 
 - A Project item references its source repository and canonical Issue. A

@@ -117,3 +117,30 @@ proposal.
 
 The example under `examples/` is explicitly synthetic, uses no paid model
 calls, and contains no measured baseline or live product claim.
+
+## Offline finding ownership
+
+[`owners.json`](owners.json) is the separate, explicit evaluation ownership
+mapping governed by [ADR-0023 W24](../../decisions/0023-use-projects-for-planning-and-issues-for-execution-authorization.md#offline-evaluation-ownership-amendment-w24).
+It uses closed contract `1.0.0` and is restricted to offline proposals. The
+three report layers retain their exact report-contract names: `agent-capability`,
+`factory` and `product-outcome`. A mapping matches one exact subject ID and
+source repository/path, with native repository IDs for both subject and owner.
+The source Issue and rationale explain each declaration. The report's subject
+version/commit/digest are still report evidence, not ownership authority.
+
+Consumers must pin both mapping and schema bytes from an immutable reviewed
+Architecture source, retain those pins in each proposal, and reject unknown,
+duplicate, conflicting or mismatched ownership. This is separate from the
+context-steward map and participant enrollment. The current map declares only
+the existing repository-delivery validation capability and finding router;
+product ownership remains unresolved. A changed source path or unknown subject
+requires review rather than a name-based fallback.
+
+Schema and repository-identity checks validate these declarations, not live
+Issue access, target lifecycle, empirical report claims or runtime admission.
+Synthetic reports stay non-actionable. An observed report with a matching map
+may supply an offline proposal for human review, with all uncertainty intact;
+no Issue/Project mutation, prioritization or execution follows from it. The
+current Architecture release remains draft and no Control Plane consumer is
+enabled by this source addition.

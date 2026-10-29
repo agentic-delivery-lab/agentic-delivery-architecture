@@ -34,6 +34,7 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   if (release.contractVersions?.requirementsReference !== '1.0.0') errors.push('architecture release must pin requirementsReference contract 1.0.0');
   if (!['1.0.0', '1.1.0'].includes(release.contractVersions?.decisionInventory)) errors.push('architecture release must pin decision inventory contract 1.0.0 or 1.1.0');
   if (release.contractVersions?.architectureArtifacts !== '1.0.0') errors.push('architecture release must pin architecture artifact contract 1.0.0');
+  if (release.contractVersions?.evaluationOwnership !== '1.0.0') errors.push('current architecture release must pin offline evaluation ownership contract 1.0.0');
   if (release.contractVersions?.evaluationReport !== '2.0.0') errors.push('architecture release must pin evaluation report contract 2.0.0');
   if (!supportsDeclaredAmendmentContracts(decisionInventory.recordById.values(), release.contractVersions)) errors.push('Declared amendments require decision inventory 1.1.0 and architecture release 5.1.0');
   for (const name of ['conformancePolicy', 'toolingLock']) {

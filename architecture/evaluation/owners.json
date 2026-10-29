@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "scope": "offline-proposal-only",
+  "mappings": [
+    {
+      "layer": "agent-capability",
+      "subjectId": "repository-delivery-validation",
+      "subjectSource": {
+        "repository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+        "repositoryId": 1380894656,
+        "path": "capabilities/catalog.yml"
+      },
+      "owner": {
+        "repository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+        "repositoryId": 1380894656
+      },
+      "sourceIssue": "https://github.com/agentic-delivery-lab/agentic-delivery-agent-customizations/issues/3",
+      "rationale": "Customizations owns the reusable repository-delivery-validation capability and its offline dataset, grader and replay work under source Issue3."
+    },
+    {
+      "layer": "factory",
+      "subjectId": "evaluation-finding-router",
+      "subjectSource": {
+        "repository": "agentic-delivery-lab/agentic-delivery",
+        "repositoryId": 1358455028,
+        "path": "scripts/lib/evaluation-finding-router.mjs"
+      },
+      "owner": {
+        "repository": "agentic-delivery-lab/agentic-delivery",
+        "repositoryId": 1358455028
+      },
+      "sourceIssue": "https://github.com/agentic-delivery-lab/agentic-delivery/issues/103",
+      "rationale": "The Control Plane owns offline routing of evaluation findings under source Issue103. This declaration does not authorize mutation or a live consumer."
+    }
+  ]
+}

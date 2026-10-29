@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Define an explicit, closed offline evaluation ownership map for the existing
+  Customizations validation capability and Control Plane finding router.
+  Bind exact layers, subjects and source paths to native repository identities;
+  reject ambiguous ownership and execution fields. ADR-0023 W24 separates
+  this map from semantic-review stewardship, Issue authority and live adoption.
+  No product owner, observed outcome or runtime activation is declared.
+
 - Add a versioned current Customizations catalog projection, bound to native
   repository identity and an immutable manifest commit, while preserving the
   historical schema-1 locator and unchanged schema-3 index contract. Emit the

@@ -163,6 +163,10 @@
         "requirementsReference": {
           "const": "1.0.0",
           "description": "Required approved Requirements lock contract introduced by Architecture release contract 5.0.0."
+        },
+        "evaluationOwnership": {
+          "const": "1.0.0",
+          "description": "Optional offline-only exact subject ownership map. A pin does not authorize Issue mutation, prioritization or execution."
         }
       },
       "minProperties": 1,

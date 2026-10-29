@@ -6,6 +6,7 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 
 import { parseRepositoryYaml } from './lib/yaml.mjs';
+import { stewardMatchesAuditEvidence } from './decision-inventory.mjs';
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const JSON_SCHEMA_2020 = 'https://json-schema.org/draft/2020-12/schema';
@@ -15,6 +16,7 @@ export const architectureDataContracts = Object.freeze({
   'architecture/domain/context-map.yml': 'domain-context-map.schema.json',
   'architecture/domain/ubiquitous-language.yml': 'domain-language.schema.json',
   'architecture/strategy/organizational-strategy.yml': 'organizational-strategy.schema.json',
+  'architecture/evaluation/owners.json': 'evaluation-owners.schema.json',
   'architecture/evaluation/examples/agent-capability-report.yml': 'evaluation-report.schema.json',
   'architecture/principles/index.yml': 'principle-index.schema.json',
   'architecture/quality/quality-scenarios.yml': 'quality-scenarios.schema.json',
@@ -95,7 +97,28 @@ async function discoverArchitectureData(root, directory = 'architecture', result
   return results.sort();
 }
 
-function validateCrossFieldConstraints(schemaName, relativePath, value) {
+async function validateCrossFieldConstraints(root, schemaName, relativePath, value) {
+  if (schemaName === 'evaluation-owners.schema.json') {
+    const audit = parseRepositoryYaml(await readFile(path.join(root, 'architecture/references/system-evidence.yml'), 'utf8'), 'repository identity evidence');
+    const subjects = new Set();
+    for (const mapping of value.mappings) {
+      // Reuse only the native name/ID check, never infer ownership from a
+      // context steward. Ownership comes from this separate reviewed mapping.
+      for (const identity of [mapping.subjectSource, mapping.owner]) {
+        if (!audit.repositories.some(evidence => stewardMatchesAuditEvidence(identity, evidence))) {
+          throw new Error(`${relativePath} repository name and native identity do not match the audited repository identity`);
+        }
+      }
+      const key = JSON.stringify([mapping.layer, mapping.subjectId, mapping.subjectSource.repositoryId, mapping.subjectSource.path]);
+      if (subjects.has(key)) throw new Error(`${relativePath} has duplicate or conflicting subject ownership`);
+      subjects.add(key);
+      const ownerIssueRepository = mapping.sourceIssue.split('/').slice(3, 5).join('/');
+      if (ownerIssueRepository.toLowerCase() !== mapping.owner.repository.toLowerCase()) {
+        throw new Error(`${relativePath} owner source Issue must belong to its owner repository`);
+      }
+    }
+    return;
+  }
   if (schemaName !== 'evaluation-report.schema.json') return;
 
   const datasetCaseIds = value.dataset?.caseIds ?? [];
@@ -162,7 +185,7 @@ export async function validateStructuredValue(root, relativePath, value) {
   if (!validate(value)) {
     throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
   }
-  validateCrossFieldConstraints(schemaName, relativePath, value);
+  await validateCrossFieldConstraints(root, schemaName, relativePath, value);
   return true;
 }
 
@@ -183,7 +206,7 @@ export async function validateStructuredData(root = repositoryRoot) {
     if (!validate(value)) {
       throw new Error(`${relativePath} violates ${schemaName}: ${describeErrors(validate.errors)}`);
     }
-    validateCrossFieldConstraints(schemaName, relativePath, value);
+    await validateCrossFieldConstraints(root, schemaName, relativePath, value);
   }
   return { files: Object.keys(architectureDataContracts).length, schemas: schemaFiles.length };
 }

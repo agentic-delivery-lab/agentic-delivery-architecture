@@ -68,6 +68,7 @@ export async function validateArchitectureRelease(root = repositoryRoot, expecte
   if (!['3.0.0', '4.0.0'].includes(release.contractVersions?.adrPrimitiveIndex)) errors.push('architecture release must pin a supported ADR/Primitive index contract');
   if (!['1.0.0', '1.1.0'].includes(release.contractVersions?.decisionInventory)) errors.push('architecture release must pin decision inventory contract 1.0.0 or 1.1.0');
   if (release.contractVersions?.architectureArtifacts !== '1.0.0') errors.push('architecture release must pin architecture artifact contract 1.0.0');
+  if (release.contractVersions?.evaluationOwnership !== undefined && release.contractVersions.evaluationOwnership !== '1.0.0') errors.push('unsupported offline evaluation ownership contract');
   if (release.contractVersions?.evaluationReport !== '2.0.0') errors.push('architecture release must pin evaluation report contract 2.0.0');
   if (!supportsDeclaredAmendmentContracts(inventory.recordById.values(), release.contractVersions)) errors.push('Declared amendments require decision inventory 1.1.0 and architecture release 5.1.0');
   for (const [name, reference] of [['conformancePolicy', release.conformancePolicy], ['toolingLock', release.toolingLock]]) {

@@ -15,8 +15,8 @@ const manifestPath = 'architecture/generated/architecture-release.json';
 // Synthetic local Git fixtures exercise the real validators and digest binding.
 // A valid lifecycle label is neither owner approval nor consumer admission.
 test('release lifecycle validation preserves source integrity across declared states', async (t) => {
-  const scratch = await mkdtemp(path.join(tmpdir(), 'architecture-lifecycle-test-'));
   const objects = execFileSync('git', ['-C', root, 'rev-parse', '--path-format=absolute', '--git-path', 'objects'], { encoding: 'utf8' }).trim();
+  const scratch = await mkdtemp(path.join(tmpdir(), 'architecture-lifecycle-test-'));
   async function fixture(name, status) {
     const directory = path.join(scratch, name);
     await mkdir(directory);

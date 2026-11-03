@@ -4,14 +4,15 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-03
+
 ### Added
 
 - Record sjefsharp's strategy and 24-record scope acceptance, including five
   proposed-origin decisions, with explicit sole-owner review and separate AI/check
   evidence. Preserve historical origins, hosting protections and runtime exclusions.
-  Prepare draft80 with the owner acceptance; current main stays draft79 until
-  source review and merge. Exact release promotion remains separate; no consumer
-  or runtime activation.
+  Bind the first Architecture release to its exact source and content digest.
+  Consumer adoption and runtime activation remain separate decisions.
 
 - Define an explicit, closed offline evaluation ownership map for the existing
   Customizations validation capability and Control Plane finding router.
@@ -183,6 +184,11 @@ All notable changes to this repository are documented here.
   duplicate bounded-context UML model.
 
 ### Fixed
+
+- Make release contract validation honor the existing draft, released and
+  withdrawn lifecycle values. Real local Git fixtures verify source/digest binding
+  in each state and reject unknown values and status-only promotion. These checks
+  validate metadata; they do not supply human approval or admit a withdrawn source.
 
 - Verified imported source bytes with `git show` at pinned source commits and
   recorded the two relative-link corrections required by relocating ADR-0008

@@ -664,7 +664,7 @@ test('architecture release identifies the target authority', async () => {
   const releaseSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/architecture-release.schema.json'), 'utf8'));
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
-  assert.equal(result.status, 'draft');
+  assert.equal(result.status, release.status);
   assert.equal(release.contractVersions.evaluationReport, '2.0.0');
   assert.equal(release.contractVersions.architectureRelease, '5.1.0');
   assert.deepEqual(releaseSchema.properties.contractVersions.properties.architectureRelease.enum, ['5.0.0', '5.1.0']);

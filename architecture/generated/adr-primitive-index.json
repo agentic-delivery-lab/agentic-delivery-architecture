@@ -4,7 +4,7 @@
   "architecture": "urn:agentic-delivery:architecture:authority",
   "decisionInventory": {
     "path": "architecture/references/decision-inventory.yml",
-    "sha256": "9aad2877bbb89589d704eeebbeaef9e4a1850d70429125cf1d1041b2b106f59b",
+    "sha256": "248c1d4039d4c53ee399a5e774bd436608c7e71157dafc4242dc5f63c6b4e625",
     "schemaVersion": 1
   },
   "primitiveRelease": {
@@ -54,7 +54,10 @@
       "id": "ADR-0003",
       "file": "decisions/0003-use-context-scoped-ubiquitous-language.md",
       "domains": [
-        "agentic-delivery-governance"
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
       ],
       "requiredEnforcement": [
         "deterministic",
@@ -150,6 +153,7 @@
       "id": "ADR-0009",
       "file": "decisions/0009-run-codex-from-source-issues-with-a-budget-boundary.md",
       "domains": [
+        "agentic-delivery-control-plane",
         "agentic-delivery-governance"
       ],
       "requiredEnforcement": [
@@ -177,6 +181,7 @@
       "id": "ADR-0012",
       "file": "decisions/0012-use-github-as-the-lifecycle-control-plane.md",
       "domains": [
+        "agentic-delivery-control-plane",
         "agentic-delivery-governance"
       ],
       "requiredEnforcement": [
@@ -193,7 +198,10 @@
       "id": "ADR-0013",
       "file": "decisions/0013-derive-adr-traceability-from-agentic-primitives.md",
       "domains": [
-        "agentic-delivery-governance"
+        "agentic-delivery-control-plane",
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
       ],
       "requiredEnforcement": [
         "deterministic"
@@ -206,7 +214,7 @@
       "id": "ADR-0015",
       "file": "decisions/0015-isolate-resumable-runner-execution.md",
       "domains": [
-        "agentic-delivery-governance"
+        "agentic-delivery-control-plane"
       ],
       "requiredEnforcement": [
         "deterministic"
@@ -220,7 +228,9 @@
       "file": "decisions/0016-require-structured-pull-request-descriptions.md",
       "domains": [
         "agentic-delivery-control-plane",
-        "agentic-delivery-governance"
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
       ],
       "requiredEnforcement": [
         "deterministic",
@@ -234,7 +244,7 @@
       "id": "ADR-0017",
       "file": "decisions/0017-use-an-explicit-agent-invocation-boundary.md",
       "domains": [
-        "agentic-delivery-governance"
+        "agentic-delivery-control-plane"
       ],
       "requiredEnforcement": [
         "deterministic"
@@ -248,7 +258,9 @@
       "file": "decisions/0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md",
       "domains": [
         "agentic-delivery-control-plane",
-        "agentic-delivery-governance"
+        "agentic-delivery-governance",
+        "agentic-primitives",
+        "developer-distribution"
       ],
       "requiredEnforcement": [
         "deterministic",

@@ -6,6 +6,13 @@ All notable changes to this repository are documented here.
 
 ### Added
 
+- Record sjefsharp's strategy and 24-record scope acceptance, including five
+  proposed-origin decisions, with explicit sole-owner review and separate AI/check
+  evidence. Preserve historical origins, hosting protections and runtime exclusions.
+  Prepare draft80 with the owner acceptance; current main stays draft79 until
+  source review and merge. Exact release promotion remains separate; no consumer
+  or runtime activation.
+
 - Define an explicit, closed offline evaluation ownership map for the existing
   Customizations validation capability and Control Plane finding router.
   Bind exact layers, subjects and source paths to native repository identities;

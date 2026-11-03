@@ -6,6 +6,7 @@ consulted: None
 informed: None
 domains:
   - agentic-delivery-governance
+  - agentic-delivery-control-plane
 required-enforcement:
   - instructional
   - deterministic

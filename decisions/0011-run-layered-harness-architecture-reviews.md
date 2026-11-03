@@ -119,3 +119,12 @@ issue-to-pull-request execution require separate runtime evidence.
 - Architecture conformance policy: [`architecture/policies/conformance.yml`](../architecture/policies/conformance.yml).
 - Pinned repository revisions and current evidence limits: [`system-evidence.yml`](../architecture/references/system-evidence.yml).
 - [ADR-0001](0001-use-madr-for-architecture-decisions.md), [ADR-0003](0003-use-context-scoped-ubiquitous-language.md), [ADR-0012](0012-use-github-as-the-lifecycle-control-plane.md), and [ADR-0013](0013-derive-adr-traceability-from-agentic-primitives.md) establish related ownership and review boundaries.
+
+### Sole-owner review clarification (W12)
+
+For current owner-operated factory development, apply the explicit human owner
+acceptance and separate AI/check evidence in
+[ADR-0018](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md#sole-owner-review-amendment-w12).
+Human ownership can be held by `sjefsharp` across affected contexts; AI review
+is not a second human approval. Existing hosting protections and runner
+exclusions remain effective.

@@ -7,6 +7,8 @@ informed: Organization maintainers
 domains:
   - agentic-delivery-governance
   - agentic-delivery-control-plane
+  - agentic-primitives
+  - developer-distribution
 required-enforcement:
   - instructional
   - deterministic

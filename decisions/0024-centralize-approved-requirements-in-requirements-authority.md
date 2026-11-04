@@ -134,3 +134,12 @@ is introduced by this decision. Reversal requires an explicit selected authority
 baseline and reference-only consumers, preserving Git history and avoiding two
 editable catalogs. Creation of Requirements is owner-authorized; baseline
 approval and cutover must still produce their own truthful acceptance records.
+
+### Owner acceptance amendment (W12)
+
+On 2026-11-03, `sjefsharp` accepted this decision and its affected-context scope
+under [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11).
+The owner holds all named affected steward roles. Historical proposal metadata
+remains provenance; current owner acceptance is recorded separately in the
+[24-record acceptance](../architecture/references/owner-scope-acceptance-2026-11-03.md).
+This does not approve an unknown release digest, consumer adoption or runtime activation.

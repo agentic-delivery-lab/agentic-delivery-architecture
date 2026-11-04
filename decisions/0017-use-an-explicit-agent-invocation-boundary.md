@@ -5,7 +5,7 @@ decision-makers: Repository maintainers
 consulted: GitHub Docs and Vercel Functions documentation
 informed: None
 domains:
-  - agentic-delivery-governance
+  - agentic-delivery-control-plane
 required-enforcement:
   - deterministic
 ---

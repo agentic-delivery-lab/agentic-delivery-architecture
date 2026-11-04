@@ -334,7 +334,7 @@ test('canonical inventory has exact record coverage and rejects projections and 
   assert.equal(result.adrIds.length, 22);
   assert.ok(result.recordById.has('ADP-0001'));
   assert.ok(result.recordById.has('ADD-0001'));
-  assert.equal(result.importedTransforms.length, 11);
+  assert.equal(result.importedTransforms.length, 15);
   assert.deepEqual(release.decisionIds, result.decisionIds);
   assert.deepEqual(release.adrIds, result.adrIds.map((id) => `urn:agentic-delivery:adr:architecture:${id.slice(4)}`));
   assert.deepEqual(JSON.parse(await readFile(path.join(root, 'architecture/generated/adr-primitive-index.json'), 'utf8')).externalAdrs, []);
@@ -664,7 +664,7 @@ test('architecture release identifies the target authority', async () => {
   const releaseSchema = JSON.parse(await readFile(path.join(root, 'architecture/contracts/architecture-release.schema.json'), 'utf8'));
   assert.equal(result.architectureId, 'urn:agentic-delivery:architecture:authority');
   assert.match(result.contentSha256, /^[0-9a-f]{64}$/);
-  assert.equal(result.status, 'draft');
+  assert.equal(result.status, release.status);
   assert.equal(release.contractVersions.evaluationReport, '2.0.0');
   assert.equal(release.contractVersions.architectureRelease, '5.1.0');
   assert.deepEqual(releaseSchema.properties.contractVersions.properties.architectureRelease.enum, ['5.0.0', '5.1.0']);

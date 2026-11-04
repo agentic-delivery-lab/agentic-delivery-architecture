@@ -6,6 +6,9 @@ consulted: None
 informed: None
 domains:
   - agentic-delivery-governance
+  - agentic-delivery-control-plane
+  - agentic-primitives
+  - developer-distribution
 required-enforcement:
   - deterministic
 ---

@@ -239,3 +239,12 @@ duplicate text is removed.
   consultation history remain unrecorded.
 - This ADR and its ownership changes are proposed on the issue-linked feature
   branch. They remain provisional until the review pull request is merged.
+
+### Owner acceptance amendment (W12)
+
+On 2026-11-03, `sjefsharp` accepted this decision and its affected-context scope
+under [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11).
+The owner holds all named affected steward roles. Historical proposal metadata
+remains provenance; current owner acceptance is recorded separately in the
+[24-record acceptance](../architecture/references/owner-scope-acceptance-2026-11-03.md).
+This does not approve an unknown release digest, consumer adoption or runtime activation.

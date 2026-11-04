@@ -21,7 +21,8 @@ export async function validateArchitectureContracts(root = repositoryRoot) {
   } catch (error) {
     errors.push(error.message);
   }
-  if (release.schemaVersion !== 2 || release.status !== 'draft') errors.push('draft architecture release must use schemaVersion 2 and status draft');
+  // Lifecycle validity is structural; owner approval and consumer admission are separate.
+  if (release.schemaVersion !== 2 || !['draft', 'released', 'withdrawn'].includes(release.status)) errors.push('architecture release must use schemaVersion 2 and a supported lifecycle status');
   if (release.sourceRepository !== 'agentic-delivery-lab/agentic-delivery-architecture') errors.push('architecture release sourceRepository must identify Architecture Authority');
   if (!/^[0-9a-f]{40}$/.test(release.sourceCommit)) errors.push('architecture release sourceCommit must be immutable');
   if (!/^[0-9a-f]{64}$/.test(release.contentSha256 ?? '')) errors.push('architecture release contentSha256 must be a non-null SHA-256 digest');

@@ -6,6 +6,7 @@ consulted: Architecture Authority and Delivery Control Plane maintainers
 informed: Organization maintainers
 domains:
   - agentic-primitives
+  - developer-distribution
 required-enforcement:
   - deterministic
   - instructional

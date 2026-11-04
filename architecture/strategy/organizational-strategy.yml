@@ -1,6 +1,9 @@
 schemaVersion: 1
-status: proposed
-asOf: '2026-10-21'
+status: adopted
+adoptionEvidence:
+  record: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
+  recordedAt: '2026-11-03'
+asOf: '2026-11-03'
 sourceIssue: https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11
 purpose: Make software engineering continuously improvable, explainable, and trustworthy.
 mission: >-

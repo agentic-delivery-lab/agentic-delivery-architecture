@@ -5,8 +5,10 @@ decision-makers: Repository maintainers
 consulted: Official GitHub Actions, GitHub Apps, and webhook documentation
 informed: None
 domains:
-  - agentic-delivery-control-plane
   - agentic-delivery-governance
+  - agentic-delivery-control-plane
+  - agentic-primitives
+  - developer-distribution
 required-enforcement:
   - deterministic
   - semantic
@@ -209,6 +211,28 @@ and its PR do not adopt all proposed strategy goals or activate participants.
 If scope, identity or evidence is uncertain, hold the consequential action;
 rollback disables affected privileged automation and restores the prior
 supported policy composition while preserving receipts and historical origin.
+
+### Sole-owner review amendment (W12)
+
+For the owner-operated factory, `sjefsharp` may hold all named human steward
+roles and explicitly accept the strategy and affected-context decision meaning.
+A separate human is not invented to satisfy a role label. The owner accepted
+this review model under [Architecture #11](https://github.com/agentic-delivery-lab/agentic-delivery-architecture/issues/11)
+on 2026-11-03. Record this as owner acceptance, supported by separate AI review
+and required deterministic checks, never as approval by a second person.
+
+The accepted scope and five proposed-origin decision dispositions are in the
+[owner acceptance record](../architecture/references/owner-scope-acceptance-2026-11-03.md).
+The named interactive operator may prepare and validate the exact candidate.
+An approved immutable release still needs an explicit acceptance record for its
+exact source, digest, evidence limits and rollback before #106 implementation.
+Existing repository protections remain effective; this clause does not authorize
+changing or bypassing their review, check or merge requirements.
+
+Runner exclusions, Issue authorization and no self-promotion remain unchanged.
+No model, bot or runner may infer owner acceptance from its own output. Release
+acceptance does not authorize deployment, App changes, participant activation
+or production rollout; those retain their separate owner decisions.
 
 ### Invocation receipt settlement amendment (W06)
 

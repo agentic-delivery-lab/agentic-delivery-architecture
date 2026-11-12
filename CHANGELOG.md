@@ -4,6 +4,13 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+### Security
+
+- Update the locked Ajv URI parser, `fast-uri`, from 3.1.8 to the stock upstream
+  3.1.9 release to address four URI-normalization advisories.
+- Update Ajv from 8.17.1 to the stock upstream 8.18.0 release for
+  GHSA-2g4f-4pwh-qvx6. Approved Architecture content and release pins are unchanged.
+
 ## [0.1.0] - 2026-11-03
 
 ### Added

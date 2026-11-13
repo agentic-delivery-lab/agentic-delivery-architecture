@@ -42,9 +42,14 @@ contexts and their relationships are also recorded in
 [`context-map.yml`](context-map.yml).
 The repository mapping and its evidence paths are checked against
 [`system-evidence.yml`](../references/system-evidence.yml). They route semantic
-review requests, but do not name a person or prove CODEOWNERS coverage. The
-audited one-member/CODEOWNERS gate currently limits independent steward
-approval; see parent issue [#59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59).
+review requests, but do not name a person or prove CODEOWNERS coverage.
+Within the accepted sole-owner scope,
+[ADR-0018 W12](../../decisions/0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md#sole-owner-review-amendment-w12)
+permits sjefsharp to hold the named steward roles. Record owner acceptance,
+separate AI review and required deterministic checks distinctly; this is no
+claim of approval by a second person. The earlier one-member observation
+under [parent #59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59)
+remains historical and does not replace the accepted review model.
 
 ## Context-scoped language
 

@@ -1,5 +1,5 @@
 schemaVersion: 1
-snapshotDate: '2026-10-22'
+snapshotDate: '2026-11-13'
 snapshotKind: scoped-live-audit-and-owner-delegated-configuration
 purpose: >-
   Retain scoped repository revisions and dated live observations used by this
@@ -4766,3 +4766,31 @@ observations:
       time/model/validation/controller/child/concurrency, durable recovery, profile and isolation
       requirements remain. Earlier dated observations retain their original scope. Existing17/114
       carry reconciliation; Requirements FR003 remains proposed and its checkout is unchanged.
+
+  - id: released-primitive-catalog-source-20261113
+    observedAt: '2026-11-13T17:05:35.725831Z'
+    source: https://github.com/agentic-delivery-lab/agentic-delivery/pull/136
+    sourceRepositories: [architecture, primitives, control-plane, distribution]
+    sourceCommit: bfa2134dae04a16617634e98cc3c33848733da43
+    sourcePath: architecture/references/primitive-catalog.lock.yml; tools/primitive-catalog-source.mjs
+    result: >-
+      Primitive 0.2.0 is owner-approved and published at release-manifest commit
+      4ead1fea75312cf96ee0e6bf4eb70df0530ad059, prepared implementation
+      82d2584357e86bb37fa7d5e1b89bb6759a2998f0 and canonical content SHA-256
+      f0756d16a2fdac674e61abd75f13a9a6a7fb28caaba79774483ad4969dfed28f.
+      The existing catalog generator reproduced that digest at both source roles
+      with its unchanged trusted digest tool and generated 17 rows, adding the
+      branch starter, removing none and updating seven prior rows. The decision
+      inventory remains cd5df6c97365dd469c35fb47351d70e1a0bbd5bbc3adb99e09ec930660b825cb.
+      Control Plane PR136 merged at cbf920074addeea8e833729f5ded84bcaa30326d
+      with its strict resource reader and passing source checks. Its runtime,
+      bootstrap, workflow and producer pins remain unchanged. Distribution main
+      remains 077100bf52b77e32d842e7f0423f1ae0334fef27 with no installed projection
+      or profile from this new cohort.
+    limitation: >-
+      These are scoped source observations and a generated catalog update.
+      Exact Architecture release acceptance, compatible consumer adoption,
+      installed aliases/profile, stock-client execution and positive T10 remain
+      separate. No App, participant, database or runtime activation is supplied.
+      Earlier repository-head entries and dated observations remain historical;
+      this entry does not refresh their live configuration or outcome claims.

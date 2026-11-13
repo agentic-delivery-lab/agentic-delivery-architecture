@@ -96,17 +96,18 @@ Architecture issue #3.
 
 ## Canonical decision ownership
 
-The proposed owner map centralizes 21 active ADR IDs, ADP-0001, and ADD-0001
-in Architecture Authority.
-The assignment is based on organization-wide decision stewardship, not on the
-historical repository path. This remains provisional until the issue-linked
-Architecture pull request is reviewed and merged. The repository-local copies
-in Control Plane, Primitives, and Distribution remain at their audited source
-revisions until each repository updates them in its own reviewed follow-up.
+Architecture Authority owns the 22 active ADR IDs, ADP-0001 and ADD-0001 in
+the accepted 24-record scope. The assignment follows organization-wide decision
+stewardship. The [dated owner acceptance record](../architecture/references/owner-scope-acceptance-2026-11-03.md)
+retains the adopted identifiers and evidence boundaries. Historical
+`origin.type: proposed` values retain their provenance; they do not erase that
+owner adoption. Each consumer selects an approved immutable Architecture
+Release in its own reviewed source update. A source merge does not move a
+consumer pin or activate runtime.
 
 | Canonical text owner | Decision identifiers | Canonical text location |
 | --- | --- | --- |
-| Architecture Authority | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015 through ADR-0023, ADP-0001, ADD-0001 | This repository's `decisions/` directory, listed in the [decision inventory](../architecture/references/decision-inventory.yml) and pinned by the Architecture release. |
+| Architecture Authority | ADR-0001 through ADR-0009, ADR-0011 through ADR-0013, ADR-0015 through ADR-0024, ADP-0001, ADD-0001 | This repository's `decisions/` directory, listed in the [decision inventory](../architecture/references/decision-inventory.yml) and pinned by the Architecture release. |
 
 The active identifiers preserve the historical gaps: ADR-0010 is superseded by
 ADR-0012, and ADR-0014 is superseded by ADR-0018. Neither has an active record
@@ -117,12 +118,17 @@ second decision prose.
 The bounded-context registry assigns the repository used to route semantic
 review for each affected domain. Governance and Control Plane reviews route to
 `agentic-delivery-lab/agentic-delivery`; Primitives review routes to
-`agentic-delivery-lab/agentic-delivery-primitives`; Distribution review routes
+`agentic-delivery-lab/agentic-delivery-agent-customizations`; Distribution review routes
 to `agentic-delivery-lab/agentic-delivery-distribution`. A record scoped to
 multiple contexts requires semantic review from each mapped context steward.
-The mapping identifies a repository, not a person, approval team, or active
-CODEOWNERS rule. Current audit evidence records a one-member/CODEOWNERS limit
-that blocks independent steward approval; see parent issue [#59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59).
+The mapping identifies a repository; it does not assign a person, approval
+team or active CODEOWNERS rule. Within the accepted sole-owner scope,
+[ADR-0018 W12](0018-organization-wide-agentic-delivery-control-plane-distribution-and-versioning.md#sole-owner-review-amendment-w12)
+permits sjefsharp to hold the named steward roles. Record owner acceptance,
+separate AI review and required deterministic checks as distinct evidence.
+This supplies no review by a second person or runner merge authority. The
+earlier one-member observation under [parent #59](https://github.com/agentic-delivery-lab/agentic-delivery/issues/59)
+remains dated historical evidence.
 
 Text ownership does not move runtime or artifact authority. The Control Plane
 owns controller and GitHub adapter implementation; Primitives owns its

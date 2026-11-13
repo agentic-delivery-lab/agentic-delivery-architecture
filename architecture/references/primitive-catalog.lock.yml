@@ -2,16 +2,16 @@ schemaVersion: 2
 source:
   repository: agentic-delivery-lab/agentic-delivery-agent-customizations
   repositoryId: 1380894656
-  releaseId: urn:agentic-delivery:primitive-release:0.1.0-draft.15
-  releaseVersion: 0.1.0-draft.15
-  sourceCommit: 69beab027d8b28fc082fa6054f4def5ba0146e3c
-  contentSha256: 4b6c07deb6f7be8f495244e3c50a528054528db1fdec5a5a14ea4cfdda5bb34e
-  status: draft
+  releaseId: urn:agentic-delivery:primitive-release:0.2.0
+  releaseVersion: 0.2.0
+  sourceCommit: 4ead1fea75312cf96ee0e6bf4eb70df0530ad059
+  contentSha256: f0756d16a2fdac674e61abd75f13a9a6a7fb28caaba79774483ad4969dfed28f
+  status: released
 architectureId: urn:agentic-delivery:architecture:authority
 primitives:
   - id: codex-delivery
     kind: agent
-    version: 0.2.0
+    version: 0.3.0
     sourcePath: agents/codex/codex-delivery.md
     enforcement: instructional
     adrs:
@@ -20,13 +20,14 @@ primitives:
       - ADR-0015
       - ADR-0017
       - ADR-0018
+      - ADR-0020
       - ADR-0023
       - ADR-0024
     domains:
       - agentic-delivery-control-plane
   - id: architecture-decision
     kind: skill
-    version: 0.1.0
+    version: 0.2.1
     sourcePath: skills/architecture-decision/SKILL.md
     enforcement: instructional
     adrs:
@@ -37,7 +38,7 @@ primitives:
       - agentic-delivery-governance
   - id: delivery-workflow
     kind: skill
-    version: 0.2.0
+    version: 0.2.2
     sourcePath: skills/delivery-workflow/SKILL.md
     enforcement: instructional
     adrs:
@@ -60,7 +61,7 @@ primitives:
       - agentic-delivery-governance
   - id: plain-language-communication
     kind: skill
-    version: 0.1.0
+    version: 0.1.1
     sourcePath: skills/plain-language-communication/SKILL.md
     enforcement: instructional
     adrs:
@@ -69,7 +70,7 @@ primitives:
       - agentic-delivery-governance
   - id: ubiquitous-language
     kind: skill
-    version: 0.1.0
+    version: 0.1.1
     sourcePath: skills/ubiquitous-language/SKILL.md
     enforcement: instructional
     adrs:
@@ -142,7 +143,7 @@ primitives:
       - agentic-delivery-governance
   - id: source-issue-validator
     kind: validator
-    version: 0.1.0
+    version: 0.2.0
     sourcePath: validators/repository-delivery/validate-source-issue.mjs
     enforcement: deterministic
     adrs:
@@ -160,7 +161,7 @@ primitives:
       - agentic-delivery-governance
   - id: primitive-catalog-validator
     kind: validator
-    version: 0.1.0
+    version: 0.1.2
     sourcePath: validators/primitive-metadata/validate-catalog.mjs
     enforcement: deterministic
     adrs:
@@ -168,3 +169,12 @@ primitives:
       - ADR-0018
     domains:
       - agentic-primitives
+  - id: issue-branch-starter
+    kind: capability
+    version: 0.1.0
+    sourcePath: scripts/start-issue-branch.mjs
+    enforcement: deterministic
+    adrs:
+      - ADR-0007
+    domains:
+      - agentic-delivery-governance

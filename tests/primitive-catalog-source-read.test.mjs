@@ -11,7 +11,7 @@ const root = path.resolve(import.meta.dirname, '..');
 const sourceRoot = process.env.AGENTIC_SOURCE_ROOT_PRIMITIVES ?? path.join(root, 'sources/primitives');
 const manifestCommit = '69beab027d8b28fc082fa6054f4def5ba0146e3c';
 
-test('the actual immutable Customizations source reproduces its manifest digest and projected catalog', async () => {
+test('the historical immutable Customizations source reproduces its original projected catalog', async () => {
   const { readPrimitiveCatalogSource, projectPrimitiveCatalog } = await import('../tools/primitive-catalog-source.mjs');
   const source = await readPrimitiveCatalogSource({ sourceRoot, manifestCommit });
   assert.equal(source.manifestCommit, manifestCommit);
@@ -19,8 +19,26 @@ test('the actual immutable Customizations source reproduces its manifest digest 
   assert.equal(source.manifest.contentSha256, '4b6c07deb6f7be8f495244e3c50a528054528db1fdec5a5a14ea4cfdda5bb34e');
   assert.equal(source.catalog.primitives.length, 16);
   const projected = projectPrimitiveCatalog(source);
-  const lock = parseRepositoryYaml(await readFile(path.join(root, 'architecture/references/primitive-catalog.lock.yml'), 'utf8'), 'selected Primitive catalog');
-  assert.deepEqual(lock, projected, 'The selected lock must contain exactly the actual pinned source projection');
+  const { stdout } = await promisify(execFile)('git', ['--no-lazy-fetch', '--no-replace-objects', '-C', root,
+    'show', 'ba804c044bd7dc0a7c5568062d43a1f0d9f3141b:architecture/references/primitive-catalog.lock.yml'],
+  { timeout: 30_000, maxBuffer: 1024 * 1024 });
+  const lock = parseRepositoryYaml(stdout, 'historical Architecture 0.1.0 Primitive catalog');
+  assert.deepEqual(lock, projected, 'The historical lock must retain its exact original source projection');
+});
+
+
+test('the selected catalog reproduces the independently pinned accepted Primitive 0.2.0 source', async () => {
+  const { readPrimitiveCatalogSource, projectPrimitiveCatalog } = await import('../tools/primitive-catalog-source.mjs');
+  const acceptedManifest = '4ead1fea75312cf96ee0e6bf4eb70df0530ad059';
+  const source = await readPrimitiveCatalogSource({ sourceRoot, manifestCommit: acceptedManifest });
+  assert.equal(source.manifest.status, 'released');
+  assert.equal(source.manifest.version, '0.2.0');
+  assert.equal(source.manifest.sourceCommit, '82d2584357e86bb37fa7d5e1b89bb6759a2998f0');
+  assert.equal(source.manifest.contentSha256, 'f0756d16a2fdac674e61abd75f13a9a6a7fb28caaba79774483ad4969dfed28f');
+  const lock = parseRepositoryYaml(await readFile(path.join(root,
+    'architecture/references/primitive-catalog.lock.yml'), 'utf8'), 'selected Primitive catalog');
+  assert.equal(lock.source.sourceCommit, acceptedManifest);
+  assert.deepEqual(lock, projectPrimitiveCatalog(source), 'The selected lock must reproduce the exact accepted source');
 });
 
 test('source reads reject moving refs and unavailable immutable commits', async () => {

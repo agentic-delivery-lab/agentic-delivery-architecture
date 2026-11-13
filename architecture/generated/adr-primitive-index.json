@@ -10,11 +10,11 @@
   "primitiveRelease": {
     "repository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
     "repositoryId": 1380894656,
-    "releaseId": "urn:agentic-delivery:primitive-release:0.1.0-draft.15",
-    "version": "0.1.0-draft.15",
-    "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
-    "contentSha256": "4b6c07deb6f7be8f495244e3c50a528054528db1fdec5a5a14ea4cfdda5bb34e",
-    "status": "draft"
+    "releaseId": "urn:agentic-delivery:primitive-release:0.2.0",
+    "version": "0.2.0",
+    "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
+    "contentSha256": "f0756d16a2fdac674e61abd75f13a9a6a7fb28caaba79774483ad4969dfed28f",
+    "status": "released"
   },
   "domains": [
     "agentic-delivery-control-plane",
@@ -130,6 +130,7 @@
       "primitives": [
         "delivery-workflow",
         "issue-branch-name-validator",
+        "issue-branch-starter",
         "pull-request-branch-validator",
         "source-issue-validator",
         "workspace-lifecycle-guard"
@@ -301,7 +302,8 @@
         "semantic"
       ],
       "primitives": [
-        "architecture-decision"
+        "architecture-decision",
+        "codex-delivery"
       ]
     },
     {
@@ -379,10 +381,10 @@
     {
       "id": "architecture-decision",
       "kind": "skill",
-      "version": "0.1.0",
+      "version": "0.2.1",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "skills/architecture-decision/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -406,7 +408,7 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/validate-changelog.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -423,10 +425,10 @@
     {
       "id": "codex-delivery",
       "kind": "agent",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "agents/codex/codex-delivery.md",
       "enforcement": "instructional",
       "adrs": [
@@ -435,6 +437,7 @@
         "ADR-0015",
         "ADR-0017",
         "ADR-0018",
+        "ADR-0020",
         "ADR-0023",
         "ADR-0024"
       ],
@@ -444,6 +447,7 @@
         "ADR-0015",
         "ADR-0017",
         "ADR-0018",
+        "ADR-0020",
         "ADR-0023",
         "ADR-0024"
       ],
@@ -458,7 +462,7 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/validate-commit-range.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -477,10 +481,10 @@
     {
       "id": "delivery-workflow",
       "kind": "skill",
-      "version": "0.2.0",
+      "version": "0.2.2",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "skills/delivery-workflow/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -508,7 +512,7 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/validate-gitmoji.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -528,8 +532,28 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/validate-branch-name.mjs",
+      "enforcement": "deterministic",
+      "adrs": [
+        "ADR-0007"
+      ],
+      "localAdrs": [
+        "ADR-0007"
+      ],
+      "externalAdrs": [],
+      "domains": [
+        "agentic-delivery-governance"
+      ]
+    },
+    {
+      "id": "issue-branch-starter",
+      "kind": "capability",
+      "version": "0.1.0",
+      "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
+      "sourceRepositoryId": 1380894656,
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
+      "sourcePath": "scripts/start-issue-branch.mjs",
       "enforcement": "deterministic",
       "adrs": [
         "ADR-0007"
@@ -545,10 +569,10 @@
     {
       "id": "plain-language-communication",
       "kind": "skill",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "skills/plain-language-communication/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -565,10 +589,10 @@
     {
       "id": "primitive-catalog-validator",
       "kind": "validator",
-      "version": "0.1.0",
+      "version": "0.1.2",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/primitive-metadata/validate-catalog.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -590,7 +614,7 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/validate-pull-request-body.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -610,7 +634,7 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/validate-pull-request-branch.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -630,7 +654,7 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/validate-pull-request-title.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -647,10 +671,10 @@
     {
       "id": "source-issue-validator",
       "kind": "validator",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/validate-source-issue.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -670,7 +694,7 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/repository-delivery/lib/toolchain.mjs",
       "enforcement": "deterministic",
       "adrs": [
@@ -687,10 +711,10 @@
     {
       "id": "ubiquitous-language",
       "kind": "skill",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "skills/ubiquitous-language/SKILL.md",
       "enforcement": "instructional",
       "adrs": [
@@ -710,7 +734,7 @@
       "version": "0.1.0",
       "sourceRepository": "agentic-delivery-lab/agentic-delivery-agent-customizations",
       "sourceRepositoryId": 1380894656,
-      "sourceCommit": "69beab027d8b28fc082fa6054f4def5ba0146e3c",
+      "sourceCommit": "4ead1fea75312cf96ee0e6bf4eb70df0530ad059",
       "sourcePath": "validators/workspace-lifecycle/workspace_guard.py",
       "enforcement": "deterministic",
       "adrs": [

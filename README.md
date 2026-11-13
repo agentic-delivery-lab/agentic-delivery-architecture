@@ -25,7 +25,7 @@ the [source and live-evidence snapshot](architecture/references/system-evidence.
 the [arc42 chapter profile](architecture/arc42/README.md), and the twelve
 [arc42 chapters](architecture/arc42/).
 
-Architecture Authority is the proposed canonical text owner for all
+Architecture Authority is the canonical text owner for all
 organization ADR, ADP, and ADD records. The [decision index](decisions/README.md)
 and [decision inventory](architecture/references/decision-inventory.yml) pin
 the exact records, context scope, imported source identities, and provenance.
@@ -55,11 +55,13 @@ per-family JSON Schema Draft 2020-12 schemas under `architecture/contracts/`.
 Separate cross-file checks verify IDs, context references, immutable pins, and
 generated outputs; context stewards still review semantic meaning.
 
-The public Architecture repository and its draft release are versioned on
-`main`. A draft release is not a published or deployed architecture contract.
-The latest live baseline and known evidence gaps are recorded with commit pins
-in `architecture/references/system-evidence.yml`; they must be refreshed when
-the architecture snapshot is updated.
+Architecture source is versioned on `main`. An approved immutable Architecture
+Release binds its manifest commit, prepared source and content digest.
+Provisional branch metadata and passing checks do not establish release
+acceptance, consumer adoption or runtime activation. The latest scoped source
+observations and known evidence gaps are recorded with commit pins in
+`architecture/references/system-evidence.yml`; their individual dates and
+limitations remain authoritative.
 
 ## Checks
 

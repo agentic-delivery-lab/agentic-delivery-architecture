@@ -96,13 +96,14 @@ Architecture issue #3.
 
 ## Canonical decision ownership
 
-The proposed owner map centralizes 21 active ADR IDs, ADP-0001, and ADD-0001
-in Architecture Authority.
-The assignment is based on organization-wide decision stewardship, not on the
-historical repository path. This remains provisional until the issue-linked
-Architecture pull request is reviewed and merged. The repository-local copies
-in Control Plane, Primitives, and Distribution remain at their audited source
-revisions until each repository updates them in its own reviewed follow-up.
+Architecture Authority owns the 22 active ADR IDs, ADP-0001 and ADD-0001 in
+the accepted 24-record scope. The assignment follows organization-wide decision
+stewardship. The [dated owner acceptance record](../architecture/references/owner-scope-acceptance-2026-11-03.md)
+retains the adopted identifiers and evidence boundaries. Historical
+`origin.type: proposed` values retain their provenance; they do not erase that
+owner adoption. Each consumer selects an approved immutable Architecture
+Release in its own reviewed source update. A source merge does not move a
+consumer pin or activate runtime.
 
 | Canonical text owner | Decision identifiers | Canonical text location |
 | --- | --- | --- |

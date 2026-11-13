@@ -4,6 +4,14 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- Generate the Primitive catalog and ADR index from accepted Primitive 0.2.0,
+  including the shared issue-branch starter and its reviewed skill/validator
+  revisions. Preserve all 24 decision records and their historical origins.
+- Clarify the accepted canonical decision scope and release/adoption boundaries,
+  with a dated source observation for the new resource-reader cohort.
+
 ### Security
 
 - Update the locked Ajv URI parser, `fast-uri`, from 3.1.8 to the stock upstream
